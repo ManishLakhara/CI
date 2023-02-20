@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('time_sheets', function (Blueprint $table) {
+            $table->bigIncrements('story_media_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->unsignedBigInteger('mission_id');
+            $table->foreign('mission_id')->references('mission_id')->on('missions');
+            $table->time('time')->nullable();
+            $table->integer('action')->nullable();
+            $table->dateTime('date_volunteered');
+            $table->text('notes')->nullable();
+            $table->enum('status', ['APPROVED', 'DECLINED',  'SUBMIT_FOR_APPROVAL','PENDING'])->default('PENDING');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('time_sheets');
+    }
+};
