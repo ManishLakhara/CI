@@ -9,4 +9,5 @@ class PasswordReset extends Model
 {
     use HasFactory;
     protected $primaryKey = 'password_reset_id';
+    protected $fillable = ['email', 'token'];
 }

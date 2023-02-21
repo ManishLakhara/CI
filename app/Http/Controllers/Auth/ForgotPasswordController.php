@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Auth;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,9 +26,12 @@ class ForgotPasswordController extends Controller
         }
     }
 
+
+
+
     public function resetPassword(Request $request){
         $newpassword = $request->password;
         $user = User::where('email',$this->email)->get();
-        dd($user);
+    
     }
 }

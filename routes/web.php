@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,22 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-})->name('login');
-
+Route::get('/', [AuthController::class,'index'])->name('login');
 Route::get('index', function() {
     return view('index');
 })->name('index');
 
+Route::post('check-email',[ForgotPasswordController::class,'checkEmail'])->name('check.email');
+Route::post('custom-login',[AuthController::class,'postLogin'])->name('login.custom');
 
-Route::get('forgot',function(){
-    return view('forgot');
+Route::get('forgot', function() {
+    return view('login.forgot');
+})->name('forgot.password');
+
+Route::get('reset',function(){
+    return view('reset');
 });
 
-Route::get('check-email',[ForgotPasswordController::class,'checkEmail'])->name('check.email');
-Route::post('custom-login',[AuthController::class,'customLogin'])->name('login.custom');
-
-Route::get('forgot',function() {
-    return view('forgot');
-})->name('forgot.password');
+Route::post('reset-Password',[ForgotPasswordController::class,''])->name('reset.password');
