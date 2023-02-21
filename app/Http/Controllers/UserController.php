@@ -9,11 +9,13 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
+
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index(): Response
     {
         //

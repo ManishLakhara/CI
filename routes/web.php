@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +17,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('login');
+})->name('login');
+
+Route::get('index', function() {
+    return view('index');
+})->name('index');
+
+
+Route::get('forgot',function(){
+    return view('forgot');
 });
 
-Route::get('/', function () {
-    return view('login');
-})->name('custom-login');
+Route::get('check-email',[ForgotPasswordController::class,'checkEmail'])->name('check.email');
+Route::post('custom-login',[AuthController::class,'customLogin'])->name('login.custom');
 
+Route::get('forgot',function() {
+    return view('forgot');
+})->name('forgot.password');
