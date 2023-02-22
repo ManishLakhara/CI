@@ -3,7 +3,8 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\admin\IndexController;
+use App\Http\Controllers\admin\AdminAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,3 +33,11 @@ Route::get('reset',function(){
 });
 
 Route::post('reset-Password',[ForgotPasswordController::class,''])->name('reset.password');
+
+
+//backend routes
+    Route::get('admindashboard', [AdminAuthController::class, 'dashboard'])->name('dashboard');
+    Route::post('admindashboard', [AdminAuthController::class, 'index'])->name('dashboard');
+    Route::get('adminlogin', [AdminAuthController::class, 'login']);
+    Route::post('admincustomlogin', [AdminAuthController::class, 'customLogin'])->name('admincustomlogin');
+//end backend route
