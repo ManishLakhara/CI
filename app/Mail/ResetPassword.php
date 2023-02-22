@@ -37,12 +37,12 @@ class ResetPassword extends Mailable
     /**
      * Get the message content definition.
      */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         view: 'template.reset-password'
+    //     );
+    // }
 
     /**
      * Get the attachments for the message.
@@ -58,7 +58,6 @@ class ResetPassword extends Mailable
     {
         $user['name'] = $this->name;
         $user['token'] = $this->token;
-
         return $this->from("manishlakhara60402001@gmail.com", "Manish Lakhara")
         ->subject('Password Reset Link')
         ->view('template.reset-password', ['user' => $user]);

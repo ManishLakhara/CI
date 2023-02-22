@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('city_id');
             $table->unsignedBigInteger('country_id');
             $table->foreign('country_id')->references('country_id')->on('countries');
-            $table->string('name', 255);
+            $table->string('name', 255)->unique();
             $table->timestamps();
             $table->softDeletes();
         });

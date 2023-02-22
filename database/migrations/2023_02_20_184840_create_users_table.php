@@ -17,14 +17,14 @@ return new class extends Migration
             $table->string('last_name', 16)->nullable();
             $table->string('email', 128);
             $table->string('password', 255);
-            $table->integer('phone_number');
+            $table->bigInteger('phone_number');
             $table->string('avatar', 2048)->nullable();;
             $table->text('why_i_volunteer')->nullable();
             $table->string('employee_id', 16)->nullable();;
             $table->string('department', 16)->nullable();;
-            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('country_id')->nullable();
             $table->foreign('country_id')->references('country_id')->on('countries');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->foreign('city_id')->references('city_id')->on('cities');
             $table->text('profile_text')->nullable();
             $table->string('linked_in_url', 255)->nullable();;
