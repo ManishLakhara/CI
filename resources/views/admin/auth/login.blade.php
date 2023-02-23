@@ -37,11 +37,11 @@
                                                 <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
+                                                <a class="small" href="{{ route('forgetpassword') }}">Forgot Password?</a>
                                                 <button type="submit" class="btn btn-primary">Login</a>
                                             </div>
                                         </form>
-                                        
+
                                     </div>
                                     <div class="card-footer text-center py-3">
                                         <div class="small"><a href="register.html">Need an account? Sign up!</a></div>

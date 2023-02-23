@@ -4,7 +4,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\admin\AdminAuthController;
+use App\Http\Controllers\admin\ForgetPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +49,10 @@ Route::post('register',[AuthController::class,'register'])->name('post-register'
 //backend routes
     Route::get('admindashboard', [AdminAuthController::class, 'dashboard'])->name('dashboard');
     Route::post('admindashboard', [AdminAuthController::class, 'index'])->name('dashboard');
-    Route::get('adminlogin', [AdminAuthController::class, 'login']);
+    Route::get('adminlogin', [AdminAuthController::class, 'login'])->name('adminlogin');
     Route::post('admincustomlogin', [AdminAuthController::class, 'customLogin'])->name('admincustomlogin');
+    Route::get('forgetpassword', [ForgetPasswordController::class, 'forgetpassword'])->name('forgetpassword');
+    Route::post('resetpassword', [ForgetPasswordController::class, 'resetpassword'])->name('resetpassword');
+    Route::post('admin-check-email',[ForgetPasswordController::class,'admincheckEmail'])->name('admin.check.email');
+    Route::get('resetpassword', [ForgetPasswordController::class, 'resetpassword'])->name('resetpassword');
 //end backend route
