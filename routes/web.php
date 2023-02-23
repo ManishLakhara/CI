@@ -19,9 +19,13 @@ use App\Http\Controllers\admin\ForgetPasswordController;
 */
 //frontend Routes
 Route::get('/', [AuthController::class,'index'])->name('login');
+
 Route::get('index', function() {
     return view('index');
-})->name('index');
+})->name('index')->middleware('auth');
+
+Route::get('logout',[AuthController::class,'logout']);
+
 
 Route::post('custom-login',[AuthController::class,'postLogin'])->name('login.custom');
 
@@ -31,15 +35,16 @@ Route::get('forgot', function() {
 
 Route::post('reset',[PasswordResetController::class,'resetPassword'])->name('check.email');
 
-Route::post('reset-Password',[ForgotPasswordController::class,''])->name('reset.password');
-
-
 Route::get('register',function() {
     return view('register.register');
 })->name('register');
 
-Route::get('forgot-password/{$token}',[PasswordResetController::class,'modifyPassword']);
+Route::get('forgot-password/{token}',function($token){
+    return view('reset',[$token]);
+});
 Route::post('register',[AuthController::class,'register'])->name('post-register');
+
+Route::post('password-resetting',[PasswordResetController::class,'passwordResetting'])->name('password-resetting');
 
 //frontend Routes
 

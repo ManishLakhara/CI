@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-
+use \Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller {
     /* This is controller for Authentication of user 
@@ -18,6 +18,10 @@ class AuthController extends Controller {
         return view('login.login');
     }
 
+    public function logout(){
+        Session::flush();
+        return redirect('/');
+    }
     public function postLogin(Request $request){
         $request->validate([
             'email' => 'required',
@@ -27,7 +31,7 @@ class AuthController extends Controller {
         if(Auth::attempt($credentionals)){
             return redirect()->intended('index');
         } else {
-            return redirect()->intended('/')->with('status','Oppes! You have entered wrong password');
+            return redirect()->intended('/')->with('status','Oppes! Credentials Passed are INCORRECT');
         }
     }
 

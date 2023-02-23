@@ -16,11 +16,21 @@
                 @csrf
                 <div class="form-group">
                     <label for="" class="login-text">Email Address</label>
-                    <input type="email" class="form-control m-1" name="email" id="" aria-describedby="emailHelpId" placeholder="" value="manish@gmail.com">
+                    <input type="email" class="form-control m-1" name="email" id="" required aria-describedby="emailHelpId" placeholder="" value="">
+                    @error('email')
+                    <div class="text-danger">
+                        {{$message}}
+                    </div>
+                    @enderror
                   </div>
                   <div class="form-group">
                     <label for="" class="login-text">Password</label>
-                    <input type="password" class="form-control m-1" name="password" id="" placeholder="" value="12345678"> 
+                    <input type="password" class="form-control m-1" name="password" required id="" placeholder="" value=""> 
+                    @error('password')
+                    <div class="text-danger">
+                        {{$message}}
+                    </div>
+                    @enderror
                   </div> 
                   <button type="submit" class="btn btn-outline-warning mt-3" style="width: 100%; border-radius: 23px">Login</button>
                </form>
@@ -32,19 +42,11 @@
                @endif
 
 
-                <p class="m-3" style="text-align: center;"> <small>
-                    <a href="{{ route('forgot.password')}}" style="color:#414141; text-decoration:none;">Lost your password?</a>
-                </small>
-                </p>
-                <p class="m-3 fs-12" style="text-align: center; color:#414141;">
-                    <small>
-                        Don't have an account? <a style="text-decoration:none;" href="{{route('register')}}">Create an account</a> 
-                    </small>
-                </p>
-                <p class="m-3 privacy-policy" style="text-align: center;"> <small>
-                    <a href="#forgot.html" style="color:#414141; text-decoration:none;">Privacy Policy</a>
-                </small>
-                </p>
+                @include('components.lostyourpassword')
+
+                @include('components.createanaccount')
+
+                @include('components.privacypolicy')
             </div>
         </div>
     </div>

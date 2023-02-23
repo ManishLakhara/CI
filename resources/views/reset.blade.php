@@ -1,4 +1,16 @@
 @extends('layouts.app')
+<style>
+    {{include 'CSS/style.css'}}
+    {{include 'CSS/bootstrap.min.css'}}
+</style>
+<script>
+    {{include 'JS/bootstrap.bundle.min.js'}}
+    {{include 'JS/jquery.min.js'}}
+    {{include 'JS/popper.js'}}
+</script>
+<?php
+$token = substr($_SERVER['REQUEST_URI'],-60);
+?>
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-start" style="width: 100%; height: 100%;">
@@ -11,30 +23,51 @@
                     Please enter a new password in the fields below.
                 </small></p>
 
-                <form action="{{route('reset.password')}}" method='post'>
+                <form action="{{route('password-resetting')}}" method='post'>
                     @csrf
                      <label for="inputNewPassword" class="col-form-label">New Password</label> 
                      <div class="col">
-                        <input type="password" class="form-control" id="" name='password' value="Password">
+                        <input type="password" class="form-control" id="" name='password' value="">
+                        @error('password')
+                                <div class="text-danger">
+                                    {{$message}}
+                                </div>
+                            @enderror
                      </div>
 
                      <label for="inputConfirmPassword" class="col-form-label">Confirm Password</label> 
                      <div class="col">
-                        <input type="password" class="form-control" id="" value="Password">
+                        <input type="password" class="form-control" name="confirm-password" id="" value="">
+                        @error('confirm-password')
+                                <div class="text-danger">
+                                    {{$message}}
+                                </div>
+                        @enderror
                      </div>
+
+
+                     @if(session('error'))
+                        <div class="alert alert-danger m-3">
+                            {{session('error')}}
+                        </div>
+                    @endif
+
+
+                     <div class="col">
+                        <input type="password" class="form-control" hidden name="token" id="" value={{$token}}>
+                     </div> 
+
                      <div class="col">
                         <button type="submit" class="btn btn-outline-warning mt-3" style="width: 100%; border-radius: 23px">Change Password</button>
+                    </div>
+                    <div>
+                        
                     </div>
                 </form>
 
 
-                <p class="m-3" style="text-align: center;"> <small>
-                    <a href="{{route('login')}}" style="color:#414141; text-decoration:none;">Login</a>
-                </small>
-                </p>
-                <p class="m-3" style="text-align: center;"> <small>
-                    <a href="#forgot.html" style="color:#414141; text-decoration:none;">Privacy Policy</a>
-                </small>
-                </p>
+                @include('components.login')
+
+                @include('components.privacypolicy')
         </div>
 @endsection

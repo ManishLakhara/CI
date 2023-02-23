@@ -61,7 +61,8 @@
                                         </p>
 
                                         <p style="text-align: center;">
-                                            <a href="{{'http://localhost:8000/forgot-password/'.$user['token']}}" class="btn">Reset your password</a>
+                                            @csrf
+                                            <a href="{{'http://127.0.0.1:8000/forgot-password/'.$user['token']}}" class="btn">Reset your password</a>
                                         </p>
 
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('password_resets', function (Blueprint $table) {
             $table->bigIncrements('password_reset_id');
-            $table->string('email', 191);
+            $table->string('email', 191)->unique();
             $table->string('token', 191);
             $table->timestamps();
             $table->softDeletes();
