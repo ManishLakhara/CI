@@ -10,7 +10,7 @@
                         @csrf
                         <label for="inputFirstName" class="col-form-label"> First Name</label>
                         <div class="col">
-                            <input type="text" class="form-control" required name="first_name" id="" value="">
+                            <input type="text" class="form-control"  name="first_name" id="" value="">
                             @error('first_name')
                             <div class="text-danger">
                                 {{$message}}
@@ -20,7 +20,7 @@
                         
                         <label for="inputLastName" class="col-form-label"> Last Name</label>
                         <div class="col">
-                            <input type="text" class="form-control" required name="last_name" id="" value="">
+                            <input type="text" class="form-control"  name="last_name" id="" value="">
                             @error('last_name')
                             <div class="text-danger">
                                 {{$message}}
@@ -29,7 +29,7 @@
                         </div>
                         <label for="inputPhone" class="col-form-label"> Phone Number</label>
                         <div class="col">
-                            <input type="tel" class="form-control" required name="phone_number" id=""
+                            <input type="tel" class="form-control"  name="phone_number" id=""
                                 value="">
                                 @error('phone_number')
                                 <div class="text-danger">
@@ -39,7 +39,7 @@
                         </div>
                         <label for="inputEmail" class="col-form-label"> Email</label>
                         <div class="col">
-                            <input type="email" class="form-control" required name="email" id=""
+                            <input   class="form-control"  name="email" id=""
                                 value="">
                                 @error('email')
                                 <div class="text-danger">
@@ -49,7 +49,7 @@
                         </div>
                         <label for="inputPassword" class="col-form-label">Password</label>
                         <div class="col">
-                            <input type="password" class="form-control" required name="password" id="" value="">
+                            <input type="password" class="form-control"  name="password" id="" value="">
                             @error('password')
                             <div class="text-danger">
                                 {{$message}}
@@ -58,7 +58,7 @@
                         </div>
                         <label for="inputComfirmPassword" class="col-form-label">Confirm Password</label>
                         <div class="col">
-                            <input type="password" class="form-control" required name="confirm_password" id=""
+                            <input type="password" class="form-control"  name="confirm_password" id=""
                                 value="">
                             @error('confirm_password')
                             <div class="text-danger">

@@ -12,6 +12,6 @@ class MissionThemeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\MissionTheme::factory(200)->create();
     }
 }

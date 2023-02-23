@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\MissionThemeController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\PasswordResetController;
@@ -47,6 +48,7 @@ Route::post('register',[AuthController::class,'register'])->name('post-register'
 
 Route::post('password-resetting',[PasswordResetController::class,'passwordResetting'])->name('password-resetting');
 
+
 //frontend Routes
 
 
@@ -70,4 +72,5 @@ Route::post('password-resetting',[PasswordResetController::class,'passwordResett
 
     //     return view('admin.auth.login');
     // });
+    Route::get('missiontheme',[MissionThemeController::class,'getAll']);
 //end backend route

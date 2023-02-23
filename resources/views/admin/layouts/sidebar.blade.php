@@ -1,11 +1,15 @@
 <div id="layoutSidenav_nav">
-    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-        <div class="sb-sidenav-menu">
+    <nav class="sb-sidenav accordion sb-sidenav bg-orange" id="sidenavAccordion">
+        <div class="sb-sidenav-menu color-white align-content-center">
             <div class="nav">
-                <div class="sb-sidenav-menu-heading">Core</div>
+                <div class="sb-sidenav-menu-heading NotoSans text-white">NAVIGATION</div>
+
                 <a class="nav-link" href="index.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    Dashboard
+
+                    <div class="card bg-light mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Header</div>
+                    </div>
                 </a>
                 <div class="sb-sidenav-menu-heading">Interface</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">

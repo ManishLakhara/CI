@@ -22,10 +22,10 @@ class AdminAuthController extends Controller
         return view('admin.index');
     }
      public function customLogin(Request $request){
-        // $request->validate([
-        //     'email' => 'required',
-        //     'password' => 'required',
-        // ]);
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
         $credentionals = $request->only('email','password');
         if(Auth::guard('admin')->attempt($credentionals)){
             return view('admin.index');

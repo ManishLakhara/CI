@@ -17,7 +17,8 @@ class MissionThemeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->sentence(25),
+            'status'=> $this->faker->numberBetween(0,1),
         ];
     }
 }

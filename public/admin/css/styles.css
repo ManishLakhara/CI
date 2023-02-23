@@ -76,6 +76,14 @@
   }
 }
 
+.user_image {
+  object-fit: scale-down;
+}
+
+.bg-orange {
+  background-color: #F88634;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
