@@ -6,6 +6,12 @@
                 @include('components.carosel')
             <div class="col-md-4 align-self-center" style="padding: 4%;">
 
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{session('success')}}
+                    </div>
+                @endif
+
                <form action="{{route('login.custom')}}" method="post">
                 @csrf
                 <div class="form-group">
@@ -32,7 +38,7 @@
                 </p>
                 <p class="m-3 fs-12" style="text-align: center; color:#414141;">
                     <small>
-                        Don't have an account? <a style="text-decoration:none;" href="#">Create an account</a> 
+                        Don't have an account? <a style="text-decoration:none;" href="{{route('register')}}">Create an account</a> 
                     </small>
                 </p>
                 <p class="m-3 privacy-policy" style="text-align: center;"> <small>

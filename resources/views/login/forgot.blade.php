@@ -21,9 +21,9 @@
                         <button type="submit" class="btn btn-outline-warning mt-3" style="width: 100%; border-radius: 23px">Reset my Password</button>
                     </form>
 
-                    @if(session('message'))
+                    @if(session('status'))
                         <div class="alert alert-danger">
-                            {{ session('message')}}
+                            {!! session('status') !!}
                         </div>
                     @endif
 

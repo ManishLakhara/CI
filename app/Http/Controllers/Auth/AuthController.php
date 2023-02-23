@@ -30,4 +30,28 @@ class AuthController extends Controller {
             return redirect()->intended('/')->with('status','Oppes! You have entered wrong password');
         }
     }
+
+    public function register(Request $request){
+        $this->validate($request,[
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        
+        if(User::where('email',$request->email)->count()===0){
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'password' => bcrypt($request->password), 
+            ]);
+            return redirect()->intended('/')->with('success', $user->first_name.' New User is Registered');
+        }
+        else{
+            return redirect()->intended('register')->with('status','user-Already exists');
+        }
+    }
 }

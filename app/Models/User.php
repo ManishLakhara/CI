@@ -11,6 +11,14 @@ class User extends Authenticatable
     use HasFactory;
     protected $primaryKey = 'user_id';
 
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'phone_number',
+        'password',
+    ];
+
     public function country() {
         return $this->belongsTo(Country::class, 'country_id');
     }
