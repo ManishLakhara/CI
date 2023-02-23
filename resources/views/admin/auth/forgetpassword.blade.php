@@ -10,7 +10,7 @@
         <link  href="{{asset('admin/css/styles.css')}}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
-    <body class="bg-primary">
+    <body>
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -21,7 +21,7 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Password Recovery</h3></div>
                                     <div class="card-body">
                                         <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
-                                        <form method="post"  action="{{route('admin.check.email')}}">
+                                        <form method="post"  action="{{route('resetpassword2')}}">
                                             @csrf
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="inputEmail" name="email" type="email" placeholder="name@example.com" required/>
@@ -33,6 +33,12 @@
                                             </div>
                                         </form>
                                     </div>
+                                    @if(session('success'))
+                                        <div class='alert-success'>
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+
                                     <div class="card-footer text-center py-3">
                                         <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
                                     </div>

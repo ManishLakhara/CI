@@ -21,7 +21,7 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">New Password</h3></div>
                                     <div class="card-body">
                                         <div class="small mb-3 text-muted text-center">Enter your new password.</div>
-                                        <form method="post"  >
+                                        <form method="post">
                                             @csrf
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="inputPassword" type="password" name="password"  placeholder="Password" required/>

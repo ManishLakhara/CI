@@ -16,9 +16,14 @@ class AdminResetPassword extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+
+     public $name;
+    public $token;
+
+    public function __construct($name, $token)
     {
-        //
+        $this->name = $name;
+        $this->token = $token;
     }
 
     /**
@@ -34,12 +39,12 @@ class AdminResetPassword extends Mailable
     /**
      * Get the message content definition.
      */
-    public function content(): Content
+    /*public function content(): Content
     {
         return new Content(
             view: 'view.name',
         );
-    }
+    }*/
 
     /**
      * Get the attachments for the message.
@@ -49,5 +54,15 @@ class AdminResetPassword extends Mailable
     public function attachments(): array
     {
         return [];
+    }
+
+    public function build()
+    {
+        $user['name'] = $this->name;
+        $user['token'] = $this->token;
+
+        return $this->from("19it.rutvikkumar.kansagara@gmail.com", "kansagara rutvikkumar25")
+        ->subject('Password Reset Link')
+        ->view('admin.admintemplate.adminreset', ['user' => $user]);
     }
 }
