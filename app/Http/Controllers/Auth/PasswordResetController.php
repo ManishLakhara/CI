@@ -33,24 +33,15 @@ class PasswordResetController extends Controller
                 $user['email'] = $request->email;
                 $user['token'] = $token;
                 $user->save();
-
-<<<<<<< Updated upstream
                 $mail = Mail::to($request->email)->send(new ResetPassword($user['email'],$token));
 
                 if($mail) {
                     return back()->with('success', 'Success! password reset link has been sent to your email : '.$user['email']);
-=======
-                Mail::to($request->email)->send(new ResetPassword($user['email'],$token));
-
-                if(Mail::failures() != 0) {
-                    return back()->with('success', 'Success! password reset link has been sent to your email');
->>>>>>> Stashed changes
                 }
                 return back()->with('failed', 'Failed! there is some issue with email provider');
             }
     }
 
-<<<<<<< Updated upstream
     public function passwordResetting(Request $request){
         $request->validate(
             ['token' => 'required',
@@ -61,9 +52,6 @@ class PasswordResetController extends Controller
         
         if($request['password']!==$request['confirm-password']){
             return back()->with('error',"confirm password is different from password");
-=======
-            
->>>>>>> Stashed changes
         }
 
         $reset = PasswordReset::where('token',$request['token'])->get();
@@ -72,13 +60,7 @@ class PasswordResetController extends Controller
         $user = User::where('email',$email)->get()[0];
         $user->password = bcrypt($request['password']);
         $user->save();
-
-<<<<<<< Updated upstream
         return redirect()->intended('/')->with('success','Hurry!! Password have been Successfully updated');
-=======
 
-
-
->>>>>>> Stashed changes
     }
 }
