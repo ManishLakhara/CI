@@ -29,7 +29,7 @@
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <a class="small" href="{{ route('adminlogin') }}">Return to login</a>
-                                                <button class="btn btn-primary">Reset Password</a>
+                                                <button type="submit" class="btn btn-primary">Reset Password</a>
                                             </div>
                                         </form>
                                     </div>

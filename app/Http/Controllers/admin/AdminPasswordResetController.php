@@ -46,5 +46,4 @@ class AdminPasswordResetController extends Controller
     }
 
     
-
 }
