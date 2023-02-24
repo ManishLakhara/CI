@@ -12,7 +12,8 @@ use Illuminate\Support\Str;
 class PasswordResetController extends Controller
 {
 
-    public function resetPassword(Request $request){
+    public function resetPassword(Request $request)
+    {
             $request->validate([
                 'email' => 'required',
             ]);
@@ -25,7 +26,9 @@ class PasswordResetController extends Controller
                 ]);
            $token = Str::random(60);
 
-                if(PasswordReset::where('email',$request->email))
+                if(PasswordReset::where('email',$request->email)->get()->count()==0){
+                    return back()->with('status','user All ready exists');
+                }
 
 
 
@@ -40,7 +43,7 @@ class PasswordResetController extends Controller
                 }
                 return back()->with('failed', 'Failed! there is some issue with email provider');
             }
-    }
+        }
 
     public function passwordResetting(Request $request){
         $request->validate(
@@ -49,7 +52,7 @@ class PasswordResetController extends Controller
              'confirm-password' => 'required | min:8',
              ]
         );
-        
+
         if($request['password']!==$request['confirm-password']){
             return back()->with('error',"confirm password is different from password");
         }
@@ -61,6 +64,5 @@ class PasswordResetController extends Controller
         $user->password = bcrypt($request['password']);
         $user->save();
         return redirect()->intended('/')->with('success','Hurry!! Password have been Successfully updated');
-
     }
 }
