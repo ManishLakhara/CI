@@ -49,7 +49,6 @@ Route::post('register',[AuthController::class,'register'])->name('post-register'
 
 Route::post('password-resetting',[PasswordResetController::class,'passwordResetting'])->name('password-resetting');
 
-
 //frontend Routes
 
 
@@ -65,6 +64,7 @@ Route::post('password-resetting',[PasswordResetController::class,'passwordResett
     Route::post('admin-check-email',[ForgetPasswordController::class,'admincheckEmail'])->name('admin.check.email');
     Route::get('resetpassword', [ForgetPasswordController::class, 'resetpassword'])->name('resetpassword');
     Route::post('resetpassword2', [AdminPasswordResetController::class,'resetPassword'])->name('resetpassword2');
+    
     Route::get('adminresetpage/{token}',function(){
         return view('admin.auth.resetpassword');
 
@@ -75,8 +75,14 @@ Route::post('password-resetting',[PasswordResetController::class,'passwordResett
 
     //     return view('admin.auth.login');
     // });
-    Route::post('missiontheme/new',[MissionThemeController::class,'new'])->name('missiontheme.new');
-    Route::get('missiontheme',[MissionThemeController::class,'getAll']);
-    Route::get('missionskill',[SkillController::class,'getAll']);
-    Route::post('missionskill/new',[SkillController::class,'new'])->name('missionskill.new');
+    // Route::get('missiontheme/delete/{slug}', [MissionThemeController::class,'delete']);
+    // Route::post('missiontheme/new',[MissionThemeController::class,'new'])->name('missiontheme.new');
+    // Route::get('missiontheme',[MissionThemeController::class,'getAll']);
+    // Route::get('missionskill',[SkillController::class,'getAll']);
+    // Route::post('missionskill/new',[SkillController::class,'new'])->name('missionskill.new');
+    // Route::get('missionskill/delete/{slug}', [SkillController::class,'delete']);
+
+    Route::resource('missiontheme', MissionThemeController::class)->withTrashed();
+    Route::resource('missionskill', MissionSkillController::class)->withTrashed();
+
 //end backend route

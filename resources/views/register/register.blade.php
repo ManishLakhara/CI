@@ -5,7 +5,11 @@
             <div class="col-md-8 align-self-center">
                 @include('components.carosel')
                 <div class="col-md-4 align-self-center" style="padding: 4%;">
-
+                    @if (session('status'))
+                    <div class="alert alert-danger">
+                        {{ session('status') }}
+                    </div>
+                @endif
                     <form action="{{ route('post-register') }}" method='post'>
                         @csrf
                         <label for="inputFirstName" class="col-form-label"> First Name</label>
@@ -73,11 +77,7 @@
                         </div>
                     </form>
 
-                    @if (session('status'))
-                        <div class="alert alert-danger">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    
 
                     @include('components.lostyourpassword')
 

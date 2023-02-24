@@ -70,7 +70,7 @@
                                 <tr>
                                     <td>{{$mt->skill_name}}</td>
                                     <td>
-                                       @if($mt->status) 
+                                       @if($mt->status)
                                             <div class="h5">
                                                 <span class="badge text-white bg-success">Active</span>
                                             </div>
@@ -80,7 +80,17 @@
                                             </div>
                                        @endif
                                     </td>
-                                    <td><img src="" alt=""></td>
+                                    <td>
+                                        <button type="button">
+                                            
+                                        </button>
+
+                                        <button type="button">
+                                            <a href="missionskill/delete/{{ $mt->skill_id }}">
+                                                <img src="Images/bin.png" alt="">
+                                            </a>
+                                        </button>
+                                    </td>
                                 </tr>
                         @endforeach
                     </tbody>
