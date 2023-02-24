@@ -30,8 +30,6 @@ class PasswordResetController extends Controller
                     return back()->with('status','user All ready exists');
                 }
 
-
-
                 $user = new PasswordReset;
                 $user['email'] = $request->email;
                 $user['token'] = $token;

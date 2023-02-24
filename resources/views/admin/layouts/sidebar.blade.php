@@ -2,16 +2,90 @@
     <nav class="sb-sidenav accordion sb-sidenav bg-orange" id="sidenavAccordion">
         <div class="sb-sidenav-menu color-white align-content-center">
             <div class="nav">
-                <div class="sb-sidenav-menu-heading NotoSans text-white">NAVIGATION</div>
+                <div class="sb-sidenav-menu-heading text-white">NAVIGATION</div>
 
-                <a class="nav-link" href="index.html">
+                {{-- <a class="nav-link" href="index.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 
                     <div class="card bg-light mb-3" style="max-width: 18rem;">
                         <div class="card-header">Header</div>
                     </div>
+                </a> --}}
+                <a class="nav-link" href="#">
+                    <div class='container'>
+                        {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
+                        <i class="fa-solid fa-user text-white"></i>
+                        <span class="text-white font-weight-light">
+                            User
+                        </span>
+                    </div>
                 </a>
-                <div class="sb-sidenav-menu-heading">Interface</div>
+
+                <a class="nav-link" href="#">
+                    <div class='container'>
+                        {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
+                        <i class="fa-solid fa-pen-to-square text-white"></i>
+                        <span class="text-white font-weight-light ">
+                            CMS Page
+                        </span>
+                    </div>
+                </a>
+                <a class="nav-link" href="#">
+                    <div class='container'>
+                        {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
+                        <i class="fa-solid fa-bullseye text-white"></i>
+                        <span class="text-white ">
+                            Mission
+                        </span>
+                    </div>
+                </a>
+                <a class="nav-link" href="/missiontheme">
+                    <div class='container-fluid'>
+                        {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
+                        <i class="fa-thin fa-rectangles-mixed"></i>
+                        <span class="text-white text-active">
+                            Mission Theme
+                        </span>
+                    </div>
+                </a>
+                <a class="nav-link" href="/missionskill">
+                    <div class='container'>
+                        {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
+                        <i class="fa-solid fa-folder text-white"></i>
+                        <span class="text-white">
+                            Mission skill
+                        </span>
+                    </div>
+                </a>
+                <a class="nav-link" href="#">
+                    <div class='container'>
+                        {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
+                        <i class="fa-solid fa-folder text-white"></i>
+                        <span class="text-white">
+                            Mission Application
+                        </span>
+                    </div>
+                </a>
+                <a class="nav-link" href="#">
+                    <div class='container'>
+                        {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
+                        <i class="fa-solid fa-book-blank text-white"></i>
+                        <span class="text-white ">
+                            Story
+                        </span>
+                    </div>
+                </a>
+                <a class="nav-link" href="#">
+                    <div class='container-fluid'>
+                        {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
+                        <i class="fa-brands fa-canadian-maple-leaf text-white"></i>
+                        <span class="text-white ">
+                            Banner Management
+                        </span>
+                    </div>
+                </a>
+                
+                {{-- <div class="sb-sidenav-menu-heading">Interface</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Layouts
@@ -68,6 +142,6 @@
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
             CI platform
-        </div>
+        </div> --}}
     </nav>
 </div>

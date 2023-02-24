@@ -12,6 +12,6 @@ class SkillSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\Skill::factory(200)->create();
     }
 }

@@ -17,7 +17,7 @@
                     <img class="rounded-circle me-3 user_image" src="Images/user-img1.png" alt="">
                 <strong class='me-2'>Evan Donohue</strong></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><a class="dropdown-item" href="adminlogin">Logout</a></li>
             </ul>
         </li>
     </ul>

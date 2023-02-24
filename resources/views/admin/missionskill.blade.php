@@ -6,18 +6,18 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Mission Theme</h1>
+        <h1 class="mt-4">Mission Skill</h1>
         @if (session('success'))
             <div class="alert alert-success">
                 {{session('success')}}
             </div>
         @endif
         <span class="border-bottom">
-        <form action="{{route('missiontheme.new')}}" method="post">
+        <form action="{{route('missionskill.new')}}" method="post">
             @csrf
             <div class='row m-3'>
             <div>       
-                <label for="title">Title</label><input type="text" class="form-control" name="title" id="">
+                <label for="title">Skill Name</label><input type="text" class="form-control" name="skill_name" id="">
                 @error('title')
                     <div class="text-danger">
                         {{$message}}
@@ -43,7 +43,7 @@
     </span>
 
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">Missions</li>
+            <li class="breadcrumb-item active">Skills</li>
         </ol>
         <div class="card mb-4">
             <div class="card-body">
@@ -51,24 +51,24 @@
 
                     <thead>
                         <tr>
-                            <th>Title</th>
+                            <th>Skill Name</th>
                             <th>Status</th>
-                            <th>action</th>
+                            <th>Action</th>
                             
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Title</th>
+                            <th>Skill Name</th>
                             <th>Status</th>
-                            <th>action</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
 
                     <tbody>
                         @foreach ($data as $mt)
                                 <tr>
-                                    <td>{{$mt->title}}</td>
+                                    <td>{{$mt->skill_name}}</td>
                                     <td>
                                        @if($mt->status) 
                                             <div class="h5">

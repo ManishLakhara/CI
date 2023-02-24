@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Mission extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'title',
+        'short_description',
+        'description',
+        'mission_type',
+        'status',
+        'theme_id',
+    ];
+
     protected $primaryKey = 'mission_id';
 
     public function missionTheme() {

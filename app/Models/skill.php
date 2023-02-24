@@ -10,6 +10,10 @@ class Skill extends Model
     use HasFactory;
     protected $primaryKey = 'skill_id';
 
+    protected $fillable = [
+        'skill_name',
+        'status',
+    ];
     public function missionSkill() {
         return $this->belongsToMany(MissionSkill::class, 'skill_id');
     }

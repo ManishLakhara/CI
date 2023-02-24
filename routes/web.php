@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\MissionThemeController;
+use App\Http\Controllers\admin\SkillController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\PasswordResetController;
@@ -74,5 +75,8 @@ Route::post('password-resetting',[PasswordResetController::class,'passwordResett
 
     //     return view('admin.auth.login');
     // });
+    Route::post('missiontheme/new',[MissionThemeController::class,'new'])->name('missiontheme.new');
     Route::get('missiontheme',[MissionThemeController::class,'getAll']);
+    Route::get('missionskill',[SkillController::class,'getAll']);
+    Route::post('missionskill/new',[SkillController::class,'new'])->name('missionskill.new');
 //end backend route

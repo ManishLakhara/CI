@@ -15,9 +15,9 @@ return new class extends Migration
             $table->bigIncrements('mission_id');
             $table->unsignedBigInteger('theme_id');
             $table->foreign('theme_id')->references('mission_theme_id')->on('mission_themes');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->foreign('city_id')->references('city_id')->on('cities');
-            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('country_id')->nullable();
             $table->foreign('country_id')->references('country_id')->on('countries');
             $table->string('title', 128);
             $table->text('short_description');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->enum('mission_type',['TIME','GOAL']);
-            $table->enum('status', [0,1]);
+            $table->tinyInteger('status')->default(1);
             $table->string('organization_name', 255)->nullable();
             $table->text('organization_detail')->nullable();
             $table->enum('availability', ['daily','weekly','week-end','monthly'])->nullable();
