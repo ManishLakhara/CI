@@ -22,7 +22,8 @@ class StoreSkillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'skill_name' => 'required',
+            'status' => 'required',
         ];
     }
 }

@@ -31,12 +31,9 @@ class MissionSkillController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreSkillRequest $request): RedirectResponse
     {
-        $request->validate([
-            'skill_name' => 'required',
-            'status' => 'required',
-        ]);
+        $request->validator();
         
         MissionTheme::create($request->post());
 

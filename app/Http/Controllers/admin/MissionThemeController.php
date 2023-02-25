@@ -31,12 +31,9 @@ class MissionThemeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreMissionThemeRequest $request): RedirectResponse
     {
-        $request->validate([
-            'title' => 'required',
-            'status' => 'required',
-        ]);
+        $request->validated();
         
         MissionTheme::create($request->post());
 
@@ -56,19 +53,18 @@ class MissionThemeController extends Controller
      */
     public function edit(MissionTheme $missionTheme)
     {
-        return view('admin.missiontheme.edit', compact('missionTheme'));// Create view by name missiontheme/edit.blade.php
+        return view('admin.missiontheme.edit', compact('missionTheme'));
+        // Create view by name missiontheme/edit.blade.php
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MissionTheme $missionTheme): RedirectResponse
+    public function update(UpdateMissionThemeRequest $request, MissionTheme $missionTheme): RedirectResponse
     {
-        $request->validate([
-            'title' => 'required',
-            'status' => 'required',
-        ]);
-        
+
+        $request->validated();
+
         $missionTheme->fill($request->post())->save();
 
         return redirect()->route('missiontheme.index')->with('success','Company Has Been updated successfully');

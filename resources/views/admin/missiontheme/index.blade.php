@@ -50,6 +50,10 @@
                 {{session('success')}}
             </div>
         @endif
+        <a href="{{ route('missiontheme.create') }}">
+        <button type="button" class="btn rounded text-right btn-outline-warning">
+            <i class="fa-solid fa-plus px-3"></i> Add</button>
+        </a>
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>

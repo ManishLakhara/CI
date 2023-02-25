@@ -82,7 +82,7 @@ Route::post('password-resetting',[PasswordResetController::class,'passwordResett
     // Route::post('missionskill/new',[SkillController::class,'new'])->name('missionskill.new');
     // Route::get('missionskill/delete/{slug}', [SkillController::class,'delete']);
 
-    Route::resource('missiontheme', MissionThemeController::class)->withTrashed();
+    Route::resource('missiontheme', MissionThemeController::class)->withTrashed()->middleware('auth');
     Route::resource('missionskill', MissionSkillController::class)->withTrashed();
 
 //end backend route
