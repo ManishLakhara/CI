@@ -8,15 +8,28 @@ use App\Http\Requests\StoreMissionThemeRequest;
 use App\Http\Requests\UpdateMissionThemeRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class MissionThemeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = MissionTheme::orderBy('mission_theme_id','desc')->paginate(10);
+        $data = MissionTheme::where([
+            ['title','!=',Null],
+            [function ($query) use ($request) {
+                if(($s = $request->s)) {
+                    $query->orWhere('title', 'LIKE', '%' . $s . '%')
+                          ->get();
+                }
+            }]
+        ])->paginate(10)
+          ->appends(['s'=>$request->s]);
+        
+
+        //$data = MissionTheme::orderBy('mission_theme_id','desc')->paginate(10);
         return view('admin.missiontheme.index',compact('data')); // Create view by name missiontheme/index.blade.php
     }
 
@@ -37,7 +50,7 @@ class MissionThemeController extends Controller
         
         MissionTheme::create($request->post());
 
-        return redirect()->route('missiontheme.index')->with('success','Company has been created successfully.');
+        return redirect()->route('missiontheme.index')->with('success','field has been created successfully.');
     }
 
     /**
@@ -45,14 +58,15 @@ class MissionThemeController extends Controller
      */
     public function show(MissionTheme $missionTheme)
     {
-        return view('admin.missiontheme.show', compact('missionTheme'));
+        return view('admin.missiontheme.edit', compact('missionTheme'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(MissionTheme $missionTheme)
+    public function edit(MissionTheme $missionTheme, $missionThemeId)
     {
+        $missionTheme = $missionTheme->find($missionThemeId);
         return view('admin.missiontheme.edit', compact('missionTheme'));
         // Create view by name missiontheme/edit.blade.php
     }
@@ -60,22 +74,23 @@ class MissionThemeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMissionThemeRequest $request, MissionTheme $missionTheme): RedirectResponse
+    public function update(UpdateMissionThemeRequest $request, MissionTheme $missionTheme,$id): RedirectResponse
     {
 
         $request->validated();
-
-        $missionTheme->fill($request->post())->save();
-
-        return redirect()->route('missiontheme.index')->with('success','Company Has Been updated successfully');
+        $missionTheme->find($id)
+                     ->fill($request->post())
+                     ->save();
+        return redirect()->route('missiontheme.index')->with('success','field Has Been updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MissionTheme $missionTheme): RedirectResponse
+    public function destroy(MissionTheme $missionTheme,$id): RedirectResponse
     {
-        $missionTheme->trashed();
-        return redirect()->route('missiontheme.index')->with('success','Company has been deleted successfully');
+        $missionTheme->find($id)
+                     ->delete();
+        return back()->with('success','field has been deleted successfully');
     }
 }

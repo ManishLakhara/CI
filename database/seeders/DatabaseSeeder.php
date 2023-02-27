@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             SkillSeeder::class,
             MissionThemeSeeder::class,
             MissionSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

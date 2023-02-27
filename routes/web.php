@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers\admin\MissionThemeController;
-use App\Http\Controllers\admin\SkillController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\admin\MissionSkillController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\ForgetPasswordController;
 use App\Http\Controllers\Admin\AdminPasswordResetController;
@@ -82,7 +81,7 @@ Route::post('password-resetting',[PasswordResetController::class,'passwordResett
     // Route::post('missionskill/new',[SkillController::class,'new'])->name('missionskill.new');
     // Route::get('missionskill/delete/{slug}', [SkillController::class,'delete']);
 
-    Route::resource('missiontheme', MissionThemeController::class)->withTrashed()->middleware('auth');
+    Route::resource('missiontheme', MissionThemeController::class)->withTrashed();
     Route::resource('missionskill', MissionSkillController::class)->withTrashed();
-
+    Route::resource('user', UserController::class)->withTrashed();
 //end backend route

@@ -17,6 +17,13 @@ class User extends Authenticatable
         'email',
         'phone_number',
         'password',
+        'country_id',
+        'city_id',
+        'employee_id',
+        'departmemt',
+        'status',
+        'profile_text',
+        'avatar',
     ];
 
     public function country() {

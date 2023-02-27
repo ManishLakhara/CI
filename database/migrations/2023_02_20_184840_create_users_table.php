@@ -29,7 +29,7 @@ return new class extends Migration
             $table->text('profile_text')->nullable();
             $table->string('linked_in_url', 255)->nullable();;
             $table->string('title', 255)->nullable();;
-            $table->enum('status',[0,1]);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
