@@ -22,19 +22,20 @@ class UserController extends Controller
     {
         $data = User::where([
             [function ($query) use ($request) {
-                if(($s = $request->s)) {
+                if (($s = $request->s)) {
                     $query->orWhere('first_name', 'LIKE', '%' . $s . '%')
-                          ->orWhere('last_name', 'LIKE', '%' . $s . '%')
-                          ->get();
+                        ->orWhere('last_name', 'LIKE', '%' . $s . '%')
+                        ->get()
+                        ->orderBy('user_id','DESC');
                 }
             }]
         ])->paginate(10)
-          ->appends(['s'=>$request->s]);
-        
+            ->appends(['s' => $request->s]);
+
 
         //$data = User::orderBy('user_id','desc')->paginate(10);
-        return view('admin.user.index',compact('data')); // Create view by name missiontheme/index.blade.php
-    
+        return view('admin.user.index', compact('data')); // Create view by name missiontheme/index.blade.php
+
     }
 
     /**
@@ -42,9 +43,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        
-        $data['countries'] = Country::get(['name','country_id']);
-        return view('admin.user.create',$data);
+
+        $data['countries'] = Country::get(['name', 'country_id']);
+        return view('admin.user.create', $data);
     }
 
     /**
@@ -52,15 +53,14 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        dd($request);
         User::create($request->post());
-        return redirect()->route('user.index')->with('success','New User have been created');
+        return redirect()->route('user.index')->with('success', 'New User have been created');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user): Response
+    public function show(User $user) : Response
     {
         //
     }
@@ -68,7 +68,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user): Response
+    public function edit(User $user) : Response
     {
         //
     }
@@ -76,7 +76,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    public function update(UpdateUserRequest $request, User $user) : RedirectResponse
     {
         //
     }
@@ -84,7 +84,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user): RedirectResponse
+    public function destroy(User $user) : RedirectResponse
     {
         //
     }

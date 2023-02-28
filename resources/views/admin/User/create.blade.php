@@ -79,7 +79,8 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <label for="first_name">First Name</label>
-                                <input type="text" name="first_name" class="form-control" id="">
+                                <input type="text" name="first_name" class="form-control" value="{{old('first_name')}}">
+                                "id="">
                                 @error('first_name')
                                     <div class="text-danger">
                                         {{$message}}
@@ -88,7 +89,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="last_name">Last Name</label>
-                                <input type="text" name="last_name" class="form-control" id="">
+                                <input type="text" name="last_name" class="form-control" value="{{old('last_name')}}" id="">
                                 @error('last_name')
                                     <div class="text-danger">
                                         {{$message}}
@@ -97,10 +98,19 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col">
+                            <div class="col-md-6">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" class="form-control" id="">
+                                <input type="email" name="email" class="form-control" value="{{old('email')}}" id="">
                                 @error('email')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone_number">Phone Number</label>
+                                <input type="tel" name="phone_number" class="form-control" value="{{old('phone_number')}}" id="">
+                                @error('phone_number')
                                     <div class="text-danger">
                                         {{$message}}
                                     </div>
@@ -110,7 +120,7 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <label for="password">Password</label>
-                                <input type="password" name="password" class="form-control" id="">
+                                <input type="password" name="password" class="form-control" value="{{old('password')}}" id="">
                                 @error('password')
                                     <div class="text-danger">
                                         {{$message}}
@@ -119,7 +129,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="confirm_password">Confirm password</label>
-                                <input type="password" name="confirm_password" class="form-control" id="">
+                                <input type="password" name="confirm_password" class="form-control" value="{{old('confirm_password')}}" id="">
                                 @error('confirm_password')
                                     <div class="text-danger">
                                         {{$message}}
@@ -130,7 +140,7 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <label for="employee_id">Employee ID</label>
-                                <input type="text" name="employee_id" class="form-control" id="">
+                                <input type="text" name="employee_id" class="form-control" value="{{old('employee_id')}}" id="">
                                 @error('employee_id')
                                     <div class="text-danger">
                                         {{$message}}
@@ -141,11 +151,11 @@
                                 <label for="department">Department</label>
                                 <select id="inputState" name="department" class="form-control">
                                     <option selected>Choose...</option>
-                                    <option value="HR">HR</option>
-                                    <option value="Development">Development</option>
-                                    <option value="Sales">Sales</option>
-                                    <option value="Deployment">Deployment</option>
-                                    <option value="Manager">Manager</option>
+                                    <option value="HR" {{ old('department')=="HR"? 'selected' : '' }}>HR</option>
+                                    <option value="Development" {{ old('department')=="Development"? 'selected' : '' }}>Development</option>
+                                    <option value="Sales" {{ old('department')=="Sales"? 'selected' : '' }}>Sales</option>
+                                    <option value="Deployment" {{ old('department')=="Deployment"? 'selected' : '' }}>Deployment</option>
+                                    <option value="Manager" {{ old('department')=="Manager"? 'selected' : '' }}>Manager</option>
                                 </select>
                                 @error('department')
                                     <div class="text-danger">
@@ -157,7 +167,7 @@
                         <div class="form-row">
                             <div class="col">
                                 <label for="profile_text">About You</label>
-                                <textarea class="form-control" id="summary-ckeditor" name="summary-ckeditor"></textarea>
+                                <textarea class="form-control" id="profile_text" name="profile_text">{{old('profile_text')}}</textarea>
                             </div>
                             @error('profile_text')
                                     <div class="text-danger">
@@ -169,10 +179,10 @@
                         <div class="form-row justify-content-start">
                             <div class="col-md-5">
                                 <label for="country">Country</label>
-                                <select name="country" class="form-control" id="country-dropdown">
+                                <select name="country_id" class="form-control" id="country-dropdown">
                                     <option selected>Select Country</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->country_id }}">{{ $country->name }}</option>
+                                        <option value="{{ $country->country_id }}" {{old('country_id')==$country->country_id? 'selected':''}}>{{ $country->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('country')
@@ -183,7 +193,7 @@
                             </div>
                             <div class="col-md-5">
                                 <label for="city">city</label>
-                                <select class="form-control" name="city" id="city-dropdown">
+                                <select class="form-control" name="city_id" id="city-dropdown">
                                 </select>
                                 @error('city')
                                     <div class="text-danger">

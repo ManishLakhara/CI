@@ -20,7 +20,7 @@ class User extends Authenticatable
         'country_id',
         'city_id',
         'employee_id',
-        'departmemt',
+        'department',
         'status',
         'profile_text',
         'avatar',
