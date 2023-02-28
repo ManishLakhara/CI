@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\CountryCityController;
 use App\Http\Controllers\admin\MissionThemeController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordResetController;
@@ -84,4 +85,5 @@ Route::post('password-resetting',[PasswordResetController::class,'passwordResett
     Route::resource('missiontheme', MissionThemeController::class)->withTrashed();
     Route::resource('missionskill', MissionSkillController::class)->withTrashed();
     Route::resource('user', UserController::class)->withTrashed();
+   
 //end backend route

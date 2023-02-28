@@ -18,5 +18,11 @@
 </head>
 <body>
     @yield('content')
+    
 </body>
+<script>
+    setTimeout(() => {
+        $('.alert').alert('close');
+    }, 3000);
+</script>
 </html>

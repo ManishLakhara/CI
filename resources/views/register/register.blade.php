@@ -9,7 +9,7 @@
                     <div class="alert alert-danger">
                         {{ session('status') }}
                     </div>
-                @endif
+                    @endif
                     <form action="{{ route('post-register') }}" method='post'>
                         @csrf
                         <label for="inputFirstName" class="col-form-label"> First Name</label>
