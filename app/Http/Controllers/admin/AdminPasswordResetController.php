@@ -45,5 +45,30 @@ class AdminPasswordResetController extends Controller
 
     }
 
-    
+    public function adminPasswordResetting(Request $request){
+        $request->validate(
+
+            ['token' => 'required',
+             'password' => 'required | min:8',
+             'confirm-password' => 'required | min:8',
+             ]
+
+        );
+
+        if($request['password']!==$request['confirm-password']){
+           
+            return back()->with('error',"confirm password is different from password");
+
+        }
+
+        $reset = PasswordReset::where('token',$request['token'])->get();
+        $email = $reset[0]->email;
+
+        $user = Admin::where('email',$email)->get()[0];
+        $user->password = bcrypt($request['password']);
+        $user->save();
+
+        return redirect()->intended('/')->with('success','Hurry!! Password have been Successfully updated');
+    }
+
 }

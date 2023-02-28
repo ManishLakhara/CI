@@ -9,7 +9,8 @@ use App\Http\Requests\UpdateMissionThemeRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Request;
-
+use App\Models\Country;
+use App\Models\City;
 class MissionThemeController extends Controller
 {
     /**
@@ -27,7 +28,7 @@ class MissionThemeController extends Controller
             }]
         ])->paginate(10)
           ->appends(['s'=>$request->s]);
-        
+
 
         //$data = MissionTheme::orderBy('mission_theme_id','desc')->paginate(10);
         return view('admin.missiontheme.index',compact('data')); // Create view by name missiontheme/index.blade.php
@@ -47,7 +48,7 @@ class MissionThemeController extends Controller
     public function store(StoreMissionThemeRequest $request): RedirectResponse
     {
         $request->validated();
-        
+
         MissionTheme::create($request->post());
 
         return redirect()->route('missiontheme.index')->with('success','field has been created successfully.');
@@ -93,4 +94,7 @@ class MissionThemeController extends Controller
                      ->delete();
         return back()->with('success','field has been deleted successfully');
     }
+
+
+   
 }

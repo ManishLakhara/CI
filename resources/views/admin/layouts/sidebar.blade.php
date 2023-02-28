@@ -30,7 +30,7 @@
                         </span>
                     </div>
                 </a>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/mission">
                     <div class='container'>
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
                         <i class="fa-solid fa-bullseye text-white"></i>
@@ -84,7 +84,7 @@
                         </span>
                     </div>
                 </a>
-                
+
                 {{-- <div class="sb-sidenav-menu-heading">Interface</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>

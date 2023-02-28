@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\ForgetPasswordController;
 use App\Http\Controllers\Admin\AdminPasswordResetController;
+use App\Http\Controllers\admin\MissionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -64,12 +65,13 @@ Route::post('password-resetting',[PasswordResetController::class,'passwordResett
     Route::post('admin-check-email',[ForgetPasswordController::class,'admincheckEmail'])->name('admin.check.email');
     Route::get('resetpassword', [ForgetPasswordController::class, 'resetpassword'])->name('resetpassword');
     Route::post('resetpassword2', [AdminPasswordResetController::class,'resetPassword'])->name('resetpassword2');
-    
+
     Route::get('adminresetpage/{token}',function(){
         return view('admin.auth.resetpassword');
 
     });
 
+    Route::post('admin-password-resetting',[AdminPasswordResetController::class,'adminPasswordResetting'])->name('adminPasswordResetting');
 
     // Route::get('adminresetpage',function(){
 
@@ -85,5 +87,6 @@ Route::post('password-resetting',[PasswordResetController::class,'passwordResett
     Route::resource('missiontheme', MissionThemeController::class)->withTrashed();
     Route::resource('missionskill', MissionSkillController::class)->withTrashed();
     Route::resource('user', UserController::class)->withTrashed();
-   
+
+    Route::resource('mission', MissionController::class);
 //end backend route

@@ -11,6 +11,9 @@
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
+        <?php
+         $token = substr($_SERVER['REQUEST_URI'],-60);
+        ?>
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -21,18 +24,35 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">New Password</h3></div>
                                     <div class="card-body">
                                         <div class="small mb-3 text-muted text-center">Enter your new password.</div>
-                                        <form method="post">
+                                        <form method="post" action="{{route('adminPasswordResetting')}}">
                                             @csrf
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="inputPassword" type="password" name="password"  placeholder="Password" required/>
                                                 <label for="inputPassword">New Password</label>
-
+                                                @error('password')
+                                                <div class="text-danger">
+                                                    {{$message}}
+                                                </div>
+                                            @enderror
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" name="password"  placeholder="Password" required/>
+                                                <input class="form-control" id="inputPassword" type="password" name="confirm-password"  placeholder="Password" required/>
                                                 <label for="inputPassword">Confirm New Password</label>
-
+                                                @error('confirm-password')
+                                                <div class="text-danger">
+                                                    {{$message}}
+                                                </div>
+                                        @enderror
                                             </div>
+                                            @if(session('error'))
+                                            <div class="alert alert-danger m-3">
+                                                {{session('error')}}
+                                            </div>
+                                        @endif
+
+                                        <div class="col">
+                                            <input type="password" class="form-control" hidden name="token" id="" value={{$token}}>
+                                         </div>
 
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <a class="small" href="{{ route('adminlogin') }}">Return to login</a>

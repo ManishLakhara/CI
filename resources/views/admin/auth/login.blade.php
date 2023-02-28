@@ -1,6 +1,6 @@
 @extends('admin.layouts.login.app')
 @section('content')
-    
+
 
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
@@ -32,6 +32,10 @@
                                             <div class="d-flex align-items-center mt-4 mb-0">
                                                 <button type="submit" class="btn btn-success">Login</a>
                                             </div>
+                                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                                <a class="small" href="{{ route('forgetpassword') }}">Forgot Password?</a>
+                                                
+                                            </div>
                                         </form>
                                     </div>
 
@@ -44,3 +48,11 @@
         </div>
         @include('admin.layouts.login.scripts')
 @endsection
+
+
+
+
+
+
+
+

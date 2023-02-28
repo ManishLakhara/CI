@@ -15,6 +15,8 @@ class Mission extends Model
         'mission_type',
         'status',
         'theme_id',
+        'country_id',
+        'city_id',
     ];
 
     protected $primaryKey = 'mission_id';

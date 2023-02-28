@@ -44,7 +44,7 @@ class ForgetPasswordController extends Controller
                 $token = Str::random(60);
 
                 $user['token'] = $token;
-                
+
                 $user->save();
 
                 Mail::to($request->email)->send(new AdminResetPassword($user->name, $token));

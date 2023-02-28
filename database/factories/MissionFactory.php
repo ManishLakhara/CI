@@ -25,6 +25,8 @@ class MissionFactory extends Factory
             'description' => $this->faker->sentence(3),
             'mission_type' => $this->faker->randomElement(['GOAL','TIME']),
             'status'=> $this->faker->numberBetween(0,1),
+            'country_id'=> $this->faker->numberBetween(1,250),
+            
         ];
     }
 }
