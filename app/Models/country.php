@@ -11,7 +11,7 @@ class Country extends Model
     protected $primaryKey = 'country_id';
 
     protected $fillable = [
-        'name',
+        'name', 'ISO'
     ];
     
     public function city() {

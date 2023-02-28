@@ -10,6 +10,10 @@ class City extends Model
     use HasFactory;
     protected $primaryKey = 'city_id';
 
+    protected $fillable = [
+        'country_id', 'name'
+    ];
+    
     public function Country() {
         return $this->belongsTo(Country::class, 'country_id');
     }
