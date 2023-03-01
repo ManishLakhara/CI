@@ -12,35 +12,6 @@
                 {{session('success')}}
             </div>
         @endif
-        {{-- <span class="border-bottom">
-        <form action="{{route('missiontheme.create')}}" method="post">
-            @csrf
-            <div class='row m-3'>
-            <div>
-                <label for="title">Title</label><input type="text" class="form-control" name="title" id="">
-                @error('title')
-                    <div class="text-danger">
-                        {{$message}}
-                    </div>
-                @enderror
-            </div>
-            <div class="container-fluid py-3">
-               
-                <label class="float-start px-2" for="options-outlined">Status</label>
-                <input type="radio" class="btn-check " name="status" value='1' id="success-outlined">
-                <label class="btn btn-outline-success px-3"  for="success-outlined">Active</label>
-                <input type="radio" class="btn-check" value='0' name="status" id="danger-outlined">
-                <label class="btn btn-outline-danger px-3" for="danger-outlined">Inactive</label>
-
-                @error('status')
-                    <div class="text-danger">
-                        {{$message}}
-                    </div>
-                @enderror
-
-                <button type="submit" class="btn btn-primary float-end">Add</button>
-        </form>
-    </span> --}}
 
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active">Missions</li>
@@ -60,31 +31,31 @@
                 <form action="{{route('missiontheme.store') }}" method="post">
                     @csrf
                     <label for="title">Title</label>
-                    <input type="text" class='form-control' name='title'>
+                    <input type="text" class='form-control' name='title' value={{old('title')}}>
                     @error('title')
-                    <div class="text-danger">
+                        <div class="text-danger">
                         {{$message}}
-                    </div>
-                    @enderror
+                        </div>
+                        @enderror
                     <div class="py-4">
-                <label class="float-start px-2" for="options-outlined">Status</label>
-                <input type="radio" class="btn-check " name="status" value='1' id="success-outlined">
-                <label class="btn btn-outline-success px-3"  for="success-outlined">Active</label>
-                <input type="radio" class="btn-check" value='0' name="status" id="danger-outlined">
-                <label class="btn btn-outline-danger px-3" for="danger-outlined">Inactive</label>
+                    <label class="float-start px-2" for="options-outlined">Status</label>
+                    <input type="radio" class="btn-check " name="status" {{old('status')==1?'checked':''}} value='1' id="success-outlined">
+                    <label class="btn btn-outline-success px-3"  for="success-outlined">Active</label>
+                    <input type="radio" class="btn-check" value='0' {{old('status')==0?'checked':''}} name="status" id="danger-outlined">
+                    <label class="btn btn-outline-danger px-3" for="danger-outlined">Inactive</label>
 
-                @error('status')
-                    <div class="text-danger">
-                        {{$message}}
-                    </div>
-                @enderror
+                    @error('status')
+                        <div class="text-danger">
+                            {{$message}}
+                        </div>
+                        @enderror
                 </div>
 
-                <div>
+                <div>{{-- This is Create Button to Submit this form--}}
                     <button type='submit' class="btn btn-warning">
                         Create
                     </button>
-                </div>
+                    </div>
                 </form>
             </div> 
         </div>

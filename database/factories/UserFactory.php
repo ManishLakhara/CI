@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
@@ -19,20 +21,24 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $countries = Country::all()->pluck('country_id')->toArray();
+        $country = fake()->randomElement($countries);
+        $cities = City::where('country_id',$country)
+                        ->pluck('city_id')
+                        ->toArray();
         return [
-            // 'name' => fake()->name(),
-            // 'email' => fake()->unique()->safeEmail(),
-            // 'email_verified_at' => now(),
-            // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            // 'remember_token' => Str::random(10),
             'first_name' => fake()->firstname(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'employee_id' => fake()->unique()->randomNumber(9),
-            'department' => fake()->randomElement(['HR', 'SALES', 'DEVLOPER']),
+            'department' => fake()->randomElement(['HR', 'SALES', 'DEVELOPER', 'DEPLOYER', 'MANAGER']),
             'status' => fake()->numberBetween(0,1),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', //passsword
-            'phone_number' => '1234567891',
+            'password' => bcrypt(fake()->word()), //passsword
+            'phone_number' => fake()->randomNumber(9),
+            'profile_text' => fake()->sentence(3),
+            'title' => fake()->words(6,true),
+            'country_id' => $country,
+            'city_id' => fake()->randomElement($cities),
         ];
     }
 

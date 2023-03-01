@@ -25,8 +25,7 @@ class UserController extends Controller
                 if (($s = $request->s)) {
                     $query->orWhere('first_name', 'LIKE', '%' . $s . '%')
                         ->orWhere('last_name', 'LIKE', '%' . $s . '%')
-                        ->get()
-                        ->orderBy('user_id','DESC');
+                        ->get();
                 }
             }]
         ])->paginate(10)
@@ -53,6 +52,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        $password = $request['password'];
+        $request['password'] = bcrypt($password);
         User::create($request->post());
         return redirect()->route('user.index')->with('success', 'New User have been created');
     }
@@ -60,32 +61,52 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user) : Response
+    public function show(User $user,$id)
     {
-        //
+        $user->find('$id');
+        return view('admin.user.edit');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user) : Response
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+        if($user->city_id!=null){
+            $cities = $user->country->city;
+            $countries = Country::get(['name', 'country_id']);
+            return view('admin.user.edit',compact('user','countries','cities'));
+        }
+        else{
+            $countries = Country::get(['name', 'country_id']);
+            return view('admin.user.edit',compact('user','countries'));
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user) : RedirectResponse
+    public function update(UpdateUserRequest $request,$id) : RedirectResponse
     {
-        //
+        $user = new User;
+        $password = $request['password'];
+        $request['password'] = bcrypt($password);
+        $user->find($id)
+             ->fill($request->post())
+             ->save();
+        return redirect()->route('user.index')
+                         ->with('success','Field Have been successfully Submitted');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user) : RedirectResponse
+    public function destroy($id): RedirectResponse
     {
-        //
+        $user = new User;
+        $user->find($id)
+             ->delete();
+        return back()->with('success','Successfully Deleted');
     }
 }
