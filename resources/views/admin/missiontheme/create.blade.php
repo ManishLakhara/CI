@@ -12,7 +12,6 @@
                 {{session('success')}}
             </div>
         @endif
-
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active">Missions</li>
         </ol>
@@ -25,9 +24,9 @@
             <div class="card-header">
                 <i class="fa-solid fa-plus text-black"></i>
             </div>
-            
+
             <div class="card-body">
-            
+
                 <form action="{{route('missiontheme.store') }}" method="post">
                     @csrf
                     <label for="title">Title</label>
@@ -57,7 +56,7 @@
                     </button>
                     </div>
                 </form>
-            </div> 
+            </div>
         </div>
     </div>
 @endsection

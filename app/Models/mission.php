@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Mission extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $fillable = [
         'title',
         'short_description',
@@ -17,10 +21,16 @@ class Mission extends Model
         'theme_id',
         'country_id',
         'city_id',
+        'start_date',
+        'end_date',
+        'organization_name',
+        'organization_detail',
+        'availability',
     ];
 
     protected $primaryKey = 'mission_id';
-
+    protected $dates = ['deleted_at'];
+    
     public function missionTheme() {
         return $this->belongTo(MissionTheme::class, 'mission_id');
     }

@@ -79,52 +79,7 @@
                         </form>
                     </div>
                 </div>
-                {{-- <table id="datatablesSimple">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>action</th>
 
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>action</th>
-                        </tr>
-                    </tfoot>
-
-                    <tbody>
-                        @foreach ($data as $mt)
-                                <tr>
-                                    <td>{{$mt->title}}</td>
-                                    <td>
-                                       @if($mt->status)
-                                            <div class="h5">
-                                                <span class="badge text-white bg-success">Active</span>
-                                            </div>
-                                       @else
-                                            <div class="h5">
-                                                <span class="badge text-white bg-danger">Inactive</span>
-                                            </div>
-                                       @endif
-                                    </td>
-                                    <td>
-                        <button>
-
-                        </button>
-                        <button type="button">
-                            <a href="missiontheme/{{ $mt->mission_theme_id }}">
-                            <img src="Images/bin.png" alt="">
-                            </a>
-                        </button>
-                    </td>
-                                </tr>
-                        @endforeach
-                    </tbody>
-                </table> --}}
 
                 <table class="table table-bordered">
                     <thead>
@@ -144,8 +99,8 @@
                         <td>{{ $d->start_date }}</td>
                         <td>{{ $d->end_date }}</td>
                         <td>
-                            <form  method="Post">
-                                <a class="btn btn-white">
+                            <form action="{{ route('mission.destroy',$d->mission_id) }}" method="post">
+                                <a class="btn btn-white"href="{{route('mission.edit',$d->mission_id)}}">
                                 <img src="Images/edit.png" height="22px" width="22px" alt="edit">
                                 </a>
                                 @csrf
