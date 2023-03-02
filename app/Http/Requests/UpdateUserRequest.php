@@ -11,7 +11,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,19 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'bail|required|email',
+            'phone_number' => 'bail|required|numeric',
+            'password' => 'required',
+            'confirm_password' => 'bail|required|same:password',
+            'employee_id' => 'numeric',
+            'avatar' => 'required',
+            'department' => 'required',
+            'profile_text' => 'required',
+            'country_id' => 'required',
+            'city_id' => 'required',
+            'status'=>'required',
         ];
     }
 }

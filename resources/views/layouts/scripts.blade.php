@@ -10,31 +10,9 @@ CKEDITOR.replace( 'summary-ckeditor' );
 <script src="{{asset('admin/assets/demo/chart-bar-demo.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="{{asset('admin/js/datatables-simple-demo.js')}}"></script>
+
 <script>
     setTimeout(() => {
         $('.alert').alert('close');
     }, 3000);
-</script>
-<script>
-    $(document).ready(function() {
-        $('#country-dropdown').on('change', function() {
-            var country_id = this.value;
-            $("#city-dropdown").html('');
-            $.ajax({
-                url: "{{ url('api/fetch-city') }}",
-                type: "POST",
-                data: {
-                    country_id: country_id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
-                success: function(result) {
-                    $('#city-dropdown').html('<option value="">Select City</option>');
-                    $.each(result.cities, function(key, value) {
-                        $("#city-dropdown").append('<option value="' + value.city_id + '">' + value.name + '</option>');
-                    });
-                }
-            });
-        });
-    });
 </script>

@@ -11,7 +11,7 @@
                         <div class="card-header">Header</div>
                     </div>
                 </a> --}}
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('user.index')}}">
                     <div class='container'>
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
                         <i class="fa-solid fa-user text-white"></i>
