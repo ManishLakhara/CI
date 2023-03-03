@@ -1,11 +1,74 @@
+@media screen and (max-width: 580px) {
+    #userAvatar {display: none;}
+  }
+
 .policy{
+    display: none;
     position:absolute;
-    bottom:0;
-    left:0;
-    right:0;
     padding-bottom: 2%;
     padding-left: 10%;
 }
 .no-decor{
     text-decoration: none;
+}
+
+.black-box{
+    height: 500px;
+    border: 1px;
+    border-color: black;
+}
+.mission-title{
+    font-size: 1.50rem;
+}
+.mission-short-description{
+    color: #757575;
+    display: -webkit-box;
+    /* max-width: 250px; */
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.theme-color{
+    color: #414141;
+}
+
+.rating-color{
+    color:#fbc634 !important;
+}
+
+.small-ratings i{
+    color:#cecece;   
+}
+
+.apply-btn {
+    color: #F88634;
+    border-width: 2px;
+    border-color: #F88634;
+    border-radius: 23px;
+    max-width: 133px;
+} 
+.time-border {
+    position: absolute;
+    background-color: white;
+    top: 10%;
+    border-radius: 23px;
+    max-width: fit-content;
+    border-color: #E8E8E8;
+}
+
+.auto-width{
+    max-width: fit-content;
+}
+.relative-container{
+    position: relative;
+}
+
+.tag{
+    position: absolute;
+    background-color: white;
+    max-width: fit-content;
+    border-radius: 23px;
+    padding-right: 2%;
+    padding-left: 2%;
+    z-index: 1;
 }

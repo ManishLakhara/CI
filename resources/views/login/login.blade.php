@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.loginapp')
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center" style="width: 100%; height: 100%;">

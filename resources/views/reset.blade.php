@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.loginapp')
 <style>
     {{include 'CSS/style.css'}}
     {{include 'CSS/bootstrap.min.css'}}
