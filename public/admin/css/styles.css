@@ -76,6 +76,8 @@
   }
 }
 
+
+
 .user_image {
   object-fit: scale-down;
 }
@@ -11440,6 +11442,14 @@ body {
 }
 .sb-topnav.navbar-light #sidebarToggle {
   color: #212529;
+}
+
+
+@media screen and (max-width: 991px){
+  #filler-gap { display: none;}
+}
+@media screen and (min-width: 992px){
+  #sidebarToggle { display: none;}
 }
 
 .sb-sidenav {

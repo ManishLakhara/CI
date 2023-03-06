@@ -66,8 +66,8 @@
 
             <div class="card-body">
                 <div class="mt-1 mb-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="relative max-w-xs">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col relative max-w-xs">
                             <form action="{{ route('mission.index') }}" method="GET">
                                 @csrf
                                 <label for="search" class="sr-only">
@@ -78,14 +78,13 @@
                                     placeholder="Search..." />
                             </form>
                         </div>
-                        <div class="pb-3">
+                        <div class="col pb-3 p-2 text-md-right">
                             <a href="{{ route('mission.create') }}">
                                 <button type="button" class="btn text-right btn-outline-warning" style="border-radius: 23px">
                                     <i class="fa-solid fa-plus px-3"></i> Add</button>
                             </a>
                         </div>
                     </div>
-                    
                 </div>
 
 

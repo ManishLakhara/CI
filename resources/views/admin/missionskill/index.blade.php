@@ -26,19 +26,19 @@
             </div>
             <div class="card-body">
                 <div class="mt-1 mb-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="relative max-w-xs">
+                    <div class="row align-items-center">
+                        <div class="col relative max-w-xs">
                             <form action="{{ route('missionskill.index') }}" method="GET">
                                 @csrf
                                 <label for="search" class="sr-only">
                                     Search
                                 </label>
                                 <input type="text" name="s"
-                                    class="form-control block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                                    class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                                     placeholder="Search..." />
                             </form>
                         </div>
-                        <div class="pb-3">
+                        <div class="col pb-3 p-3 text-md-right">
                             <a href="{{ route('missionskill.create') }}">
                                 <button type="button" class="btn text-right btn-outline-warning" style="border-radius: 23px">
                                     <i class="fa-solid fa-plus px-3"></i> Add</button>
@@ -62,11 +62,11 @@
                                         <td>{{$mt->skill_name}}</td>
                                         <td>
                                            @if($mt->status)
-                                                <div class="h5 text-success">
+                                                <div class=" text-success">
                                                     Active
                                                 </div>
                                            @else
-                                                <div class="h5 text-danger">
+                                                <div class=" text-danger">
                                                     Inactive
                                                 </div>
                                            @endif

@@ -34,7 +34,6 @@ class UserController extends Controller
 
         //$data = User::orderBy('user_id','desc')->paginate(10);
         return view('admin.user.index', compact('data')); // Create view by name missiontheme/index.blade.php
-
     }
 
     /**
