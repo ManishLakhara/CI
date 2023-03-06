@@ -56,10 +56,9 @@
                 {{session('success')}}
             </div>
         @endif
-        <a href="{{ route('missiontheme.create') }}">
-        <button type="button" class="btn rounded text-right btn-outline-warning">
-            <i class="fa-solid fa-plus px-3"></i> Add</button>
-        </a>
+
+        
+        
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
@@ -67,66 +66,29 @@
             
             <div class="card-body">
                 <div class="mt-1 mb-4">
-                    <div class="relative max-w-xs">
-                        <form action="{{ route('missiontheme.index') }}" method="GET">
-                            @csrf
-                            <label for="search" class="sr-only">
-                                Search
-                            </label>
-                            <input type="text" name="s"
-                                class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                                placeholder="Search..." />
-                        </form>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="relative max-w-xs">
+                            <form action="{{ route('missiontheme.index') }}" method="GET">
+                                @csrf
+                                <label for="search" class="sr-only">
+                                    Search
+                                </label>
+                                <input type="text" name="s"
+                                    class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                                    placeholder="Search..." />
+                            </form>
+                        </div>
+                        <div class="pb-3">
+                            <a href="{{ route('missiontheme.create') }}">
+                                <button type="button" class="btn text-right btn-outline-warning" style="border-radius: 23px">
+                                    <i class="fa-solid fa-plus px-3"></i> Add</button>
+                                </a>
+                        </div>
                     </div>
+                    
                 </div>
-                {{-- <table id="datatablesSimple">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>action</th>
-                            
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>action</th>
-                        </tr>
-                    </tfoot>
 
-                    <tbody>
-                        @foreach ($data as $mt)
-                                <tr>
-                                    <td>{{$mt->title}}</td>
-                                    <td>
-                                       @if($mt->status) 
-                                            <div class="h5">
-                                                <span class="badge text-white bg-success">Active</span>
-                                            </div>
-                                       @else
-                                            <div class="h5">
-                                                <span class="badge text-white bg-danger">Inactive</span>
-                                            </div>
-                                       @endif
-                                    </td>
-                                    <td>
-                        <button>
-            
-                        </button>
-                        <button type="button">
-                            <a href="missiontheme/{{ $mt->mission_theme_id }}">
-                            <img src="Images/bin.png" alt="">
-                            </a>
-                        </button>
-                    </td>
-                                </tr>
-                        @endforeach
-                    </tbody>
-                </table> --}}
-
-                <table class="table table-bordered">
+                <table class="table table-responsive table-bordered">
                     <thead>
                         <tr>
                             <th>S.No</th>
@@ -168,8 +130,8 @@
                     </tbody>
 
                 </table>
-                <div>
-                    {!! $data->links('pagination::bootstrap-4') !!}
+                <div class="d-flex justify-content-end" >                  
+                        {!! $data->links('pagination::bootstrap-4') !!}
                 </div>
             </div>
         </div>

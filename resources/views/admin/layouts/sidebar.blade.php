@@ -42,7 +42,7 @@
                 <a class="nav-link" href="/missiontheme">
                     <div class='container-fluid'>
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
-                        <i class="fa-thin fa-rectangles-mixed"></i>
+                        <i class="fa-solid fa-folder text-white"></i>
                         <span class="text-white text-active">
                             Mission Theme
                         </span>
@@ -69,7 +69,7 @@
                 <a class="nav-link" href="#">
                     <div class='container'>
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
-                        <i class="fa-solid fa-book-blank text-white"></i>
+                        <i class="fa-brands fa-canadian-maple-leaf text-white"></i>
                         <span class="text-white ">
                             Story
                         </span>

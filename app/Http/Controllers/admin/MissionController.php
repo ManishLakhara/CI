@@ -101,7 +101,7 @@ class MissionController extends Controller
     {
         $mission=new Mission;
         $mission->find($id)
-                     ->delete();
+                ->delete();
         return back()->with('success','field has been deleted successfully');
     }
 }

@@ -11432,7 +11432,7 @@ body {
   z-index: 1039;
 }
 .sb-topnav .navbar-brand {
-  width: 225px;
+  width: 250px;
   margin: 0;
 }
 .sb-topnav.navbar-dark #sidebarToggle {
@@ -11443,10 +11443,12 @@ body {
 }
 
 .sb-sidenav {
+  font-family: 'NotaSans';
   display: flex;
   flex-direction: column;
   height: 100%;
   flex-wrap: nowrap;
+  z-index: inherit;
 }
 .sb-sidenav .sb-sidenav-menu {
   flex-grow: 1;

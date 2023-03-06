@@ -72,3 +72,38 @@
     padding-left: 2%;
     z-index: 1;
 }
+
+.light-theme-color {
+    color: #757575;
+    font-weight: lighter;
+}
+
+
+.view-active {
+    background-color: #414141;
+
+}
+
+#grid-view:active{
+    background-color: #414141;
+}
+
+@font-face {
+    font-family: NatoSans;
+    src: url('../fonts/JotRegular.ttf'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+.goal-range{
+  background: #F88634;
+  border-radius: 8px;
+  height: 7px;
+  width: 200px;
+  outline: none;;
+  --webkit-appearance: none
+}
+
+small{
+    size: 5px;
+}

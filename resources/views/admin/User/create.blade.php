@@ -21,57 +21,57 @@
                         @csrf
                         <div class="form-row py-4"> 
                             <div class="form-check">
-                                <input class="form-check-input" value="Images/volunteer1.png" type="radio" name="avatar" id="avatar1" checked>
+                                <input class="form-check-input" value="Images/volunteer1.png" type="radio" name="avatar" id="avatar1" @if(old('avatar')=="Images/volunteer1.png") checked @endif >
                                 <label class="form-check-label" for="avatar1">
-                                    <img class="rounded-circle" height="100px" width="100px" src="../Images/volunteer1.png" alt="Alt Images">
+                                    <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer1.png")}} alt="Alt Images">
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" value="Images/volunteer2.png" type="radio" name="avatar" id="avatar1">
-                                <label class="form-check-label" for="avatar1">
-                                    <img class="rounded-circle" height="100px" width="100px" src="../Images/volunteer2.png" alt="Alt Images">
+                                <input class="form-check-input" value="Images/volunteer2.png" type="radio" name="avatar" id="avatar2" @if(old('avatar')=="Images/volunteer2.png") checked @endif>
+                                <label class="form-check-label" for="avatar2">
+                                    <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer2.png")}} alt="Alt Images">
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" value="Images/volunteer3.png" type="radio" name="avatar" id="avatar1">
-                                <label class="form-check-label" for="avatar1">
-                                    <img class="rounded-circle" height="100px" width="100px" src="../Images/volunteer3.png" alt="Alt Images">
+                                <input class="form-check-input" value="Images/volunteer3.png" type="radio" name="avatar" id="avatar3" @if(old('avatar')=="Images/volunteer3.png") checked @endif>
+                                <label class="form-check-label" for="avatar3">
+                                    <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer3.png")}} alt="Alt Images">
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" value="Images/volunteer4.png" type="radio" name="avatar" id="avatar1">
-                                <label class="form-check-label" for="avatar1">
-                                    <img class="rounded-circle" height="100px" width="100px" src="../Images/volunteer4.png" alt="Alt Images">
+                                <input class="form-check-input" value="Images/volunteer4.png" type="radio" name="avatar" id="avatar4" @if(old('avatar')=="Images/volunteer4.png") checked @endif>
+                                <label class="form-check-label" for="avatar4">
+                                    <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer4.png")}} alt="Alt Images">
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" value="Images/volunteer5.png" type="radio" name="avatar" id="avatar1">
-                                <label class="form-check-label" for="avatar1">
-                                    <img class="rounded-circle" height="100px" width="100px" src="../Images/volunteer5.png" alt="Alt Images">
+                                <input class="form-check-input" value="Images/volunteer5.png" type="radio" name="avatar" id="avatar5" @if(old('avatar')=="Images/volunteer5.png") checked @endif>
+                                <label class="form-check-label" for="avatar5">
+                                    <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer5.png")}} alt="Alt Images">
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" value="Images/volunteer6.png" type="radio" name="avatar" id="avatar1">
-                                <label class="form-check-label" for="avatar1">
-                                    <img class="rounded-circle" height="100px" width="100px" src="../Images/volunteer6.png" alt="Alt Images">
+                                <input class="form-check-input" value="Images/volunteer6.png" type="radio" name="avatar" id="avatar6" @if(old('avatar')=="Images/volunteer6.png") checked @endif>
+                                <label class="form-check-label" for="avatar6">
+                                    <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer6.png")}} alt="Alt Images">
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" value="Images/volunteer7.png" type="radio" name="avatar" id="avatar1">
-                                <label class="form-check-label" for="avatar1">
-                                    <img class="rounded-circle" height="100px" width="100px" src="../Images/volunteer7.png" alt="Alt Images">
+                                <input class="form-check-input" value="Images/volunteer7.png" type="radio" name="avatar" id="avatar7" @if(old('avatar')=="Images/volunteer7.png") checked @endif>
+                                <label class="form-check-label" for="avatar7">
+                                    <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer7.png")}} alt="Alt Images">
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" value="Images/volunteer8.png" type="radio" name="avatar" id="avatar1">
-                                <label class="form-check-label" for="avatar1">
-                                    <img class="rounded-circle" height="100px" width="100px" src="../Images/volunteer8.png" alt="Alt Images">
+                                <input class="form-check-input" value="Images/volunteer8.png" type="radio" name="avatar" id="avatar8" @if(old('avatar')=="Images/volunteer8.png") checked @endif>
+                                <label class="form-check-label" for="avatar8">
+                                    <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer8.png")}} alt="Alt Images">
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" value="Images/volunteer9.png" type="radio" name="avatar" id="avatar1">
-                                <label class="form-check-label" for="avatar1">
-                                    <img class="rounded-circle" height="100px" width="100px" src="../Images/volunteer9.png" alt="Alt Images">
+                                <input class="form-check-input" value="Images/volunteer9.png" type="radio" name="avatar" id="avatar9" @if(old('avatar')=="Images/volunteer9.png") checked @endif>
+                                <label class="form-check-label" for="avatar9">
+                                    <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer9.png")}} alt="Alt Images">
                                 </label>
                             </div>
                         </div>
