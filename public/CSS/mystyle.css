@@ -1,31 +1,151 @@
-  *::after,
-  *::before {
-      box-sizing: border-box;
-  }
+*::after,
+*::before {
+    box-sizing: border-box;
+}
 
 @media screen and (max-width: 580px) {
-    #userAvatar {display: none;}
-  }
+    #userAvatar {
+        display: none;
+    }
+}
 
-.policy{
+.from_untill {
+    border-radius: 23px;
+    max-width: fit-content;
+    padding-bottom: 0.5rem;
+    background-color: white;
+}
+
+.like_btn{
+    background-color: black;
+    -webkit-background-composite: none;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    height: 3rem;
+    width: 3rem;
+    opacity: 0.7;
+}
+
+.add_btn{
+    background-color: black;
+    -webkit-background-composite: none;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    height: 3rem;
+    width: 3rem;
+    opacity: 0.7;
+}
+
+.mission_location{
+    background-color: black;
+    -webkit-background-composite: none;
+    color: white;
+    border: none;
+    border-radius: 23px;
+    opacity: 0.7;
+}
+
+.parent_mission_location{
+    top: -14rem;
+    right: 0.8rem;
+}
+.parent_add_btn {
+    top: -4rem;
+    right: 0.8rem;
+}
+
+.parent_like_btn {
+    top: -8rem;
+    right: 0.8rem;
+}
+.parent_from-untill {
+    top: -1.8rem;
+    left: 3.3rem;
+}
+
+
+
+.parent_mission_theme{
+    top: -0.8rem;
+    left: 8.5rem;
+}
+@media screen and (max-width: 1399px) {
+    .parent_from-untill {
+        left: 1.7rem;
+    }
+    .parent_mission_theme {
+        left: 6.6rem
+    }
+}
+@media screen and (max-width: 1199px) {
+    .parent_from-untill {
+        left: 4.6rem;
+    }
+    .parent_mission_theme {
+        left: 10.5rem
+    }
+}
+@media screen and (max-width: 991px) {
+    .parent_from-untill {
+        left: 1.3rem;
+    }
+    .parent_mission_theme {
+        left: 6.5rem
+    }
+}
+@media screen and (max-width: 767px) {
+    .parent_from-untill {
+        left: 6rem;
+    }
+    .parent_mission_theme {
+        left: 12rem;
+    }
+}
+@media screen and (max-width: 499px) {
+    .parent_from-untill {
+        left: 2rem;
+    }
+    .parent_mission_theme {
+        left: 11rem;
+    }
+}
+@media screen and (max-width: 472px) {
+    .parent_from-untill {
+        left: 3.3rem;
+    }
+    .parent_mission_theme {
+        left: 9rem;
+    }
+}
+@media screen and (max-width: 400px) {
+    .parent_from-untill {
+        left: 2.0rem;
+    }
+    .parent_mission_theme {
+        left: 7rem;
+    }
+}
+.policy {
     display: none;
-    position:absolute;
+    position: absolute;
     padding-bottom: 2%;
     padding-left: 10%;
 }
-.no-decor{
+.no-decor {
     text-decoration: none;
 }
 
-.black-box{
+.black-box {
     height: 500px;
     border: 1px;
     border-color: black;
 }
-.mission-title{
-    font-size: 1.50rem;
+.mission-title {
+    font-size: 1.5rem;
 }
-.mission-short-description{
+.mission-short-description {
     color: #757575;
     display: -webkit-box;
     /* max-width: 250px; */
@@ -33,42 +153,42 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.theme-color{
+.theme-color {
     color: #414141;
 }
 
-.rating-color{
-    color:#fbc634 !important;
+.rating-color {
+    color: #fbc634 !important;
 }
 
-.small-ratings i{
-    color:#cecece;   
+.small-ratings i {
+    color: #cecece;
 }
 
 .apply-btn {
-    color: #F88634;
+    color: #f88634;
     border-width: 2px;
-    border-color: #F88634;
+    border-color: #f88634;
     border-radius: 23px;
     max-width: 133px;
-} 
+}
 .time-border {
     position: absolute;
     background-color: white;
     top: 10%;
     border-radius: 23px;
     max-width: fit-content;
-    border-color: #E8E8E8;
+    border-color: #e8e8e8;
 }
 
-.auto-width{
+.auto-width {
     max-width: fit-content;
 }
-.relative-container{
+.relative-container {
     position: relative;
 }
 
-.tag{
+.tag {
     position: absolute;
     background-color: white;
     max-width: fit-content;
@@ -83,33 +203,34 @@
     font-weight: lighter;
 }
 
-
 .view-active {
     background-color: #414141;
-
 }
 
-#grid-view:active{
+#grid-view:active {
     background-color: #414141;
 }
 
 @font-face {
     font-family: NatoSans;
-    src: url('../fonts/JotRegular.ttf'); 
+    src: url("../fonts/JotRegular.ttf");
     font-weight: normal;
     font-style: normal;
 }
 
-.goal-range{
-  background: #F88634;
-  border-radius: 8px;
-  height: 7px;
-  width: 200px;
-  outline: none;;
-  --webkit-appearance: none
+.goal-range {
+    background: #f88634;
+    border-radius: 8px;
+    height: 7px;
+    width: 200px;
+    outline: none;
+    --webkit-appearance: none;
 }
 
-small{
+small {
     size: 5px;
 }
 
+.background-1 {
+    background-image: url();
+}

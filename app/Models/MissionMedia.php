@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class MissionMedia extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'mission_id',
+        'mission_name',
+        'mission_type',
+        'mission_path',
+        'default',
+    ];
     protected $primaryKey = 'mission_media_id';
 
     public function mission() {

@@ -1,4 +1,5 @@
 <header>
+  <div class="container-fluid border-bottom">
     <div class="container">
       <div class="d-flex justify-content-between border-bottom py-1 align-items-center">
         <div class="col-md-4 col-sm-6">
@@ -30,5 +31,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>   
+  </div>
 </header>

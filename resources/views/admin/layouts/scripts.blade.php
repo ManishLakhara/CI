@@ -11,11 +11,6 @@ CKEDITOR.replace( 'summary-ckeditor' );
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="{{asset('admin/js/datatables-simple-demo.js')}}"></script>
 <script>
-    setTimeout(() => {
-        $('.alert').alert('close');
-    }, 3000);
-</script>
-<script>
     $(document).ready(function() {
         $('#country-dropdown').on('change', function() {
             var country_id = this.value;
@@ -37,4 +32,7 @@ CKEDITOR.replace( 'summary-ckeditor' );
             });
         });
     });
+</script>
+<script>
+    $(".alert").slideUp(2000);
 </script>

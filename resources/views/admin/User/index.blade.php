@@ -8,11 +8,10 @@
 
     <div class="container-fluid px-4">
         <h1 class="mt-4">User</h1>
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{session('success')}}
-            </div>
-        @endif
+        
+        <!-- Success Alert -->
+        @include('admin.components.successAlert')
+
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active">User</li>
         </ol>
@@ -24,29 +23,7 @@
             </div>
             
             <div class="card-body">
-                <div class="mt-1 mb-4"> 
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col relative max-w-xs">
-                            <form action="{{ route('user.index') }}" method="GET">  
-                                @csrf
-                                <label for="search" class="sr-only">
-                                    Search
-                                </label>
-                                <input type="text" name="s"
-                                    class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                                    placeholder="Search..." />
-                            </form>
-                        </div>
-                        <div class="col pb-3 text-md-right p-2">
-                            <a href="{{ route('user.create') }}">
-                                <button type="button" class="btn text-right btn-outline-warning" style="border-radius: 23px">
-                                    <i class="fa-solid fa-plus px-3"></i> Add</button>
-                                </a>
-                        </div>
-                    </div>   <!-- This is search bar -->
-                    
-                </div>
-             
+                @include('admin.components.search_add',['form_action'=>'user.index','add'=>'user.create'])
                 <table class="table table-responsive table-bordered">
                     <thead>
                         <tr>
@@ -85,9 +62,11 @@
                                 </a>
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-white">
+                                <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-white">
                                     <img src="Images/bin.png" alt="delete">
                                 </button>
+                                <!-- Modal -->
+                                @include('admin.components.deleteModal')
                             </form>
                         </td>
                     </tr>
@@ -95,9 +74,7 @@
                     </tbody>
 
                 </table>
-                <div class="d-flex justify-content-end">
-                    {!! $data->links('pagination::bootstrap-4') !!}
-                </div>
+                @include('admin.layouts.pagination')
             </div>
         </div>
     </div>

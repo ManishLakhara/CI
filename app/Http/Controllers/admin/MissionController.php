@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Skill;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -44,6 +45,7 @@ class MissionController extends Controller
     public function create()
     {
 
+        // $data['skills'] = Skill::get(['skill_name','skill_id']);
         $data['countries'] = Country::get(['name','country_id']);
         $data['mission_theme'] = MissionTheme::get(['title','mission_theme_id']);
         return view('admin.mission.create',$data);

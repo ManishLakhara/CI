@@ -3,7 +3,7 @@
         <!-- Navbar Brand-->
         {{-- <a class="navbar-brand ps-3" href="index.html">CI platform</a> --}}
         <!-- Sidebar Toggle-->
-        <div style="width: 225px; background-color:#F88634; height: inherit" style="transition: 0.6ms" id="filler-gap"></div>
+        <div style="width: 225px; background-color:#F88634; height: inherit;" id="filler-gap"></div>
         <div>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 px-3" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         </div>

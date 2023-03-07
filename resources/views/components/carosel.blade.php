@@ -6,7 +6,7 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-            <div class="overlay-image" style="background-image: url(Images/Grow-Trees-On-the-path-to-environment-sustainability-login.png);"></div>
+            <div class="overlay-image background-1" ></div>
             <div class="container">
                 <h1> Sed ut perspiciatis unde omnis iste natus voluptatem.</h1>
                 <p>
