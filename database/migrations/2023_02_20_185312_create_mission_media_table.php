@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('media_name', 64);
             $table->string('media_type', 4);
             $table->string('media_path', 255)->nullable();
-            $table->enum('default',[0,1]);
+            $table->tinyInteger('default');
             $table->timestamps();
             $table->softDeletes();
         });

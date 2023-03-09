@@ -10,7 +10,7 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4">Add Mission</h1>
 
-            <form method="post" action="{{route('mission.store')}}" class="row g-3">
+            <form method="post" action="{{route('mission.store')}}" class="row g-3" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-6">
                     <label for="missionTitle" class="form-label">Mission Title</label>
@@ -58,7 +58,7 @@
                     <label for="city">City</label>
                     <select class="form-control" name="city_id" id="city-dropdown">
                         <option value="">Select City</option>
-                       
+
                     </select>
                     @error('city_id')
                         <div class="text-danger">
@@ -127,15 +127,20 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label" for="customFile">Mission Images</label>
-                        <input type="file" class="form-control" id="customFile"  name='mission_images'/>
+                        <input type="file" class="form-control" id="customFile"  name="media_name[]" multiple/>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label" for="customFile">Mission Documents</label>
-                    <input type="file" class="form-control" id="customFile"  name='mission_documents'/>
+                    <input type="file" class="form-control" id="customFile"  name="document_name[]" multiple/>
+                    @error('document_name.*')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                                @enderror
                 </div>
                 <div class="col-md-6">
                     <label for="inputAvailable" class="form-label">Mission Availability</label>
-                    <select id="inputAvailable" class="form-select" name='mission_availability'>
+                    <select id="inputAvailable" class="form-select" name='availability'>
                         <option>Daily</option>
                         <option>Weekly</option>
                         <option>Week-end</option>
@@ -144,7 +149,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="missionVideo" class="form-label">Mission Video</label>
-                    <input type="text" class="form-control" id="orgVideo" name='mission_video'>
+                    <input type="text" class="form-control" id="orgVideo" name="media_name" multiple>
                 </div>
                 <div class="col-md-6">
                     <label class="float-start px-2" for="options-outlined">Status</label>

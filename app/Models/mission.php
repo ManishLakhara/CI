@@ -30,7 +30,7 @@ class Mission extends Model
 
     protected $primaryKey = 'mission_id';
     protected $dates = ['deleted_at'];
-    
+
     public function missionTheme() {
         return $this->belongTo(MissionTheme::class, 'mission_id');
     }

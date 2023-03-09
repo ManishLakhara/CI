@@ -13,4 +13,12 @@ class MissionDocument extends Model
     public function mission() {
         return $this->belongTo(Mission::class, 'mission_id');
     }
+
+    protected $fillable = [
+        'document_path',
+        'document_name',
+        'document_type',
+         'mission_id',
+
+    ];
 }

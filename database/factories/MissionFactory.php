@@ -24,7 +24,7 @@ class MissionFactory extends Factory
         $cities = City::where('country_id',$country)
                         ->pluck('city_id')
                         ->toArray();
-                        
+
         return [
             'theme_id' => $this->faker->numberBetween(1,200),
             'title' => $this->faker->words(4,true),

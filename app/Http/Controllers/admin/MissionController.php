@@ -11,9 +11,11 @@ use App\Models\Mission;
 use App\Models\MissionTheme;
 use App\Models\Country;
 use App\Models\City;
-
+use App\Models\MissionDocument;
+use App\Models\MissionMedia;
 use App\Http\Requests\StoreMissionRequest;
 use App\Http\Requests\UpdateMissionRequest;
+use Illuminate\Support\Facades\Storage;
 
 class MissionController extends Controller
 {
@@ -56,8 +58,89 @@ class MissionController extends Controller
      */
     public function store(StoreMissionRequest $request)
     {
+
         //dd($request);
-        Mission::create($request->post());
+        $mission=Mission::create($request->post());
+        // $document_path = $request->file('document_name')->store('mission_documents');
+
+        // // Get the document type from the file extension
+        // $document_type = $request->file('document_name')->getClientOriginalExtension();
+
+        // // Create a new mission document record in the database
+        // $mission_document = new MissionDocument([
+        //     'document_name' => $request->file('document_name')->getClientOriginalName(),
+        //     'document_type' => $document_type,
+        //     'document_path' => $document_path
+        // ]);
+        // // $mission_document->save();
+        // $mission->missionDocument()->save($mission_document);
+
+
+
+        if ($request->hasfile('document_name')) {
+            foreach ($request->file('document_name') as $file) {
+                $fileName = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $uniqueName = uniqid() . '_' . $fileName;
+                $file->storeAs('missions_documents', $uniqueName, 'public');
+                MissionDocument::create([
+                    'mission_id' => $mission->mission_id,
+                    'document_name' => $uniqueName,
+                    'document_type' => $extension,
+                    'document_path' => 'storage/missions_documents/' . $uniqueName,
+                ]);
+            }
+        }
+
+
+
+
+
+
+           $mission = Mission::create($request->post());
+
+            if ($request->hasFile('media_name')) {
+                foreach ($request->file('media_name') as $key => $file) {
+                    $fileName = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension();
+                    $uniqueName = uniqid() . '_' . $fileName;
+                    $file->storeAs('mission_media', $uniqueName, 'public');
+                    $mediaType = $extension;
+                    if (strpos($file->getMimeType(), 'video') !== false) {
+                        if (!preg_match('/(?:youtube\.com\/|vimeo\.com\/)(?:watch\?v=|embed\/|)([^\s]+)/', $request->media_name[$key])) {
+                            return back()->withInput()->withErrors(['media_name.' . $key => 'The video URL is invalid']);
+                        }
+                        $mediaType = 'video';
+                    } else {
+                        $mediaType = $extension;
+                    }
+                    $mediaPath = 'storage/mission_media/' . $uniqueName;
+                    $default = $key == 0 ? 1 : 0;
+                    MissionMedia::create([
+                        'mission_id' => $mission->mission_id,
+                        'media_name' => $uniqueName,
+                        'media_type' => $mediaType,
+                        'media_path' => $mediaPath,
+                        'default' => $default,
+                    ]);
+                }
+            }
+
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return redirect()->route('mission.index')->with('success','New Mission have been created');
     }
 
@@ -79,7 +162,7 @@ class MissionController extends Controller
         $mission = $mission->find($missionId);
         $countries = Country::get(['name','country_id']);
         $mission_theme = MissionTheme::get(['title','mission_theme_id']);
-        $cities=$mission->city_id;
+
         return view('admin.mission.edit', compact('mission', 'countries','mission_theme'));
         // Create view by name mission/edit.blade.php
     }
