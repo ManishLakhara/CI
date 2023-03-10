@@ -75,6 +75,11 @@
                                     <img class="rounded-circle" height="100px" width="100px" src={{asset("Images/volunteer9.png")}} alt="Alt Images">
                                 </label>
                             </div>
+                            @error('avatar')
+                                <div class="text-danger">
+                                    {{$message}}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="form-row">

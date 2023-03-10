@@ -76,6 +76,10 @@
   }
 }
 
+.thead{
+  background-color: #F8F9FC;
+}
+
 .user_image {
   object-fit: scale-down;
 }

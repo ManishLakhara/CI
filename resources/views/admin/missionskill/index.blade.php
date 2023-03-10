@@ -17,12 +17,12 @@
             'add' => 'missionskill.create',
         ])
         <table class="table table-responsive border-start border-end">
-            <thead>
+            <thead style="background-color: #F8F9FC">
                 <tr>
-                    <th width="300px">Sr.no</th>
-                    <th width="300px">Skill Name</th>
-                    <th width="300px">Status</th>
-                    <th width="300px">Action</th>
+                    <th width="600px">Sr.no</th>
+                    <th width="600px">Skill Name</th>
+                    <th width="600px">Status</th>
+                    <th width="600px">Action</th>
                 </tr>
             </thead>
             <tbody>

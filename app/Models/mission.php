@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -35,8 +36,8 @@ class Mission extends Model
     public function country(): HasOne {
         return $this->hasOne(Country::class, 'country_id','country_id');
     }
-    public function missionTheme() {
-        return $this->belongTo(MissionTheme::class, 'mission_id');
+    public function missionTheme(): HasOne{
+        return $this->hasOne(MissionTheme::class, 'mission_theme_id', 'theme_id');
     }
 
     public function missionApplication() {

@@ -15,12 +15,12 @@
             'add' => 'missiontheme.create',
         ])
         <table class="table table-responsive border-start border-end">
-            <thead>
+            <thead style="background-color: #F8F9FC">
                 <tr>
-                    <th class="w-25">S.No</th>
-                    <th class="w-25">Title</th>
-                    <th class="w-25">Status</th>
-                    <th class="w-25">Action</th>
+                    <th width="25%">S.No</th>
+                    <th width="25%">Title</th>
+                    <th width="25%">Status</th>
+                    <th width="25%">Action</th>
                 </tr>
             </thead>
             <tbody>

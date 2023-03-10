@@ -16,15 +16,15 @@
             'add' => 'user.create',
         ])
         <table class="table table-responsive border-start border-end">
-            <thead>
+            <thead style="background-color: #F8F9FC">
                 <tr>
-                    <th width="200px">First Name</th>
-                    <th width="200px">Last Name</th>
-                    <th width="200px">Email</th>
-                    <th width="200px">Employee Id</th>
-                    <th width="200px">Department</th>
-                    <th width="200px">Status</th>
-                    <th width="200px">Action</th>
+                    <th width="600px">First Name</th>
+                    <th width="600px">Last Name</th>
+                    <th width="600px">Email</th>
+                    <th width="600px">Employee Id</th>
+                    <th width="600px">Department</th>
+                    <th width="600px">Status</th>
+                    <th width="600px">Action</th>
                 </tr>
             </thead>
             <tbody>

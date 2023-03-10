@@ -25,7 +25,7 @@ class UpdateUserRequest extends FormRequest
             'first_name' => 'required|max:16',
             'last_name' => 'required|max:16',
             'email' => 'bail|required|email|max:128',
-            'phone_number' => 'bail|required|numeric|size:10',
+            'phone_number' => 'bail|required|numeric',
             'employee_id' => 'numeric',
             'avatar' => 'required',
             'department' => 'required',

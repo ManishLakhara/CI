@@ -84,73 +84,7 @@
     top: -8rem;
     right: 0.8rem;
 }
-.parent_from-untill {
-    top: -1.8rem;
-    left: 3.3rem;
-}
 
-
-
-.parent_mission_theme{
-    top: -0.8rem;
-    left: 8.5rem;
-}
-@media screen and (max-width: 1399px) {
-    .parent_from-untill {
-        left: 1.7rem;
-    }
-    .parent_mission_theme {
-        left: 6.6rem
-    }
-}
-@media screen and (max-width: 1199px) {
-    .parent_from-untill {
-        left: 4.6rem;
-    }
-    .parent_mission_theme {
-        left: 10.5rem
-    }
-}
-@media screen and (max-width: 991px) {
-    .parent_from-untill {
-        left: 1.3rem;
-    }
-    .parent_mission_theme {
-        left: 6.5rem
-    }
-}
-@media screen and (max-width: 767px) {
-    .parent_from-untill {
-        left: 6rem;
-    }
-    .parent_mission_theme {
-        left: 12rem;
-    }
-}
-@media screen and (max-width: 499px) {
-    .parent_from-untill {
-        left: 2rem;
-    }
-    .parent_mission_theme {
-        left: 11rem;
-    }
-}
-@media screen and (max-width: 472px) {
-    .parent_from-untill {
-        left: 3.3rem;
-    }
-    .parent_mission_theme {
-        left: 9rem;
-    }
-}
-@media screen and (max-width: 400px) {
-    .parent_from-untill {
-        left: 2.0rem;
-    }
-    .parent_mission_theme {
-        left: 7rem;
-    }
-}
 .policy {
     display: none;
     position: absolute;

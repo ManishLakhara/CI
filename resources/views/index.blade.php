@@ -1,62 +1,83 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container-fluid border-bottom">
-        <div class="container ">
-            <div action="" class="row">
-                <div class="col input-group">
-                    <div class="div d-flex align-items-center ">
-                        <div class='d-flex'>
-                            <button id="search-button" type="button" class="btn btn-white">
-                                <i class="fa fa-search text-muted" aria-hidden="true"></i>
-                            </button>
-                            <input id="search-input" type="search" id="div1" class="div-control w-100 border-0 py-4"
-                                placeholder="Search Mission..." />
+<div class="container-fluid border-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d-flex rounded">
+                <form action={{route('landing.index')}} style="margin: 0%; padding:0%;">
+                    <div class="d-flex">
+                        <button type="submit" class="btn">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        <div class="form-outline">
+                          <input type="search" name="s" placeholder="Search Missions... " value='{{old("s")}}' class="form-control border-0" />
                         </div>
                     </div>
-                </div>
-                <div class="col d-flex justify-content-around">
-                    <div class="border-start input-group px-2">
-                        <select class="custom-select w-100 border-0 text-muted" name="country_id" id="country-dropdown">
-                            <option selected>Country</option>
-                            @foreach ($countries as $country)
-                                <option value={{ $country->country_id }}>{{ $country->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="border-start input-group px-2">
-                        <select class="custom-select w-100 border-0 text-muted" name="city_id" id="city-dropdown">
-                            <option selected> city </option>
-                        </select>
-                    </div>
-                    <div class="border-start input-group px-2">
-                        <select class="custom-select  w-100 border-0 text-muted" name="mission_theme_id">
-                            <option selected>Theme</option>
-                            @foreach ($themes as $theme)
-                                <option value={{ $theme->mission_theme_id }}>{{ $theme->title }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="border-start border-end input-group px-2">
-                        <select class="custom-select  w-100 border-0 text-muted">
-                            <option selected>Skill</option>
-                            @foreach ($skills as $skill)
-                                <option value={{ $skill->skill_id }}>{{ $skill->skill_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
+                </form>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
+            <div class="col-md-6 d-flex justify-content-around">
+                <div class="border-start input-group h-100 px-2">
+                    <select class="custom-select w-100 border-0 text-muted" name="country_id" id="country-dropdown">
+                        <option selected>Country</option>
+                        @foreach ($countries as $country)
+                            <option value={{ $country->country_id }}>{{ $country->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="border-start input-group px-2">
+                    <select class="custom-select w-100 border-0 text-muted" name="city_id" id="city-dropdown">
+                        <option selected> city </option>
+                    </select>
+                </div>
+                <div class="border-start input-group px-2">
+                    <select class="custom-select  w-100 border-0 text-muted" name="mission_theme_id">
+                        <option selected>Theme</option>
+                        @foreach ($themes as $theme)
+                            <option value={{ $theme->mission_theme_id }}>{{ $theme->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="border-start border-end input-group px-2">
+                    <select class="custom-select  w-100 border-0 text-muted">
+                        <option selected>Skill</option>
+                        @foreach ($skills as $skill)
+                            <option value={{ $skill->skill_id }}>{{ $skill->skill_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
     </div>
+</div>
+    </div>
+    <div class="container py-4">
+        <div id="badges">
+            <div class="d-inline-flex border px-2" style="border-radius: 23px">
+                <span class="badge fs-5" style="color: black; font-weight: lighter;">india</span>
+                <button type="button" class="close btn" style="padding: 0%;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            <div class="d-inline-flex border px-2" style="border-radius: 23px">
+                <span class="badge fs-5" style="color: black; font-weight: lighter;">india</span>
+                <button type="button" class="close btn" style="padding: 0%;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            <div class="d-inline-flex border px-2" style="border-radius: 23px">
+                <span class="badge fs-5" style="color: black; font-weight: lighter;">india</span>
+                <button type="button" class="close btn" style="padding: 0%;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>  
+            <button class="btn" type="button"> clear all</button>
+            </div>
+    </div>
+    
     <div class=" container  py-3">
         <div class="d-flex py-4 justify-content-between">
             <div>
-                <h4> <span class="light-theme-color">Explore</span> <span class="theme-color">72 Mission</span> </h4>
+                <h4> <span class="light-theme-color">Explore</span> <span class="theme-color">{{$count}} Mission</span> </h4>
             </div>
             <div class="d-flex">
                 <div class="input-group px-2" style="width: 200px ">
@@ -77,7 +98,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row py-3">
             @foreach ($data as $item)
                 <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center">
@@ -86,12 +106,12 @@
                             src={{ asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png') }}
                             alt="">
                         <div class="position-relative">
-                            <fieldset class='position-absolute parent_mission_theme'>
-                                <legend>
-                                    <span class="from_untill"><small
-                                            class="px-2 fs-5 theme-color">item->theme</small></span>
-                                </legend>
-                            </fieldset>
+                            {{-- <div class='position-absolute'>
+                                <span class="from_untill">
+                                    <small class="px-2 fs-5 theme-color">{{ $item->missionTheme->title }}
+                                    </small>
+                                </span>
+                            </div> --}}
                             <form action="#" class="position-absolute parent_like_btn">
                                 <button class="like_btn py-1"><i class="fa-regular fa-heart fs-4"></i></button>
                             </form>
@@ -107,12 +127,13 @@
                             </span>
                         </div>
                     </div>
-
-
-
-
+                    <div class="text-center" style="margin-top: -25px">
+                        <span class="fs-4 px-2 from_untill">
+                            {{$item->missionTheme->title}}
+                        </span>
+                    </div>
                     <div class="card-body">
-                        <h4 class='mission-title theme-color pt-3'>{{ $item->title }}
+                        <h4 class='mission-title theme-color'>{{ $item->title }}
                         </h4>
                         <p class='card-text mission-short-description'>
                             {{ $item->short_description }}
@@ -132,18 +153,17 @@
                             </div>
                         </div>
                         <div class="py-3">
+                            <div class="border"></div>
+                            
+                            <div class="text-center" style="margin-top: -14px">
+                                <small class="p-2 fs-6 border from_untill">From
+                                {{ date('d-m-Y', strtotime($item->start_date)) }} untill
+                                {{ date('d-m-Y', strtotime($item->end_date)) }}
+                                </small>
 
-                            <div class="border-1 border-top border-bottom py-2">
-                                <div class="position-relative">
-                                    <fieldset class='position-absolute parent_from-untill'>
-                                        <legend>
-                                            <span class="border from_untill"><small class="px-1 fs-6">From
-                                                    {{ date('d-m-Y', strtotime($item->start_date)) }} untill
-                                                    {{ date('d-m-Y', strtotime($item->end_date)) }}</small></span>
-                                        </legend>
-                                    </fieldset>
                                 </div>
-
+                            
+                            <div class="py-2">
                                 <div class="d-flex py-3 justify-content-between">
                                     @if (true)
                                         <div class="d-flex align-items-center ">
@@ -191,7 +211,9 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="border"></div>
                         </div>
+                        
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-lg fs-5 apply-btn"> Apply <i
                                     class="fa-sharp fa-solid fa-arrow-right"></i> </button>
@@ -201,7 +223,7 @@
             @endforeach
 
         </div> {{-- row-end --}}
-        @include('admin.layouts.pagination');
+        @include('admin.layouts.pagination')
     </div>
     <script>
         $(document).ready(function() {
@@ -226,5 +248,8 @@
                 });
             });
         });
+    </script>
+    <script>
+        
     </script>
 @endsection
