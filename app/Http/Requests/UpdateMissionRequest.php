@@ -31,7 +31,7 @@ class UpdateMissionRequest extends FormRequest
              'mission_type' => 'required',
              'status' => 'required',
              'document_name.*' => 'mimes:pdf,doc,docx',
-             //'media_name.*' => 'image|max:2048|mimes:jpg,jpeg,png,',
+             'media_name.*' => 'image|max:2048|mimes:jpg,jpeg,png,',
              'media_names' => [
                 function ($attribute, $value, $fail) {
                     $videoUrl = $this->input('media_names');

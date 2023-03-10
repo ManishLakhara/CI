@@ -19,7 +19,7 @@
                         <select class="custom-select w-100 border-0 text-muted" name="country_id" id="country-dropdown">
                             <option selected>Country</option>
                             @foreach ($countries as $country)
-                                <option value={{$country->country_id}}>{{$country->name}}</option>
+                                <option value={{ $country->country_id }}>{{ $country->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -32,7 +32,7 @@
                         <select class="custom-select  w-100 border-0 text-muted" name="mission_theme_id">
                             <option selected>Theme</option>
                             @foreach ($themes as $theme)
-                                <option value={{$theme->mission_theme_id}}>{{$theme->title}}</option>
+                                <option value={{ $theme->mission_theme_id }}>{{ $theme->title }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -40,12 +40,12 @@
                         <select class="custom-select  w-100 border-0 text-muted">
                             <option selected>Skill</option>
                             @foreach ($skills as $skill)
-                                <option value={{$skill->skill_id}}>{{$skill->skill_name}}</option>
+                                <option value={{ $skill->skill_id }}>{{ $skill->skill_name }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
-                
+
             </div>
         </div>
         <div class="container">
@@ -82,40 +82,45 @@
             @foreach ($data as $item)
                 <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center">
                     <div class="py-1">
-                        <img class="card-img-top" src={{ asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png') }} alt="">
+                        <img class="card-img-top"
+                            src={{ asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png') }}
+                            alt="">
                         <div class="position-relative">
                             <fieldset class='position-absolute parent_mission_theme'>
                                 <legend>
-                                    <span class="from_untill"><small class="px-2 fs-5 theme-color">item->theme</small></span>
+                                    <span class="from_untill"><small
+                                            class="px-2 fs-5 theme-color">item->theme</small></span>
                                 </legend>
                             </fieldset>
                             <form action="#" class="position-absolute parent_like_btn">
                                 <button class="like_btn py-1"><i class="fa-regular fa-heart fs-4"></i></button>
                             </form>
                             <form action="#" class="position-absolute parent_add_btn">
-                                <button class="add_btn py-1"><img src={{asset('Images/user.png')}} alt=""></button>
+                                <button class="add_btn py-1"><img src={{ asset('Images/user.png') }}
+                                        alt=""></button>
                             </form>
                             <span class="position-absolute parent_mission_location">
                                 <span class="mission_location px-2 py-1">
-                                    <img src={{asset('Images/pin.png')}} alt=""><span class="text-white px-2">{{$item->country->name}}</span>
+                                    <img src={{ asset('Images/pin.png') }} alt=""><span
+                                        class="text-white px-2">{{ $item->country->name }}</span>
                                 </span>
                             </span>
                         </div>
                     </div>
-                    
 
-                    
+
+
 
                     <div class="card-body">
-                        <h4 class='mission-title theme-color pt-3'>{{$item->title}}
+                        <h4 class='mission-title theme-color pt-3'>{{ $item->title }}
                         </h4>
                         <p class='card-text mission-short-description'>
-                            {{$item->short_description}}
+                            {{ $item->short_description }}
                         </p>
                         <div class="d-flex py-2 justify-content-between">
                             <div>
                                 <span class="theme-color">
-                                    {{$item->organization_name}}
+                                    {{ $item->organization_name }}
                                 </span>
                             </div>
                             <div class="small-ratings">
@@ -132,7 +137,9 @@
                                 <div class="position-relative">
                                     <fieldset class='position-absolute parent_from-untill'>
                                         <legend>
-                                            <span class="border from_untill"><small class="px-1 fs-6">From  {{date('d-m-Y',strtotime($item->start_date))}} untill {{date('d-m-Y',strtotime($item->end_date))}}</small></span>
+                                            <span class="border from_untill"><small class="px-1 fs-6">From
+                                                    {{ date('d-m-Y', strtotime($item->start_date)) }} untill
+                                                    {{ date('d-m-Y', strtotime($item->end_date)) }}</small></span>
                                         </legend>
                                     </fieldset>
                                 </div>
@@ -212,7 +219,8 @@
                     success: function(result) {
                         $('#city-dropdown').html('<option value="">Select City</option>');
                         $.each(result.cities, function(key, value) {
-                            $("#city-dropdown").append('<option value="' + value.city_id + '">' + value.name + '</option>');
+                            $("#city-dropdown").append('<option value="' + value
+                                .city_id + '">' + value.name + '</option>');
                         });
                     }
                 });

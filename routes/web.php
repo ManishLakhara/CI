@@ -52,6 +52,9 @@ Route::post('register', [AuthController::class, 'register'])->name('post-registe
 Route::post('password-resetting', [PasswordResetController::class, 'passwordResetting'])->name('password-resetting');
 
 
+Route::get('cms', function () {
+    return view('cms');
+})->name('cms');
 
 
 //frontend Routes

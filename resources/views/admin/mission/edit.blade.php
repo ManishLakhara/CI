@@ -59,8 +59,14 @@
             </div>
 
             <div class="col-md-6">
-                <label for="city">city</label>
-                <select class="form-control" name="city_id" id="city-dropdown" value='{{ $mission->city }}'>
+                <label for="city">City</label>
+                <select class="form-control" name="city_id" id="city-dropdown">
+                    <option value="none" selected="" disabled="" hidden=""></option>
+                    @foreach ($cities as $city)
+                        <option value="{{ $city->city_id }}" {{ $city->city_id == $mission->city_id ? 'selected' : '' }}>
+                            {{ $city->name }}
+                        </option>
+                    @endforeach
                 </select>
                 @error('city_id')
                     <div class="text-danger">
@@ -68,7 +74,6 @@
                     </div>
                 @enderror
             </div>
-
 
             <div class="col-md-6">
                 <label for="orgName" class="form-label">Mission Organisation Name</label>
@@ -95,17 +100,11 @@
 
                 </div>
             </div>
-            {{-- <div class="col-md-6">
-                    <label for="inputType" class="form-label">Mission Type</label>
-                    <select id="inputType" class="form-select" name='mission_type'>
-                        <option value="time">Time</option>
-                        <option value="goal">Goal</option>
-                    </select>
-                </div> --}}
+
             <div class="col-md-6">
                 <label for="inputType" class="form-label">Mission Type</label>
                 <select id="inputType" class="form-select" name='mission_type'>
-                    <option value="none" selected="" disabled="" hidden=""></option>
+                    <option value="none" selected="" disabled="" hidden="">select mission type</option>
                     <option value="TIME" @if ($mission->mission_type == 'TIME') selected @endif>Time</option>
                     <option value="GOAL" @if ($mission->mission_type == 'GOAL') selected @endif>Goal</option>
                 </select>
@@ -135,23 +134,48 @@
             </div>
             <div class="col-md-6">
                 <label for="mission_skills">Mission Skills</label>
-                <select name="skill_id[]" class="form-control" id="skill-dropdown" multiple>
-                    @foreach ($mission_skills as $skill)
-                        <option value="{{ $skill->skill_id }}"
-                            @foreach ($selected_skills as $selected_skill) {{ $selected_skill->skill_id == $skill->skill_id ? 'selected' : '' }} @endforeach>
-                            {{ $skill->skill_name }}</option>
-                    @endforeach
-                </select>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Skills
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                        style="max-height: 200px; overflow-y: auto;">
+                        @foreach ($mission_skills as $skill)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="skill_id[]"
+                                    value="{{ $skill->skill_id }}" id="skill-{{ $skill->skill_id }}"
+                                    @if (in_array($skill->skill_id, $selected_skills->pluck('skill_id')->toArray())) checked @endif>
+                                <label class="form-check-label" for="skill-{{ $skill->skill_id }}">
+                                    {{ $skill->skill_name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
                 @error('skill_id')
                     <div class="text-danger">
                         {{ $message }}
                     </div>
                 @enderror
-                </select>
             </div>
+
+
             <div class="col-md-6">
                 <label class="form-label" for="customFile">Mission Images</label>
-                <input type="file" class="form-control" id="customFile" name='mission_images' />
+                <input type="file" class="form-control" id="customFile" name="media_name[]" multiple />
+
+                @error('media_name.*')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
+                <div>
+                    @foreach ($missionImages as $image)
+                        <span>{{ $image->media_name }}</span>
+                        <input type="checkbox" name="selected_media[]" value="{{ $image->media_name }}" checked>
+                    @endforeach
+                </div>
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="customFile">Mission Documents</label>
@@ -162,7 +186,13 @@
                         {{ $message }}
                     </div>
                 @enderror
-
+                <div>
+                    @foreach ($missionDocuments as $document)
+                        <span>{{ $document->document_name }}</span>
+                        <input type="checkbox" name="selected_documents[]" value="{{ $document->document_name }}"
+                            checked>
+                    @endforeach
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="inputAvailable" class="form-label">Mission Availability</label>
@@ -176,7 +206,15 @@
             </div>
             <div class="col-md-6">
                 <label for="missionVideo" class="form-label">Mission Video</label>
-                <input type="text" class="form-control" id="orgVideo" name="media_names">
+
+                @if ($missionVideo && $missionVideo->count() > 0)
+                    <input type="text" class="form-control" id="orgVideo" name="media_names"
+                        value='{{ $missionVideo->first()->media_path }}'>
+                @else
+                    <input type="text" class="form-control" id="orgVideo" name="media_names" value=''>
+                @endif
+
+
                 @error('media_names')
                     <div class="text-danger">
                         {{ $message }}

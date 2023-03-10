@@ -89,26 +89,12 @@
 
                 </div>
             </div>
-            {{-- <div class="col-md-6">
-                    <label for="inputType" class="form-label">Mission Type</label>
-                    <select id="inputType" class="form-select"  name='mission_type'>
-                        <option>Time</option>
-                        <option>Goal</option>
-                </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="text" class="form-label">Total Seats</label>
-                    <input type="text" class="form-control" id="text" name='total_seats'>
-                </div>
-                <div class="col-md-6">
-                    <label for="missionRegDeadline" class="form-label">Mission Registration Deadline</label>
-                    <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'>
-                </div> --}}
+           
 
             <div class="col-md-6">
                 <label for="inputType" class="form-label">Mission Type</label>
                 <select id="inputType" class="form-select" name='mission_type'>
-                    <option value="none" selected="" disabled="" hidden=""></option>
+                    <option value="none" selected="" disabled="" hidden="">select mision type</option>
                     <option value="time">Time</option>
                     <option value="goal">Goal</option>
                 </select>
@@ -126,28 +112,38 @@
             <div class="col-md-6">
                 <label for="inputTheme" class="form-label">Mission Theme</label>
                 <select class="form-control" id="country-dropdown" name='theme_id'>
-                    <option value="none" selected="" disabled="" hidden=""></option>
+                    <option value="none" selected="" disabled="" hidden="">select mission theme</option>
                     @foreach ($mission_theme as $theme)
                         <option value="{{ $theme->mission_theme_id }}">{{ $theme->title }}</option>
                     @endforeach
                 </select>
 
             </div>
-            <div class="col-md-6">
+             <div class="col-md-6">
                 <label for="mission_skills">Mission Skills</label>
-                <select name="skill_id[]" class="form-control" id="skill-dropdown" multiple>
-
-                    @foreach ($mission_skills as $skill)
-                        <option value="{{ $skill->skill_id }}">{{ $skill->skill_name }}</option>
-                    @endforeach
-                </select>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Skills
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="max-height: 200px; overflow-y: auto;">
+                        @foreach ($mission_skills as $skill)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="skill_id[]" value="{{ $skill->skill_id }}" id="skill-{{ $skill->skill_id }}">
+                                <label class="form-check-label" for="skill-{{ $skill->skill_id }}">
+                                    {{ $skill->skill_name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
                 @error('skill_id')
                     <div class="text-danger">
                         {{ $message }}
                     </div>
                 @enderror
-                </select>
             </div>
+
+
             <div class="col-md-6">
                 <label class="form-label" for="customFile">Mission Images</label>
                 <input type="file" class="form-control" id="customFile" name="media_name[]" multiple />

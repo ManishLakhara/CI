@@ -29,3 +29,4 @@ class UpdateCmsPageRequest extends FormRequest
         ];
     }
 }
+

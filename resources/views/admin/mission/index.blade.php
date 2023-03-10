@@ -8,8 +8,8 @@
 
     <div class="container-fluid px-4">
         <h1 class="mt-4">Mission</h1>
-        
-        <!-- Success Alert -->  
+
+        <!-- Success Alert -->
         @include('admin.components.successAlert')
 
         {{-- <span class="border-bottom">
@@ -51,17 +51,17 @@
             </div>
 
             <div class="card-body">
-                               
+
                 @include('admin.components.search_add',['form_action' => 'mission.index','add' => 'mission.create'])
 
-                <table class="table table-responsive table-bordered">
-                    <thead>
+                <table class="table table-responsive">
+                    <thead class="table-light">
                         <tr>
-                            <th>Mission Title</th>
-                            <th>Mission Type</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th width="280px">Action</th>
+                            <th class="col-lg-5">Mission Title</th>
+                            <th class="col-lg-2">Mission Type</th>
+                            <th class="col-lg-2">Start Date</th>
+                            <th class="col-lg-2">End Date</th>
+                            <th class="col-lg-1">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,11 +72,12 @@
                         <td>{{ $d->start_date }}</td>
                         <td>{{ $d->end_date }}</td>
                         <td>
-                            
+
                                 <a class="btn btn-white"href="{{route('mission.edit',$d->mission_id)}}">
-                                <img src="Images/edit.png" height="22px" width="22px" alt="edit">
+                                {{-- <img src="Images/edit.png" height="22px" width="22px" alt="edit"> --}}
+                                <i class="fas fa-edit"></i>
                                 </a>
-                                
+
                                 <button type="button" data-toggle="modal" data-target="#deleteModal-{{$d->mission_id}}" class="btn btn-white">
                                     <img src="Images/bin.png" alt="delete">
                                 </button>
