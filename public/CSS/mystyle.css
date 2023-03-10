@@ -51,6 +51,30 @@
     top: -14rem;
     right: 0.8rem;
 }
+
+@media screen and (max-width: 1399px) {
+    .parent_mission_location{
+        top: -12rem;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .parent_mission_location{
+        top: -11rem;
+    }
+}
+@media screen and (max-width: 767px) {
+    .parent_mission_location{
+        top: -16rem;
+    }
+}
+
+@media screen and (max-width: 467px) {
+    .parent_mission_location{
+        top: -11rem;
+    }
+}
+
 .parent_add_btn {
     top: -4rem;
     right: 0.8rem;
@@ -145,6 +169,7 @@
 .mission-title {
     font-size: 1.5rem;
 }
+
 .mission-short-description {
     color: #757575;
     display: -webkit-box;

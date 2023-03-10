@@ -18,18 +18,18 @@ class MissionSkillController extends Controller
     public function index(Request $request)
     {
         $data = Skill::where([
-            ['skill_name','!=',Null],
+            ['skill_name', '!=', Null],
             [function ($query) use ($request) {
-                if (($s = $request->s)){
-                    $query->orWhere('skill_name','LIKE','%'.$s.'%')
-                          ->get();
+                if (($s = $request->s)) {
+                    $query->orWhere('skill_name', 'LIKE', '%' . $s . '%')
+                        ->get();
                 }
             }]
         ])->paginate(10)
-          ->appends(['s'=>$request->s]);
+            ->appends(['s' => $request->s]);
         //$data = Skill::orderBy('skill_id','desc')->paginate(10);
-        return view("admin.missionskill.index",compact('data'));
-    } 
+        return view("admin.missionskill.index", compact('data'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -45,7 +45,7 @@ class MissionSkillController extends Controller
     public function store(StoreSkillRequest $request)
     {
         Skill::create($request->post());
-        return redirect()->route('missionskill.index')->with('success','New Record is Updated');
+        return redirect()->route('missionskill.index')->with('success', 'New Record is Updated');
     }
 
     /**
@@ -68,23 +68,23 @@ class MissionSkillController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSkillRequest $request,Skill $skill, string $id)
+    public function update(UpdateSkillRequest $request, Skill $skill, string $id)
     {
         $request->validated();
         $skill->find($id)
-              ->fill($request->post())
-              ->save();
+            ->fill($request->post())
+            ->save();
         return redirect()->route('missionskill.index')
-                         ->with('success','field Has Been updated Successfully');
+            ->with('success', 'field Has Been updated Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Skill $skill,$id)
+    public function destroy(Skill $skill, $id)
     {
         $skill->find($id)
-              ->delete();
-        return back()->with('success','Successfully deleted Selected item');
+            ->delete();
+        return back()->with('success', 'Successfully deleted Selected item');
     }
 }

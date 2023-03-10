@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Country extends Model
 {
@@ -20,5 +22,9 @@ class Country extends Model
 
     public function User() {
         return $this->hasMany(User::class, 'country_id');
+    }
+
+    public function mission(): BelongsToMany{
+        return $this->belongsToMany(Mission::class,'country_id');
     }
 }

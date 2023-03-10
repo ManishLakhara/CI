@@ -16,3 +16,4 @@ CKEDITOR.replace( 'summary-ckeditor' );
         $('.alert').alert('close');
     }, 3000);
 </script>
+

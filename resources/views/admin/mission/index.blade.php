@@ -72,17 +72,19 @@
                         <td>{{ $d->start_date }}</td>
                         <td>{{ $d->end_date }}</td>
                         <td>
-                            <form action="{{ route('mission.destroy',$d->mission_id) }}" method="post">
+                            
                                 <a class="btn btn-white"href="{{route('mission.edit',$d->mission_id)}}">
                                 <img src="Images/edit.png" height="22px" width="22px" alt="edit">
                                 </a>
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-white">
+                                
+                                <button type="button" data-toggle="modal" data-target="#deleteModal-{{$d->mission_id}}" class="btn btn-white">
                                     <img src="Images/bin.png" alt="delete">
                                 </button>
                                 <!-- Modal -->
-                                @include('admin.components.deleteModal')
+                                @include('admin.components.deleteModal',[
+                                    'id' => $d->mission_id,
+                                    'form_action' => 'mission.destroy',
+                                ])
                             </form>
                         </td>
                     </tr>

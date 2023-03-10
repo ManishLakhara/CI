@@ -1,20 +1,25 @@
-<div class="mt-1 mb-4">
+<div class="mt-4 mb-4">
     <div class="row justify-content-between align-items-center">
-        <div class="col relative max-w-xs">
+        <div class="col-sm-4 relative w-100">
             <form action="{{ route($form_action) }}" method="GET">
                 @csrf
                 <label for="search" class="sr-only">
                     Search
                 </label>
-                <input type="text" name="s"
-                    class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                    placeholder="Search..." />
+                <div class="d-flex border rounded w-100">
+                    <button type="submit" class="btn">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    <div class="form-outline w-100">
+                      <input type="search" name="s" placeholder="Search" value='{{old("s")}}' class="form-control border-0" />
+                    </div>
+                </div>    
             </form>
         </div>
-        <div class="col pb-3 p-2 text-md-right">
-            <a href="{{ route($add) }}">
-                <button type="button" class="btn text-right btn-outline-warning" style="border-radius: 23px">
-                    <i class="fa-solid fa-plus px-3"></i> Add</button>
+        <div class="col-sm-4 pb-3 p-2  text-right">
+            <a href="{{ route($add)}}">
+                <button type="button" class="btn text-right" style="border-radius: 23px; border-color: #F88634; color: #F88634;">
+                    <i class="fa-solid fa-plus"></i> Add</button>
             </a>
         </div>
     </div>

@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Models\Country;
 use App\Models\City;
+
 class MissionThemeController extends Controller
 {
     /**
@@ -19,19 +20,21 @@ class MissionThemeController extends Controller
     public function index(Request $request)
     {
         $data = MissionTheme::where([
-            ['title','!=',Null],
+            ['title', '!=', Null],
             [function ($query) use ($request) {
-                if(($s = $request->s)) {
+                if (($s = $request->s)) {
                     $query->orWhere('title', 'LIKE', '%' . $s . '%')
-                          ->get();
+                        
+                        ->get();
                 }
             }]
-        ])->paginate(10)
-          ->appends(['s'=>$request->s]);
+        ])->orderBy('mission_theme_id', 'desc') 
+            ->paginate(10)
+            ->appends(['s' => $request->s]);
 
 
         //$data = MissionTheme::orderBy('mission_theme_id','desc')->paginate(10);
-        return view('admin.missiontheme.index',compact('data')); // Create view by name missiontheme/index.blade.php
+        return view('admin.missiontheme.index', compact('data')); // Create view by name missiontheme/index.blade.php
     }
 
     /**
@@ -45,13 +48,13 @@ class MissionThemeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMissionThemeRequest $request): RedirectResponse
+    public function store(StoreMissionThemeRequest $request) : RedirectResponse
     {
         $request->validated();
 
         MissionTheme::create($request->post());
 
-        return redirect()->route('missiontheme.index')->with('success','field has been created successfully.');
+        return redirect()->route('missiontheme.index')->with('success', 'field has been created successfully.');
     }
 
     /**
@@ -75,26 +78,23 @@ class MissionThemeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMissionThemeRequest $request, MissionTheme $missionTheme,$id): RedirectResponse
+    public function update(UpdateMissionThemeRequest $request, MissionTheme $missionTheme, $id) : RedirectResponse
     {
 
         $request->validated();
         $missionTheme->find($id)
-                     ->fill($request->post())
-                     ->save();
-        return redirect()->route('missiontheme.index')->with('success','field Has Been updated successfully');
+            ->fill($request->post())
+            ->save();
+        return redirect()->route('missiontheme.index')->with('success', 'field Has Been updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MissionTheme $missionTheme,$id): RedirectResponse
+    public function destroy(MissionTheme $missionTheme, $id) : RedirectResponse
     {
         $missionTheme->find($id)
-                     ->delete();
-        return back()->with('success','field has been deleted successfully');
+            ->delete();
+        return back()->with('success', 'field has been deleted successfully');
     }
-
-
-   
 }

@@ -151,7 +151,7 @@
                             <div class="col-md-6">
                                 <label for="department">Department</label>
                                 <select id="inputState" name="department" class="form-control">
-                                    <option selected>Choose...</option>
+                                    <option value="{{NULL}}" selected>Choose...</option>
                                     <option value="HR" {{ $user->department =="HR"? 'selected' : '' }}>HR</option>
                                     <option value="Development" {{ $user->department =="DEVELOPER"? 'selected' : '' }}>Development</option>
                                     <option value="Sales" {{ $user->department =="SALES"? 'selected' : '' }}>Sales</option>
@@ -211,11 +211,11 @@
                         <div class="form-row justify-content-left">
                             <div class="col-md-4 py-4">
                                 <label for="status">Status</label>
-                                <input type="radio" class="btn-check form-control" name="status" {{old('status')=='1'? 'checked':''}} value='1' id="success-outlined">
+                                <input type="radio" class="btn-check form-control" name="status" @if ($user->status==1) checked @endif value='1' id="success-outlined">
                                 {{-- @if($skill->status==1) checked @endif> --}}
                                 <label class="btn btn-outline-success px-3"  for="success-outlined">Active</label>
 
-                                <input type="radio" class="btn-check form-control" value='0'  name="status"  id="danger-outlined">
+                                <input type="radio" class="btn-check form-control" value='0'  name="status" @if ($user->status==0) checked @endif  id="danger-outlined">
                                 {{-- @if($skill->status==0) checked @endif> --}}
                                 <label class="btn btn-outline-danger px-3" for="danger-outlined">Inactive</label>
                                 @error('status')

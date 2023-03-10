@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\MissionThemeController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\admin\MissionSkillController;
+use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\AdminAuthController;
@@ -91,3 +92,6 @@ Route::resource('missionskill', MissionSkillController::class)->withTrashed();
 Route::resource('user', UserController::class)->withTrashed();
 Route::resource('mission', MissionController::class);
 //end backend route
+
+
+Route::get('index',[LandingPageController::class, 'index']);

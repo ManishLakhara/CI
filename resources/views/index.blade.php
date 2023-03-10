@@ -16,44 +16,43 @@
                 </div>
                 <div class="col d-flex justify-content-around">
                     <div class="border-start input-group px-2">
-                        <select class="custom-select w-100 border-0 text-muted">
+                        <select class="custom-select w-100 border-0 text-muted" name="country_id" id="country-dropdown">
                             <option selected>Country</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-
-
-                    <div class="border-start input-group px-2">
-                        <select class="custom-select w-100 border-0 text-muted">
-                            <option selected>City</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            @foreach ($countries as $country)
+                                <option value={{$country->country_id}}>{{$country->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="border-start input-group px-2">
-                        <select class="custom-select w-100 border-0 text-muted">
+                        <select class="custom-select w-100 border-0 text-muted" name="city_id" id="city-dropdown">
+                            <option selected> city </option>
+                        </select>
+                    </div>
+                    <div class="border-start input-group px-2">
+                        <select class="custom-select  w-100 border-0 text-muted" name="mission_theme_id">
                             <option selected>Theme</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            @foreach ($themes as $theme)
+                                <option value={{$theme->mission_theme_id}}>{{$theme->title}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="border-start border-end input-group px-2">
-                        <select class="custom-select w-100 border-0 text-muted">
+                        <select class="custom-select  w-100 border-0 text-muted">
                             <option selected>Skill</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            @foreach ($skills as $skill)
+                                <option value={{$skill->skill_id}}>{{$skill->skill_name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
+                
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
             </div>
         </div>
     </div>
-
     <div class=" container  py-3">
         <div class="d-flex py-4 justify-content-between">
             <div>
@@ -80,14 +79,14 @@
         </div>
 
         <div class="row py-3">
-            @for ($i = 0; $i < 9; $i++)
+            @foreach ($data as $item)
                 <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center">
                     <div class="py-1">
                         <img class="card-img-top" src={{ asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png') }} alt="">
                         <div class="position-relative">
                             <fieldset class='position-absolute parent_mission_theme'>
                                 <legend>
-                                    <span class="from_untill"><small class="px-2 fs-5 theme-color">Environment</small></span>
+                                    <span class="from_untill"><small class="px-2 fs-5 theme-color">item->theme</small></span>
                                 </legend>
                             </fieldset>
                             <form action="#" class="position-absolute parent_like_btn">
@@ -98,7 +97,7 @@
                             </form>
                             <span class="position-absolute parent_mission_location">
                                 <span class="mission_location px-2 py-1">
-                                    <img src={{asset('Images/pin.png')}} alt=""><span class="text-white px-2">New York</span>
+                                    <img src={{asset('Images/pin.png')}} alt=""><span class="text-white px-2">{{$item->country->name}}</span>
                                 </span>
                             </span>
                         </div>
@@ -108,17 +107,15 @@
                     
 
                     <div class="card-body">
-                        <h4 class='mission-title theme-color pt-3'>Grow tree - On the path to environment sustainability
+                        <h4 class='mission-title theme-color pt-3'>{{$item->title}}
                         </h4>
                         <p class='card-text mission-short-description'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi repudiandae ratione,
-                            eum eos assumenda magni, nihil corporis blanditiis quis deserunt ipsam iste at dicta. Cumque
-                            asperiores culpa consequuntur quibusdam ducimus.
+                            {{$item->short_description}}
                         </p>
                         <div class="d-flex py-2 justify-content-between">
                             <div>
                                 <span class="theme-color">
-                                    Tree Canada
+                                    {{$item->organization_name}}
                                 </span>
                             </div>
                             <div class="small-ratings">
@@ -135,12 +132,10 @@
                                 <div class="position-relative">
                                     <fieldset class='position-absolute parent_from-untill'>
                                         <legend>
-                                            <span class="border from_untill"><small class="px-1 fs-6">From 10/01/2019 untill 10/02/2020</small></span>
+                                            <span class="border from_untill"><small class="px-1 fs-6">From  {{date('d-m-Y',strtotime($item->start_date))}} untill {{date('d-m-Y',strtotime($item->end_date))}}</small></span>
                                         </legend>
                                     </fieldset>
                                 </div>
-                                
-
 
                                 <div class="d-flex py-3 justify-content-between">
                                     @if (true)
@@ -196,9 +191,32 @@
                         </div>
                     </div>
                 </div>
-            @endfor
+            @endforeach
 
         </div> {{-- row-end --}}
-
+        @include('admin.layouts.pagination');
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#country-dropdown').on('change', function() {
+                var country_id = this.value;
+                $("#city-dropdown").html('');
+                $.ajax({
+                    url: "{{ url('api/fetch-city') }}",
+                    type: "POST",
+                    data: {
+                        country_id: country_id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        $('#city-dropdown').html('<option value="">Select City</option>');
+                        $.each(result.cities, function(key, value) {
+                            $("#city-dropdown").append('<option value="' + value.city_id + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

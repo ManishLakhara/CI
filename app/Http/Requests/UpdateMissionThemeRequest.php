@@ -22,7 +22,7 @@ class UpdateMissionThemeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required',
+            'title' => 'required|max:255',
             'status' => 'required',
         ];
     }
