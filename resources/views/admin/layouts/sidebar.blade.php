@@ -21,7 +21,7 @@
                     </div>
                 </a>
 
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/cmspage">
                     <div class='container'>
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
                         <i class="fa-solid fa-pen-to-square text-white"></i>

@@ -12,6 +12,11 @@ class MissionSkill extends Model
     use SoftDeletes;
     protected $primaryKey = 'mission_skill_id';
 
+    protected $fillable = [
+        'skill_id',
+        'mission_id'
+    ];
+
     public function mission() {
         return $this->hasMany(Mission::class, 'mission_id');
     }
