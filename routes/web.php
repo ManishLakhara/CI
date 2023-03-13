@@ -14,6 +14,7 @@ use App\Http\Controllers\admin\ForgetPasswordController;
 use App\Http\Controllers\Admin\AdminPasswordResetController;
 use App\Http\Controllers\admin\MissionController;
 use App\Http\Controllers\admin\CmsPageController;
+use App\Http\Controllers\CmsPagesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,9 +55,6 @@ Route::post('register', [AuthController::class, 'register'])->name('post-registe
 Route::post('password-resetting', [PasswordResetController::class, 'passwordResetting'])->name('password-resetting');
 
 
-Route::get('cms', function () {
-    return view('cms');
-})->name('cms');
 
 
 //frontend Routes
@@ -100,4 +98,7 @@ Route::resource('cmspage', CmsPageController::class);
 //end backend route
 
 
-Route::get('index',[LandingPageController::class, 'index'])->name('landing.index');
+Route::get('index',[LandingPageController::class, 'index']);
+
+
+Route::get('cms',[CmsPagesController::class, 'index']);
