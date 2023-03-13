@@ -10,7 +10,7 @@
             <div class="col-lg-4 col-md-6">
 
                 <div class="container mt-5" style="height: 100%;">
-                    <div class="col-sm-10"  style="position: sticky;top:50px;">
+                    <div class="col-sm-10" style="position: sticky;top:10%;">
                         <ul class="nav flex-column justify-content">
                             @foreach ($data as $item)
                                 <li class="nav-item">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                {{-- <div class="container"> --}}
+                <div class="container">
 
 
                 <div class="row">
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- </div> --}}
+                </div>
             </div>
             @include('admin.layouts.pagination')
         </div>

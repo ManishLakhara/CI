@@ -23,7 +23,7 @@
                         <div class="form-row">
                             <div class="col-md-12 mb-3">
                                 <label for="Title">Title</label>
-                                <input type="text" name="title" class="form-control" id="">
+                                <input type="text" name="title" class="form-control" id="" value="{{ old('title') }}">
 
                                 @error('title')
                                     <div class="text-danger">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label for="inputAddress" class="form-label">Description</label>
-                                <textarea name="text" id="editor1"></textarea>
+                                <textarea name="text" id="editor1">{{ old('text') }}</textarea>
                                 @error('text')
                                     <div class="text-danger">
                                         {{ $message }}
@@ -43,7 +43,7 @@
 
                             <div class="col-md-12 mb-3">
                                 <label for="slug">Slug</label>
-                                <input type="text" name="slug" class="form-control" id="">
+                                <input type="text" name="slug" class="form-control" id="" value="{{ old('slug') }}">
 
                                 @error('slug')
                                     <div class="text-danger">

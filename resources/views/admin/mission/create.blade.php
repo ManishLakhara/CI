@@ -12,7 +12,7 @@
             @csrf
             <div class="col-md-6">
                 <label for="missionTitle" class="form-label">Mission Title</label>
-                <input type="text" class="form-control" id="missionTitle" name='title'>
+                <input type="text" class="form-control" id="missionTitle" name='title' value="{{ old('title') }}">
                 @error('title')
                     <div class="text-danger">
                         {{ $message }}
@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-6">
                 <label for="missionDesc" class="form-label">Mission Short Description</label>
-                <input type="text" class="form-control" id="missionDesc" name='short_description'>
+                <input type="text" class="form-control" id="missionDesc" name='short_description' value="{{ old('short_description') }}">
                 @error('short_description')
                     <div class="text-danger">
                         {{ $message }}
@@ -30,7 +30,7 @@
             </div>
             <div class="col-12">
                 <label for="inputAddress" class="form-label">Mission Description</label>
-                <textarea name="description" id="editor1"></textarea>
+                <textarea name="description" id="editor1">{{ old('description') }}</textarea>
                 @error('description')
                     <div class="text-danger">
                         {{ $message }}
@@ -41,7 +41,7 @@
             <div class="col-md-6">
                 <label for="country">Country</label>
                 <select name="country_id" class="form-control" id="country-dropdown">
-                    <option value="none" selected="" disabled="" hidden=""></option>
+                    <option value="none" selected="" disabled="" hidden="">select country</option>
                     @foreach ($countries as $country)
                         <option value="{{ $country->country_id }}">{{ $country->name }}</option>
                     @endforeach
@@ -69,27 +69,27 @@
 
             <div class="col-md-6">
                 <label for="orgName" class="form-label">Mission Organisation Name</label>
-                <input type="text" class="form-control" id="orgName" name='organization_name'>
+                <input type="text" class="form-control" id="orgName" name='organization_name' value="{{ old('organization_name') }}">
             </div>
             <div class="col-md-6">
                 <label for="exampleFormControlTextarea1" class="form-label">Mission Organisation Detail</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name='organization_detail'></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name='organization_detail'>{{ old('organization_name') }}</textarea>
             </div>
             <div class="col-md-6">
                 <label for="inputdate" class="form-label">Mission Start Date</label>
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type='date' class="form-control" name='start_date' />
+                    <input type='date' class="form-control" name='start_date' value="{{ old('start_date') }}" />
 
                 </div>
             </div>
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Mission End Date</label>
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type='date' class="form-control" name='end_date' />
+                    <input type='date' class="form-control" name='end_date' value="{{ old('end_date') }}"/>
 
                 </div>
             </div>
-           
+
 
             <div class="col-md-6">
                 <label for="inputType" class="form-label">Mission Type</label>
