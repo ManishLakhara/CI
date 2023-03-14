@@ -98,7 +98,8 @@ Route::resource('cmspage', CmsPageController::class);
 //end backend route
 
 
-Route::get('index',[LandingPageController::class, 'index']);
 
 
 Route::get('cms',[CmsPagesController::class, 'index']);
+Route::get('index',[LandingPageController::class, 'index'])->name('landing.index');
+Route::get('filter-data',[LandingPageController::class,'filterData']);

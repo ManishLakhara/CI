@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CountryCityController;
+use App\Http\Controllers\LandingPageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

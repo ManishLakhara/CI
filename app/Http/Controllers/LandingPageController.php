@@ -7,13 +7,15 @@ use App\Models\Mission;
 use App\Models\MissionTheme;
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LandingPageController extends Controller
 {
+    
     public function index(Request $request)
     {
-        // $data = Mission::orderBy('mission_id','desc')->paginate(9);
-        $datas = Mission::where([
+        // $datas = Mission::orderBy('mission_id','desc');
+        $data = Mission::where([
             ['title', '!=', Null],
             [function ($query) use ($request) {
                 if (($s = $request->s)){
@@ -23,11 +25,25 @@ class LandingPageController extends Controller
                 }
             }]
         ]);
-        $count = $datas->count();
-        $data = $datas->paginate(9)->appends(['s'=>$request->s]);
+        
+        // if(isset($request->countries_array))
+        // {
+        //     $data = $data->whereIn('country_id',$request->countries_array);
+        //     return $data;
+        // }
+        
+        $count = $data->count();
+        $data = $data->paginate(9);
         $countries = Country::all(['country_id','name']);
         $themes = MissionTheme::all(['mission_theme_id','title']);
         $skills = Skill::all(['skill_id','skill_name']);
-        return view('index',compact('data','countries','themes','skills','count')); // Create view by name missiontheme/index.blade.php
+        return view('index',compact('data','count','countries','themes','skills')); // Create view by name missiontheme/index.blade.php
+    }
+    
+    public function filterData(Request $request){
+        $data = Mission::orderBy('mission_id','desc')->with('country');
+        $count = $data->count();
+        $data = $data->paginate(9);
+        return ([$count,]);
     }
 }
