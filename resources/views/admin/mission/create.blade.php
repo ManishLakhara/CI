@@ -21,7 +21,8 @@
             </div>
             <div class="col-md-6">
                 <label for="missionDesc" class="form-label">Mission Short Description</label>
-                <input type="text" class="form-control" id="missionDesc" name='short_description' value="{{ old('short_description') }}">
+                <input type="text" class="form-control" id="missionDesc" name='short_description'
+                    value="{{ old('short_description') }}">
                 @error('short_description')
                     <div class="text-danger">
                         {{ $message }}
@@ -69,7 +70,8 @@
 
             <div class="col-md-6">
                 <label for="orgName" class="form-label">Mission Organisation Name</label>
-                <input type="text" class="form-control" id="orgName" name='organization_name' value="{{ old('organization_name') }}">
+                <input type="text" class="form-control" id="orgName" name='organization_name'
+                    value="{{ old('organization_name') }}">
             </div>
             <div class="col-md-6">
                 <label for="exampleFormControlTextarea1" class="form-label">Mission Organisation Detail</label>
@@ -85,9 +87,14 @@
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Mission End Date</label>
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type='date' class="form-control" name='end_date' value="{{ old('end_date') }}"/>
+                    <input type='date' class="form-control" name='end_date' value="{{ old('end_date') }}" />
 
                 </div>
+                @error('end_date')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
 
@@ -119,16 +126,19 @@
                 </select>
 
             </div>
-             <div class="col-md-6">
+            <div class="col-md-6">
                 <label for="mission_skills">Mission Skills</label>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Select Skills
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="max-height: 200px; overflow-y: auto;">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                        style="max-height: 200px; overflow-y: auto;">
                         @foreach ($mission_skills as $skill)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="skill_id[]" value="{{ $skill->skill_id }}" id="skill-{{ $skill->skill_id }}">
+                                <input class="form-check-input" type="checkbox" name="skill_id[]"
+                                    value="{{ $skill->skill_id }}" id="skill-{{ $skill->skill_id }}">
                                 <label class="form-check-label" for="skill-{{ $skill->skill_id }}">
                                     {{ $skill->skill_name }}
                                 </label>

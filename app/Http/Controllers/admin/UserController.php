@@ -66,7 +66,7 @@ class UserController extends Controller
         $user->find('$id');
         return view('admin.user.edit');
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
