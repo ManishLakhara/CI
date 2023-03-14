@@ -30,21 +30,21 @@
                 <div class="container">
 
 
-                <div class="row">
-                    <div class="mt-5">
-                        <div class="col-sm-9">
-                            @foreach ($data as $item)
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="{{ $item->slug }}" role="tabpanel">
-                                        <h3 class="mt-3">{{ $item->title }}</h3>
-                                        <p class="mt-3">{!! $item->text !!}</p>
+                    <div class="row">
+                        <div class="mt-5">
+                            <div class="col-sm-9">
+                                @foreach ($data as $item)
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="{{ $item->slug }}" role="tabpanel">
+                                            <h3 class="mt-3">{{ $item->title }}</h3>
+                                            <p class="mt-3">{!! $item->text !!}</p>
 
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
             @include('admin.layouts.pagination')

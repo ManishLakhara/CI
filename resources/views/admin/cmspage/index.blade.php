@@ -53,8 +53,8 @@
                                     <a class="btn btn-white" href="{{ route('cmspage.edit', $d->cms_page_id) }}">
                                         <img src="Images/edit.png" height="22px" width="22px" alt="edit">
                                     </a>
-                                    <button type="button" data-toggle="modal" data-target="#deleteModal-{{$d->cms_page_id}}"
-                                        class="btn btn-white">
+                                    <button type="button" data-toggle="modal"
+                                        data-target="#deleteModal-{{ $d->cms_page_id }}" class="btn btn-white">
                                         <img src="Images/bin.png" alt="delete">
                                     </button>
                                     @include('admin.components.deleteModal', [
