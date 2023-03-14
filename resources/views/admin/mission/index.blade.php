@@ -54,8 +54,8 @@
 
                 @include('admin.components.search_add',['form_action' => 'mission.index','add' => 'mission.create'])
 
-                <table class="table table-responsive table-bordered">
-                    <thead style="background-color: #F8F9FC">
+                <table class="table table-responsive">
+                    <thead class="table-light">
                         <tr>
                             <th class="col-lg-5">Mission Title</th>
                             <th class="col-lg-2">Mission Type</th>

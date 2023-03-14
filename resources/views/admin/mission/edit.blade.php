@@ -246,25 +246,27 @@
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        // get the mission type select element
-        var missionType = $('#inputType');
+        const inputType = document.getElementById('inputType');
+        const totalSeats = document.getElementById('text');
+        const registrationDeadline = document.getElementById('missionRegDeadline');
 
-        // get the total seats and registration deadline inputs
-        var totalSeats = $('#text');
-        var regDeadline = $('#missionRegDeadline');
+        let isTimeSelected = inputType.value === 'TIME';
 
-        // add an event listener to the mission type select element
-        missionType.on('change', function() {
-            // check if the selected mission type is 'time'
-            if (missionType.val() === 'time') {
-                // if it is, enable the total seats and registration deadline inputs
-                totalSeats.prop('disabled', false);
-                regDeadline.prop('disabled', false);
+        function updateFields() {
+            if (isTimeSelected) {
+                totalSeats.removeAttribute('disabled');
+                registrationDeadline.removeAttribute('disabled');
             } else {
-                // if it isn't, disable the total seats and registration deadline inputs
-                totalSeats.prop('disabled', true);
-                regDeadline.prop('disabled', true);
+                totalSeats.setAttribute('disabled', true);
+                registrationDeadline.setAttribute('disabled', true);
             }
+        }
+
+        inputType.addEventListener('change', function() {
+            isTimeSelected = this.value === 'TIME';
+            updateFields();
         });
+
+        updateFields();
     </script>
 @endsection
