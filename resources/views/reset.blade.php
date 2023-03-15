@@ -25,7 +25,7 @@ $token = substr($_SERVER['REQUEST_URI'],-60);
 
                 <form action="{{route('password-resetting')}}" method='post'>
                     @csrf
-                     <label for="inputNewPassword" class="col-form-label">New Password</label> 
+                     <label for="inputNewPassword" class="col-form-label">New Password</label>
                      <div class="col">
                         <input type="password" class="form-control" id="" name='password' value="">
                         @error('password')
@@ -35,7 +35,7 @@ $token = substr($_SERVER['REQUEST_URI'],-60);
                             @enderror
                      </div>
 
-                     <label for="inputConfirmPassword" class="col-form-label">Confirm Password</label> 
+                     <label for="inputConfirmPassword" class="col-form-label">Confirm Password</label>
                      <div class="col">
                         <input type="password" class="form-control" name="confirm-password" id="" value="">
                         @error('confirm-password')
@@ -55,13 +55,13 @@ $token = substr($_SERVER['REQUEST_URI'],-60);
 
                      <div class="col">
                         <input type="password" class="form-control" hidden name="token" id="" value={{$token}}>
-                     </div> 
+                     </div>
 
                      <div class="col">
                         <button type="submit" class="btn btn-outline-warning mt-3" style="width: 100%; border-radius: 23px">Change Password</button>
                     </div>
                     <div>
-                        
+
                     </div>
                 </form>
 

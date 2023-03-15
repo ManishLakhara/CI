@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\AdminPasswordResetController;
 use App\Http\Controllers\admin\MissionController;
 use App\Http\Controllers\admin\CmsPageController;
 use App\Http\Controllers\CmsPagesController;
+use App\Http\Controllers\UserEditProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -103,3 +104,6 @@ Route::resource('cmspage', CmsPageController::class);
 Route::get('cms',[CmsPagesController::class, 'index']);
 Route::get('index',[LandingPageController::class, 'index'])->name('landing.index');
 Route::get('filter-data',[LandingPageController::class,'filterData']);
+
+Route::get('edit-profile',[UserEditProfileController::class,'index']);
+Route::post('profile',[UserEditProfileController::class,'update'])->name('profile.update');
