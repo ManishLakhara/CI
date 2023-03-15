@@ -104,12 +104,10 @@
     .parent_add_btn_l{
         top: -5.5em;
     }
-    .parent_mission_location_l{
-        top: -11em;
-    }
 }
 
 .parent_mission_location_l{
+    top: -12em;
     right: 1.8rem;
 }
 .policy {
