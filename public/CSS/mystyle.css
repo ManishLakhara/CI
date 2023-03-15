@@ -106,8 +106,14 @@
     }
 }
 
+@media screen and (max-width: 1199){
+    .parent_mission_location_l{
+        top: -11em;
+    }
+}
+
 .parent_mission_location_l{
-    top: -12em;
+    top: -13em;
     right: 1.8rem;
 }
 .policy {

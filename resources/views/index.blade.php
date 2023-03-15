@@ -263,6 +263,67 @@
                         <p class='mission-short-description'>
                             {{ $item->short_description }}
                         </p>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="d-flex">
+                                    <div class="d-flex align-items-center ">
+                                        <div class="px-1">
+                                            <img src={{ asset('Images/seats-left.png') }} alt="">
+                                        </div>
+                                        <div class="px-2 d-flex flex-column align-items-start">
+                                            <span class="theme-color fs-5 font-weight-bolder">10 <br></span>
+                                            <span class="text-muted">Seats left</span>
+                                        </div>
+                                    </div>
+                                    @if (false)
+                                        <div class='d-flex align-items-center'>
+                                            <div class="px-1">
+                                                <img src={{ asset('Images/deadline.png') }} alt="">
+                                            </div>
+                                            <div class=" px-2 d-flex flex-column align-items-start">
+                                                <span class="theme-color fs-5 font-weight-bolder">09/01/2019 <br></span>
+                                                <span class="text-muted">Registration Deadline</span>
+                                            </div>
+                                        </div>
+                                    @elseif(true)
+                                        <div class='d-flex align-items-center'>
+                                            <div class="px-1">
+                                                <img src={{ asset('Images/achieved.png') }} alt="">
+                                            </div>
+                                            <div class=" px-2 d-flex flex-column align-items-start">
+                                                <input type="range" class="progress" name="goal" value="80"
+                                                    disabled id="achievedgoal">
+                                                <span class="text-muted"><small>8000 Achieved</small></span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class='d-flex align-items-center'>
+                                        <div class="px-1">
+                                            <img src={{ asset('Images/calender.png') }} alt="">
+                                        </div>
+                                        <div class=" px-2 d-flex flex-column align-items-start">
+                                            <small class="p-2 fs-6">From
+                                                {{ date('d-m-Y', strtotime($item->start_date)) }} <br> untill
+                                                {{ date('d-m-Y', strtotime($item->end_date)) }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class='d-flex align-items-center'>
+                                        <div class="px-1">
+                                            <img src={{ asset('Images/settings.png') }} alt="">
+                                        </div>
+                                        <div class=" px-2 d-flex flex-column align-items-start">
+                                            <small class="p-2 fs-5 theme-color"> Skills <br> botany</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div>
+                                <button class="mx-2 btn btn-outline apply-btn px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i> 
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             @endforeach 
