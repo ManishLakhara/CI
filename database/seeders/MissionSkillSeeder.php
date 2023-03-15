@@ -12,6 +12,6 @@ class MissionSkillSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\MissionSkill::factory(200)->create();
     }
 }

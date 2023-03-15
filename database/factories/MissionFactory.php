@@ -26,7 +26,7 @@ class MissionFactory extends Factory
                         ->toArray();
 
         return [
-            'theme_id' => $this->faker->numberBetween(1,200),
+            'theme_id' => $this->faker->numberBetween(1,10),
             'title' => $this->faker->words(4,true),
             'short_description' => $this->faker->words(10,true),
             'description' => $this->faker->sentence(3),

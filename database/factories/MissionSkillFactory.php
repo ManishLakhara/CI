@@ -17,7 +17,8 @@ class MissionSkillFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'mission_id' => $this->faker->numberBetween(1,200),
+            'skill_id' => $this->faker->numberBetween(1,10),
         ];
     }
 }
