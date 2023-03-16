@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+<?php 
+    $user_id = 420;
+?>
     <div class="container-fluid border-bottom">
         <div class="container">
             <div class="row">
@@ -25,7 +28,7 @@
                             <img src="{{asset("Images/filter.png")}}" alt="">
                         </button>
                     
-                     
+                    
                     <div class="border-start input-group h-100 px-2">
                         <select class="custom-select w-100 border-0 text-muted" name="country_id" id="country-dropdown">
                             <option disabled selected>Country</option>
@@ -67,12 +70,12 @@
 
     <form id="form_f"  action="{{route('landing.index')}}" method="GET" style="display: none">
         <input  type="number" name="country_f" id="country_f_id" value="{{ request()->input('country_f') }}"/>
+        <input  type="number" name="city_f" id="city_f_id" value="{{ request()->input('city_f') }}"/>
         <input type="text" name="s" id="search_f_id" value="{{ request()->input('s') }}"/>
         <input type="number" name="theme_f" id="theme_f_id" value="{{ request()->input('theme_f')}}" />
         <input type="number" name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f_id') }}"/>
         <button class="btn" type="submit" id="submit_f_id"></button>
     </form>
-
 
 
 
@@ -104,17 +107,15 @@
                     </select>
                 </div>
                 <div class='d-flex px-3 justify-content-center align-items-center'>
-                    <input type="radio" class="btn-check" name="view" value='0'  id="grid-view">
-                    <label class="btn p-1 rounded-circle " for="grid-view"><img src={{ asset('Images/grid.png') }}
+                    <input type="radio" class="btn-check px-1" name="view" value='0' checked  id="grid-view">
+                    <label  id="grid-view-label" class="btn p-1 rounded-circle" for="grid-view"><img src={{ asset('Images/grid.png') }}
                             alt=""></label>
-                    <input type="radio" class="btn-check" name="view" id="list-view">
-                    <label class="btn p-2 rounded-circle" value='1' for="list-view"><img
+                    <input type="radio" class="btn-check px-1" name="view" id="list-view">
+                    <label id="list-view-label" class="btn p-2 rounded-circle" value='1' for="list-view"><img
                             src={{ asset('Images/list.png') }} alt=""></label>
                 </div>
             </div>
         </div>
-
-       
         <div id="gridViewContent" class="row py-3" id="missions">
              @foreach ($data as $item)
                  {{-- This is grid view --}}
@@ -124,9 +125,32 @@
                             src={{ asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png') }}
                             alt="">
                         <div class="position-relative">
-                            <form action="#" class="position-absolute parent_like_btn">
-                                <button class="like_btn py-1"><i class="fa-regular fa-heart fs-4"></i></button>
-                            </form>
+                            <div class="position-absolute parent_like_btn">
+                                
+                                {{-- <label for="img1">
+                                    <input type="radio" name="imgbackground" id="img1" class="d-none imgbgchk py-1" value="">
+                                    <i class="fa-regular fa-heart fs-4"></i> --}}
+                                <button id="mission_like_btn_{{$item->mission_id}}_{{$user_id}}" type="button" class="like_btn py-1">
+                                    <?php $set=false;
+                                          $value='0';?>
+                                    @foreach ($favorite as $fav)
+                                        @if($fav->mission_id == $item->mission_id)
+                                            <i class="fas fa-heart fs-4"></i>
+                                            <?php $set=true;
+                                            $value=$fav->favorite_mission_id;
+                                            ?>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @if($set==false)
+                                    <i class="fa-regular fa-heart fs-4"></i>
+                                    @endif
+                                </button>
+                                <input type="radio" name="imgbackground" id="mission_like_input_{{$item->mission_id}}_{{$user_id}}" class="d-none imgbgchk py-1 hidden" style="display: none"
+                                value={{$value}}
+                                >
+                                {{-- </label> --}}
+                            </div>
                             <form action="#" class="position-absolute parent_add_btn">
                                 <button class="add_btn py-1"><img src={{ asset('Images/user.png') }}
                                         alt=""></button>
@@ -243,9 +267,29 @@
                             </span>
                         </div>
                         <div class="position-relative">
-                            <form action="#" class="position-absolute parent_like_btn_l">
-                                <button class="like_btn py-1"><i class="fa-regular fa-heart fs-4"></i></button>
-                            </form>
+                            <div class="position-absolute parent_like_btn_l">
+
+
+                                <button  id="mission_like_btn_{{$item->mission_id}}_{{$user_id}}" type="button" class="like_btn py-1">
+                                    <?php $set=false;
+                                          $value='0';?>
+                                    @foreach ($favorite as $fav)
+                                        @if($fav->mission_id == $item->mission_id)
+                                            <i class="fas fa-heart fs-4"></i>
+                                            <?php $set=true;
+                                            $value=$fav->favorite_mission_id;
+                                            ?>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @if($set==false)
+                                    <i class="fa-regular fa-heart fs-4"></i>
+                                    @endif
+                                </button>
+                                <input type="radio" name="imgbackground" id="mission_like_input_{{$item->mission_id}}_{{$user_id}}" class="d-none imgbgchk py-1 hidden" style="display: none"
+                                value={{$value}}>
+                            
+                            </div>
                             <form action="#" class="position-absolute parent_add_btn_l">
                                 <button class="add_btn py-1"><img src={{ asset('Images/user.png') }}
                                         alt=""></button>
@@ -379,7 +423,17 @@
 @endif
     <script>
         $(document).ready(function() {
-            $('#country-dropdown').on('select', function() {
+            $('#grid-view').on('click', function() {
+                $('#grid-view-label').css({'background-color': '#D9D9D9'});
+                $('#list-view-label').css({'background-color': 'white'});
+            })
+            $('#grid-view').click();
+            $('#list-view').on('click', function() {
+                $('#list-view-label').css({'background-color': '#D9D9D9'});
+                $('#grid-view-label').css({'background-color': 'white'});
+            })
+            $('#country-dropdown').on('change', function() {
+                console.log('yes');
                 var country_id = this.value;
                 $("#city-dropdown").html('');
                 $.ajax({
@@ -407,27 +461,68 @@
         var themes = [];
         var skills = [];
         var search = "";
-        $(document).ready(function() {
+        $(document).ready(function(Event) {
             $("#clear_all").hide();
+            $("button[id^='mission_like_btn_']").on('click', function() {
+                var mission_id = this.id.split("_")[3];
+                var user_id = this.id.split("_")[4];
+
+                if($('#mission_like_input_'+mission_id+'_'+user_id).val()=='0'){
+                    $.ajax({
+                        url: "{{url('api/add-favourite')}}",
+                        type: "POST",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            mission_id: mission_id,
+                            user_id: user_id,
+                        },
+                        success: function(data) {
+                            $('#mission_like_input_'+mission_id+'_'+user_id).val(data);
+                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fas fa-heart fs-4"></i>');
+                        }
+                    });
+                }else{
+                    let fav = $('#mission_like_input_'+mission_id+'_'+user_id).val()
+                    $.ajax({
+                        url: "{{url('api/remove-favourite')}}",
+                        type: "POST",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            mission_id: mission_id,
+                            user_id: user_id,
+                            favorite_mission_id: fav,
+                        },
+                        success: function() {
+                            $('#mission_like_input_'+mission_id+'_'+user_id).val('0');
+                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fa-regular fa-heart fs-4"></i>');
+                        }
+                    });
+                }
+            }),
             // getAjax();
+            // $("input[id^='mission_like_input_']").on('change', function() {
+            //     if($this.val()=='1'){
+            //         $("button[id^='mission_like_btn_']").html('<i class="fas fa-heart fs-4"></i>');
+            //     }
+            // }),
             $('#refresh-apply').on('click', function() {
                 $('#search_input').val('');
                 $('#filter-clear').click();
                 $('#filter-apply').click();
-            })
+            }),
             $('#grid-view').on('click', function() {
                 $('#gridViewContent').show();
                 $('#listViewContent').hide();
-            })
+            }),
             $('#list-view').on('click', function() {
                 $('#gridViewContent').hide();
                 $('#listViewContent').show();
-            })
+            }),
             $("#filter-apply").on('click',function() {
                 search = $("#search_input").val();
                 $("#search_f_id").val(search);
                 $('#submit_f_id').click();
-            })
+            }),
             $("#country-dropdown").on('change', function(e) {
                     //e.preventDefault();
                     $("#clear_all").show();
@@ -461,6 +556,7 @@
                         htmlstr
                     );
                     cities.push(city_id);
+                    $('#city_f_id').val(cities);
                 }),
                 $("#theme-dropdown").on('change', function() {
                     $("#clear_all").show();

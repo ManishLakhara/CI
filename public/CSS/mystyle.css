@@ -19,7 +19,7 @@
 .like_btn{
     background-color: black;
     -webkit-background-composite: none;
-    color: white;
+    color: rgb(247, 81, 81);
     border-radius: 50%;
     border: none;
     height: 3rem;

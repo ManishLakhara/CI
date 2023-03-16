@@ -4,7 +4,7 @@ use App\Http\Controllers\admin\CountryCityController;
 use App\Http\Controllers\LandingPageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\FavouriteMissionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,3 +20,5 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 Route::post('fetch-city',[CountryCityController::class,'fetchCity']);
+Route::post('add-favourite',[FavouriteMissionController::class,'addFavourite']);
+Route::post('remove-favourite',[FavouriteMissionController::class,'removeFavourite']);
