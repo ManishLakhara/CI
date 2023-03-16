@@ -10,16 +10,15 @@ use App\Http\Requests\UserProfileUpdateRequest;
 
 class UserEditProfileController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+
         return view('usereditprofile');
     }
 
-    public function update(User $user, UserProfileUpdateRequest $request)
+    public function edit($user_id)
     {
-        $countries = Country::get(['name', 'country_id']);
-        $cities = City::where("country_id", $user->country_id)->get();
-        $user->fill($request->post())->save();
-
-        return $this->success('profile','Profile updated successfully!');
+        $user = User::findOrFail($user_id);
+        return view('usereditprofile', compact('user'));
     }
 }

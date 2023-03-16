@@ -22,7 +22,14 @@ class UserProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'first_name' => 'required|max:16',
+            'last_name' => 'required|max:16',
+            'employee_id' => 'max:16',
+            'title' => 'max:255',
+            'department' => 'max:16',
+            'country_id' => 'required',
+            'city_id' => 'required',
+
         ];
     }
 }

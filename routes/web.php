@@ -106,4 +106,5 @@ Route::get('index',[LandingPageController::class, 'index'])->name('landing.index
 Route::get('filter-data',[LandingPageController::class,'filterData']);
 
 Route::get('edit-profile',[UserEditProfileController::class,'index']);
-Route::post('profile',[UserEditProfileController::class,'update'])->name('profile.update');
+
+Route::get('edit/{user_id}',[UserEditProfileController::class,'edit'])->name('edit');

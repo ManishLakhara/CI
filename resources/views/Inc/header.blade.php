@@ -27,10 +27,10 @@
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="#">Logout</a>
               <a class="dropdown-item" href="#">Login as Admin</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" href="{{ url('edit-profile') }}">Something else here</a>
           </div>
         </div>
       </div>
-    </div>   
+    </div>
   </div>
 </header>
