@@ -22,12 +22,14 @@
         </div>
         <div class="dropdown">
           <a class="btn text-muted btn-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           <img class="rounded-circle px-3" src={{asset('Images/user-img1.png')}}  alt=""> <span id="userAvatar">Evan Donohue</span>
+            <img class="rounded-circle px-3" src="{{ Auth::user()->avatar ? asset(Auth::user()->avatar) : asset('Images/user-img1.png') }}" alt="Profile" style="height:54px">
+            <span id="userAvatar">{{ isset($user) ? $user->first_name . ' ' . $user->last_name : '' }}</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Logout</a>
+              <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
               <a class="dropdown-item" href="#">Login as Admin</a>
-              <a class="dropdown-item" href="{{ url('edit-profile') }}">Something else here</a>
+              <a class="dropdown-item" href="{{ route('edit-profile', ['user_id' => Auth::user()->user_id]) }}">Edit Profile </a>
+
           </div>
         </div>
       </div>

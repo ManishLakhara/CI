@@ -105,6 +105,7 @@ Route::get('cms',[CmsPagesController::class, 'index']);
 Route::get('index',[LandingPageController::class, 'index'])->name('landing.index');
 Route::get('filter-data',[LandingPageController::class,'filterData']);
 
-Route::get('edit-profile',[UserEditProfileController::class,'index']);
+Route::post('update-profile', [UserEditProfileController::class,'updateProfile'])->name('update-profile');
 
-Route::get('edit/{user_id}',[UserEditProfileController::class,'edit'])->name('edit');
+Route::get('edit-profile/{user_id}', [UserEditProfileController::class,'editProfile'])->name('edit-profile')->middleware('auth');
+Route::post('logout', [UserEditProfileController::class,'logout'])->name('logout');
