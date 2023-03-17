@@ -9,6 +9,7 @@ use App\Models\City;
 use App\Http\Requests\UserProfileUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserEditProfileController extends Controller
@@ -22,7 +23,7 @@ class UserEditProfileController extends Controller
             return redirect()->route('login');
         }
 
-      
+
 
         $countries = Country::get(['name', 'country_id']);
         $cities = City::where("country_id", $user->country_id)->get();
@@ -45,6 +46,32 @@ class UserEditProfileController extends Controller
         $user->save();
 
         return redirect()->route('edit-profile')->with('success', 'Profile updated successfully!');
+    }
+
+
+    public function updatePassword(Request $request)
+    {
+        // Validate the input data
+        $request->validate([
+            'old_password' => 'required',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required|same:password',
+        ]);
+
+        // Get the authenticated user
+        $user = auth()->user();
+
+        // Check if the old password matches the user's current password
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'The old password is incorrect.']);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Redirect the user with a success message
+        return redirect()->back()->with('success', 'Your password has been updated successfully.');
     }
 
     public function logout()

@@ -4,7 +4,9 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('update-profile') }}" enctype="multipart/form-data" method="POST">
+
+
+    <form action="{{ route('update-profile') }}" enctype="multipart/form-data" method="POST" id="form1">
         @csrf
 
 
@@ -18,64 +20,16 @@
 
                     <h5 class="mt-2">{{ $user->first_name }} {{ $user->last_name }}</h5>
 
-                    <button type="button" data-toggle="modal" data-target="#passwordModal" class="btn btn-warning">Change
-                        Password</button>
+                    <button type="button" data-toggle="modal" data-target="#passwordModal-{{ $user->user_id }}"
+                        class="btn btn-warning">Change
+                        Password
+                    </button>
 
 
-                    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog"
-                        aria-labelledby="passwordModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content p-3">
-                                <form action="" method="post">
-                                    @csrf
-                                    @method('POST')
-                                    <div>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="py-2 text-start">
-                                                Change Password
-                                            </div>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                                style="border:none;background:none">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 mt-4">
-
-                                                <input type="password" class="form-control" id="exampleInputPassword1"
-                                                    placeholder="Enter Old Password">
-                                            </div>
-                                            <div class="col-12 mt-4">
-
-                                                <input type="password" class="form-control" id="exampleInputPassword1"
-                                                    placeholder="Enter new Password">
-                                            </div>
-                                            <div class="col-12 mt-4">
-
-                                                <input type="password" class="form-control" id="exampleInputPassword1"
-                                                    placeholder="Enter confirm Password">
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="d-flex py-4 justify-content-end">
-                                        <div class="px-1">
-                                            <button type="button" class="btn btn-outline-secondary px-4"
-                                                style="border-radius: 23px" data-dismiss="modal">Close</button>
-                                        </div>
-                                        <div class="px-1">
-                                            <button type="submit" class="btn btn-outline effects px-4"
-                                                style="border-color: #f88634 ;border-radius: 23px; color: #f88634">Change
-                                                Password</button>
-                                        </div>
-
-                                    </div>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
+                    @include('components.passwordmodal', [
+                        'user_id' => $user->user_id,
+                        'form_action' => 'update-password',
+                    ])
 
                 </div>
                 <div class="col-lg-8">
@@ -181,7 +135,7 @@
                                 <div class="col-lg-6">
                                     <label for="country">Country</label>
                                     <select name="country_id" class="form-control" id="country-dropdown">
-
+                                        <option value="none">select your country</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->country_id }}"
                                                 @if ($country->country_id == $user->country_id) selected @endif>
@@ -284,7 +238,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn apply-btn mt-5 float-end">Save</button>
+                    <button type="submit" class="btn apply-btn mt-5 float-end" form="form1">Save</button>
                 </div>
             </div>
         </div>
@@ -315,4 +269,8 @@
             });
         });
     </script>
+@section('contactus')
+    @include('inc.contactus')
+@endsection
+
 @endsection

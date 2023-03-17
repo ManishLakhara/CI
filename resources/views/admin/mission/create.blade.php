@@ -112,9 +112,20 @@
             </div>
             <div class="col-md-6">
                 <label for="missionRegDeadline" class="form-label">Mission Registration Deadline</label>
-                <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'
-                    disabled>
+                <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline' disabled
+                    value="{{ old('registration_deadline') }}">
             </div>
+            <div class="col-md-6">
+                <label for="goal_objective_text" class="form-label">Goal Objective Text</label>
+                <input type="text" class="form-control" id="goal_objective_text" name='goal_objective_text' disabled
+                    value="{{ old('goal_objective_text') }}">
+            </div>
+            <div class="col-md-6">
+                <label for="goal_value" class="form-label">Goal Value</label>
+                <input type="text" class="form-control" id="goal_value" name='goal_value' disabled
+                    value="{{ old('goal_value') }}">
+            </div>
+
 
             <div class="col-md-6">
                 <label for="inputTheme" class="form-label">Mission Theme</label>
@@ -216,24 +227,30 @@
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        // get the mission type select element
-        var missionType = $('#inputType');
+        const missionTypeSelect = document.getElementById('inputType');
+        const totalSeatsInput = document.getElementById('text');
+        const registrationDeadlineInput = document.getElementById('missionRegDeadline');
+        const goalObjectiveTextInput = document.getElementById('goal_objective_text');
+        const goalValueInput = document.getElementById('goal_value');
 
-        // get the total seats and registration deadline inputs
-        var totalSeats = $('#text');
-        var regDeadline = $('#missionRegDeadline');
+        missionTypeSelect.addEventListener('change', function() {
+            const selectedOption = missionTypeSelect.value;
 
-        // add an event listener to the mission type select element
-        missionType.on('change', function() {
-            // check if the selected mission type is 'time'
-            if (missionType.val() === 'time') {
-                // if it is, enable the total seats and registration deadline inputs
-                totalSeats.prop('disabled', false);
-                regDeadline.prop('disabled', false);
+            if (selectedOption === 'time') {
+                totalSeatsInput.disabled = false;
+                registrationDeadlineInput.disabled = false;
+                goalObjectiveTextInput.disabled = true;
+                goalValueInput.disabled = true;
+            } else if (selectedOption === 'goal') {
+                totalSeatsInput.disabled = true;
+                registrationDeadlineInput.disabled = true;
+                goalObjectiveTextInput.disabled = false;
+                goalValueInput.disabled = false;
             } else {
-                // if it isn't, disable the total seats and registration deadline inputs
-                totalSeats.prop('disabled', true);
-                regDeadline.prop('disabled', true);
+                totalSeatsInput.disabled = true;
+                registrationDeadlineInput.disabled = true;
+                goalObjectiveTextInput.disabled = true;
+                goalValueInput.disabled = true;
             }
         });
     </script>

@@ -41,7 +41,10 @@ class UpdateMissionRequest extends FormRequest
                 },
             ],
             'start_date' => 'date',
-            'end_date' => 'date|after:start_date'
+            'end_date' => 'date|after:start_date',
+            'registration_deadline'=>'date|after:start_date|before:end_date',
+            'goal_objective_text'=>'max:255',
+            'goal_value'=>'integer',
             //'skill_id'=>'required'
         ];
     }

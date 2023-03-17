@@ -101,7 +101,7 @@ Route::resource('cmspage', CmsPageController::class);
 
 
 
-Route::get('cms',[CmsPagesController::class, 'index']);
+Route::get('cms',[CmsPagesController::class, 'index'])->name('policy-page');
 Route::get('index',[LandingPageController::class, 'index'])->name('landing.index');
 Route::get('filter-data',[LandingPageController::class,'filterData']);
 
@@ -109,3 +109,4 @@ Route::post('update-profile', [UserEditProfileController::class,'updateProfile']
 
 Route::get('edit-profile/{user_id}', [UserEditProfileController::class,'editProfile'])->name('edit-profile')->middleware('auth');
 Route::post('logout', [UserEditProfileController::class,'logout'])->name('logout');
+Route::post('update-password', [UserEditProfileController::class, 'updatePassword'])->name('update-password')->middleware('auth');

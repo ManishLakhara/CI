@@ -7,16 +7,17 @@ use App\Models\Mission;
 use App\Models\MissionTheme;
 use App\Models\Skill;
 use App\Models\FavoriteMission;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class LandingPageController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         // $datas = Mission::orderBy('mission_id','desc');
+        $user = Auth::user();
         $count = 0;
         $data = Mission::where([
             ['title', '!=', Null],
@@ -31,7 +32,7 @@ class LandingPageController extends Controller
         if(isset($request->country_f))
         {
             $data = $data->where('country_id',$request->country_f);
-        }   
+        }
         if(isset($request->city_f)){
             $data = $data->where('city_id',$request->city_f);
         }
@@ -52,9 +53,9 @@ class LandingPageController extends Controller
         $skills = Skill::all(['skill_id','skill_name']);
         $favorite = FavoriteMission::where('user_id',$user_id)
                                      ->get(['favorite_mission_id','mission_id']);
-        return view('index',compact('data','count','countries','themes','skills','favorite')); // Create view by name missiontheme/index.blade.php
+        return view('index',compact('data','count','countries','themes','skills','favorite','user')); // Create view by name missiontheme/index.blade.php
     }
-    
+
     // public function filterData(Request $request){
     //     $data = Mission::orderBy('mission_id','desc')->with('country');
     //     $count = $data->count();

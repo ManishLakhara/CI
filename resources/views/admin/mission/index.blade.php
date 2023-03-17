@@ -5,7 +5,6 @@
 @endsection
 
 @section('body')
-
     <div class="container-fluid px-4">
         <h1 class="mt-4">Mission</h1>
 
@@ -52,7 +51,10 @@
 
             <div class="card-body">
 
-                @include('admin.components.search_add',['form_action' => 'mission.index','add' => 'mission.create'])
+                @include('admin.components.search_add', [
+                    'form_action' => 'mission.index',
+                    'add' => 'mission.create',
+                ])
 
                 <table class="table table-responsive">
                     <thead class="table-light">
@@ -66,30 +68,31 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $d)
-                    <tr>
-                        <td>{{ $d->title }}</td>
-                        <td>{{ $d->mission_type }}</td>
-                        <td>{{ $d->start_date }}</td>
-                        <td>{{ $d->end_date }}</td>
-                        <td>
+                            <tr>
+                                <td>{{ $d->title }}</td>
+                                <td>{{ $d->mission_type }}</td>
+                                <td>{{ $d->start_date }}</td>
+                                <td>{{ $d->end_date }}</td>
+                                <td>
 
-                                <a class="btn btn-white"href="{{route('mission.edit',$d->mission_id)}}">
-                                {{-- <img src="Images/edit.png" height="22px" width="22px" alt="edit"> --}}
-                                <i class="fas fa-edit"></i>
-                                </a>
+                                    <a class="btn btn-white"href="{{ route('mission.edit', $d->mission_id) }}">
+                                        {{-- <img src="Images/edit.png" height="22px" width="22px" alt="edit"> --}}
+                                        <i class="fas fa-edit"></i>
+                                    </a>
 
-                                <button type="button" data-toggle="modal" data-target="#deleteModal-{{$d->mission_id}}" class="btn btn-white">
-                                    <img src="Images/bin.png" alt="delete">
-                                </button>
-                                <!-- Modal -->
-                                @include('admin.components.deleteModal',[
-                                    'id' => $d->mission_id,
-                                    'form_action' => 'mission.destroy',
-                                ])
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
+                                    <button type="button" data-toggle="modal"
+                                        data-target="#deleteModal-{{ $d->mission_id }}" class="btn btn-white">
+                                        <img src="Images/bin.png" alt="delete">
+                                    </button>
+                                    <!-- Modal -->
+                                    @include('admin.components.deleteModal', [
+                                        'id' => $d->mission_id,
+                                        'form_action' => 'mission.destroy',
+                                    ])
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
 
                 </table>

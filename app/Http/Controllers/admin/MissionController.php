@@ -17,7 +17,8 @@ use App\Http\Requests\UpdateMissionRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Skill;
 use App\Models\MissionSkill;
-
+use App\Models\GoalMission;
+use App\Models\TimeMission;
 
 class MissionController extends Controller
 {
@@ -93,7 +94,7 @@ class MissionController extends Controller
                 ]);
             }
         }
-
+        $goalMission = new GoalMission;
 
         // handle mission images
         $images = $request->file('media_name');
@@ -148,6 +149,24 @@ class MissionController extends Controller
             ]);
             $missionSkill->save();
         }
+        if ($request->get('mission_type') === 'goal') {
+            $goalMission = new GoalMission([
+                'goal_objective_text' => $request->input('goal_objective_text'),
+                'goal_value' => $request->input('goal_value'),
+                'mission_id' => $mission->mission_id,
+            ]);
+
+            $goalMission->save();
+        }
+        if ($request->get('mission_type') === 'time') {
+            $timeMission = new TimeMission([
+                'total_seats' => $request->input('total_seats'),
+                'registration_deadline' => $request->input('registration_deadline'),
+                'mission_id' => $mission->mission_id,
+            ]);
+
+            $timeMission->save();
+        }
 
         return redirect()->route('mission.index')->with('success', 'New Mission have been created');
     }
@@ -171,7 +190,7 @@ class MissionController extends Controller
         $countries = Country::get(['name', 'country_id']);
         $cities = City::where("country_id", $mission->country_id)->get();
         $mission_theme = MissionTheme::get(['title', 'mission_theme_id']);
-       
+
         $mission_skills = Skill::get(['skill_id', 'skill_name']);
         $selected_skills = MissionSkill::where(['mission_id' => $missionId])->get();
         $missionVideo = MissionMedia::where(['mission_id' => $missionId, 'media_name' => 'youtube'])->get();
@@ -182,7 +201,7 @@ class MissionController extends Controller
         $missionDocuments = MissionDocument::where([
             'mission_id' => $missionId,
         ])->get();
-        return view('admin.mission.edit', compact('mission', 'countries', 'mission_theme','cities', 'mission_skills', 'selected_skills', 'missionVideo', 'missionImages', 'missionDocuments'));
+        return view('admin.mission.edit', compact('mission', 'countries', 'mission_theme', 'cities', 'mission_skills', 'selected_skills', 'missionVideo', 'missionImages', 'missionDocuments'));
         // Create view by name mission/edit.blade.php
     }
 

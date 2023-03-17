@@ -22,6 +22,8 @@
     @include('inc.header')
     @yield('content')
     @include('inc.footer')
+
 </body>
     @include('layouts.scripts')
+    @yield('contactus')
 </html>
