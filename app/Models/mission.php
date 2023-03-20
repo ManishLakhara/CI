@@ -79,6 +79,10 @@ class Mission extends Model
         return $this->hasOne(GoalMission::class, 'mission_id');
     }
 
+    public function timeMission() {
+        return $this->hasOne(TimeMission::class, 'mission_id');
+    }
+
     public function timeSheet() {
         return $this->hasMany(TimeSheet::class, 'mission_id');
     }

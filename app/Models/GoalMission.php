@@ -11,7 +11,10 @@ class GoalMission extends Model
     use HasFactory;
     use SoftDeletes;
     protected $primaryKey = 'goal_mission_id';
+    protected $dates = ['deleted_at'];
+
     protected $fillable=[
+        'mission_id',
         'goal_objective_text',
         'goal_value',
         'mission_id',

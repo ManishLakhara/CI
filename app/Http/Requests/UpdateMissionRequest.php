@@ -42,10 +42,11 @@ class UpdateMissionRequest extends FormRequest
             ],
             'start_date' => 'date',
             'end_date' => 'date|after:start_date',
+            'total_seats'=>'integer',
             'registration_deadline'=>'date|after:start_date|before:end_date',
-            'goal_objective_text'=>'max:255',
+            'goal_objective_text'=>'max:255|string',
             'goal_value'=>'integer',
-            //'skill_id'=>'required'
+            'skill_id' => 'required_without_all:skill_id.*|array|min:1',
         ];
     }
 

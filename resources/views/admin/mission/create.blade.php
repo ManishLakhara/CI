@@ -83,6 +83,11 @@
                     <input type='date' class="form-control" name='start_date' value="{{ old('start_date') }}" />
 
                 </div>
+                @error('start_date')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Mission End Date</label>
@@ -100,30 +105,56 @@
 
             <div class="col-md-6">
                 <label for="inputType" class="form-label">Mission Type</label>
-                <select id="inputType" class="form-select" name='mission_type'>
+                <select id="inputType" class="form-select" name='mission_type' value="{{ old('mission_type') }}">
                     <option value="none" selected="" disabled="" hidden="">select mision type</option>
                     <option value="time">Time</option>
                     <option value="goal">Goal</option>
                 </select>
+                @error('mission_type')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
+
             <div class="col-md-6">
                 <label for="text" class="form-label">Total Seats</label>
                 <input type="text" class="form-control" id="text" name='total_seats' disabled>
+                @error('total_seats')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6">
                 <label for="missionRegDeadline" class="form-label">Mission Registration Deadline</label>
                 <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline' disabled
                     value="{{ old('registration_deadline') }}">
+                @error('registration_deadline')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6">
                 <label for="goal_objective_text" class="form-label">Goal Objective Text</label>
                 <input type="text" class="form-control" id="goal_objective_text" name='goal_objective_text' disabled
                     value="{{ old('goal_objective_text') }}">
+                @error('goal_objective_text')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6">
                 <label for="goal_value" class="form-label">Goal Value</label>
                 <input type="text" class="form-control" id="goal_value" name='goal_value' disabled
                     value="{{ old('goal_value') }}">
+                @error('goal_value')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
 
@@ -140,11 +171,11 @@
             <div class="col-md-6">
                 <label for="mission_skills">Mission Skills</label>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    <button class="btn btn-secondary dropdown-toggle col-md-6" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Select Skills
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                    <div class="dropdown-menu col-md-6" aria-labelledby="dropdownMenuButton"
                         style="max-height: 200px; overflow-y: auto;">
                         @foreach ($mission_skills as $skill)
                             <div class="form-check">
@@ -159,7 +190,7 @@
                 </div>
                 @error('skill_id')
                     <div class="text-danger">
-                        {{ $message }}
+                        Please select at least one skill.
                     </div>
                 @enderror
             </div>
@@ -241,16 +272,30 @@
                 registrationDeadlineInput.disabled = false;
                 goalObjectiveTextInput.disabled = true;
                 goalValueInput.disabled = true;
+
+
+                goalObjectiveTextInput.value = '';
+                goalValueInput.value = '';
             } else if (selectedOption === 'goal') {
                 totalSeatsInput.disabled = true;
                 registrationDeadlineInput.disabled = true;
                 goalObjectiveTextInput.disabled = false;
                 goalValueInput.disabled = false;
+
+
+                totalSeatsInput.value = '';
+                registrationDeadlineInput.value = '';
             } else {
                 totalSeatsInput.disabled = true;
                 registrationDeadlineInput.disabled = true;
                 goalObjectiveTextInput.disabled = true;
                 goalValueInput.disabled = true;
+
+
+                totalSeatsInput.value = '';
+                registrationDeadlineInput.value = '';
+                goalObjectiveTextInput.value = '';
+                goalValueInput.value = '';
             }
         });
     </script>

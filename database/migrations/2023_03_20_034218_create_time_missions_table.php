@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('total_seats')->nullable();
             $table->datetime('registration_deadline')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

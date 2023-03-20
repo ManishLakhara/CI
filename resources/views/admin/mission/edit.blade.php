@@ -108,23 +108,69 @@
 
             <div class="col-md-6">
                 <label for="inputType" class="form-label">Mission Type</label>
-                <select id="inputType" class="form-select" name='mission_type'>
+                <select id="inputType" class="form-select" name='mission_type' onchange="handleMissionTypeChange(this)">
                     <option value="none" selected="" disabled="" hidden="">select mission type</option>
-                    <option value="TIME" @if ($mission->mission_type == 'TIME') selected @endif>Time</option>
-                    <option value="GOAL" @if ($mission->mission_type == 'GOAL') selected @endif>Goal</option>
+                    <option value="time" {{ $mission->mission_type === 'TIME' ? 'selected' : '' }}>Time</option>
+                    <option value="goal" {{ $mission->mission_type === 'GOAL' ? 'selected' : '' }}>Goal</option>
                 </select>
+                @error('mission_type')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
             <div class="col-md-6">
                 <label for="text" class="form-label">Total Seats</label>
-                <input type="text" class="form-control" id="text"
-                    name='total_seats'value='{{ $mission->total_seats }}' disabled>
+                <input type="text" class="form-control" id="text" name='total_seats'
+                    value="{{ $timeMission ? $timeMission->total_seats : '' }}"
+                    {{ $mission->mission_type === 'GOAL' ? 'disabled' : '' }}>
+                @error('total_seats')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
+
             <div class="col-md-6">
                 <label for="missionRegDeadline" class="form-label">Mission Registration Deadline</label>
                 <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'
-                    disabled>
+                    value="{{ $timeMission ? date('Y-m-d', strtotime($timeMission->registration_deadline)) : '' }}"
+                    {{ $mission->mission_type === 'GOAL' ? 'disabled' : '' }}>
+                @error('registration_deadline')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
+
+            <div class="col-md-6">
+                <label for="goal_objective_text" class="form-label">Goal Objective Text</label>
+                <input type="text" class="form-control" id="goal_objective_text" name='goal_objective_text'
+                    value="{{ $goalMission ? $goalMission->goal_objective_text : '' }}"
+                    {{ $mission->mission_type === 'TIME' ? 'disabled' : '' }}>
+                @error('goal_objective_text')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="col-md-6">
+                <label for="goal_value" class="form-label">Goal Value</label>
+                <input type="text" class="form-control" id="goal_value" name='goal_value'
+                    value="{{ $goalMission ? $goalMission->goal_value : '' }}"
+                    {{ $mission->mission_type === 'TIME' ? 'disabled' : '' }}>
+                @error('goal_value')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+
+
+
             <div class="col-md-6">
                 <label for="inputTheme" class="form-label">Mission Theme</label>
                 <select class="form-control" id="country-dropdown" name='theme_id'>
@@ -250,28 +296,59 @@
         CKEDITOR.replace('editor1');
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script></script>
     <script>
-        const inputType = document.getElementById('inputType');
-        const totalSeats = document.getElementById('text');
-        const registrationDeadline = document.getElementById('missionRegDeadline');
+        const missionTypeSelect = document.querySelector('#inputType');
+        const totalSeatsInput = document.querySelector('#text');
+        const registrationDeadlineInput = document.querySelector('#missionRegDeadline');
+        const goalObjectiveTextInput = document.querySelector('#goal_objective_text');
+        const goalValueInput = document.querySelector('#goal_value');
 
-        let isTimeSelected = inputType.value === 'TIME';
+        function disableTotalSeatsAndRegistrationDeadline() {
+            totalSeatsInput.disabled = true;
+            registrationDeadlineInput.disabled = true;
+            totalSeatsInput.value = '';
+            registrationDeadlineInput.value = '';
+        }
 
-        function updateFields() {
-            if (isTimeSelected) {
-                totalSeats.removeAttribute('disabled');
-                registrationDeadline.removeAttribute('disabled');
-            } else {
-                totalSeats.setAttribute('disabled', true);
-                registrationDeadline.setAttribute('disabled', true);
+        function disableGoalObjectiveTextAndGoalValue() {
+            goalObjectiveTextInput.disabled = true;
+            goalValueInput.disabled = true;
+            goalObjectiveTextInput.value = '';
+            goalValueInput.value = '';
+        }
+
+        function enableTotalSeatsAndRegistrationDeadline() {
+            totalSeatsInput.disabled = false;
+            registrationDeadlineInput.disabled = false;
+        }
+
+        function enableGoalObjectiveTextAndGoalValue() {
+            goalObjectiveTextInput.disabled = false;
+            goalValueInput.disabled = false;
+        }
+
+        function handleMissionTypeChange(selectElement) {
+            const selectedMissionType = selectElement.value;
+            if (selectedMissionType === 'time') {
+                disableGoalObjectiveTextAndGoalValue();
+                enableTotalSeatsAndRegistrationDeadline();
+            } else if (selectedMissionType === 'goal') {
+                disableTotalSeatsAndRegistrationDeadline();
+                enableGoalObjectiveTextAndGoalValue();
             }
         }
 
-        inputType.addEventListener('change', function() {
-            isTimeSelected = this.value === 'TIME';
-            updateFields();
+        missionTypeSelect.addEventListener('change', function() {
+            handleMissionTypeChange(this);
         });
 
-        updateFields();
+        // Initialize field states based on the initial mission type value
+        const initialMissionType = missionTypeSelect.value;
+        if (initialMissionType === 'time') {
+            disableGoalObjectiveTextAndGoalValue();
+        } else if (initialMissionType === 'goal') {
+            disableTotalSeatsAndRegistrationDeadline();
+        }
     </script>
 @endsection
