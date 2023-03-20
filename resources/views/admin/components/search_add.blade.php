@@ -11,7 +11,7 @@
                         <i class="fas fa-search"></i>
                       </button>
                     <div class="form-outline w-100">
-                      <input type="search" name="s" placeholder="Search" value='{{old("s")}}' class="form-control border-0" />
+                      <input type="search" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0" />
                     </div>
                 </div>    
             </form>

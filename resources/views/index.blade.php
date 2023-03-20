@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<?php 
-    $user_id = 420;
+<?php
+    $user_id = Auth::user()->user_id;
 ?>
     <div class="container-fluid border-bottom">
         <div class="container">
@@ -17,7 +17,7 @@
                                 value='{{ request()->input('s') }}' class="form-control border-0" />
                         </div>
                     </div>
-                   </form> 
+                   </form>
                 </div>
                 <div class="col-md-6 d-flex justify-content-around">
                     <button class="btn border-start" type=submit id="refresh-apply">
@@ -27,8 +27,8 @@
                         <button class="btn border-start" type=submit id="filter-apply">
                             <img src="{{asset("Images/filter.png")}}" alt="">
                         </button>
-                    
-                    
+
+
                     <div class="border-start input-group h-100 px-2">
                         <select class="custom-select w-100 border-0 text-muted" name="country_id" id="country-dropdown">
                             <option disabled selected>Country</option>
@@ -58,6 +58,31 @@
                                 <option value={{ $skill->skill_id }}>{{ $skill->skill_name }}</option>
                             @endforeach
                         </select>
+                        {{-- <div class="dropdown" id="skill-dropdown">
+                            <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="float-start ps-0 pe-5">
+                                    Skill
+                                </span>
+                            </button>
+                            <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton">
+
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="selectAllCheckbox">
+                                  <label class="form-check-label text-secondary" for="selectAllCheckbox">
+                                    Select All
+                                  </label>
+                                </div>
+                                @foreach ($skills as $skill)
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ $skill->skill_id }}" id="skill_{{ $skill->skill_id }}" name="skill[]">
+                                    <label class="form-check-label text-secondary" for="skill_{{ $skill->skill_id }}">
+                                      {{ $skill->skill_name }}
+                                    </label>
+                                  </div>
+                                @endforeach
+
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -74,6 +99,7 @@
         <input type="text" name="s" id="search_f_id" value="{{ request()->input('s') }}"/>
         <input type="number" name="theme_f" id="theme_f_id" value="{{ request()->input('theme_f')}}" />
         <input type="number" name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f_id') }}"/>
+        <input type="number" name="sort" id="sort" value="{{request()->input('sort')}}"/>
         <button class="btn" type="submit" id="submit_f_id"></button>
     </form>
 
@@ -100,10 +126,14 @@
             </div>
             <div class="d-flex">
                 <div class="input-group px-2" style="width: 200px ">
-                    <select class="custom-select w-100 border-1 text-muted">
-                        <option selected>Sort by</option>
-                        <option value="1">time</option>
-                        <option value="2">rating</option>
+                    <select id="selectsort" class="custom-select w-100 border-1 text-muted">
+                        <option disabled selected>Sort by</option>
+                        <option value="1" @if(request()->input('sort')=='1') selected @endif>Newest</option>
+                        <option value="2"@if(request()->input('sort')=='2') selected @endif>Oldest</option>
+                        <option value="3"@if(request()->input('sort')=='3') selected @endif>Lowest available seats</option>
+                        <option value="4"@if(request()->input('sort')=='4') selected @endif>Highest available seats</option>
+                        <option value="5"@if(request()->input('sort')=='5') selected @endif>My favourites</option>
+                        <option value="6" @if(request()->input('sort')=='6') selected @endif>Registration deadline</option>
                     </select>
                 </div>
                 <div class='d-flex px-3 justify-content-center align-items-center'>
@@ -116,9 +146,10 @@
                 </div>
             </div>
         </div>
-        <div id="gridViewContent" class="row py-3" id="missions">
-             @foreach ($data as $item)
-                 {{-- This is grid view --}}
+         {{--gridViewContent--}}
+            <div id="gridViewContent" class="row py-3" id="missions">
+                @foreach ($data as $item)
+                    {{-- This is grid view --}}
                 <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center">
                     <div class="py-1">
                         <img class="card-img-top"
@@ -126,13 +157,13 @@
                             alt="">
                         <div class="position-relative">
                             <div class="position-absolute parent_like_btn">
-                                
+
                                 {{-- <label for="img1">
                                     <input type="radio" name="imgbackground" id="img1" class="d-none imgbgchk py-1" value="">
                                     <i class="fa-regular fa-heart fs-4"></i> --}}
                                 <button id="mission_like_btn_{{$item->mission_id}}_{{$user_id}}" type="button" class="like_btn py-1">
                                     <?php $set=false;
-                                          $value='0';?>
+                                            $value='0';?>
                                     @foreach ($favorite as $fav)
                                         @if($fav->mission_id == $item->mission_id)
                                             <i class="fas fa-heart fs-4"></i>
@@ -151,10 +182,51 @@
                                 >
                                 {{-- </label> --}}
                             </div>
-                            <form action="#" class="position-absolute parent_add_btn">
-                                <button class="add_btn py-1"><img src={{ asset('Images/user.png') }}
+                            <div class="position-absolute parent_add_btn">
+                                <button class="add_btn py-1" id="misison_invite_btn_{{$item->mission_id}}_{{$user_id}}" data-toggle="modal" data-target="#invite_user_modal_{{$item->mission_id}}_{{$user_id}}"><img src={{ asset('Images/user.png') }}
                                         alt=""></button>
-                            </form>
+                                <!-- Modal -->
+                                <div class="modal fade w-100" id="invite_user_modal_{{$item->mission_id}}_{{$user_id}}" tabindex="-1" role="dialog" aria-labelledby="invite_user_modal_{{$item->mission_id}}_{{$user_id}}Label" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="invite_user_modal_{{$item->mission_id}}_{{$user_id}}Label">Invite Your Friends</h5>
+                                            <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                        <th scope="col">First</th>
+                                                        <th scope="col">last</th>
+                                                        <th scope="col">email</th>
+                                                        <th scope="col">Invite</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($users as $user)
+                                                            <tr>
+                                                            <th>{{$user->first_name}}</th>
+                                                            <td>{{$user->last_name}}</td>
+                                                            <td>{{$user->email}}</td>
+                                                            <td>
+                                                                <input type="checkbox" id="invite_{{$item->mission_id}}_{{$user->user_id}}_{{$user_id}}" value="{{$user->user_id}}">
+                                                            </td>
+                                                            </tr>
+                                                        @endforeach
+
+                                                    </tbody>
+                                                    </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <span class="position-absolute parent_mission_location">
                                 <span class="mission_location px-2 py-1">
                                     <img src={{ asset('Images/pin.png') }} alt=""><span
@@ -225,7 +297,7 @@
                                                 <img src={{ asset('Images/deadline.png') }} alt="">
                                             </div>
                                             <div class=" px-2 d-flex flex-column align-items-start">
-                                                <span class="theme-color fs-5 font-weight-bolder">09/01/2019 <br></span>
+                                                <span class="theme-color fs-5 font-weight-bolder">{{ date('d-m-Y', strtotime($item->end_date)) }}<br></span>
                                                 <span class="text-muted">Deadline</span>
                                             </div>
                                         </div>
@@ -251,161 +323,202 @@
                         </div>
                     </div>
                 </div>
-            @endforeach 
-             
-        </div> 
-        
-        <div class="row py-3" id="listViewContent" style="display: none;">
-            @foreach ($data as $item)
-                 {{-- This is list view --}}
-                <div class="row">
-                    <div class="col-md-4 py-2 text-center">
-                        <img class="img-fluid" src="{{asset("Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png")}}" alt="">
-                        <div class="text-center" style="margin-top: -20px">
-                            <span class="fs-4 px-2 from_untill">
-                                {{ $item->missionTheme->title }}
-                            </span>
-                        </div>
-                        <div class="position-relative">
-                            <div class="position-absolute parent_like_btn_l">
-
-
-                                <button  id="mission_like_btn_{{$item->mission_id}}_{{$user_id}}" type="button" class="like_btn py-1">
-                                    <?php $set=false;
-                                          $value='0';?>
-                                    @foreach ($favorite as $fav)
-                                        @if($fav->mission_id == $item->mission_id)
-                                            <i class="fas fa-heart fs-4"></i>
-                                            <?php $set=true;
-                                            $value=$fav->favorite_mission_id;
-                                            ?>
-                                            @break
-                                        @endif
-                                    @endforeach
-                                    @if($set==false)
-                                    <i class="fa-regular fa-heart fs-4"></i>
-                                    @endif
-                                </button>
-                                <input type="radio" name="imgbackground" id="mission_like_input_{{$item->mission_id}}_{{$user_id}}" class="d-none imgbgchk py-1 hidden" style="display: none"
-                                value={{$value}}>
-                            
-                            </div>
-                            <form action="#" class="position-absolute parent_add_btn_l">
-                                <button class="add_btn py-1"><img src={{ asset('Images/user.png') }}
-                                        alt=""></button>
-                            </form> 
-                            <span class="position-absolute parent_mission_location_l">
-                                <span class="mission_location px-2 py-1">
-                                    <img src={{ asset('Images/pin.png') }} alt=""><span
-                                        class="text-white px-2">{{ $item->country->name }}</span>
+                @endforeach
+            </div>
+         {{--ListViewContent--}}
+            <div class="row py-3" id="listViewContent" style="display: none;">
+                @foreach ($data as $item)
+                    {{-- This is list view --}}
+                    <div class="row">
+                        <div class="col-md-4 py-2 text-center">
+                            <img class="img-fluid" src="{{asset("Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png")}}" alt="">
+                            <div class="text-center" style="margin-top: -20px">
+                                <span class="fs-4 px-2 from_untill">
+                                    {{ $item->missionTheme->title }}
                                 </span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col p-2">
-                        <div class="row align-items-start">
-                            <div class="col">
-                                <div class="d-flex">
-                                    <div>
-                                        <img src="{{asset('Images/pin1.png')}}" alt=""> {{$item->country->name}}
-                                    </div>
-                                    <div class="px-2">
-                                        <img src="{{asset('Images/web.png')}}" alt=""> {{$item->missionTheme->title}}
-                                    </div>
-                                    <div class="px-2">
-                                        <img src="{{asset('Images/organization.png')}}" alt=""> {{$item->organization_name}}
-                                    </div>
-                                </div>
                             </div>
-                            <div class="col-sm-2">
-                                <div class="small-ratings">
-                                    <i class="fa fa-star rating-color"></i>
-                                    <i class="fa fa-star rating-color"></i>
-                                    <i class="fa fa-star rating-color"></i>
-                                    <i class="fa fa-star rating-color"></i>
-                                    <i class="fa fa-star rating-color"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="h4 theme-color pt-4">
-                            {{ $item->title }}
-                        </div>
-                        <p class='mission-short-description'>
-                            {{ $item->short_description }}
-                        </p>
-                        <div class="row justify-content-between">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="d-flex">
-                                            <div class="d-flex align-items-center ">
-                                                <div class="px-1">
-                                                    <img src={{ asset('Images/seats-left.png') }} alt="">
-                                                </div>
-                                                <div class="px-2 d-flex flex-column align-items-start">
-                                                    <span class="theme-color fs-5 font-weight-bolder">10 <br></span>
-                                                    <span class="text-muted">Seats left</span>
-                                                </div>
-                                            </div>
-                                            @if (false)
-                                                <div class='d-flex align-items-center'>
-                                                    <div class="px-1">
-                                                        <img src={{ asset('Images/deadline.png') }} alt="">
-                                                    </div>
-                                                    <div class=" px-2 d-flex flex-column align-items-start">
-                                                        <span class="theme-color fs-5 font-weight-bolder">09/01/2019 <br></span>
-                                                        <span class="text-muted">Registration Deadline</span>
-                                                    </div>
-                                                </div>
-                                            @elseif(true)
-                                                <div class='d-flex align-items-center'>
-                                                    <div class="px-1">
-                                                        <img src={{ asset('Images/achieved.png') }} alt="">
-                                                    </div>
-                                                    <div class=" px-2 d-flex flex-column align-items-start">
-                                                        <div class="progress">
-                                                            <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="80" aria-valuemax="100"></div>
-                                                          </div>
-                                                        <span class="text-muted"><small>8000 Achieved</small></span>
-                                                    </div>
-                                                </div>
+                            <div class="position-relative">
+                                <div class="position-absolute parent_like_btn_l">
+
+
+                                    <button  id="mission_like_btn_{{$item->mission_id}}_{{$user_id}}" type="button" class="like_btn py-1">
+                                        <?php $set=false;
+                                            $value='0';?>
+                                        @foreach ($favorite as $fav)
+                                            @if($fav->mission_id == $item->mission_id)
+                                                <i class="fas fa-heart fs-4"></i>
+                                                <?php $set=true;
+                                                $value=$fav->favorite_mission_id;
+                                                ?>
+                                                @break
                                             @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="d-flex">
-                                            <div class='d-flex align-items-center'>
-                                                <div class="px-1">
-                                                    <img src={{ asset('Images/calender.png') }} alt="">
+                                        @endforeach
+                                        @if($set==false)
+                                        <i class="fa-regular fa-heart fs-4"></i>
+                                        @endif
+                                    </button>
+                                    <input type="radio" name="imgbackground" id="mission_like_input_{{$item->mission_id}}_{{$user_id}}" class="d-none imgbgchk py-1 hidden" style="display: none"
+                                    value={{$value}}>
+
+                                </div>
+                                <div class="position-absolute parent_add_btn_l">
+                                    <button class="add_btn py-1"id="misison_invite_btn_{{$item->mission_id}}_{{$user_id}}" data-toggle="modal" data-target="#invite_user_modal_{{$item->mission_id}}_{{$user_id}}"><img src={{ asset('Images/user.png') }}
+                                            alt=""></button>
+                                    {{-- <!-- Modal -->
+                                    <div class="modal fade w-100" id="invite_user_modal_{{$item->mission_id}}_{{$user_id}}" tabindex="-1" role="dialog" aria-labelledby="invite_user_modal_{{$item->mission_id}}_{{$user_id}}Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h5 class="modal-title" id="invite_user_modal_{{$item->mission_id}}_{{$user_id}}Label">Invite Your Friends</h5>
+                                                <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                                 </div>
-                                                <div class=" px-2 d-flex flex-column align-items-start">
-                                                    <small class="p-2 fs-7">From
-                                                        {{ date('d-m-Y', strtotime($item->start_date)) }} <br> untill
-                                                        {{ date('d-m-Y', strtotime($item->end_date)) }}
-                                                    </small>
+                                                <div class="modal-body">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">First</th>
+                                                            <th scope="col">last</th>
+                                                            <th scope="col">email</th>
+                                                            <th scope="col">Invite</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($users as $user)
+                                                            <tr>
+                                                                <th>{{$user->first_name}}</th>
+                                                                <td>{{$user->last_name}}</td>
+                                                                <td>{{$user->email}}</td>
+                                                                <td>
+                                                                    <input type="checkbox" id="invite_{{$item->mission_id}}_{{$user->user_id}}_{{$user_id}}" value="{{$user->user_id}}">
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
-                                            <div class='d-flex align-items-center'>
-                                                <div class="px-1">
-                                                    <img src={{ asset('Images/settings.png') }} alt="">
-                                                </div>
-                                                <div class=" px-2 d-flex flex-column align-items-start">
-                                                    <small class="p-2 fs-6 theme-color"> Skills <br> botany</small>
-                                                </div>
-                                            </div>
                                         </div>
-                                    </div>
-                                </div>             
+                                    </div> --}}
+                                </div>
+                                <span class="position-absolute parent_mission_location_l">
+                                    <span class="mission_location px-2 py-1">
+                                        <img src={{ asset('Images/pin.png') }} alt=""><span
+                                            class="text-white px-2">{{ $item->country->name }}</span>
+                                    </span>
+                                </span>
                             </div>
-                            <div class="col-md-3">
-                                <button class="mx-2 btn btn-outline apply-btn px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i> 
-                                </button>
+                        </div>
+                        <div class="col p-2">
+                            <div class="row align-items-start">
+                                <div class="col">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img src="{{asset('Images/pin1.png')}}" alt=""> {{$item->country->name}}
+                                        </div>
+                                        <div class="px-2">
+                                            <img src="{{asset('Images/web.png')}}" alt=""> {{$item->missionTheme->title}}
+                                        </div>
+                                        <div class="px-2">
+                                            <img src="{{asset('Images/organization.png')}}" alt=""> {{$item->organization_name}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="small-ratings">
+                                        <i class="fa fa-star rating-color"></i>
+                                        <i class="fa fa-star rating-color"></i>
+                                        <i class="fa fa-star rating-color"></i>
+                                        <i class="fa fa-star rating-color"></i>
+                                        <i class="fa fa-star rating-color"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h4 theme-color pt-4">
+                                {{ $item->title }}
+                            </div>
+                            <p class='mission-short-description'>
+                                {{ $item->short_description }}
+                            </p>
+                            <div class="row justify-content-between">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="d-flex">
+                                                <div class="d-flex align-items-center ">
+                                                    <div class="px-1">
+                                                        <img src={{ asset('Images/seats-left.png') }} alt="">
+                                                    </div>
+                                                    <div class="px-2 d-flex flex-column align-items-start">
+                                                        <span class="theme-color fs-5 font-weight-bolder">10 <br></span>
+                                                        <span class="text-muted">Seats left</span>
+                                                    </div>
+                                                </div>
+                                                @if (false)
+                                                    <div class='d-flex align-items-center'>
+                                                        <div class="px-1">
+                                                            <img src={{ asset('Images/deadline.png') }} alt="">
+                                                        </div>
+                                                        <div class=" px-2 d-flex flex-column align-items-start">
+                                                            <span class="theme-color fs-5 font-weight-bolder">09/01/2019 <br></span>
+                                                            <span class="text-muted">Registration Deadline</span>
+                                                        </div>
+                                                    </div>
+                                                @elseif(true)
+                                                    <div class='d-flex align-items-center'>
+                                                        <div class="px-1">
+                                                            <img src={{ asset('Images/achieved.png') }} alt="">
+                                                        </div>
+                                                        <div class=" px-2 d-flex flex-column align-items-start">
+                                                            <div class="progress">
+                                                                <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="80" aria-valuemax="100"></div>
+                                                            </div>
+                                                            <span class="text-muted"><small>8000 Achieved</small></span>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="d-flex">
+                                                <div class='d-flex align-items-center'>
+                                                    <div class="px-1">
+                                                        <img src={{ asset('Images/calender.png') }} alt="">
+                                                    </div>
+                                                    <div class=" px-2 d-flex flex-column align-items-start">
+                                                        <small class="p-2 fs-7">From
+                                                            {{ date('d-m-Y', strtotime($item->start_date)) }} <br> untill
+                                                            {{ date('d-m-Y', strtotime($item->end_date)) }}
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class='d-flex align-items-center'>
+                                                    <div class="px-1">
+                                                        <img src={{ asset('Images/settings.png') }} alt="">
+                                                    </div>
+                                                    <div class=" px-2 d-flex flex-column align-items-start">
+                                                        <small class="p-2 fs-6 theme-color"> Skills <br> botany</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="mx-2 btn btn-outline apply-btn px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
+                @endforeach
                 </div>
-            @endforeach
-        </div>
+
         @include('admin.layouts.pagination')
     </div>
 @else
@@ -416,7 +529,7 @@
     </div>
     <div class="d-flex pt-4 justify-content-center">
         <button class="btn btn-outline fs-4 apply-btn">
-            Submit New Missions 
+            Submit New Missions
             <i class="fa-sharp fa-solid fa-arrow-right"></i>
         </button>
     </div>
@@ -455,14 +568,45 @@
             });
         });
     </script>
+     <script>
+        document.getElementById('selectAllskill').addEventListener('change', function() {
+        var checkboxes = document.querySelectorAll('input[name="options[]"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = this.checked;
+        }
+        });
+
+    </script>
     <script>
         var countries = [];
         var cities = [];
         var themes = [];
         var skills = [];
+        var sort = 0;
         var search = "";
         $(document).ready(function(Event) {
             $("#clear_all").hide();
+            $('input[id^="invite_"]').on('click', function() {
+                if (this.checked) {
+                    var mission_id = this.id.split("_")[1];
+                    var to_user_id = this.id.split('_')[2];
+                    var from_user_id = this.id.split("_")[3];
+                    console.log(mission_id);
+                    $.ajax({
+                        url: "{{url('api/invite-user')}}",
+                        type: "POST",
+                        data: {
+                            _token: '{{csrf_token() }}',
+                            from_user_id: from_user_id,
+                            to_user_id: to_user_id,
+                            mission_id: mission_id,
+                        },
+                        success: function(data) {
+                            alert("Invite Send",1000);
+                        },
+                    })
+                }
+            }),
             $("button[id^='mission_like_btn_']").on('click', function() {
                 var mission_id = this.id.split("_")[3];
                 var user_id = this.id.split("_")[4];
@@ -505,6 +649,11 @@
             //         $("button[id^='mission_like_btn_']").html('<i class="fas fa-heart fs-4"></i>');
             //     }
             // }),
+            $('#selectsort').on('change', function() {
+                sort=$('#selectsort').val();
+                $('#sort').val(sort);
+                $('#submit_f_id').click();
+            }),
             $('#refresh-apply').on('click', function() {
                 $('#search_input').val('');
                 $('#filter-clear').click();
@@ -592,6 +741,9 @@
                     skills.push(skill_id);
                     $("#skill_f_id").val(skills);
                 }),
+                // $('input[id^=skill_]').on('change', function(){
+                //     console.log('fjsdlkfjklsdklfs');
+                // }),
                 $('#filter-clear').on('click', function() {
                     $("#clear_all").hide();
                     $('#badges').children().remove();

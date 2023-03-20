@@ -5,8 +5,9 @@
       <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner">
+  
       <div class="carousel-item active">
-            <div class="overlay-image background-1" ></div>
+            <div class="overlay-image" style='background-image: url({{asset("Images/Grow-Trees-On-the-path-to-environment-sustainability-login.png")}});'></div>
             <div class="container">
                 <h1> Sed ut perspiciatis unde omnis iste natus voluptatem.</h1>
                 <p>
@@ -15,7 +16,7 @@
             </div>
       </div>
       <div class="carousel-item" >
-        <div class="overlay-image" style="background-image: url(Images/image2.png);" ></div>
+        <div class="overlay-image" style="background-image: url('{{asset('Images/image2.png')}}');" ></div>
         <div class="container">
             <h1> Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h1>
             <p>

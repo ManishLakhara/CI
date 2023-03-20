@@ -5,6 +5,7 @@ use App\Http\Controllers\LandingPageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FavouriteMissionController;
+use App\Http\Controllers\MissionInviteController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,3 +23,4 @@ use App\Http\Controllers\FavouriteMissionController;
 Route::post('fetch-city',[CountryCityController::class,'fetchCity']);
 Route::post('add-favourite',[FavouriteMissionController::class,'addFavourite']);
 Route::post('remove-favourite',[FavouriteMissionController::class,'removeFavourite']);
+Route::post('invite-user',[MissionInviteController::class,'inviteUser']);
