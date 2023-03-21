@@ -3,24 +3,24 @@
 namespace Database\Seeders;
 
 use App\Models\Mission;
-use App\Models\MissionSkill;
-use App\Models\Skill;
+use App\Models\TimeMission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class MissionSkillSeeder extends Seeder
+class TimeMissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $ids = Mission::all()->pluck('mission_id');
-        $skills_id = Skill::all()->pluck('skill_id');
+        $ids = Mission::whereMissionType('TIME')->get()->pluck('mission_id');
+
         foreach($ids as $id){
-            MissionSkill::create([
+            TimeMission::create([
                 'mission_id' => $id,
-                'skill_id' => fake()->randomElement($skills_id),
+                'registration_deadline' => fake()->date(),
+                'total_seats' => fake()->numberBetween(20,40),
             ]);
         }
     }

@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             MissionThemeSeeder::class,
             MissionSeeder::class,
             UserSeeder::class,
-            
+            GoalSeeder::class,
+            TimeSeeder::class,
         ]);
     }
 }

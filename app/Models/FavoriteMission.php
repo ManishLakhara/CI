@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class FavoriteMission extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     protected $primaryKey = 'favorite_mission_id';
     protected $fillable = [
         'mission_id',

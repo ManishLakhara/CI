@@ -30,6 +30,7 @@ class Mission extends Model
         'availability',
     ];
 
+
     protected $primaryKey = 'mission_id';
     protected $dates = ['deleted_at'];
 
@@ -60,7 +61,7 @@ class Mission extends Model
     }
 
     public function missionSkill(){
-        return $this->belongTo(MissionSkill::class, 'mission_id');
+        return $this->belongsTo(MissionSkill::class, 'mission_id','mission_id');
     }
 
     public function story() {
@@ -72,15 +73,15 @@ class Mission extends Model
     }
 
     public function favoriteMission() {
-        return $this->hasMany(FavoriteMission::class, 'mission_id');
+        return $this->belongsTo(FavoriteMission::class, 'mission_id');
     }
 
-    public function goalMission() {
-        return $this->hasOne(GoalMission::class, 'mission_id');
+    public function goalMission(): HasOne {
+        return $this->hasOne(GoalMission::class, 'mission_id','mission_id');
     }
 
-    public function timeMission() {
-        return $this->hasOne(TimeMission::class, 'mission_id');
+    public function timeMission(): HasOne {
+        return $this->hasOne(TimeMission::class, 'mission_id','mission_id');
     }
 
     public function timeSheet() {

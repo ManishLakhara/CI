@@ -18,10 +18,10 @@ class MissionSkill extends Model
     ];
 
     public function mission() {
-        return $this->hasMany(Mission::class, 'mission_id');
+        return $this->hasOne(Mission::class, 'mission_id','mission_id');
     }
 
     public function skill(){
-        return $this->hasOne(Skill::class, 'skill_id');
+        return $this->hasOne(Skill::class, 'skill_id','skill_id');
     }
 }

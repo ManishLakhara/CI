@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GoalMission extends Model
@@ -17,10 +18,10 @@ class GoalMission extends Model
         'mission_id',
         'goal_objective_text',
         'goal_value',
-        'mission_id',
+        'registration_deadline',
     ];
 
-    public function mission() {
-        return $this->belongsTo(Mission::class, 'mission_id');
+    public function missions(): BelongsTo {
+        return $this->belongsTo(Mission::class,'mission_id','mission_id');
     }
 }

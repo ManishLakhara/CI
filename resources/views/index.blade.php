@@ -7,7 +7,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 d-flex rounded">
-                    <form action="{{route('landing.index')}}" method="GET" id="search-mission" style="margin: 0%; padding:0%;">
+                    <form action="{{route('landing.index')}}" method="POST" id="search-mission" style="margin: 0%; padding:0%;">
+                        @csrf
                     <div class="d-flex">
                         <button type="submit" id="search-mission-id" class="btn">
                             <i class="fas fa-search"></i>
@@ -39,50 +40,60 @@
                     </div>
                     <div class="border-start input-group px-2">
                         <select class="custom-select w-100 border-0 text-muted" name="city_id" id="city-dropdown">
-                            <option disabled selected> city </option>
+                            <option disabled selected> City </option>
                         </select>
                     </div>
                     <div class="border-start input-group px-2">
-                        <select class="custom-select  w-100 border-0 text-muted" name="mission_theme_id"
-                            id="theme-dropdown">
-                            <option disabled selected>Theme</option>
-                            @foreach ($themes as $theme)
-                                <option value={{ $theme->mission_theme_id }}>{{ $theme->title }}</option>
-                            @endforeach
-                        </select>
+                        <div class="dropdown w-100">
+                            <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="float-start ps-0 pe-5">
+                                    Theme
+                                </span>
+                            </button>
+                            <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton">
+                              <div>
+                                {{-- <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="selectAllskill">
+                                  <label class="form-check-label text-secondary" for="selectAllCheckbox">
+                                    Select All
+                                  </label>
+                                </div> --}}
+                                @foreach ($themes as $theme)
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ $theme->mission_theme_id }}" id="mission_theme_option_{{ $theme->mission_theme_id }}">
+                                    <label class="form-check-label text-secondary" for="mission_theme_option_{{ $theme->mission_theme_id }}" id="theme_label_{{$theme->mission_theme_id}}">
+                                      {{ $theme->title }}
+                                    </label>
+                                  </div>
+                                @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="border-start border-end input-group px-2">
-                        <select class="custom-select  w-100 border-0 text-muted" id="skill-dropdown">
-                            <option disabled selected>Skill</option>
-                            @foreach ($skills as $skill)
-                                <option value={{ $skill->skill_id }}>{{ $skill->skill_name }}</option>
-                            @endforeach
-                        </select>
-                        {{-- <div class="dropdown" id="skill-dropdown">
+                        <div class="dropdown w-100">
                             <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="float-start ps-0 pe-5">
                                     Skill
                                 </span>
                             </button>
                             <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton">
-
-                                <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="" id="selectAllCheckbox">
+                              <div>
+                                {{-- <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="selectAllskill">
                                   <label class="form-check-label text-secondary" for="selectAllCheckbox">
                                     Select All
                                   </label>
-                                </div>
+                                </div> --}}
                                 @foreach ($skills as $skill)
                                   <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="{{ $skill->skill_id }}" id="skill_{{ $skill->skill_id }}" name="skill[]">
-                                    <label class="form-check-label text-secondary" for="skill_{{ $skill->skill_id }}">
-                                      {{ $skill->skill_name }}
-                                    </label>
+                                    <input class="form-check-input" type="checkbox" value="{{ $skill->skill_id }}" id="skill_option_{{ $skill->skill_id }}" name="options[]">
+                                    <label class="form-check-label text-secondary" for="skill_option_{{ $skill->skill_id }}" id="skill_label_{{$skill->skill_id}}">{{ $skill->skill_name }}</label>
                                   </div>
                                 @endforeach
-
+                                </div>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,12 +104,13 @@
 
 
 
-    <form id="form_f"  action="{{route('landing.index')}}" method="GET" style="display: none">
-        <input  type="number" name="country_f" id="country_f_id" value="{{ request()->input('country_f') }}"/>
-        <input  type="number" name="city_f" id="city_f_id" value="{{ request()->input('city_f') }}"/>
+    <form id="form_f"  action="{{route('landing.index')}}" method="POST" style="display: none">
+        @csrf
+        <input  type="text" name="country_f" id="country_f_id" value="{{ request()->input('country_f') }}"/>
+        <input  type="text" name="city_f" id="city_f_id" value="{{ request()->input('city_f') }}"/>
         <input type="text" name="s" id="search_f_id" value="{{ request()->input('s') }}"/>
-        <input type="number" name="theme_f" id="theme_f_id" value="{{ request()->input('theme_f')}}" />
-        <input type="number" name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f_id') }}"/>
+        <input type="text" name="theme_f" id="theme_f_id" value="{{ request()->input('theme_f')}}" />
+        <input type="text" multiple name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f_id') }}"/>
         <input type="number" name="sort" id="sort" value="{{request()->input('sort')}}"/>
         <button class="btn" type="submit" id="submit_f_id"></button>
     </form>
@@ -270,47 +282,51 @@
                             </div>
                             <div class="py-2">
                                 <div class="d-flex py-3 justify-content-between">
-                                    @if (true)
+                                    @if ($item->timeMission!=null)
                                         <div class="d-flex align-items-center ">
                                             <div class="px-1">
                                                 <img src={{ asset('Images/seats-left.png') }} alt="">
                                             </div>
                                             <div class="px-2 d-flex flex-column align-items-start">
-                                                <span class="theme-color fs-5 font-weight-bolder">10 <br></span>
+                                                <span class="theme-color fs-5 font-weight-bolder">{{$item->timeMission->total_seats}}<br></span>
                                                 <span class="text-muted">Seats left</span>
                                             </div>
                                         </div>
-                                    @else
+                                    @endif
+                                    @if(false)
                                         <div class="d-flex align-items-center ">
                                             <div class="px-1">
                                                 <img src={{ asset('Images/Already-volunteered.png') }} alt="">
                                             </div>
                                             <div class="px-2 d-flex flex-column align-items-start">
-                                                <span class="theme-color fs-5 font-weight-bolder">250<br></span>
+                                                <span class="theme-color fs-5 font-weight-bolder">{{$item->timeMission->total_seats}}<br></span>
                                                 <span class="text-muted"><small>Already volunteered</small></span>
                                             </div>
                                         </div>
                                     @endif
-                                    @if (true)
+                                    @if ($item->timeMission!=null)
                                         <div class='d-flex align-items-center'>
                                             <div class="px-1">
                                                 <img src={{ asset('Images/deadline.png') }} alt="">
                                             </div>
                                             <div class=" px-2 d-flex flex-column align-items-start">
-                                                <span class="theme-color fs-5 font-weight-bolder">{{ date('d-m-Y', strtotime($item->end_date)) }}<br></span>
+                                                <span class="theme-color fs-5 font-weight-bolder">{{ date('d-m-Y', strtotime($item->timeMission->registration_deadline)) }}<br></span>
                                                 <span class="text-muted">Deadline</span>
                                             </div>
                                         </div>
-                                    @elseif(false)
-                                        <div class='d-flex align-items-center'>
+                                    @elseif($item->goalMission!=null)
+                                        <div class='d-flex align-items-center justify-content-start w-50'>
                                             <div class="px-1">
                                                 <img src={{ asset('Images/achieved.png') }} alt="">
                                             </div>
-                                            <div class=" px-2 d-flex flex-column align-items-start">
-                                                <input type="range" class="goal-range" name="goal" value="80"
-                                                    disabled id="achievedgoal">
-                                                <span class="text-muted"><small>8000 Achieved</small></span>
+
+                                            <div class="d-flex flex-column ps-2 w-100">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small class="fw-light text-secondary ps-1">{{$item->goalMission->goal_value}} achieved</small>
                                             </div>
+
                                         </div>
                                     @endif
                                 </div>
@@ -459,17 +475,17 @@
                                                         <span class="text-muted">Seats left</span>
                                                     </div>
                                                 </div>
-                                                @if (false)
+                                                @if ($item->timeMission!=null)
                                                     <div class='d-flex align-items-center'>
                                                         <div class="px-1">
                                                             <img src={{ asset('Images/deadline.png') }} alt="">
                                                         </div>
                                                         <div class=" px-2 d-flex flex-column align-items-start">
-                                                            <span class="theme-color fs-5 font-weight-bolder">09/01/2019 <br></span>
+                                                            <span class="theme-color fs-5 font-weight-bolder">{{ date('d-m-Y', strtotime($item->timeMission->registration_deadline)) }} <br></span>
                                                             <span class="text-muted">Registration Deadline</span>
                                                         </div>
                                                     </div>
-                                                @elseif(true)
+                                                @elseif($item->goalMission!=null)
                                                     <div class='d-flex align-items-center'>
                                                         <div class="px-1">
                                                             <img src={{ asset('Images/achieved.png') }} alt="">
@@ -478,7 +494,7 @@
                                                             <div class="progress">
                                                                 <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="80" aria-valuemax="100"></div>
                                                             </div>
-                                                            <span class="text-muted"><small>8000 Achieved</small></span>
+                                                            <span class="text-muted"><small>{{$item->goalMission->goal_value}} Achieved</small></span>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -502,7 +518,7 @@
                                                         <img src={{ asset('Images/settings.png') }} alt="">
                                                     </div>
                                                     <div class=" px-2 d-flex flex-column align-items-start">
-                                                        <small class="p-2 fs-6 theme-color"> Skills <br> botany</small>
+                                                        <small class="p-2 fs-6 theme-color"> Skills <br> {{$item->missionSkill->skill->skill_name}}</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -584,6 +600,22 @@
         var skills = [];
         var sort = 0;
         var search = "";
+        function getBadge(id,name,type){
+            $("#clear_all").show()
+                    htmlstr = ""
+                    htmlstr += '<div id="close_'+type+'_parent_'+id+'" class="d-inline-flex border px-2" style="border-radius: 23px">';
+                    htmlstr += '<span class="badge fs-5" style="color: black; font-weight: lighter;">' +
+                        name + '</span>';
+                    htmlstr += '<button type="button" class="close btn" style="padding: 0%;" id=close_'+type+'_button_'+id+'>'
+                    htmlstr += '<span aria-hidden="true">&times;</span>'
+                    htmlstr += '</button></div>'
+                    $('#badges').append(
+                        htmlstr
+                    );
+        }
+        function removeBadge(id,type){
+            $('#close_'+type+'_parent_'+id).remove();
+        }
         $(document).ready(function(Event) {
             $("#clear_all").hide();
             $('input[id^="invite_"]').on('click', function() {
@@ -643,12 +675,6 @@
                     });
                 }
             }),
-            // getAjax();
-            // $("input[id^='mission_like_input_']").on('change', function() {
-            //     if($this.val()=='1'){
-            //         $("button[id^='mission_like_btn_']").html('<i class="fas fa-heart fs-4"></i>');
-            //     }
-            // }),
             $('#selectsort').on('change', function() {
                 sort=$('#selectsort').val();
                 $('#sort').val(sort);
@@ -657,6 +683,7 @@
             $('#refresh-apply').on('click', function() {
                 $('#search_input').val('');
                 $('#filter-clear').click();
+                search = $("#search_input").val();
                 $('#filter-apply').click();
             }),
             $('#grid-view').on('click', function() {
@@ -707,43 +734,32 @@
                     cities.push(city_id);
                     $('#city_f_id').val(cities);
                 }),
-                $("#theme-dropdown").on('change', function() {
-                    $("#clear_all").show();
-                    let theme_id = $('#theme-dropdown').val();
-                    let theme = $('#theme-dropdown option:selected').html();
-                    htmlstr = ""
-                    htmlstr += '<div class="d-inline-flex border px-2" style="border-radius: 23px">';
-                    htmlstr += '<span class="badge fs-5" style="color: black; font-weight: lighter;">' +
-                        theme + '</span>';
-                    htmlstr += '<button type="button" class="close btn " style="padding: 0%;">'
-                    htmlstr += '<span aria-hidden="true">&times;</span>'
-                    htmlstr += '</button></div>'
-                    $('#badges').append(
-                        htmlstr
-                    );
-                    themes.push(theme_id);
-                    $("#theme_f_id").val(themes);
-                }),
-                $("#skill-dropdown").on('change', function() {
-                    $("#clear_all").show();
-                    let skill_id = $('#skill-dropdown').val();
-                    let skill = $('#skill-dropdown option:selected').html();
-                    htmlstr = ""
-                    htmlstr += '<div class="d-inline-flex border px-2" style="border-radius: 23px">';
-                    htmlstr += '<span class="badge fs-5" style="color: black; font-weight: lighter;">' +
-                        skill + '</span>';
-                    htmlstr += '<button type="button" class="close btn" style="padding: 0%;">'
-                    htmlstr += '<span aria-hidden="true">&times;</span>'
-                    htmlstr += '</button></div>'
-                    $('#badges').append(
-                        htmlstr
-                    );
-                    skills.push(skill_id);
-                    $("#skill_f_id").val(skills);
-                }),
-                // $('input[id^=skill_]').on('change', function(){
-                //     console.log('fjsdlkfjklsdklfs');
-                // }),
+                $('input[id^=mission_theme_option_]').on('change', function(){
+                    let mission_theme_id = this.id.split('_')[3];
+                    let title = $('#theme_label_'+mission_theme_id).text();
+                    if(this.checked){
+                        getBadge(mission_theme_id,title,'mission');
+                        themes.push(mission_theme_id);
+                    }
+                    else{
+                        removeBadge(mission_theme_id,'mission');
+                        themes.pop(mission_theme_id);
+                    }
+                    $('#theme_f_id').val(themes);
+                })
+                $('input[id^=skill_option_]').on('change', function(){
+                    let skill_id = this.id.split('_')[2];
+                    let skill_name = $('#skill_label_'+skill_id).text();
+                    if(this.checked){
+                        getBadge(skill_id, skill_name,'skill');
+                        skills.push(skill_id);
+                    }
+                    else{
+                        removeBadge(skill_id,'skill');
+                        skills.pop(skill_id);
+                    }
+                    $('#skill_f_id').val(skills);
+                })
                 $('#filter-clear').on('click', function() {
                     $("#clear_all").hide();
                     $('#badges').children().remove();
@@ -755,8 +771,10 @@
                     $('#city_f_id').val(cities);
                     $('#themes_f_id').val(themes);
                     $('#skills_f_id').val(skills);
-
                 })
+        });
+        $(document).on('click', '#country-dropdown', function (e) {
+            e.stopPropagation();
         });
     </script>
 @endsection

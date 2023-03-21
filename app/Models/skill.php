@@ -17,10 +17,10 @@ class Skill extends Model
         'status',
     ];
     public function missionSkill() {
-        return $this->belongsToMany(MissionSkill::class, 'skill_id');
+        return $this->belongsToMany(MissionSkill::class, 'skill_id','skill_id');
     }
 
     public function userSkill() {
-        return $this->hasMany(UserSkill::class, 'skill_id');
+        return $this->hasMany(UserSkill::class, 'skill_id','skill_id');
     }
 }
