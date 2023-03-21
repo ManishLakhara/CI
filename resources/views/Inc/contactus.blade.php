@@ -7,7 +7,7 @@
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content p-3">
-                    <form action="" method="post" id="form3">
+                    <form action="" method="post">
                         @csrf
                         @method('POST')
                         <div>
@@ -54,7 +54,7 @@
                             <div class="px-1">
                                 <button type="submit" class="btn btn-outline effects px-4"
                                     style="border-color: #f88634 ;border-radius: 23px; color: #f88634"
-                                    form="form3">Save
+                                    id="contactus">Save
                                 </button>
                             </div>
 

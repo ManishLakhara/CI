@@ -4,12 +4,10 @@
 @endsection
 
 @section('content')
-
-
-    <form action="{{ route('update-profile') }}" enctype="multipart/form-data" method="POST" id="form1">
+    <form action="{{ route('update-profile') }}" enctype="multipart/form-data" method="POST">
         @csrf
 
-
+@method('PUT')
 
         <div class="container">
             <div class="row">
@@ -25,13 +23,8 @@
                         Password
                     </button>
 
-
-                    @include('components.passwordmodal', [
-                        'user_id' => $user->user_id,
-                        'form_action' => 'update-password',
-                    ])
-
                 </div>
+
                 <div class="col-lg-8">
                     <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: 1px solid #ADADAD;">
                         <li class="nav-item" role="presentation">
@@ -51,11 +44,21 @@
                                     <label for="first_name" class="form-label">Name*</label>
                                     <input type="text" class="form-control" id="first_name" name='first_name'
                                         placeholder="Enter your name" value="{{ $user->first_name }}">
+                                    @error('first_name')
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="last_name" class="form-label">Surname*</label>
                                     <input type="text" class="form-control" id="last_name" name='last_name'
                                         placeholder="Enter your surname" value="{{ $user->last_name }}">
+                                    @error('last_name')
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -65,6 +68,12 @@
                                     <label for="employee_id" class="form-label">Employee ID</label>
                                     <input type="text" name="employee_id" class="form-control" id="employee_id"
                                         placeholder="Enter your Employee ID" value="{{ $user->employee_id }}">
+                                    @error('employee_id')
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+
                                 </div>
                                 <div class="col-lg-6 mt-4">
                                     <label for="manager" class="form-label">Manager</label>
@@ -84,6 +93,11 @@
                                     <label for="department" class="form-label">Department</label>
                                     <input type="text" class="form-control" id="department" name='department'
                                         placeholder="Enter your Department" value="{{ $user->department }}">
+                                    @error('department')
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -121,14 +135,14 @@
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: 1px solid #ADADAD;">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active mt-5" data-bs-toggle="tab" data-bs-target="#tab-1"
+                            <button class="nav-link active mt-5" data-bs-toggle="tab" data-bs-target="#tab-2"
                                 type="button" role="tab" aria-controls="home" aria-selected="true"
                                 style="color: #443d3e; font-weight: 500px; border:none; border-bottom: 3px solid #3b3636; padding: 14px 18px;">Address
                                 Information</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent" style="margin-top: 25px;">
-                        <div class="tab-pane fade show active" id="tab-1" role="tabpanel"
+                        <div class="tab-pane fade show active" id="tab-2" role="tabpanel"
                             style="font-size: 15px; line-height: 24px; color: #3E3E3E;">
 
                             <div class="row">
@@ -142,6 +156,11 @@
                                                 {{ $country->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('country_id')
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="city">City</label>
@@ -203,7 +222,7 @@
                             </div>
                         </div>
                     </div>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: 1px solid #ADADAD;">
+                    {{-- <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: 1px solid #ADADAD;">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active mt-5" data-bs-toggle="tab" data-bs-target="#tab-1"
                                 type="button" role="tab" aria-controls="home" aria-selected="true"
@@ -237,13 +256,83 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <button type="submit" class="btn apply-btn mt-5 float-end" form="form1">Save</button>
+                    </div> --}}
+                    <button type="submit" class="btn apply-btn mt-5 float-end">Save</button>
                 </div>
             </div>
         </div>
 
     </form>
+
+
+    <div class="modal fade" id="passwordModal-{{ $user->user_id }}" tabindex="-1" role="dialog"
+        aria-labelledby="passwordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <div class="py-2 text-start">
+                                Change Password
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                style="border:none;background:none">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-4">
+
+                                <input type="password" class="form-control" id="old_password_id"
+                                    placeholder="Enter Old Password" name="old_password">
+                                @error('old_password')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-12 mt-4">
+
+                                <input type="password" class="form-control" id="new_password_id"
+                                    placeholder="Enter new Password" name="password">
+                                @error('password')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-12 mt-4">
+
+                                <input type="password" class="form-control" id="new_confirm_password_id"
+                                    placeholder="Enter confirm Password" name="confirm_password">
+                                @error('confirm_password')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex py-4 justify-content-end">
+                        <div class="px-1">
+                            <button type="button" class="btn btn-outline-secondary px-4" style="border-radius: 23px"
+                                data-dismiss="modal">Close</button>
+                        </div>
+                        <div class="px-1">
+                            <button type="button" class="btn btn-outline effects px-4"
+                                style="border-color: #f88634 ;border-radius: 23px; color: #f88634"
+                                id="update_password_form_{{ Auth::user()->user_id }}">Change
+                                Password</button>
+                        </div>
+
+                    </div>
+
+            </div>
+
+        </div>
+    </div>
 
     <script>
         $(document).ready(function() {
@@ -266,11 +355,89 @@
                         });
                     }
                 });
-            });
+            })
+            $("button[id^='update_password_form_']").on('click',function(){
+                newPassword = $('#new_password_id').val();
+                newConfirmPassword = $('#new_confirm_password_id').val();
+                oldPassword = $('#old_password_id').val();
+                user_id = this.id.split("_")[3];
+                $.ajax({
+                    url: "{{ url('api/change-password') }}",
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        oldPassword: oldPassword,
+                        password: newPassword,
+                        user_id: user_id,
+                        newConfirmPassword: newConfirmPassword,
+                    },
+                    success: function(data){
+                        alert('password changed');
+                    },
+                    // error: function(xhr){
+                    //     if(xhr.status == 422){
+                    //         var errors = JSON.parse(xhr.responseText);
+                    //         if (errors.old_password) {
+                    //             alert('old is required'); // and so on
+                    //         }
+                    //         if (errors.password) {
+                    //             alert(' is required'); // and so on
+                    //         }
+                    //         if (errors.confirm_password) {
+                    //             alert('required'); // and so on
+                    //         }
+                    //     }
+                    // }
+                    error: function (err) {
+                        if (err.status == 422) { // when status code is 422, it's a validation issue
+                            console.log(err.responseJSON);
+                            $('#success_message').fadeIn().html(err.responseJSON.message);
+
+                            // you can loop through the errors object and show it to the user
+                            console.warn(err.responseJSON.errors);
+                            // display errors on each form field
+                            $.each(err.responseJSON.errors, function (i, error) {
+                                var el = $(document).find('[name="'+i+'"]');
+                                el.after($('<span style="color: red;">'+error[0]+'</span>'));
+                            });
+                        }
+                    }
+                });
+            })
         });
     </script>
-@section('contactus')
+{{-- @section('contactus')
     @include('inc.contactus')
-@endsection
+@endsection --}}
 
+
+<script>
+    // $(document).ready(function() {
+    //     //Handle form submission
+    //     $('update-password-form').submit(function(event) {
+    //         // Prevent the form from submitting normally
+    //         event.preventDefault();
+
+    //        // Get form data
+    //         var formData = new FormData(this);
+
+    //         // Send form data to server using AJAX
+    //         $.ajax({
+    //             url: $(this).attr('action'),
+    //             type: $(this).attr('method'),
+    //             data: formData,
+    //             processData: false,
+    //             contentType: false,
+    //             success: function(response) {
+    //                 // Handle success response
+    //                 console.log(response);
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 // Handle error response
+    //                 console.log(xhr.responseText);
+    //             }
+    //         });
+    //     });
+    // });
+</script>
 @endsection

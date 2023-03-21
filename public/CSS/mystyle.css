@@ -8,6 +8,12 @@
         display: none;
     }
 }
+@media screen and (max-width: 991px){
+    #filler-gap { display: none;}
+  }
+  @media screen and (min-width: 992px){
+    #cms-toggle { display: none;}
+  }
 
 .from_untill {
     border-radius: 23px;

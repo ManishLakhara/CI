@@ -24,7 +24,7 @@ class StoreCmsPageRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'text' => 'required',
-            'slug' => 'required',
+            'slug' => 'required|unique:cms_pages',
             'status' => 'required|in:0,1',
         ];
     }

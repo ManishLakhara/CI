@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 class UpdateCmsPageRequest extends FormRequest
 {
     /**
@@ -21,10 +21,14 @@ class UpdateCmsPageRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('cmspage');
         return [
             'title' => 'required|max:255',
             'text' => 'required',
-            'slug' => 'required',
+            'slug' => [
+                'required',
+                Rule::unique('cms_pages')->ignore($id, 'cms_page_id')
+            ],
             'status' => 'required|in:0,1',
         ];
     }
