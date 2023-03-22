@@ -21,9 +21,9 @@
                    </form>
                 </div>
                 <div class="col-md-6 d-flex justify-content-around">
-                    <button class="btn border-start" type=submit id="refresh-apply">
+                    {{-- <button class="btn border-start" type=submit id="refresh-apply">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
-                    </button>
+                    </button> --}}
 
                         <button class="btn border-start" type=submit id="filter-apply">
                             <img src="{{asset("Images/filter.png")}}" alt="">
@@ -31,17 +31,61 @@
 
 
                     <div class="border-start input-group h-100 px-2">
-                        <select class="custom-select w-100 border-0 text-muted" name="country_id" id="country-dropdown">
+                        {{-- <select class="custom-select w-100 border-0 text-muted" name="country_id" id="country-dropdown">
                             <option disabled selected>Country</option>
                             @foreach ($countries as $country)
                                 <option value={{ $country->country_id }}>{{ $country->name }}</option>
                             @endforeach
-                        </select>
+                        </select> --}}
+                        <div class="dropdown w-100">
+                            <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="float-start ps-0 pe-5">
+                                    Country
+                                </span>
+                            </button>
+                            <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton" style="overflow: scroll; max-height: 500px; max-width: fit-content">
+                              <div>
+                                {{-- <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="selectAllskill">
+                                  <label class="form-check-label text-secondary" for="selectAllCheckbox">
+                                    Select All
+                                  </label>
+                                </div> --}}
+                                @foreach ($countries as $country)
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ $country->country_id }}" id="country_option_{{ $country->country_id }}">
+                                    <label class="form-check-label text-secondary" for="country_option_{{ $country->country_id }}" id="country_label_{{$country->country_id}}">
+                                      {{ $country->name }}
+                                    </label>
+                                  </div>
+                                @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="border-start input-group px-2">
-                        <select class="custom-select w-100 border-0 text-muted" name="city_id" id="city-dropdown">
+                    <div class="border-start input-group px-2" >
+                        {{-- <select class="custom-select w-100 border-0 text-muted" name="city_id" id="city-dropdown">
                             <option disabled selected> City </option>
-                        </select>
+                        </select> --}}
+                        <div class="dropdown w-100">
+                            <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="float-start ps-0 pe-5">
+                                    City
+                                </span>
+                            </button>
+                            <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton" style="overflow: scroll; max-height: 500px; max-width: fit-content">
+                              <div id="city_dropper">
+                                {{-- @foreach ($cities as $city)
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ $theme->mission_theme_id }}" id="mission_theme_option_{{ $theme->mission_theme_id }}">
+                                    <label class="form-check-label text-secondary" for="mission_theme_option_{{ $theme->mission_theme_id }}" id="theme_label_{{$theme->mission_theme_id}}">
+                                      {{ $theme->title }}
+                                    </label>
+                                  </div>
+                                @endforeach --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="border-start input-group px-2">
                         <div class="dropdown w-100">
@@ -110,7 +154,7 @@
         <input  type="text" name="city_f" id="city_f_id" value="{{ request()->input('city_f') }}"/>
         <input type="text" name="s" id="search_f_id" value="{{ request()->input('s') }}"/>
         <input type="text" name="theme_f" id="theme_f_id" value="{{ request()->input('theme_f')}}" />
-        <input type="text" multiple name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f_id') }}"/>
+        <input type="text" multiple name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f') }}"/>
         <input type="number" name="sort" id="sort" value="{{request()->input('sort')}}"/>
         <button class="btn" type="submit" id="submit_f_id"></button>
     </form>
@@ -123,7 +167,7 @@
         <div class="d-flex">
             <div id="badges">
             </div>
-            <div id="clear_all">
+            <div id="clear_all" style="display: none;">
                 <button class="btn close" id="filter-clear"> clear All</button>
             </div>
         </div>
@@ -544,7 +588,7 @@
         </span>
     </div>
     <div class="d-flex pt-4 justify-content-center">
-        <button class="btn btn-outline fs-4 apply-btn">
+        <button class="btn btn-outline fs-4 apply-btn w-50">
             Submit New Missions
             <i class="fa-sharp fa-solid fa-arrow-right"></i>
         </button>
@@ -562,7 +606,6 @@
                 $('#grid-view-label').css({'background-color': 'white'});
             })
             $('#country-dropdown').on('change', function() {
-                console.log('yes');
                 var country_id = this.value;
                 $("#city-dropdown").html('');
                 $.ajax({
@@ -583,15 +626,6 @@
                 });
             });
         });
-    </script>
-     <script>
-        document.getElementById('selectAllskill').addEventListener('change', function() {
-        var checkboxes = document.querySelectorAll('input[name="options[]"]');
-        for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].checked = this.checked;
-        }
-        });
-
     </script>
     <script>
         var countries = [];
@@ -616,8 +650,64 @@
         function removeBadge(id,type){
             $('#close_'+type+'_parent_'+id).remove();
         }
+        function updateCityDropdown(country_id){
+            $('#city_dropper').html('');
+            $.ajax({
+                url: "{{ url('api/fetch-city')}}",
+                type: "POST",
+                data: {
+                    country_id: country_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json',
+                success: function(result) {
+                    $.each(result.cities, function(key, value){
+                        html = "";
+                        // html += "<div class='form-check'>";
+                        // html += "<input class='form-check-input' type='checkbox' value="+value.city_id+" id='city_option_"+value.city_id+"'>";
+                        // html += "<label class='form-check-label text-secondary' for='city_option_"+value.city_id+"' id='city_label_"value.city_id"'>"+value.name+"</label>";
+                        // html += "</div>";
+                        $('#city_dropper').append("<div class='form-check'>"+
+                            "<input class='form-check-input' type='checkbox' value="+value.city_id+" id='city_option_"+value.city_id+"'>"+
+                            "<label class='form-check-label text-secondary' for='city_option_"+value.city_id+"' id='city_label_"+value.city_id+"'>"+value.name+"</label>"+
+                            "</div>" );
+                    });
+                }
+            });
+            return;
+        }
+        function getPreviousValue(){
+            skills = $('#skill_f_id').val().split(',');
+            skills.forEach(skill => {
+                if(skill!=""){
+                    $('#skill_option_'+skill).prop('checked', true);
+                    getBadge(skill,$('#skill_label_'+skill).text(),'skill');
+                }
+            });
+            themes = $('#theme_f_id').val().split(',');
+            themes.forEach(theme => {
+                if(theme!=""){
+                    $('#mission_theme_option_'+theme).prop('checked', true);
+                    getBadge(theme,$('#theme_label_'+theme).text(),'mission');
+                }
+            });
+            countries = $('#country_f_id').val().split(',');
+            countries.forEach(country => {
+                if(country!=""){
+                    $('#country_option_'+country).prop('checked', true);
+                    getBadge(country,$('#country_label_'+country).text(),'country');
+                }
+            });
+            // cities = $('#city_f_id').val().split(',');
+            // cities.forEach(city => {
+            //     if(cities!=""){
+            //         $('#city_option_'+city).prop('checked', true);
+            //         getBadge(city,$('#city_label_'+city).text(),'city');
+            //     }
+            // });
+        }
         $(document).ready(function(Event) {
-            $("#clear_all").hide();
+            getPreviousValue();
             $('input[id^="invite_"]').on('click', function() {
                 if (this.checked) {
                     var mission_id = this.id.split("_")[1];
@@ -680,12 +770,11 @@
                 $('#sort').val(sort);
                 $('#submit_f_id').click();
             }),
-            $('#refresh-apply').on('click', function() {
-                $('#search_input').val('');
-                $('#filter-clear').click();
-                search = $("#search_input").val();
-                $('#filter-apply').click();
-            }),
+            // $('#refresh-apply').on('click', function() {
+            //     $('#search_input').val('');
+            //     $('#filter-clear').click();
+            //     search = $("#search_input").val();
+            // }),
             $('#grid-view').on('click', function() {
                 $('#gridViewContent').show();
                 $('#listViewContent').hide();
@@ -699,41 +788,51 @@
                 $("#search_f_id").val(search);
                 $('#submit_f_id').click();
             }),
-            $("#country-dropdown").on('change', function(e) {
-                    //e.preventDefault();
-                    $("#clear_all").show();
-                    let country_id = $('#country-dropdown').val();
-                    let country = $('#country-dropdown option:selected').html();
-                    htmlstr = ""
-                    htmlstr += '<div class="d-inline-flex border px-2" style="border-radius: 23px">';
-                    htmlstr += '<span class="badge fs-5" style="color: black; font-weight: lighter;">' +
-                        country + '</span>';
-                    htmlstr += '<button type="button" class="filter-item btn" style="padding: 0%;">'
-                    htmlstr += '<span aria-hidden="true">&times;</span>'
-                    htmlstr += '</button></div>'
-                    $('#badges').append(
-                        htmlstr
-                    );
+            // $("#country-dropdown").on('change', function(e) {
+            //         //e.preventDefault();
+            //         $("#clear_all").show();
+            //         let country_id = $('#country-dropdown').val();
+            //         let country = $('#country-dropdown option:selected').html();
+            //         htmlstr = ""
+            //         htmlstr += '<div class="d-inline-flex border px-2" style="border-radius: 23px">';
+            //         htmlstr += '<span class="badge fs-5" style="color: black; font-weight: lighter;">' +
+            //             country + '</span>';
+            //         htmlstr += '<button type="button" class="filter-item btn" style="padding: 0%;">'
+            //         htmlstr += '<span aria-hidden="true">&times;</span>'
+            //         htmlstr += '</button></div>'
+            //         $('#badges').append(
+            //             htmlstr
+            //         );
+            //         countries.push(country_id);
+            //         $("#country_f_id").val(countries);
+            //     }),
+            $('input[id^=country_option_]').on('change', function(){
+                let country_id = this.id.split('_')[2];
+                let country_name = $('#country_label_'+country_id).text();
+                if(this.checked){
+                    getBadge(country_id,country_name,'country');
                     countries.push(country_id);
-                    $("#country_f_id").val(countries);
-                }),
-                $("#city-dropdown").on('change', function() {
-                    $("#clear_all").show();
-                    let city_id = $('#city-dropdown').val();
-                    let city = $('#city-dropdown option:selected').html();
-                    htmlstr = ""
-                    htmlstr += '<div class="d-inline-flex border px-2" style="border-radius: 23px">';
-                    htmlstr += '<span class="badge fs-5" style="color: black; font-weight: lighter;">' +
-                        city + '</span>';
-                    htmlstr += '<button type="button" class="close btn " style="padding: 0%;">'
-                    htmlstr += '<span aria-hidden="true">&times;</span>'
-                    htmlstr += '</button></div>'
-                    $('#badges').append(
-                        htmlstr
-                    );
+                }
+                else{
+                    removeBadge(country_id, 'country');
+                    countries.pop(country_id);
+                }
+                $('#country_f_id').val(countries);
+                updateCityDropdown(country_id);
+            })
+            $('input[id^=city_option_]').on('change',function(){
+                let city_id = this.id.split('_')[2];
+                let city_name = $('#city_label_'+city_id).text();
+                if(this.checked){
+                    getBadge(city_id,city_name,'city');
                     cities.push(city_id);
-                    $('#city_f_id').val(cities);
-                }),
+                }
+                else{
+                    removeBadge(city_id, 'city');
+                    cities.pop(city_id);
+                }
+                $('#city_f_id').val(cities);
+            })
                 $('input[id^=mission_theme_option_]').on('change', function(){
                     let mission_theme_id = this.id.split('_')[3];
                     let title = $('#theme_label_'+mission_theme_id).text();
@@ -746,6 +845,7 @@
                         themes.pop(mission_theme_id);
                     }
                     $('#theme_f_id').val(themes);
+                    $("#filter-apply").click();
                 })
                 $('input[id^=skill_option_]').on('change', function(){
                     let skill_id = this.id.split('_')[2];
@@ -759,22 +859,29 @@
                         skills.pop(skill_id);
                     }
                     $('#skill_f_id').val(skills);
+                    $("#filter-apply").click();
                 })
-                $('#filter-clear').on('click', function() {
-                    $("#clear_all").hide();
+                $('#clear_all').on('click', function() {
+
                     $('#badges').children().remove();
                     countries = [];
                     cities = [];
                     themes = [];
                     skills = [];
+                    search = '';
                     $('#country_f_id').val(countries);
                     $('#city_f_id').val(cities);
                     $('#themes_f_id').val(themes);
                     $('#skills_f_id').val(skills);
+                    $('#search_f_id').val(search);
+                    $('#filter-apply').click();
+                    $("#clear_all").hide();
+                    // $('#refresh-apply').click();
                 })
         });
         $(document).on('click', '#country-dropdown', function (e) {
             e.stopPropagation();
         });
+
     </script>
 @endsection

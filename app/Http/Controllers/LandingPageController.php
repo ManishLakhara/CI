@@ -106,7 +106,7 @@ class LandingPageController extends Controller
                                              "theme_f" => $request->theme_f,
                                              "skill_f" => $request->skill_f,
                                              "sort" => $request->sort,
-                                            ]);
+    ]);
 
         $countries = Country::all(['country_id','name']);
         $themes = MissionTheme::all(['mission_theme_id','title']);
