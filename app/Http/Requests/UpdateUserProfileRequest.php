@@ -29,9 +29,9 @@ class UpdateUserProfileRequest extends FormRequest
             'department' => 'max:16',
             'country_id' => 'required',
             'city_id' => 'required',
-            
-            'linked_in_url'=>'max:255',
 
+            'linked_in_url'=>'max:255',
+            'avatar'=>'max:2048',
         ];
     }
 }
