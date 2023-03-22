@@ -4,6 +4,7 @@
       <div class="d-flex justify-content-between border-bottom py-1 align-items-center">
         <div class="col-md-4 col-sm-6">
           <div class="d-flex justify-content-end">
+            @yield('cms-toggle')
             <div class="px-4">
               <a  class="btn text-muted no-decor" href="#">Stories</a>
             </div>

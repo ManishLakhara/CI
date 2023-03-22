@@ -25,11 +25,11 @@
                     'add' => 'cmspage.create',
                 ])
 
-                <table class="table table-responsive">
+                <table class="table table-responsive border-start border-end">
                     <thead class="table-light">
                         <tr>
                             <th class="col-lg-8">Title</th>
-                            <th>Status</th>
+                            <th class="col-lg-4">Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>

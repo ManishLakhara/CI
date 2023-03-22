@@ -106,8 +106,8 @@ Route::get('index',[LandingPageController::class, 'index'])->name('landing.index
 Route::post('index',[LandingPageController::class, 'index'])->name('landing.index')->middleware('auth');
 Route::get('filter-data',[LandingPageController::class,'filterData']);
 
-Route::post('update-profile', [UserEditProfileController::class,'updateProfile'])->name('update-profile');
+Route::put('update-profile', [UserEditProfileController::class,'updateProfile'])->name('update-profile');
 
 Route::get('edit-profile/{user_id}', [UserEditProfileController::class,'editProfile'])->name('edit-profile')->middleware('auth');
 Route::post('logout', [UserEditProfileController::class,'logout'])->name('logout');
-Route::post('update-password', [UserEditProfileController::class, 'updatePassword'])->name('update-password')->middleware('auth');
+//Route::post('update-password', [UserEditProfileController::class, 'updatePassword'])->name('update-password')->middleware('auth');
