@@ -43,12 +43,20 @@ class UserEditProfileController extends Controller
         $user_id = $user->user_id;
         //dd($request);
         $u1 = User::find($user_id);
+        // if ($request->hasFile('avatar')) {
+        //     $avatar = $request->file('avatar');
+        //     $filename = time() . '.' . $avatar->getClientOriginalExtension();
+        //     $avatar->storeAs('public/avatars', $filename);
+        //     $u1->avatar = 'storage/avatars/' . $filename;
+        // }
+
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            $avatar->storeAs('public/avatars', $filename);
+            $filename = $avatar->getClientOriginalName(); // get original file name
+            $avatar->storeAs('public/avatars', $filename); // store the file with original name
             $u1->avatar = 'storage/avatars/' . $filename;
         }
+
         $u1->fill($request->post());
         $u1->save();
 
@@ -99,7 +107,7 @@ class UserEditProfileController extends Controller
                 }
             ],
             'password' => 'required|string|min:8|different:old_password',
-            'confirm_password'=>'required|same:password'
+            'confirm_password' => 'required|same:password'
         ]);
         //dd($request);
         $user_id = $request->user_id;
