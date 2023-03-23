@@ -21,36 +21,20 @@
                    </form>
                 </div>
                 <div class="col-md-6 d-flex justify-content-around">
-                    {{-- <button class="btn border-start" type=submit id="refresh-apply">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                    </button> --}}
-
                         <button class="btn border-start" type=submit id="filter-apply">
                             <img src="{{asset("Images/filter.png")}}" alt="">
                         </button>
 
 
                     <div class="border-start input-group h-100 px-2">
-                        {{-- <select class="custom-select w-100 border-0 text-muted" name="country_id" id="country-dropdown">
-                            <option disabled selected>Country</option>
-                            @foreach ($countries as $country)
-                                <option value={{ $country->country_id }}>{{ $country->name }}</option>
-                            @endforeach
-                        </select> --}}
                         <div class="dropdown w-100">
                             <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="float-start ps-0 pe-5">
                                     Country
                                 </span>
                             </button>
-                            <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton" style="overflow: scroll; max-height: 500px; max-width: fit-content">
+                            <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton">
                               <div>
-                                {{-- <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="" id="selectAllskill">
-                                  <label class="form-check-label text-secondary" for="selectAllCheckbox">
-                                    Select All
-                                  </label>
-                                </div> --}}
                                 @foreach ($countries as $country)
                                   <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="{{ $country->country_id }}" id="country_option_{{ $country->country_id }}">
@@ -75,14 +59,6 @@
                             </button>
                             <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton" style="overflow: scroll; max-height: 500px; max-width: fit-content">
                               <div id="city_dropper">
-                                {{-- @foreach ($cities as $city)
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="{{ $theme->mission_theme_id }}" id="mission_theme_option_{{ $theme->mission_theme_id }}">
-                                    <label class="form-check-label text-secondary" for="mission_theme_option_{{ $theme->mission_theme_id }}" id="theme_label_{{$theme->mission_theme_id}}">
-                                      {{ $theme->title }}
-                                    </label>
-                                  </div>
-                                @endforeach --}}
                                 </div>
                             </div>
                         </div>
@@ -286,7 +262,7 @@
                             <span class="position-absolute parent_mission_location">
                                 <span class="mission_location px-2 py-1">
                                     <img src={{ asset('Images/pin.png') }} alt=""><span
-                                        class="text-white px-2">{{ $item->country->name }}</span>
+                                        class="text-white px-2">{{ $item->city->name }}</span>
                                 </span>
                             </span>
                         </div>
@@ -378,13 +354,15 @@
                             <div class="border"></div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-lg fs-5 apply-btn"> Apply <i
+                            <form action="{{route('mission-page',$item->mission_id)}}">
+                            <button type="submit" class="btn btn-lg fs-5 apply-btn"> Apply <i
                                     class="fa-sharp fa-solid fa-arrow-right"></i> </button>
+                            </form>
                         </div>
                     </div>
                 </div>
                 @endforeach
-            </div>
+                </div>
          {{--ListViewContent--}}
             <div class="row py-3" id="listViewContent" style="display: none;">
                 @foreach ($data as $item)
@@ -469,7 +447,7 @@
                                 <span class="position-absolute parent_mission_location_l">
                                     <span class="mission_location px-2 py-1">
                                         <img src={{ asset('Images/pin.png') }} alt=""><span
-                                            class="text-white px-2">{{ $item->country->name }}</span>
+                                            class="text-white px-2">{{ $item->city->name }}</span>
                                     </span>
                                 </span>
                             </div>
@@ -479,7 +457,7 @@
                                 <div class="col">
                                     <div class="d-flex">
                                         <div>
-                                            <img src="{{asset('Images/pin1.png')}}" alt=""> {{$item->country->name}}
+                                            <img src="{{asset('Images/pin1.png')}}" alt=""> {{$item->city->name}}
                                         </div>
                                         <div class="px-2">
                                             <img src="{{asset('Images/web.png')}}" alt=""> {{$item->missionTheme->title}}
@@ -788,24 +766,6 @@
                 $("#search_f_id").val(search);
                 $('#submit_f_id').click();
             }),
-            // $("#country-dropdown").on('change', function(e) {
-            //         //e.preventDefault();
-            //         $("#clear_all").show();
-            //         let country_id = $('#country-dropdown').val();
-            //         let country = $('#country-dropdown option:selected').html();
-            //         htmlstr = ""
-            //         htmlstr += '<div class="d-inline-flex border px-2" style="border-radius: 23px">';
-            //         htmlstr += '<span class="badge fs-5" style="color: black; font-weight: lighter;">' +
-            //             country + '</span>';
-            //         htmlstr += '<button type="button" class="filter-item btn" style="padding: 0%;">'
-            //         htmlstr += '<span aria-hidden="true">&times;</span>'
-            //         htmlstr += '</button></div>'
-            //         $('#badges').append(
-            //             htmlstr
-            //         );
-            //         countries.push(country_id);
-            //         $("#country_f_id").val(countries);
-            //     }),
             $('input[id^=country_option_]').on('change', function(){
                 let country_id = this.id.split('_')[2];
                 let country_name = $('#country_label_'+country_id).text();
@@ -819,6 +779,7 @@
                 }
                 $('#country_f_id').val(countries);
                 updateCityDropdown(country_id);
+                $("#filter-apply").click();
             })
             $('input[id^=city_option_]').on('change',function(){
                 let city_id = this.id.split('_')[2];
@@ -832,6 +793,7 @@
                     cities.pop(city_id);
                 }
                 $('#city_f_id').val(cities);
+                $("#filter-apply").click();
             })
                 $('input[id^=mission_theme_option_]').on('change', function(){
                     let mission_theme_id = this.id.split('_')[3];

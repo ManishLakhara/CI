@@ -230,3 +230,12 @@ small {
 .background-1 {
     background-image: url();
 }
+
+.nav-link.active {
+    border-bottom: 2px solid #333;
+    color:#414141;
+    padding-bottom: 1em;
+  }
+.nav-link {
+    color:#e0dddd;
+}

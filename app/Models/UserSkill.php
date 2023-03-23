@@ -10,8 +10,8 @@ class UserSkill extends Model
     use HasFactory;
     protected $primaryKey = 'user_skill_id';
 
-    public function mission() {
-        return $this->belongsToMany(Mission::class, 'mission_id');
+    public function user() {
+        return $this->belongsToMany(User::class, 'user_id');
     }
 
     public function skill() {

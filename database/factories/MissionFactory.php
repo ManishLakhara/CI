@@ -25,7 +25,7 @@ class MissionFactory extends Factory
         //                 ->pluck('city_id')
         //                 ->toArray();
         //$countries = Country::where('name','=','India')->pluck('country_id')->toArray();
-        $cities = City::where('country_id','=',102)->pluck('city_id')->toArray();
+        $cities = City::where('country_id','=',7)->pluck('city_id')->toArray();
         return [
             'theme_id' => $this->faker->numberBetween(1,10),
             'title' => $this->faker->words(5,true),
@@ -33,7 +33,7 @@ class MissionFactory extends Factory
             'description' => $this->faker->sentence(3),
             'mission_type' => $this->faker->randomElement(['GOAL','TIME']),
             'status'=> $this->faker->numberBetween(0,1),
-            'country_id'=> '102',
+            'country_id'=> '7',
             'city_id' => $this->faker->randomElement($cities),
             'start_date' => $this->faker->date(),
             'end_date' => $this->faker->date(),

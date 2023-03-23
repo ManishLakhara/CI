@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\admin\MissionSkillController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\MissionDetailController;
 use Faker\Provider\HtmlLorem;
 use Faker\Provider\Lorem;
 use Illuminate\Support\Facades\Route;
@@ -111,3 +112,5 @@ Route::put('update-profile', [UserEditProfileController::class,'updateProfile'])
 Route::get('edit-profile/{user_id}', [UserEditProfileController::class,'editProfile'])->name('edit-profile')->middleware('auth');
 Route::post('logout', [UserEditProfileController::class,'logout'])->name('logout');
 //Route::post('update-password', [UserEditProfileController::class, 'updatePassword'])->name('update-password')->middleware('auth');
+
+Route::get('mission-page/{mission_id}',[MissionDetailController::class,'main'])->name('mission-page');

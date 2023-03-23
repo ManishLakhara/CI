@@ -107,8 +107,10 @@ class LandingPageController extends Controller
                                              "skill_f" => $request->skill_f,
                                              "sort" => $request->sort,
     ]);
-
-        $countries = Country::all(['country_id','name']);
+        $country_array = DB::table('missions')->select('country_id')
+                                              ->groupBy('country_id')
+                                              ->pluck('country_id');
+        $countries = Country::whereIn('country_id',$country_array)->get(['country_id','name']);
         $themes = MissionTheme::all(['mission_theme_id','title']);
         $skills = Skill::all(['skill_id','skill_name']);
         $favorite = FavoriteMission::where('user_id',Auth::user()->user_id)
