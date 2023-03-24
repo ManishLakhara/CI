@@ -73,7 +73,7 @@ class Mission extends Model
     }
 
     public function favoriteMission() {
-        return $this->belongsTo(FavoriteMission::class, 'mission_id');
+        return $this->belongsTo(FavoriteMission::class, 'mission_id','mission_id');
     }
 
     public function goalMission(): HasOne {

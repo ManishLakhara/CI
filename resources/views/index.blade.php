@@ -2,6 +2,7 @@
 @section('content')
 <?php
     $user_id = Auth::user()->user_id;
+
 ?>
     <div class="container-fluid border-bottom">
         <div class="container">

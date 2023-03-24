@@ -1,16 +1,30 @@
+
 @extends('layouts.app')
 @section('content')
+<?php
+    use Carbon\Carbon;
+    $currentDateTime = Carbon::now();
+    $formattedDateTime = $currentDateTime->format('l, F j, Y, g:iA');
+    $user_id = Auth::user()->user_id;
+    // dd($mission->favoriteMission);
+?>
     <div class="container">
         <div class="row p-5">
             <div class="col-md-6">
-                {{-- <div class="mission-image">
-                    <div class="images">
-                        <img src={{asset('Images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-4.png')}} alt="">
+                <div class="single-item">
+                    <div class="image">
+                        <img src="{{asset('Images/Animal-welfare-&-save-birds-campaign.png')}}" alt="">
                     </div>
-                    <div class="images"><img src={{asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-4.png')}} alt=""></div>
-                    <div class="images"><img src={{asset('Images/img1.png')}} alt=""></div>
-                    <div class="images"><img src={{asset('Images/Nourish-the-Children-in--African-country-1.png')}} alt=""></div>
-                </div> --}}
+                    <div class="image">
+                        <img src="{{asset('Images/Animal-welfare-&-save-birds-campaign.png')}}" alt="">
+                    </div>
+                    <div class="image">
+                        <img src="{{asset('Images/Animal-welfare-&-save-birds-campaign.png')}}" alt="">
+                    </div>
+                    <div class="image">
+                        <img src="{{asset('Images/Animal-welfare-&-save-birds-campaign.png')}}" alt="">
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="fs-2" style="color: #414141">
@@ -21,13 +35,15 @@
                 </div>
                 <div class="Border-top py-4"></div>
 
-                @if($mission->goalMission!=null)
+
                 <div class="text-center" style="margin-top: -60px;">
                     <small class="p-2 fs-6 border from_untill text-secondary">
-                        {{$mission->goalMission->goal_objective_text}}
+                        @if($mission->timeMission!=null) From {{ date('d-m-Y', strtotime($mission->start_date)) }} untill {{ date('d-m-Y', strtotime($mission->end_date)) }}
+                        @elseif($mission->goalMission!=null) {{$mission->goalMission->goal_objective_text}}
+                        @endif
                     </small>
                 </div>
-                @endif
+
                 <div class="row py-2">
                     <div class="col-lg-6 col-12 py-2 py-sm-4 ">
                         @if (true)
@@ -41,9 +57,30 @@
                                 </div>
                             </div>
                         @endif
+                        @if(false)
+                            <div class="d-flex align-items-center ">
+                                <div class="px-1">
+                                    <img src={{ asset('Images/Already-volunteered.png') }} alt="">
+                                </div>
+                                <div class="px-2 d-flex flex-column align-items-start">
+                                    <span class="theme-color fs-5 font-weight-bolder">{{$item->timeMission->total_seats}}<br></span>
+                                    <span class="text-muted"><small>Already volunteered</small></span>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="col-lg-6 col-12 py-2">
-                        @if(true)
+                        @if($mission->timeMission)
+                            <div class='d-flex align-items-center'>
+                                <div class="px-1">
+                                    <img src={{ asset('Images/deadline.png') }} alt="">
+                                </div>
+                                <div class=" px-2 d-flex flex-column align-items-start">
+                                    <span class="theme-color fs-5 font-weight-bolder">{{ date('d-m-Y', strtotime($mission->timeMission->registration_deadline)) }}<br></span>
+                                    <span class="text-muted">Deadline</span>
+                                </div>
+                            </div>
+                        @elseif($mission->goalMission)
                             <div class='d-flex justify-content-start py-2 py-sm-4 w-lg-75 w-100'>
                                 <div class="px-1">
                                     <img src={{ asset('Images/achieved.png') }} alt="">
@@ -61,24 +98,70 @@
                 <div class="Border-top"></div>
                 <div class="row py-4">
                     <div class="col-xxl-6 col-12 py-3">
-                        <button class="btn btn-outline-secondary w-100 border-2" style="border-radius: 23px">
-                            <span class="text-center">
-                                <i class="fa-regular fa-heart fs-4 text-secondary px-1"></i>
-                                Add to favorite
-                            </span>
-                            {{-- <span class="text-center">
-                                <i class="fas fa-heart fs-4 text-secondary px-1"></i>
-                                Added to favorites
-                            </span> --}}
+                        <button id="mission_like_btn_{{$mission->mission_id}}_{{$user_id}}" class="btn btn-outline-secondary w-100 border-2" style="border-radius: 23px">
+                            @if($mission->favoriteMission==null)
+                                <?php $value=0?>
+                                <span class="text-center">
+                                    <i class="fa-regular fa-heart fs-4 text-secondary px-1"></i>
+                                    Add to favorite
+                                </span>
+                            @else
+                                <?php $value=$mission->favoriteMission->favorite_mission_id?>
+                                <span class="text-center">
+                                    <i class="fas fa-heart fs-4 text-secondary px-1"></i>
+                                    Added to favorites
+                                </span>
+                            @endif
                         </button>
+                        <input type="radio" name="imgbackground" id="mission_like_input_{{$mission->mission_id}}_{{$user_id}}" class="d-none imgbgchk py-1 hidden" style="display: none" value={{$value}}>
                     </div>
                     <div class="col-xxl-6 col-12 py-3">
-                        <button class="btn btn-outline-secondary w-100 border-2" style="border-radius: 23px">
+                        <button class="btn btn-outline-secondary w-100 border-2" id="misison_invite_btn_{{$mission->mission_id}}_{{$user_id}}" data-toggle="modal" data-target="#invite_user_modal_{{$mission->mission_id}}_{{$user_id}}" style="border-radius: 23px">
                             <span class="text-center">
                                 <img class="px-1" src={{ asset('Images/add1.png') }} alt="">
                                 Recommend to a Co-worker
                             </span>
                         </button>
+                        <!-- Modal -->
+                        <div class="modal fade w-100" id="invite_user_modal_{{$mission->mission_id}}_{{$user_id}}" tabindex="-1" role="dialog" aria-labelledby="invite_user_modal_{{$mission->mission_id}}_{{$user_id}}Label" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="invite_user_modal_{{$mission->mission_id}}_{{$user_id}}Label">Invite Your Friends</h5>
+                                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                <th scope="col">First</th>
+                                                <th scope="col">last</th>
+                                                <th scope="col">email</th>
+                                                <th scope="col">Invite</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($users as $user)
+                                                    <tr>
+                                                    <th>{{$user->first_name}}</th>
+                                                    <td>{{$user->last_name}}</td>
+                                                    <td>{{$user->email}}</td>
+                                                    <td>
+                                                        <input type="checkbox" id="invite_{{$mission->mission_id}}_{{$user->user_id}}_{{$user_id}}" value="{{$user->user_id}}">
+                                                    </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                            </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     </div>
                 <div class="Border-top"></div>
@@ -116,7 +199,7 @@
                               <h5 class="card-title pb-3"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
                               <h6 class="card-subtitle text-muted">Date</h6>
                               <p class="card-text">
-                                OnGoing Opportunity
+                                {{date('d-m-Y', strtotime($mission->start_date))}}
                               </p>
                             </div>
                         </div>
@@ -146,17 +229,17 @@
                 <div class="col-md-7">
                     <ul class="nav border-bottom" id="myTab" role="tablist">
                         <li class="nav-item">
-                          <a class="nav-link active" id="mission-detail-tab" data-toggle="tab" href="#mission-detail" role="tab" aria-controls="mission-detail" aria-selected="true">Mission</a>
+                          <a class="nav-link " id="mission-detail-tab" data-toggle="tab" href="#mission-detail" role="tab" aria-controls="mission-detail" aria-selected="true">Mission</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" id="organization-detail-tab" data-toggle="tab" href="#organization-detail" role="tab" aria-controls="organization-detail" aria-selected="false">Organization</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="Comment-detail-tab" data-toggle="tab" href="#Comment-detail" role="tab" aria-controls="Comment-detail" aria-selected="false">Comments</a>
+                          <a class="nav-link active" id="Comment-detail-tab" data-toggle="tab" href="#Comment-detail" role="tab" aria-controls="Comment-detail" aria-selected="false">Comments</a>
                         </li>
                     </ul>
                     <div class="tab-content pt-4" id="myTabContent">
-                        <div class="tab-pane fade show active" id="mission-detail" role="tabpanel" aria-labelledby="mission-detail-tab">
+                        <div class="tab-pane fade " id="mission-detail" role="tabpanel" aria-labelledby="mission-detail-tab">
                             <h1 class="fs-4 py-1 theme-color">Introduction</h1>
                             <p class="text-muted">{{$mission->short_description}}</p>
                             <p class="text-muted">{{$mission->description}}</p>
@@ -167,25 +250,48 @@
 
                             <h1 class="fs-4 py-1 theme-color">Documents</h1>
                             <div class="row">
-                                <div class="p-1 col-4">
+                                <div class="p-1 col-lg-4 col-md-6 col-12">
                                     <button class="btn py-2 btn-outline border text-center" style="border-radius: 23px">
                                         <img src={{asset('Images/pdf.png')}} alt=""> random-pdf-type-doc
                                     </button>
                                 </div>
-                                <div class="p-1 col-4">
+                                <div class="p-1 col-lg-4 col-md-6 col-12">
                                     <button class="btn py-2 btn-outline border text-center" style="border-radius: 23px">
                                         <img src={{asset('Images/doc.png')}} alt=""> random-doc-type-doc
                                     </button>
                                 </div>
-                                <div class="p-1 col-4">
+                                <div class="p-1 col-lg-4 col-md-6 col-12">
                                     <button class="btn py-2 btn-outline border text-center" style="border-radius: 23px">
                                         <img src={{asset('Images/xlsx.png')}} alt=""> random-xlsx-type-doc
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="organization-detail" role="tabpanel" aria-labelledby="organization-detail-tab">...</div>
-                        <div class="tab-pane fade" id="Comment-detail" role="tabpanel" aria-labelledby="Comment-detail-tab">...</div>
+                        <div class="tab-pane fade" id="organization-detail" role="tabpanel" aria-labelledby="organization-detail-tab">
+                            {{$mission->organization_detail}}
+                        </div>
+                        <div class="tab-pane fade show active" id="Comment-detail" role="tabpanel" aria-labelledby="Comment-detail-tab">
+                            <div class="form-outline">
+                                <textarea class="form-control" id="textAreaExample3" rows="3" placeholder="Enter your comments"></textarea>
+                            </div>
+                            <div class="py-3">
+                                <button class="form-outline btn btn-outline apply-btn">Post comment</button>
+                            </div>
+                            <div class="container comment">
+                                @for ($i=0;$i<10;$i++)
+                                    <div class="row">
+                                        <div class="col-2 text-center">
+                                            <img class="img-fluid rounded-circle" src={{asset("Images/volunteer1.png")}} width="60px" height="60px" alt="">
+                                        </div>
+                                        <div class="col-10">
+                                            <span class="fs-6">Rahul Dua <br></span>
+                                            <small>{{$formattedDateTime}}<br></small>
+                                            <p class="pt-1">Nice Mission, Good Environment in place</p>
+                                        </div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -254,9 +360,65 @@
     </div>
     <script>
         $(document).ready(function(){
-            $('.mission-image').slick();
+            $("button[id^='mission_like_btn_']").on('click', function() {
+                var mission_id = this.id.split("_")[3];
+                var user_id = this.id.split("_")[4];
+                if($('#mission_like_input_'+mission_id+'_'+user_id).val()=='0'){
+                    $.ajax({
+                        url: "{{url('api/add-favourite')}}",
+                        type: "POST",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            mission_id: mission_id,
+                            user_id: user_id,
+                        },
+                        success: function(data) {
+                            $('#mission_like_input_'+mission_id+'_'+user_id).val(data);
+                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']")
+                            .html('<span class="text-center"><i class="fas fa-heart fs-4 text-secondary px-1"></i>Added to favorites</span>');
+                        }
+                    });
+                }
+                else{
+                    let fav = $('#mission_like_input_'+mission_id+'_'+user_id).val()
+                    $.ajax({
+                        url: "{{url('api/remove-favourite')}}",
+                        type: "POST",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            mission_id: mission_id,
+                            user_id: user_id,
+                            favorite_mission_id: fav,
+                        },
+                        success: function() {
+                            $('#mission_like_input_'+mission_id+'_'+user_id).val('0');
+                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<span class="text-center"><i class="fa-regular fa-heart fs-4 text-secondary px-1"></i>Add to favorite</span>');
+                        }
+                    });
+                }
+            })
+            $('input[id^="invite_"]').on('click', function() {
+                if (this.checked) {
+                    var mission_id = this.id.split("_")[1];
+                    var to_user_id = this.id.split('_')[2];
+                    var from_user_id = this.id.split("_")[3];
+                    console.log(mission_id);
+                    $.ajax({
+                        url: "{{url('api/invite-user')}}",
+                        type: "POST",
+                        data: {
+                            _token: '{{csrf_token() }}',
+                            from_user_id: from_user_id,
+                            to_user_id: to_user_id,
+                            mission_id: mission_id,
+                        },
+                        success: function(data) {
+                            console.log("Invite Send");
+                        },
+                    })
+                }
+            })
+            $(".single-item").slick();
         });
-
-
     </script>
 @endsection

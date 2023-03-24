@@ -239,3 +239,22 @@ small {
 .nav-link {
     color:#e0dddd;
 }
+.nav-link:hover {
+    color:#414141;
+}
+.container.comment{
+    height:17em;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.container.comment::-webkit-scrollbar {
+    width: 2px; /* Set the width of the scrollbar */
+  }
+  .container.comment::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Set the background color of the scrollbar track */
+  }
+
+  .container.comment::-webkit-scrollbar-thumb {
+    background: #d1cfcf; /* Set the background color of the scrollbar thumb */
+    border-radius: 5px; /* Set the border radius of the scrollbar thumb */
+  }
