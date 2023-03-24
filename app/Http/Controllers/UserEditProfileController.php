@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-
+use App\Models\Skill;
+use App\Models\UserSkill;
 
 class UserEditProfileController extends Controller
 {
@@ -29,10 +30,15 @@ class UserEditProfileController extends Controller
         $countries = Country::get(['name', 'country_id']);
         $cities = City::where("country_id", $user->country_id)->get();
 
-        return view('usereditprofile', compact('user', 'countries', 'cities'));
+        $skills = Skill::get(['skill_id', 'skill_name']);
+        $selected_skills = UserSkill::join('skills', 'user_skills.skill_id', '=', 'skills.skill_id')
+            ->where('user_skills.user_id', $user_id)
+            ->select('skills.skill_id', 'skills.skill_name')
+            ->get();
+
+
+        return view('usereditprofile', compact('user', 'countries', 'cities', 'skills', 'selected_skills'));
     }
-
-
 
 
 
@@ -122,6 +128,54 @@ class UserEditProfileController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+
+
+    // public function updateSkills(Request $request)
+    // {
+    //     $user_id = $request->input('user_id');
+    //     $selected_skills = $request->input('selected_skills');
+
+    //     // Delete all existing user skills for this user
+    //     UserSkill::where('user_id', $user_id)->delete();
+
+    //     // Add new user skills for this user
+    //     foreach ($selected_skills as $skill_id) {
+    //         $user_skill = new UserSkill;
+    //         $user_skill->user_id = $user_id;
+    //         $user_skill->skill_id = $skill_id;
+    //         $user_skill->save();
+    //     }
+
+    //     return response()->json(['success' => true]);
+    // }
+
+    public function updateSkills(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $selected_skills = $request->input('selected_skills');
+
+
+        $existing_skills = UserSkill::where('user_id', $user_id)->pluck('skill_id')->toArray();
+
+
+        $skills_to_delete = array_diff($existing_skills, $selected_skills);
+        $skills_to_add = array_diff($selected_skills, $existing_skills);
+
+
+        UserSkill::where('user_id', $user_id)->whereIn('skill_id', $skills_to_delete)->delete();
+
+
+        foreach ($skills_to_add as $skill_id) {
+            $user_skill = new UserSkill;
+            $user_skill->user_id = $user_id;
+            $user_skill->skill_id = $skill_id;
+            $user_skill->save();
+        }
+
+        return response()->json(['success' => true]);
+    }
+
 
     public function logout()
     {

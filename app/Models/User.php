@@ -31,35 +31,43 @@ class User extends Authenticatable
         'linked_in_url',
     ];
 
-    public function country() {
+    public function country()
+    {
         return $this->belongsTo(Country::class, 'country_id');
     }
 
-    public function city() {
+    public function city()
+    {
         return $this->belongsTo(City::class, 'city_id');
     }
 
-    public function missionApplication(){
+    public function missionApplication()
+    {
         return $this->hasMany(MissionApplication::class, 'user_id');
     }
 
-    public function missionRating() {
+    public function missionRating()
+    {
         return $this->hasMany(MissionRating::class, 'user_id');
     }
 
-    public function story() {
+    public function story()
+    {
         return $this->hasMany(Story::class, 'user_id');
     }
 
-    public function comment() {
+    public function comment()
+    {
         return $this->hasMany(comment::class, 'user_id');
     }
 
-    public function favoriteMission() {
+    public function favoriteMission()
+    {
         return $this->hasMany(FavoriteMission::class, 'user_id');
     }
 
-    public function timeSheet() {
+    public function timeSheet()
+    {
         return $this->hasMany(TimeSheet::class, 'user_id');
     }
 }

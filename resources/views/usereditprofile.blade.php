@@ -223,7 +223,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: 1px solid #ADADAD;">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: 1px solid #ADADAD;">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active mt-5" data-bs-toggle="tab" data-bs-target="#tab-1"
                                 type="button" role="tab" aria-controls="home" aria-selected="true"
@@ -236,28 +236,32 @@
                             style="font-size: 15px; line-height: 24px; color: #3E3E3E;">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="mission_skills">My Skills</label>
-                                    <select name="skill_id[]" class="form-control" id="skill-dropdown" multiple>
-                                        <option value="">Time management.</option>
-                                        <option value="">Effective communication</option>
-                                        <option value="">Problem-solving</option>
-                                        <option value="">Productivity & Organization</option>
-                                        <option value="">Teamwork skills</option>
-                                    </select>
-                                    <div class="col-3 mt-3">
-                                        <span class="btn pull-right btn-outline-secondary" style="border-radius:18px">Add
-                                            Skills</span>
+                                    <label for="skills">My Skills</label>
+                                    <div class="scroll-container" style=" border: 1px solid rgb(0, 0, 0);">
+                                        <ul id="selectedSkills" class="list-group"
+                                            style="height: 150px; overflow: auto;">
+                                            @foreach ($selected_skills as $user_skill)
+                                                <li class="list-group"
+                                                    style=" border:none; padding-left:10px;
+                                                    data-user-skill-id="{{ $user_skill->user_skill_id }}"
+                                                    data-skill-id="{{ $user_skill->skill_id }}">
+                                                    {{ $user_skill->skill->skill_name }}</li>
+                                            @endforeach
+                                        </ul>
                                     </div>
-                                    @error('skill_id')
-                                        <div class="text-danger">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                    </select>
+
+                                    <div class="col-3 mt-5">
+
+                                        <button type="button" class="btn btn-outline-secondary" data-toggle="modal"
+                                            data-target="#addSkillsModal" style="border-radius: 18px;">Add Skills</button>
+
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
+
                     <button type="submit" class="btn apply-btn mt-5 float-end">Save</button>
                 </div>
             </div>
@@ -266,111 +270,7 @@
     </form>
 
 
-    {{-- <div class="modal fade" id="passwordModal-{{ $user->user_id }}" tabindex="-1" role="dialog"
-        aria-labelledby="passwordModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content p-3">
 
-                <div>
-                    <div class="d-flex justify-content-between">
-                        <div class="py-2 text-start">
-                            Change Password
-                        </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            style="border:none;background:none">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 mt-4">
-
-                            <input type="password" class="form-control" id="old_password_id"
-                                placeholder="Enter Old Password" name="old_password">
-                            @error('old_password')
-                                <div class="text-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="col-12 mt-4">
-
-                            <input type="password" class="form-control" id="new_password_id"
-                                placeholder="Enter new Password" name="password">
-                            @error('password')
-                                <div class="text-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="col-12 mt-4">
-
-                            <input type="password" class="form-control" id="new_confirm_password_id"
-                                placeholder="Enter confirm Password" name="confirm_password">
-                            @error('confirm_password')
-                                <div class="text-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="d-flex py-4 justify-content-end">
-                    <div class="px-1">
-                        <button type="button" class="btn btn-outline-secondary px-4" style="border-radius: 23px"
-                            data-dismiss="modal">Close</button>
-                    </div>
-                    <div class="px-1">
-                        <button type="button" class="btn btn-outline effects px-4"
-                            style="border-color: #f88634 ;border-radius: 23px; color: #f88634"
-                            id="update_password_form_{{ Auth::user()->user_id }}">Change
-                            Password</button>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-    </div> --}}
-    {{-- <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="passwordModalLabel">Change Password</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border:none;background:none">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="passwordForm">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="old_password">Old Password</label>
-                            <input type="password" class="form-control" id="old_password" name="old_password">
-
-                        </div>
-                        <div class="form-group">
-                            <label for="password">New Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
-                        </div>
-                        <div class="form-group">
-                            <label for="password_confirmation">Confirm Password</label>
-                            <input type="password" class="form-control" id="password_confirmation"
-                                name="confirm_password">
-                        </div>
-                        <div id="password-error" class="alert alert-danger" role="alert" style="display: none;"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->user_id }}">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> --}}
     <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -430,9 +330,186 @@
 
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="addSkillsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-4" id="staticBackdropLabel">Add your Skills</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-6 skillList">
+                                <div class="border p-3">
+                                    <ul class="list-group list-unstyled">
+                                        @foreach ($skills as $skill)
+                                            <li class="skill list-unstyled fs-6 add-skill"
+                                                data-skill-id="{{ $skill->skill_id }}">{{ $skill->skill_name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-1 d-flex flex-column align-items-center justify-content-center">
+                                <a href="#" class="text-decoration-none text-muted add-skill"><i
+                                        class="fas fa-chevron-right"></i></a>
+                                <a href="#" class="text-decoration-none text-muted remove-skill"><i
+                                        class="fas fa-chevron-left"></i></a>
+                            </div>
+                            <div class="col-5">
+
+                                <div class="border p-3 h-100" id="selectSkill">
+                                    <ul class="list-group list-unstyled" id="selectedSkillsList">
+                                        @foreach ($selected_skills as $selected_skill)
+                                            <li class="skill list-unstyled fs-6 remove-skill selected"
+                                                data-skill-id="{{ $selected_skill->skill_id }}">
+                                                {{ $selected_skill->skill_name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-outline-dark fs-6 rounded-pill" data-dismiss="modal">Cancel</a>
+                    <button type="button" class="btn btn-outline-danger fs-6 rounded-pill"
+                        id="saveSkillsBtn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script>
+        $(document).ready(function() {
+            var selected_skills = [];
+
+
+            $(".skillList .add-skill").click(function() {
+                $(this).toggleClass("bg-primary text-white");
+                var skill_id = $(this).data("skill-id");
+                var skill_name = $(this).text();
+                if ($(this).hasClass("bg-primary")) {
+                    selected_skills.push({
+                        id: skill_id,
+                        name: skill_name
+                    });
+                } else {
+                    selected_skills = selected_skills.filter(function(skill) {
+                        return skill.id !== skill_id;
+                    });
+                }
+            });
+
+            // When user clicks on the right arrow, add the selected skills to the right column
+            $(".fa-chevron-right").click(function() {
+                selected_skills.forEach(function(skill) {
+                    if ($("#selectedSkillsList li[data-skill-id='" + skill.id + "']").length ===
+                        0) {
+                        var li = $("<li>", {
+                            class: "skill list-unstyled fs-6 remove-skill",
+                            "data-skill-id": skill.id,
+                            text: skill.name
+                        });
+                        $("#selectedSkillsList").append(li);
+                    }
+                });
+            });
+
+            // When user clicks on the left arrow, remove the selected skills from the right column
+            $(".fa-chevron-left").click(function() {
+                $("#selectedSkillsList li.bg-primary").each(function() {
+                    var skill_id = $(this).data("skill-id");
+                    $(this).remove();
+                    selected_skills = selected_skills.filter(function(skill) {
+                        return skill.id !== skill_id;
+                    });
+                });
+            });
+
+
+            $("#selectedSkillsList").on("click", ".remove-skill", function() {
+                $(this).toggleClass("bg-primary text-white");
+                var skill_id = $(this).data("skill-id");
+                selected_skills = selected_skills.filter(function(skill) {
+                    return skill.id !== skill_id;
+                });
+            });
+
+            $("#saveSkillsBtn").click(function() {
+                var skill_ids = selected_skills.map(function(skill) {
+                    return skill.id;
+                });
+
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+    <script>
+        $('#saveSkillsBtn').click(function() {
+            var selected_skills = [];
+            $('#selectedSkillsList li').each(function() {
+                selected_skills.push($(this).data('skill-id'));
+            });
+
+            var data = {
+                user_id: '{{ $user->user_id }}',
+                selected_skills: selected_skills
+            };
+
+            $.ajax({
+                url: "{{ url('api/users/update-skills') }}",
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    if (response.success) {
+                        alert('skills updated successfully');
+                        $('#addSkillsModal').modal('hide');
+                        location.reload();
+                    } else {
+                        alert('Error saving skills');
+                    }
+                },
+                error: function(xhr) {
+                    alert('Error saving skills');
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
 
 
     <script>
@@ -457,54 +534,6 @@
                     }
                 });
             })
-            // $("button[id^='update_password_form_']").on('click',function(){
-            //     newPassword = $('#new_password_id').val();
-            //     newConfirmPassword = $('#new_confirm_password_id').val();
-            //     oldPassword = $('#old_password_id').val();
-            //     user_id = this.id.split("_")[3];
-            //     $.ajax({
-            //         url: "{{ url('api/change-password') }}",
-            //         type: 'POST',
-            //         data: {
-            //             _token: '{{ csrf_token() }}',
-            //             oldPassword: oldPassword,
-            //             password: newPassword,
-            //             user_id: user_id,
-            //             newConfirmPassword: newConfirmPassword,
-            //         },
-            //         success: function(data){
-            //             alert('password changed');
-            //         },
-            //         // error: function(xhr){
-            //         //     if(xhr.status == 422){
-            //         //         var errors = JSON.parse(xhr.responseText);
-            //         //         if (errors.old_password) {
-            //         //             alert('old is required'); // and so on
-            //         //         }
-            //         //         if (errors.password) {
-            //         //             alert(' is required'); // and so on
-            //         //         }
-            //         //         if (errors.confirm_password) {
-            //         //             alert('required'); // and so on
-            //         //         }
-            //         //     }
-            //         // }
-            //         error: function (err) {
-            //             if (err.status == 422) { // when status code is 422, it's a validation issue
-            //                 console.log(err.responseJSON);
-            //                 $('#success_message').fadeIn().html(err.responseJSON.message);
-
-            //                 // you can loop through the errors object and show it to the user
-            //                 console.warn(err.responseJSON.errors);
-            //                 // display errors on each form field
-            //                 $.each(err.responseJSON.errors, function (i, error) {
-            //                     var el = $(document).find('[name="'+i+'"]');
-            //                     el.after($('<span style="color: red;">'+error[0]+'</span>'));
-            //                 });
-            //             }
-            //         }
-            //     });
-            // })
         });
     </script>
     <script>
@@ -540,10 +569,10 @@
     </script> --}}
     <script>
         $(function() {
-            $('label[for="avatar"]').on('click', function(e) {
-                e.stopPropagation();
-                $('#avatar').click();
-            });
+            // $('label[for="avatar"]').on('click', function(e) {
+            //     e.stopPropagation();
+            //     $('#avatar').click();
+            // });
 
             $('#avatar').on('click', function(e) {
                 e.stopPropagation();
@@ -557,6 +586,7 @@
 
                 reader.onload = function(e) {
                     img.attr('src', e.target.result);
+                    $('#header-avatar').attr('src', e.target.result);
                 };
 
                 reader.readAsDataURL(file);
@@ -566,35 +596,4 @@
     {{-- @section('contactus')
     @include('inc.contactus')
 @endsection --}}
-
-
-    <script>
-        // $(document).ready(function() {
-        //     //Handle form submission
-        //     $('update-password-form').submit(function(event) {
-        //         // Prevent the form from submitting normally
-        //         event.preventDefault();
-
-        //        // Get form data
-        //         var formData = new FormData(this);
-
-        //         // Send form data to server using AJAX
-        //         $.ajax({
-        //             url: $(this).attr('action'),
-        //             type: $(this).attr('method'),
-        //             data: formData,
-        //             processData: false,
-        //             contentType: false,
-        //             success: function(response) {
-        //                 // Handle success response
-        //                 console.log(response);
-        //             },
-        //             error: function(xhr, status, error) {
-        //                 // Handle error response
-        //                 console.log(xhr.responseText);
-        //             }
-        //         });
-        //     });
-        // });
-    </script>
 @endsection

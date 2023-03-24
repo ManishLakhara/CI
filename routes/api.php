@@ -22,10 +22,11 @@ use App\Http\Controllers\UserEditProfileController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::post('fetch-city',[CountryCityController::class,'fetchCity']);
-Route::post('add-favourite',[FavouriteMissionController::class,'addFavourite']);
-Route::post('remove-favourite',[FavouriteMissionController::class,'removeFavourite']);
-Route::post('invite-user',[MissionInviteController::class,'inviteUser']);
-Route::post('/users/update-password',[UserEditProfileController::class, 'updatePassword'])->name('users.update-password');
+Route::post('fetch-city', [CountryCityController::class, 'fetchCity']);
+Route::post('add-favourite', [FavouriteMissionController::class, 'addFavourite']);
+Route::post('remove-favourite', [FavouriteMissionController::class, 'removeFavourite']);
+Route::post('invite-user', [MissionInviteController::class, 'inviteUser']);
+Route::post('/users/update-password', [UserEditProfileController::class, 'updatePassword'])->name('users.update-password');
 
 
+Route::post('/users/update-skills', [UserEditProfileController::class, 'updateSkills'])->name('users.update-skills');
