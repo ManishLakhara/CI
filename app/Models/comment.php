@@ -9,9 +9,14 @@ class Comment extends Model
 {
     use HasFactory;
     protected $primaryKey = 'comment_id';
-
+    protected $fillable = [
+        'user_id',
+        'mission_id',
+        'approval_status',
+        'text',
+    ];
     public function user() {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id','user_id');
     }
 
     public function mission() {
