@@ -18,19 +18,19 @@ class CmsPageController extends Controller
     public function index(Request $request)
     {
         $data = CmsPage::where([
-            ['title','!=',Null],
+            ['title', '!=', Null],
             [function ($query) use ($request) {
-                if(($s = $request->s)) {
+                if (($s = $request->s)) {
                     $query->orWhere('title', 'LIKE', '%' . $s . '%')
-                          ->get();
+                        ->get();
                 }
             }]
         ])->paginate(10)
-          ->appends(['s'=>$request->s]);
+            ->appends(['s' => $request->s]);
 
 
 
-        return view('admin.cmspage.index',compact('data'));
+        return view('admin.cmspage.index', compact('data'));
     }
 
     /**
@@ -50,7 +50,7 @@ class CmsPageController extends Controller
 
         CmsPage::create($request->post());
 
-        return redirect()->route('cmspage.index')->with('success','field has been created successfully.');
+        return redirect()->route('cmspage.index')->with('success', 'field has been created successfully.');
     }
 
     /**
@@ -67,27 +67,27 @@ class CmsPageController extends Controller
     public function edit(CmsPage $cmsPage, $cmsPageId)
     {
         $cmsPage = $cmsPage->find($cmsPageId);
-        return view('admin.cmspage.edit',compact('cmsPage'));
+        return view('admin.cmspage.edit', compact('cmsPage'));
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCmsPageRequest $request,CmsPage $cmsPage,$id): RedirectResponse
+    public function update(UpdateCmsPageRequest $request, CmsPage $cmsPage, $id): RedirectResponse
     {
         $request->validated();
         $cmsPage->find($id)
-                     ->fill($request->post())
-                     ->save();
-        return redirect()->route('cmspage.index')->with('success','field Has Been updated successfully');
+            ->fill($request->post())
+            ->save();
+        return redirect()->route('cmspage.index')->with('success', 'field Has Been updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CmsPage $cmsPage,$id): RedirectResponse
+    public function destroy(CmsPage $cmsPage, $id): RedirectResponse
     {
         $cmsPage->find($id)
-        ->delete();
- return back()->with('success','field has been deleted successfully');
+            ->delete();
+        return back()->with('success', 'field has been deleted successfully');
     }
 }

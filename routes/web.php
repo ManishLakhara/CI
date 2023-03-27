@@ -17,6 +17,8 @@ use App\Http\Controllers\admin\MissionController;
 use App\Http\Controllers\admin\CmsPageController;
 use App\Http\Controllers\CmsPagesController;
 use App\Http\Controllers\UserEditProfileController;
+use App\Http\Controllers\VolunteeringTimesheetController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -114,3 +116,6 @@ Route::post('logout', [UserEditProfileController::class,'logout'])->name('logout
 //Route::post('update-password', [UserEditProfileController::class, 'updatePassword'])->name('update-password')->middleware('auth');
 
 Route::get('mission-page/{mission_id}',[MissionDetailController::class,'main'])->name('mission-page');
+
+
+Route::resource('timesheet',VolunteeringTimesheetController::class);
