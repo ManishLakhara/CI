@@ -10,23 +10,53 @@
 ?>
     <div class="container">
         <div class="row p-5">
-            <div class="col-md-6">
-                <div class="single-item">
-                    <div class="image">
-                        <img src="{{asset('Images/Animal-welfare-&-save-birds-campaign.png')}}" alt="">
+            <div class="col-lg-6">{{--This is carousel Code--}}
+                <div class="carousel-thumbnail">
+                    <div class="top-image">
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Animal-welfare-&-save-birds-campaign-1.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-5.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-2.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Nourish-the-Children-in--African-country.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Plantation-and-Afforestation-programme.png')}}" alt="">
+                        </div>
                     </div>
-                    <div class="image">
-                        <img src="{{asset('Images/Animal-welfare-&-save-birds-campaign.png')}}" alt="">
-                    </div>
-                    <div class="image">
-                        <img src="{{asset('Images/Animal-welfare-&-save-birds-campaign.png')}}" alt="">
-                    </div>
-                    <div class="image">
-                        <img src="{{asset('Images/Animal-welfare-&-save-birds-campaign.png')}}" alt="">
+                </div>
+                <div class="slidebar-nav">
+                    <div class="multiple-items">
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Animal-welfare-&-save-birds-campaign-1.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-5.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-2.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Nourish-the-Children-in--African-country.png')}}" alt="">
+                        </div>
+                        <div class="image p-1">
+                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Plantation-and-Afforestation-programme.png')}}" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6">
                 <div class="fs-2" style="color: #414141">
                     {{$mission->title}}
                 </div>
@@ -98,7 +128,7 @@
                 <div class="Border-top"></div>
                 <div class="row py-4">
                     <div class="col-xxl-6 col-12 py-3">
-                        <button id="mission_like_btn_{{$mission->mission_id}}_{{$user_id}}" class="btn btn-outline-secondary w-100 border-2" style="border-radius: 23px">
+                        <button id="this_mission_like_btn_{{$mission->mission_id}}_{{$user_id}}" class="btn btn-outline-secondary w-100 border-2" style="border-radius: 23px">
                             @if($mission->favoriteMission==null)
                                 <?php $value=0?>
                                 <span class="text-center">
@@ -113,7 +143,7 @@
                                 </span>
                             @endif
                         </button>
-                        <input type="radio" name="imgbackground" id="mission_like_input_{{$mission->mission_id}}_{{$user_id}}" class="d-none imgbgchk py-1 hidden" style="display: none" value={{$value}}>
+                        <input type="radio" name="imgbackground" id="this_mission_like_input_{{$mission->mission_id}}_{{$user_id}}" class="d-none imgbgchk py-1 hidden" style="display: none" value={{$value}}>
                     </div>
                     <div class="col-xxl-6 col-12 py-3">
                         <button class="btn btn-outline-secondary w-100 border-2" id="misison_invite_btn_{{$mission->mission_id}}_{{$user_id}}" data-toggle="modal" data-target="#invite_user_modal_{{$mission->mission_id}}_{{$user_id}}" style="border-radius: 23px">
@@ -167,10 +197,10 @@
                 <div class="Border-top"></div>
                 <div class="text-center position-relative" style="margin-top: -14px">
                     <small class="p-2 fs-6 text-center text-secondary" style="background-color: white">
-                        <span class="fa fa-star fs-5 checked"></span>
-                        <span class="fa fa-star fs-5 checked"></span>
-                        <span class="fa fa-star fs-5 checked"></span>
-                        <span class="fa fa-star fs-5 checked"></span>
+                        <span class="far fa-star fs-5 "></span>
+                        <span class="far fa-star fs-5 "></span>
+                        <span class="far fa-star fs-5 "></span>
+                        <span class="far fa-star fs-5 "></span>
                         <span class="far fa-star fs-5"></span>
                     </small>
                 </div>
@@ -229,20 +259,20 @@
                 <div class="col-md-7">
                     <ul class="nav border-bottom" id="myTab" role="tablist">
                         <li class="nav-item">
-                          <a class="nav-link " id="mission-detail-tab" data-toggle="tab" href="#mission-detail" role="tab" aria-controls="mission-detail" aria-selected="true">Mission</a>
+                          <a class="nav-link active" id="mission-detail-tab" data-toggle="tab" href="#mission-detail" role="tab" aria-controls="mission-detail" aria-selected="false">Mission</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" id="organization-detail-tab" data-toggle="tab" href="#organization-detail" role="tab" aria-controls="organization-detail" aria-selected="false">Organization</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link active" id="Comment-detail-tab" data-toggle="tab" href="#Comment-detail" role="tab" aria-controls="Comment-detail" aria-selected="false">Comments</a>
+                          <a class="nav-link" id="Comment-detail-tab" data-toggle="tab" href="#Comment-detail" role="tab" aria-controls="Comment-detail" aria-selected="false">Comments</a>
                         </li>
                     </ul>
                     <div class="tab-content pt-4" id="myTabContent">
-                        <div class="tab-pane fade " id="mission-detail" role="tabpanel" aria-labelledby="mission-detail-tab">
+                        <div class="tab-pane fade show active" id="mission-detail" role="tabpanel" aria-labelledby="mission-detail-tab">
                             <h1 class="fs-4 py-1 theme-color">Introduction</h1>
                             <p class="text-muted">{{$mission->short_description}}</p>
-                            <p class="text-muted">{{$mission->description}}</p>
+                            <p class="text-muted">{!!$mission->description!!}</p>
 
                             <h1 class="fs-4 py-1 theme-color">Challenges</h1>
                             <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, quasi? Dicta fugiat, saepe exercitationem laudantium dignissimos odio veniam expedita culpa sequi quia. Eveniet consequatur quas ratione ut exercitationem consequuntur accusamus.</p>
@@ -270,26 +300,17 @@
                         <div class="tab-pane fade" id="organization-detail" role="tabpanel" aria-labelledby="organization-detail-tab">
                             {{$mission->organization_detail}}
                         </div>
-                        <div class="tab-pane fade show active" id="Comment-detail" role="tabpanel" aria-labelledby="Comment-detail-tab">
-                            <div class="form-outline">
-                                <textarea class="form-control" id="textAreaExample3" rows="3" placeholder="Enter your comments"></textarea>
-                            </div>
-                            <div class="py-3">
-                                <button class="form-outline btn btn-outline apply-btn">Post comment</button>
-                            </div>
-                            <div class="container comment">
-                                @for ($i=0;$i<10;$i++)
-                                    <div class="row">
-                                        <div class="col-2 text-center">
-                                            <img class="img-fluid rounded-circle" src={{asset("Images/volunteer1.png")}} width="60px" height="60px" alt="">
-                                        </div>
-                                        <div class="col-10">
-                                            <span class="fs-6">Rahul Dua <br></span>
-                                            <small>{{$formattedDateTime}}<br></small>
-                                            <p class="pt-1">Nice Mission, Good Environment in place</p>
-                                        </div>
-                                    </div>
-                                @endfor
+                        <div class="tab-pane fade " id="Comment-detail" role="tabpanel" aria-labelledby="Comment-detail-tab">
+                            <form id="comment_form">
+                                <div class="form-outline">
+                                    <textarea class="form-control" id="your_comment" data-mission_id={{$mission->mission_id}} data-user_id={{$user_id}} rows="3" placeholder="Enter your comments"></textarea>
+                                </div>
+                                <div id="your_comment_error" class="text-danger"></div>
+                                <div class="py-3">
+                                    <button type="submit" class="form-outline btn btn-outline apply-btn" id="your_comment_btn">Post comment</button>
+                                </div>
+                            </form>
+                            <div class="container comment" id='comment' data-mission_id={{$mission->mission_id}} data-user_id={{$user_id}}>
                             </div>
                         </div>
                     </div>
@@ -303,7 +324,12 @@
                             <div class="card-text py-3">
                                 <div class="row">
                                     <div class="col-md-3 fs-6 theme-color"> Skills</div>
-                                    <div class="col-md-9 fs-6 theme-color">{{$mission->missionSkill->skill->skill_name}}</div>
+                                    <div class="col-md-9 fs-6 theme-color">
+                                        @foreach ($skills as $skill)
+                                            {{$skill}},
+                                        @endforeach
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="border-bottom"></div>
@@ -354,12 +380,76 @@
             <h1 class="fs-2 theme-color">Related Mission</h1>
         </div>
         <div class="container">
-            {{-- Here comes grid view cards of all related missions --}}
+            @include('components.gridView')
+            @include('admin.layouts.pagination')
         </div>
 
     </div>
     <script>
+        function getComment(){
+            const options = {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+            timeZoneName: 'short'
+            };
+            $('#comment').html('');
+            $.ajax({
+                url: "{{url('api/fetch-comment')}}",
+                type: "POST",
+                data: {
+                    mission_id: $('#comment').data('mission_id'),
+                },
+                dataType: 'json',
+                success: function(result){
+                    result.forEach(comment => {
+                        html = '<div class="row">';
+                        html += '<div class="col-2 text-center">';
+                        html += '<img class="img-fluid rounded-circle" src="http://127.0.0.1:8000/'+comment['avatar']+'" width="60px" height="60px" alt="">';
+                        html += '</div>';
+                        html += '<div class="col-10">';
+                        html += '<span class="fs-6">'+comment['first_name']+' '+comment['last_name']+'<br></span>';
+                        html += '<small>'+new Date(Date.parse(comment['created_at'])).toLocaleString('en-US', options)+'<br></small>';
+                        html += '<p class="pt-1">'+comment['text']+'</p>';
+                        html += '</div>';
+                        html += '</div>';
+                        $('#comment').append(html);
+                    });
+                },
+            });
+        }
         $(document).ready(function(){
+
+            getComment();
+            $('#comment_form').submit(function(event){
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url('api/add-comment')}}",
+                    data: {
+                        mission_id: $('#your_comment').data('mission_id'),
+                        user_id: $('#your_comment').data('user_id'),
+                        text: $('#your_comment').val(),
+                        approval_status: 'PUBLISHED',
+                    },
+                    success: function(result) {
+                        console.log(result);
+                        getComment();
+                    },
+                    error: function(result) {
+                        var errors = result.responseJSON.errors;
+                        var errorHtml = '';
+                        $.each(errors, function(key, value) {
+                            errorHtml += '<p>' + value + '</p>';
+                        });
+                        $('#your_comment_error').html(errorHtml).show();
+                        }
+                })
+            })
             $("button[id^='mission_like_btn_']").on('click', function() {
                 var mission_id = this.id.split("_")[3];
                 var user_id = this.id.split("_")[4];
@@ -374,8 +464,7 @@
                         },
                         success: function(data) {
                             $('#mission_like_input_'+mission_id+'_'+user_id).val(data);
-                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']")
-                            .html('<span class="text-center"><i class="fas fa-heart fs-4 text-secondary px-1"></i>Added to favorites</span>');
+                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fas fa-heart fs-4"></i>');
                         }
                     });
                 }
@@ -392,7 +481,44 @@
                         },
                         success: function() {
                             $('#mission_like_input_'+mission_id+'_'+user_id).val('0');
-                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<span class="text-center"><i class="fa-regular fa-heart fs-4 text-secondary px-1"></i>Add to favorite</span>');
+                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fa-regular fa-heart fs-4"></i>');
+                        }
+                    });
+                }
+            })
+            $("button[id^='this_mission_like_btn_']").on('click', function() {
+                var mission_id = this.id.split("_")[4];
+                var user_id = this.id.split("_")[5];
+                if($('#this_mission_like_input_'+mission_id+'_'+user_id).val()=='0'){
+                    $.ajax({
+                        url: "{{url('api/add-favourite')}}",
+                        type: "POST",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            mission_id: mission_id,
+                            user_id: user_id,
+                        },
+                        success: function(data) {
+                            $('#this_mission_like_input_'+mission_id+'_'+user_id).val(data);
+                            $("button[id^='this_mission_like_btn_"+mission_id+"_"+user_id+"']")
+                            .html('<span class="text-center"><i class="fas fa-heart fs-4 text-secondary px-1"></i>Added to favorites</span>');
+                        }
+                    });
+                }
+                else{
+                    let fav = $('#this_mission_like_input_'+mission_id+'_'+user_id).val()
+                    $.ajax({
+                        url: "{{url('api/remove-favourite')}}",
+                        type: "POST",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            mission_id: mission_id,
+                            user_id: user_id,
+                            favorite_mission_id: fav,
+                        },
+                        success: function() {
+                            $('#this_mission_like_input_'+mission_id+'_'+user_id).val('0');
+                            $("button[id^='this_mission_like_btn_"+mission_id+"_"+user_id+"']").html('<span class="text-center"><i class="fa-regular fa-heart fs-4 text-secondary px-1"></i>Add to favorite</span>');
                         }
                     });
                 }
@@ -418,7 +544,59 @@
                     })
                 }
             })
-            $(".single-item").slick();
+            $('.top-image').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                asNavFor: '.multiple-items'
+            })
+            $('.multiple-items').slick({
+                infinite: true,
+                arrows: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                asNavFor: '.top-image',
+                centerMode: false,
+                focusOnSelect: true,
+                responsive: [
+                    {
+                        breakpoint: 1399,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 1199,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 991,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 433,
+                        settings: {
+                            slidesToScroll: 1,
+                            slidesToShow: 1
+                        }
+                    },
+                ]
+                });
         });
     </script>
 @endsection

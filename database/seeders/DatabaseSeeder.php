@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             GoalMissionSeeder::class,
             TimeMissionSeeder::class,
+            CommentSeeder::class,
+            MissionApplicationSeeder::class,
         ]);
     }
 }

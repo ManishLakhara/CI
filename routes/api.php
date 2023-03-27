@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CountryCityController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LandingPageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,5 @@ Route::post('/users/update-password', [UserEditProfileController::class, 'update
 
 
 Route::post('/users/update-skills', [UserEditProfileController::class, 'updateSkills'])->name('users.update-skills');
+Route::post('fetch-comment', [CommentController::class,'showComments']);
+Route::post('add-comment',[CommentController::class,'addComment']);

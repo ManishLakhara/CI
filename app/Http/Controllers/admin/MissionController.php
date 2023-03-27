@@ -222,7 +222,6 @@ class MissionController extends Controller
         // return redirect()->route('mission.index')->with('success','field Has Been updated successfully');
 
         $mission = Mission::find($id);
-        $request->validated();
         $currentMissionType = $mission->mission_type;
         $newMissionType = $request->post('mission_type');
         $mission->fill($request->post())->save();

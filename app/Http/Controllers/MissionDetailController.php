@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FavoriteMission;
 use App\Models\Mission;
+use App\Models\MissionSkill;
+use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +18,13 @@ class MissionDetailController extends Controller
         $users = User::where('user_id','!=',Auth::user()->user_id)
         ->orderBy('user_id','asc')
         ->get();
-        return view('mission',compact('mission','users'));
+        $skill_id_array = MissionSkill::where('mission_id',$mission_id)->get()->pluck('skill_id');
+        $skills = Skill::whereIn('skill_id',$skill_id_array)->get()->pluck('skill_name');
+        $favorite = FavoriteMission::where('user_id',Auth::user()->user_id)
+                                     ->get(['favorite_mission_id','mission_id']);
+        $data = Mission::where('theme_id',$mission->theme_id)
+                        ->where('mission_id','!=',$mission->mission_id)
+                        ->paginate(3);
+        return view('mission',compact('mission','users','skills','data','favorite'));
     }
 }
