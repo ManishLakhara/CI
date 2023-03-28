@@ -2,11 +2,12 @@
 @extends('layouts.app')
 @section('content')
 <?php
-    use Carbon\Carbon;
-    $currentDateTime = Carbon::now();
-    $formattedDateTime = $currentDateTime->format('l, F j, Y, g:iA');
+    // use Carbon\Carbon;
+    // $currentDateTime = Carbon::now();
+    // $formattedDateTime = $currentDateTime->format('l, F j, Y, g:iA');
     $user_id = Auth::user()->user_id;
-    // dd($mission->favoriteMission);
+
+    dd($avg_rating);
 ?>
     <div class="container">
         <div class="row p-5">
@@ -195,14 +196,51 @@
                     </div>
                     </div>
                 <div class="Border-top"></div>
-                <div class="text-center position-relative" style="margin-top: -14px">
-                    <small class="p-2 fs-6 text-center text-secondary" style="background-color: white">
+                <div class="d-flex justify-content-center position-relative" style="margin-top: -35px">
+                        <div class='rating bg-white' data-mission_id="{{$mission->mission_id}}" data-user_id="{{$user_id}}">
+                            <input type="radio" name="rating_5"
+                            @if ($my_rating!=null)
+                                @if($my_rating->rating=='5')
+                                    checked
+                                @endif
+                            @endif
+                            value="5" id="5"><label for="5">☆</label>
+                            <input type="radio" name="rating_4"
+                            @if ($my_rating!=null)
+                                @if($my_rating->rating=='4')
+                                    checked
+                                @endif
+                            @endif
+                            value="4" id="4"><label for="4">☆</label>
+                            <input type="radio" name="rating_3"
+                            @if ($my_rating!=null)
+                                @if($my_rating->rating=='3')
+                                    checked
+                                @endif
+                            @endif
+                            value="3" id="3"><label for="3">☆</label>
+                            <input type="radio" name="rating_2"
+                            @if ($my_rating!=null)
+                                @if($my_rating->rating=='2')
+                                    checked
+                                @endif
+                            @endif
+                            value="2" id="2"><label for="2">☆</label>
+                            <input type="radio" name="rating_1"
+                            @if ($my_rating!=null)
+                                @if($my_rating->rating=='1')
+                                    checked
+                                @endif
+                            @endif
+                            value="1" id="1"><label for="1">☆</label>
+                        </div>
+                    {{-- <small class="p-2 fs-6 text-center text-secondary" style="background-color: white">
                         <span class="far fa-star fs-5 "></span>
                         <span class="far fa-star fs-5 "></span>
                         <span class="far fa-star fs-5 "></span>
                         <span class="far fa-star fs-5 "></span>
                         <span class="far fa-star fs-5"></span>
-                    </small>
+                    </small> --}}
                 </div>
                 <div class="row pt-3"> {{--This is cards --}}
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
@@ -358,14 +396,14 @@
                         </div>
                     </div>
                     <br>
-                    <div class="card px-4">
+                    <div class="card">
                         <div class="card-body">
                             <div class="card-title fs-4">
                                 <ul class="nav border-bottom"><span class="nav-link active"> Recent Volunteers </span></ul>
                             </div>
-                            <div class="card-text py-4" id="volunteer">
-                                <div class="row" id="volunteer">
-                                @include('components.recentvolunteers')
+                            <div class="card-text">
+                                <div class="row" id="volunteer" data-mission_id="{{$mission->mission_id}}">
+                                {{-- @include('components.recentvolunteers') --}}
                             </div>
                         </div>
                     </div>
@@ -420,11 +458,40 @@
                 },
             });
         }
+        function getVolunteers(page){
+            $.ajax({
+                url: "{{url('api/recent-volunteer')}}"+"?page=" + page,
+                type: "GET",
+                data: {
+                    mission_id: $('#volunteer').data('mission_id'),
+                },
+                success: function(data) {
+                    $('#volunteer').html(data);
+                }
+            })
+        }
         $(document).ready(function(){
             getComment();
-            $(document).on('click','.pagination ', function(event){
+            getVolunteers(1);
+            $('input[name^="rating_"]').on('click', function(){
+                let rating = $(this).val();
+                $.ajax({
+                    url: "{{url('api/add-rating')}}",
+                    type: "POST",
+                    data: {
+                        user_id: $('.rating').data('user_id'),
+                        mission_id: $('.rating').data('mission_id'),
+                        rating: rating,
+                    },
+                    success: function(response){
+                        console.log(response);
+                    }
+                })
+            })
+            $(document).on('click','.pagination a', function(event){
                 event.preventDefault();
-                alert(this.id);
+                var page = $(this).attr('href').split('page=')[1];
+                getVolunteers(page);
             })
             $('#comment_form').submit(function(event){
                 event.preventDefault();
@@ -597,7 +664,8 @@
                         }
                     },
                 ]
-                });
+            })
+
         });
     </script>
 @endsection

@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             TimeMissionSeeder::class,
             CommentSeeder::class,
             MissionApplicationSeeder::class,
+            MissionRatingSeeder::class,
         ]);
     }
 }

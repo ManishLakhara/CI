@@ -4,11 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MissionRating extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'mission_skill_id';
+    use SoftDeletes;
+    protected $primaryKey = 'mission_rating_id';
+    protected $fillable = [
+        'mission_id',
+        'user_id',
+        'rating',
+    ];
 
     public function mission() {
         return $this->belongToMany(Mission::class, 'mission_id');

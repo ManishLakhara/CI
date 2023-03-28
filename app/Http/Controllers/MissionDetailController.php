@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FavoriteMission;
 use App\Models\Mission;
 use App\Models\MissionApplication;
+use App\Models\MissionRating;
 use App\Models\MissionSkill;
 use App\Models\Skill;
 use App\Models\User;
@@ -28,9 +29,22 @@ class MissionDetailController extends Controller
                         ->limit(3)
                         ->get();
         //
-        $recent_a = MissionApplication::where('mission_id',$mission_id)->get()->pluck('user_id');
-        $volunteers = User::whereIn('user_id',$recent_a)
-        ->paginate(9);
-        return view('mission',compact('mission','users','skills','data','favorite','volunteers'));
+        $my_rating = MissionRating::where('mission_id','=',$mission_id)
+                                    ->where('user_id','=',$user->user_id)
+                                    ->first();
+        $rating = MissionRating::where('mission_id',$mission_id)
+                                ->get()
+                                ->pluck('rating');
+        $rating = array_filter($rating);
+        $avg_rating = array_sum($rating)/count($rating);
+        $count_users = count($rating);
+        return view('mission',compact('mission','users','skills','data','favorite','my_rating','avg_rating','count_users'));
+    }
+    public function showVolunteer(Request $request){
+        if($request->ajax()){
+            $recent_a = MissionApplication::where('mission_id',$request->mission_id)->get()->pluck('user_id');
+            $volunteers = User::whereIn('user_id',$recent_a)->paginate(9);
+            return view('components.recentvolunteers',compact('volunteers'))->render();
+        }
     }
 }
