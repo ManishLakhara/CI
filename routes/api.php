@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FavouriteMissionController;
 use App\Http\Controllers\MissionInviteController;
 use App\Http\Controllers\UserEditProfileController;
+use App\Models\MissionApplication;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +34,4 @@ Route::post('/users/update-password', [UserEditProfileController::class, 'update
 Route::post('/users/update-skills', [UserEditProfileController::class, 'updateSkills'])->name('users.update-skills');
 Route::post('fetch-comment', [CommentController::class,'showComments']);
 Route::post('add-comment',[CommentController::class,'addComment']);
+Route::post('recent-volunteer',[MissionApplication::class,'showVolunteer']);

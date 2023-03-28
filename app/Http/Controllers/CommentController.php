@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     public function showComments(ShowCommentRequest $request){
         $comments = Comment::where('mission_id',$request->mission_id)
-                             ->leftJoin('users','users.user_id','=','comments.user_id')
+                             ->join('users','users.user_id','=','comments.user_id')
                              ->orderBy('comments.created_at', 'desc')
                              ->get(['comments.*','users.first_name','users.last_name','avatar'])->toArray();
         return response()->json($comments);

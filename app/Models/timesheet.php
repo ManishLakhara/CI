@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TimeSheet extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'story_media_id';
+    protected $primaryKey = 'timesheet_id';
 
     public function mission() {
         return $this->belongsTo(Mission::class, 'mission_id');

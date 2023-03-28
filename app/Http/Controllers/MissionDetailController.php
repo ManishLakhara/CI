@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FavoriteMission;
 use App\Models\Mission;
+use App\Models\MissionApplication;
 use App\Models\MissionSkill;
 use App\Models\Skill;
 use App\Models\User;
@@ -24,7 +25,12 @@ class MissionDetailController extends Controller
                                      ->get(['favorite_mission_id','mission_id']);
         $data = Mission::where('theme_id',$mission->theme_id)
                         ->where('mission_id','!=',$mission->mission_id)
-                        ->paginate(3);
-        return view('mission',compact('mission','users','skills','data','favorite'));
+                        ->limit(3)
+                        ->get();
+        //
+        $recent_a = MissionApplication::where('mission_id',$mission_id)->get()->pluck('user_id');
+        $volunteers = User::whereIn('user_id',$recent_a)
+        ->paginate(9);
+        return view('mission',compact('mission','users','skills','data','favorite','volunteers'));
     }
 }

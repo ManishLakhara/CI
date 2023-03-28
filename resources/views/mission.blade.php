@@ -363,11 +363,9 @@
                             <div class="card-title fs-4">
                                 <ul class="nav border-bottom"><span class="nav-link active"> Recent Volunteers </span></ul>
                             </div>
-                            <div class="card-text py-4">
-                                {{-- Users foreach --}}
-                            </div>
-                            <div class="card-footer text-muted">
-                                {{-- User Pagination comes here --}}
+                            <div class="card-text py-4" id="volunteer">
+                                <div class="row" id="volunteer">
+                                @include('components.recentvolunteers')
                             </div>
                         </div>
                     </div>
@@ -381,7 +379,7 @@
         </div>
         <div class="container">
             @include('components.gridView')
-            @include('admin.layouts.pagination')
+            {{-- @include('admin.layouts.pagination') --}}
         </div>
 
     </div>
@@ -423,8 +421,11 @@
             });
         }
         $(document).ready(function(){
-
             getComment();
+            $(document).on('click','.pagination ', function(event){
+                event.preventDefault();
+                alert(this.id);
+            })
             $('#comment_form').submit(function(event){
                 event.preventDefault();
                 $.ajax({

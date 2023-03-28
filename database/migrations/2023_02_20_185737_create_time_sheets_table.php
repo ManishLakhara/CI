@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('time_sheets', function (Blueprint $table) {
-            $table->bigIncrements('story_media_id');
+            $table->bigIncrements('timesheet_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('users');
             $table->unsignedBigInteger('mission_id');
