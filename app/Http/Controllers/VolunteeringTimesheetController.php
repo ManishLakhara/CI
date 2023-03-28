@@ -66,8 +66,10 @@ class VolunteeringTimesheetController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(TimeSheet $sheet, $id)
     {
-        //
+        $sheet->find($id)->delete();
+
+        return back()->with('success', 'field has been deleted successfully');
     }
 }

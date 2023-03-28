@@ -20,37 +20,54 @@
                 </div>
 
                 <table class="table table-borderless table-responsive">
-
-
-                    <thead>
-                        <tr>
-                            <th>Mission</th>
-                            <th>Date</th>
-                            <th>Hours</th>
-                            <th>Minutes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($timesheets as $timesheet)
+                    @if ($timesheets->where('mission.mission_type', 'TIME')->count() > 0)
+                        <thead>
                             <tr>
-                                <td>{{ $timesheet->mission->title }}</td>
-                                <td>{{ $timesheet->date_volunteered }}</td>
-                                <td>{{ date('H', strtotime($timesheet->time)) }}</td>
-                                <td>{{ date('i', strtotime($timesheet->time)) }}</td>
-                                <td>
-
-                                    <a class="btn btn-white">
-                                        <i class="far fa-edit" style="color: orange;"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-white">
-                                        <img src="Images/bin.png" alt="delete">
-                                    </button>
-
-
-                                </td>
+                                <th>Mission</th>
+                                <th>Date</th>
+                                <th>Hours</th>
+                                <th>Minutes</th>
                             </tr>
-                        @endforeach
-                    </tbody>
+                        </thead>
+                        <tbody>
+                            @foreach ($timesheets->where('mission.mission_type', 'TIME') as $timesheet)
+                                <tr>
+                                    <td>{{ $timesheet->mission->title }}</td>
+                                    {{-- <td>{{ $timesheet->date_volunteered }}</td> --}}
+                                    <td>{{ \Carbon\Carbon::parse($timesheet->date_volunteered)->format('d-m-Y') }}</td>
+                                    <td>{{ date('H', strtotime($timesheet->time)) }} h</td>
+                                    <td>{{ date('i', strtotime($timesheet->time)) }} min</td>
+                                    <td>
+
+                                        <a class="btn btn-white">
+                                            <i class="far fa-edit" style="color: orange;"></i>
+                                        </a>
+                                        <button type="button" data-toggle="modal"
+                                            data-target="#deleteModal-{{ $timesheet->story_media_id }}"
+                                            class="btn btn-white">
+                                            <img src="Images/bin.png" alt="delete">
+                                        </button>
+                                        @include('admin.components.deleteModal', [
+                                            // 'id' => $timesheet->timesheet_id,
+                                            'id' => $timesheet->story_media_id,
+                                            'form_action' => 'timesheet.destroy',
+                                        ])
+
+                                        {{-- <button type="button" class="btn btn-white">
+                                            <img src="Images/bin.png" alt="delete">
+                                        </button> --}}
+                                        {{-- <form action="{{ route('timesheet.destroy', $timesheet->story_media_id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-white"> <img src="Images/bin.png"
+                                                    alt="delete"></button>
+                                        </form> --}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    @endif
                 </table>
 
 
@@ -190,38 +207,40 @@
 
 
                 <table class="table table-borderless table-responsive">
-
-
-                    <thead>
-                        <tr>
-                            <th>Mission</th>
-                            <th>Date</th>
-                            <th>Action</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach ($timesheets as $timesheet)
+                    @if ($timesheets->where('mission.mission_type', 'GOAL')->count() > 0)
+                        <thead>
                             <tr>
-                                <td>{{ $timesheet->mission->title }}</td>
-                                <td>{{ $timesheet->date_volunteered }}</td>
-                                <td>{{ $timesheet->action }}</td>
+                                <th>Mission</th>
+                                <th>Date</th>
+                                <th>Action</th>
 
-                                <td>
-
-                                    <a class="btn btn-white">
-                                        <i class="far fa-edit" style="color: orange;"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-white">
-                                        <img src="Images/bin.png" alt="delete">
-                                    </button>
-
-
-                                </td>
                             </tr>
-                        @endforeach
-                    </tbody>
+                        </thead>
+                        <tbody>
+
+                            @foreach ($timesheets->where('mission.mission_type', 'GOAL') as $timesheet)
+                                <tr>
+                                    <td>{{ $timesheet->mission->title }}</td>
+                                    {{-- <td>{{ $timesheet->date_volunteered) }}</td> --}}
+                                    <td>{{ \Carbon\Carbon::parse($timesheet->date_volunteered)->format('d-m-Y') }}</td>
+
+                                    <td>{{ $timesheet->action }}</td>
+
+                                    <td>
+
+                                        <a class="btn btn-white">
+                                            <i class="far fa-edit" style="color: orange;"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-white">
+                                            <img src="Images/bin.png" alt="delete">
+                                        </button>
+
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    @endif
                 </table>
 
 
@@ -235,7 +254,8 @@
                                     style="border:none;background:none">
                                     <span aria-hidden="true">&times;</span>
                                 </button> --}}
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form>

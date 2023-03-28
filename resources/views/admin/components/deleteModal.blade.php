@@ -10,7 +10,8 @@
                         Confirm Delete
                     </div>
 
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        style="border:none;background:none;">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -20,13 +21,13 @@
                 <div class="d-flex py-4 justify-content-center">
                     <div class="px-1">
                         <button type="button" class="btn btn-outline-secondary px-4" style="border-radius: 23px"
-                        data-dismiss="modal">Close</button>
+                            data-dismiss="modal">Close</button>
                     </div>
                     <div class="px-1">
                         <button type="submit" class="btn btn-outline effects px-4"
-                        style="border-color: #f88634 ;border-radius: 23px; color: #f88634">Delete</button>
+                            style="border-color: #f88634 ;border-radius: 23px; color: #f88634">Delete</button>
                     </div>
-                    
+
                 </div>
             </form>
         </div>
