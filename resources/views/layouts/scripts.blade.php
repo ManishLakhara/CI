@@ -12,4 +12,7 @@ CKEDITOR.replace( 'summary-ckeditor' );
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="{{asset('admin/js/datatables-simple-demo.js')}}"></script>
 <script src="{{asset('JS/custom.js')}}"></script>
+<script>
+    $(".alert").slideUp(2000);
+</script>
 
