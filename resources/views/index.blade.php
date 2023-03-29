@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 d-flex rounded">
-                    <form action="{{route('landing.index')}}" method="POST" id="search-mission" style="margin: 0%; padding:0%;">
+                    <form id="search-mission" style="margin: 0%; padding:0%;">
                         @csrf
                     <div class="d-flex">
                         <button type="submit" id="search-mission-id" class="btn">
@@ -53,25 +53,33 @@
                             <option disabled selected> City </option>
                         </select> --}}
                         <div class="dropdown w-100">
-                            <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button disabled  class="btn btn-none text-secondary form-select" type="button" id="city_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="float-start ps-0 pe-5">
                                     City
                                 </span>
                             </button>
-                            <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton" style="overflow: scroll; max-height: 500px; max-width: fit-content">
+                            <div class="dropdown-menu px-2" aria-labelledby="city_drop_down_menu" style="overflow: scroll; max-height: 500px; max-width: fit-content">
                               <div id="city_dropper">
+                                @foreach ($cities as $city)
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ $city->city_id }}" id="city_option_{{ $city->city_id }}">
+                                    <label class="form-check-label text-secondary" for="city_option_{{ $city->city_id }}" id="city_label_{{$city->city_id}}">
+                                      {{ $city->name }}
+                                    </label>
+                                  </div>
+                                @endforeach
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="border-start input-group px-2">
                         <div class="dropdown w-100">
-                            <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-none text-secondary form-select" disabled type="button" id="theme_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="float-start ps-0 pe-5">
                                     Theme
                                 </span>
                             </button>
-                            <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu px-2" aria-labelledby="theme_drop_down_menu">
                               <div>
                                 {{-- <div class="form-check">
                                   <input class="form-check-input" type="checkbox" value="" id="selectAllskill">
@@ -93,12 +101,12 @@
                     </div>
                     <div class="border-start border-end input-group px-2">
                         <div class="dropdown w-100">
-                            <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-none text-secondary form-select" type="button" disabled id="skill_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="float-start ps-0 pe-5">
                                     Skill
                                 </span>
                             </button>
-                            <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu px-2" aria-labelledby="skill_drop_down_menu">
                               <div>
                                 {{-- <div class="form-check">
                                   <input class="form-check-input" type="checkbox" value="" id="selectAllskill">
@@ -155,7 +163,7 @@
         <div class="d-flex py-4 justify-content-between">
             <div>
                 <h4> <span class="light-theme-color">Explore</span> <span class="theme-color" id="noOfMission">{{$count}}
-                        Mission</span> </h4>
+                    </span> Mission </h4>
             </div>
             <div class="d-flex">
                 <div class="input-group px-2" style="width: 200px ">
@@ -179,58 +187,13 @@
                 </div>
             </div>
         </div>
-         {{--gridViewContent--}}
-            @include('components.gridView')
-            {{--ListViewContent--}}
-            @include('components.listView')
-            @include('admin.layouts.pagination')
+        <div  id="this_views">
+            @include('components.gridListView')
+        </div>
     </div>
 @else
-    <div class="d-flex justify-content-center">
-        <span class="fs-3 font-weight-bold theme-color">
-            No Mission Found
-        </span>
-    </div>
-    <div class="d-flex pt-4 justify-content-center">
-        <button class="btn btn-outline fs-4 apply-btn w-50">
-            Submit New Missions
-            <i class="fa-sharp fa-solid fa-arrow-right"></i>
-        </button>
-    </div>
+    @include('components.NoMissionFound')
 @endif
-    <script>
-        $(document).ready(function() {
-            $('#grid-view').on('click', function() {
-                $('#grid-view-label').css({'background-color': '#D9D9D9'});
-                $('#list-view-label').css({'background-color': 'white'});
-            })
-            $('#grid-view').click();
-            $('#list-view').on('click', function() {
-                $('#list-view-label').css({'background-color': '#D9D9D9'});
-                $('#grid-view-label').css({'background-color': 'white'});
-            })
-            $('#country-dropdown').on('change', function() {
-                var country_id = this.value;
-                $("#city-dropdown").html('');
-                $.ajax({
-                    url: "{{ url('api/fetch-city') }}",
-                    type: "POST",
-                    data: {
-                        country_id: country_id,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'json',
-                    success: function(result) {
-                        $('#city-dropdown').html('<option value="">Select City</option>');
-                        $.each(result.cities, function(key, value) {
-                            $("#city-dropdown").append('<option value="' + value
-                                .city_id + '">' + value.name + '</option>');
-                        });
-                    }
-                });
-            });
-        });
-    </script>
     <script>
         var countries = [];
         var cities = [];
@@ -238,6 +201,7 @@
         var skills = [];
         var sort = 0;
         var search = "";
+        var view = 0;
         function getBadge(id,name,type){
             $("#clear_all").show()
                     htmlstr = ""
@@ -267,10 +231,6 @@
                 success: function(result) {
                     $.each(result.cities, function(key, value){
                         html = "";
-                        // html += "<div class='form-check'>";
-                        // html += "<input class='form-check-input' type='checkbox' value="+value.city_id+" id='city_option_"+value.city_id+"'>";
-                        // html += "<label class='form-check-label text-secondary' for='city_option_"+value.city_id+"' id='city_label_"value.city_id"'>"+value.name+"</label>";
-                        // html += "</div>";
                         $('#city_dropper').append("<div class='form-check'>"+
                             "<input class='form-check-input' type='checkbox' value="+value.city_id+" id='city_option_"+value.city_id+"'>"+
                             "<label class='form-check-label text-secondary' for='city_option_"+value.city_id+"' id='city_label_"+value.city_id+"'>"+value.name+"</label>"+
@@ -310,29 +270,26 @@
             //     }
             // });
         }
-        $(document).ready(function(Event) {
-            getPreviousValue();
-            $('input[id^="invite_"]').on('click', function() {
-                if (this.checked) {
-                    var mission_id = this.id.split("_")[1];
-                    var to_user_id = this.id.split('_')[2];
-                    var from_user_id = this.id.split("_")[3];
-                    console.log(mission_id);
-                    $.ajax({
-                        url: "{{url('api/invite-user')}}",
-                        type: "POST",
-                        data: {
-                            _token: '{{csrf_token() }}',
-                            from_user_id: from_user_id,
-                            to_user_id: to_user_id,
-                            mission_id: mission_id,
-                        },
-                        success: function(data) {
-                            alert("Invite Send",1000);
-                        },
-                    })
+        function getNextFilter(page){
+            $.ajax({
+                url: "{{url('index-filter')}}"+"?page="+page+"&s="+search+"&countries="+countries+"&cities="+cities+"&themes="+themes+"&skills="+skills,
+                type: "get",
+                success: function(result){
+                    $('#this_views').html(result);
+                    selectProperView();
+                    runJquery();
                 }
-            }),
+            })
+        }
+        function selectProperView(){
+            $('#noOfMission').text($('#noOfMission2').val());
+            if(view==1){
+                        $('#list-view').click();
+                    }else{
+                        $('#grid-view').click();
+                    }
+        }
+        function runJquery(){
             $("button[id^='mission_like_btn_']").on('click', function() {
                 var mission_id = this.id.split("_")[3];
                 var user_id = this.id.split("_")[4];
@@ -368,7 +325,108 @@
                         }
                     });
                 }
-            }),
+            });
+            $('input[id^="invite_"]').on('click', function() {
+                if (this.checked) {
+                    var mission_id = this.id.split("_")[1];
+                    var to_user_id = this.id.split('_')[2];
+                    var from_user_id = this.id.split("_")[3];
+                    console.log(mission_id);
+                    $.ajax({
+                        url: "{{url('api/invite-user')}}",
+                        type: "POST",
+                        data: {
+                            _token: '{{csrf_token() }}',
+                            from_user_id: from_user_id,
+                            to_user_id: to_user_id,
+                            mission_id: mission_id,
+                        },
+                        success: function(data) {
+                            alert("Invite Send",1000);
+                        },
+                    })
+                }
+            });
+            $('[id^="click-to-details_"]').click(function(){
+                $(location).attr('href',"{{url('mission-page/')}}"+'/'+$(this).data('mission_id'));
+            });
+            $('button[id^="mission_application_btn_"]').on('click',function(){
+                $.ajax({
+                    url: "{{url('api/new-mission-application')}}",
+                    type: "POST",
+                    data: {
+                        user_id: $(this).data('user_id'),
+                        mission_id: $(this).data('mission_id'),
+                        approval_status: 'PENDING',
+                    },
+                    success: function(result){
+                        alert(result);
+                    }
+                })
+                $(this).hide();
+                $('#mission_detail_btn_'+$(this).data('mission_id')).show();
+            });
+            $(document).on('click','.pagination a', function(event){
+                event.preventDefault();
+                var page = $(this).attr('href').split('page=')[1];
+                getNextFilter(page);
+            });
+        }
+        $(document).ready(function(Event) {
+            console.log('started');
+            getPreviousValue();
+            runJquery();
+            $('#grid-view').on('click', function() {
+                $('#grid-view-label').css({'background-color': '#D9D9D9'});
+                $('#list-view-label').css({'background-color': 'white'});
+            })
+            $('#grid-view').click();
+            $('#list-view').on('click', function() {
+                $('#list-view-label').css({'background-color': '#D9D9D9'});
+                $('#grid-view-label').css({'background-color': 'white'});
+            })
+            // $('#country-dropdown').on('change', function() {
+            //     var country_id = this.value;
+            //     $("#city-dropdown").html('');
+            //     $.ajax({
+            //         url: "{{ url('api/fetch-city') }}",
+            //         type: "POST",
+            //         data: {
+            //             country_id: country_id,
+            //             _token: '{{ csrf_token() }}'
+            //         },
+            //         dataType: 'json',
+            //         success: function(result) {
+            //             $('#city-dropdown').html('<option value="">Select City</option>');
+            //             $.each(result.cities, function(key, value) {
+            //                 $("#city-dropdown").append('<option value="' + value
+            //                     .city_id + '">' + value.name + '</option>');
+            //             });
+            //         }
+            //     })
+            //     getNextFilter(1);
+            // });
+            $('#search-mission').on('submit', function(event){
+                event.preventDefault();
+                search = $('#search_input').val();
+                $.ajax({
+                    url: "{{route('landing.filterApply')}}",
+                    type: "get",
+                    data: {
+                        s: $('#search_input').val(),
+                    },
+                    success: function(result){
+                        $('#this_views').html(result);
+                        runJquery();
+                        selectProperView();
+                    }
+                })
+            })
+            $('[id^="close_"]').click(function(){
+                console.log($(this).id);
+            })
+
+
             $('#selectsort').on('change', function() {
                 sort=$('#selectsort').val();
                 $('#sort').val(sort);
@@ -380,10 +438,12 @@
             //     search = $("#search_input").val();
             // }),
             $('#grid-view').on('click', function() {
+                view=0;
                 $('#gridViewContent').show();
                 $('#listViewContent').hide();
             }),
             $('#list-view').on('click', function() {
+                view=1;
                 $('#gridViewContent').hide();
                 $('#listViewContent').show();
             }),
@@ -404,8 +464,7 @@
                     countries.pop(country_id);
                 }
                 $('#country_f_id').val(countries);
-                updateCityDropdown(country_id);
-                $("#filter-apply").click();
+                getNextFilter(1);
             })
             $('input[id^=city_option_]').on('change',function(){
                 let city_id = this.id.split('_')[2];
@@ -419,7 +478,7 @@
                     cities.pop(city_id);
                 }
                 $('#city_f_id').val(cities);
-                $("#filter-apply").click();
+
             })
                 $('input[id^=mission_theme_option_]').on('change', function(){
                     let mission_theme_id = this.id.split('_')[3];
@@ -433,7 +492,7 @@
                         themes.pop(mission_theme_id);
                     }
                     $('#theme_f_id').val(themes);
-                    $("#filter-apply").click();
+
                 })
                 $('input[id^=skill_option_]').on('change', function(){
                     let skill_id = this.id.split('_')[2];
@@ -447,7 +506,7 @@
                         skills.pop(skill_id);
                     }
                     $('#skill_f_id').val(skills);
-                    $("#filter-apply").click();
+
                 })
                 $('#clear_all').on('click', function() {
 
@@ -462,9 +521,10 @@
                     $('#themes_f_id').val(themes);
                     $('#skills_f_id').val(skills);
                     $('#search_f_id').val(search);
-                    $('#filter-apply').click();
+
                     $("#clear_all").hide();
-                    // $('#refresh-apply').click();
+                    getNextFilter(1);
+
                 })
         });
         $(document).on('click', '#country-dropdown', function (e) {

@@ -45,7 +45,7 @@ class Mission extends Model
     }
 
     public function missionApplication() {
-        return $this->hasMany(MissionApplication::class,'mission_id');
+        return $this->hasMany(MissionApplication::class,'mission_id','mission_id');
     }
 
     public function missionDocument() {

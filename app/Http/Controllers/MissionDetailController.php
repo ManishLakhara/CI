@@ -32,13 +32,16 @@ class MissionDetailController extends Controller
         $my_rating = MissionRating::where('mission_id','=',$mission_id)
                                     ->where('user_id','=',$user->user_id)
                                     ->first();
-        $rating = MissionRating::where('mission_id',$mission_id)
+        $rating_a = MissionRating::where('mission_id',$mission_id)
                                 ->get()
                                 ->pluck('rating');
-        $rating = array_filter($rating);
-        $avg_rating = array_sum($rating)/count($rating);
-        $count_users = count($rating);
-        return view('mission',compact('mission','users','skills','data','favorite','my_rating','avg_rating','count_users'));
+        $rating=0;
+        foreach ($rating_a as $value) {
+            $rating += $value;
+        }
+        $count_rating=count($rating_a);
+        $avg_rating=ceil($rating/$count_rating);
+        return view('mission',compact('mission','users','skills','data','favorite','my_rating','avg_rating','count_rating'));
     }
     public function showVolunteer(Request $request){
         if($request->ajax()){

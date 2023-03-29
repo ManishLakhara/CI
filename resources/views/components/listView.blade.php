@@ -182,12 +182,18 @@
                         </div>
                     </div>
                     <div class="col-md-3">
+                        @if(false)
+                            <button type="button" id="mission_application_btn" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-5 apply-btn"> Apply <i
+                                class="fa-sharp fa-solid fa-arrow-right"></i> </button>
+                        @else
                         <button class="mx-2 btn btn-outline apply-btn px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                         </button>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
     </div>
+
 

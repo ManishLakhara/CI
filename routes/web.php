@@ -106,7 +106,7 @@ Route::resource('cmspage', CmsPageController::class);
 
 Route::get('cms',[CmsPagesController::class, 'index'])->name('policy-page');
 Route::get('index',[LandingPageController::class, 'index'])->name('landing.index')->middleware('auth');
-Route::post('index',[LandingPageController::class, 'index'])->name('landing.index')->middleware('auth');
+Route::get('index-filter',[LandingPageController::class, 'filterApply'])->name('landing.filterApply')->middleware('auth');
 Route::get('filter-data',[LandingPageController::class,'filterData']);
 
 Route::put('update-profile', [UserEditProfileController::class,'updateProfile'])->name('update-profile');

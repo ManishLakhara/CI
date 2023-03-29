@@ -39,3 +39,4 @@ Route::post('fetch-comment', [CommentController::class,'showComments']);
 Route::post('add-comment',[CommentController::class,'addComment']);
 Route::get('recent-volunteer',[MissionDetailController::class,'showVolunteer']);
 Route::post('add-rating',[MissionRatingController::class,'addRating']);
+Route::post('new-mission-application',[MissionApplicationController::class,'newMissionApplication']);

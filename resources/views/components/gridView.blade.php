@@ -92,6 +92,7 @@
             </span>
         </div>
         <div class="card-body">
+            <div id="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
             <h4 class='mission-title theme-color'>{{ $item->title }}
             </h4>
             <p class='card-text mission-short-description'>
@@ -110,6 +111,7 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                 </div>
+            </div>
             </div>
             <div class="py-3">
                 <div class="border"></div>
@@ -173,12 +175,19 @@
                 <div class="border"></div>
             </div>
             <div class="d-flex justify-content-center">
-                <form action="{{route('mission-page',$item->mission_id)}}">
-                <button type="submit" class="btn btn-lg fs-5 apply-btn"> Apply <i
-                        class="fa-sharp fa-solid fa-arrow-right"></i> </button>
-                </form>
+                {{-- <form action="{{route('mission-page',$item->mission_id)}}"> --}}
+                @if(true)
+                <button type="button" id="mission_application_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-5 apply-btn"> Apply <i
+                    class="fa-sharp fa-solid fa-arrow-right"></i> </button>
+                @else
+                <button id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 btn btn-outline apply-btn fs-5 px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
+                </button>
+                @endif
+                <button style="display: none;" id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 fs-5 btn btn-outline apply-btn px-2" style="width: fit-content"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
+                </button>
+                {{-- </form> --}}
             </div>
         </div>
     </div>
     @endforeach
-    </div>
+</div>

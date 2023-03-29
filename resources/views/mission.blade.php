@@ -6,8 +6,6 @@
     // $currentDateTime = Carbon::now();
     // $formattedDateTime = $currentDateTime->format('l, F j, Y, g:iA');
     $user_id = Auth::user()->user_id;
-
-    dd($avg_rating);
 ?>
     <div class="container">
         <div class="row p-5">
@@ -246,16 +244,16 @@
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
                         <div class="card" style="height: 9em">
                             <div class="card-body">
-                              <h5 class="card-title pb-4"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
+                              <h5 class="card-title"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
                                 <h6 class="card-subtitle text-muted">City</h6>
-                                <p class="card-text">{{$mission->city->name}}</p>
+                                <p class="card-text fs-7">{{$mission->city->name}}</p>
                               </div>
                         </div>
                     </div>
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
                         <div class="card" style="height: 9em">
                             <div class="card-body">
-                              <h5 class="card-title pb-4"><img src={{asset('Images/web.png')}} alt=""></h5>
+                              <h5 class="card-title"><img src={{asset('Images/web.png')}} alt=""></h5>
                               <h6 class="card-subtitle text-muted">Theme</h6>
                               <p class="card-text">{{$mission->missionTheme->title}}</p>
                             </div>
@@ -264,7 +262,7 @@
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
                         <div class="card" style="height: 9em">
                             <div class="card-body">
-                              <h5 class="card-title pb-3"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
+                              <h5 class="card-title"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
                               <h6 class="card-subtitle text-muted">Date</h6>
                               <p class="card-text">
                                 {{date('d-m-Y', strtotime($mission->start_date))}}
@@ -275,7 +273,7 @@
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
                         <div class="card" style="height: 9em">
                             <div class="card-body">
-                              <h5 class="card-title pb-3"><img src={{asset('Images/organization.png')}} alt=""></h5>
+                              <h5 class="card-title"><img src={{asset('Images/organization.png')}} alt=""></h5>
                               <h6 class="card-subtitle text-muted">Organization</h6>
                               <p class="card-text">{{$mission->organization_name}}</p>
                             </div>
@@ -284,10 +282,9 @@
                 </div>
                 <div class="row py-4 justify-content-center align-item-center" >{{--Apply Button--}}
                     <div class="col-6 align-self-center">
-                        <form action="#">
-                            <button type="submit text-center" class="btn btn-lg fs-5 apply-btn w-100"> Apply <i
-                                    class="fa-sharp fa-solid fa-arrow-right"></i> </button>
-                            </form>
+                        <button type="button" id="mission_application_btn" class="btn btn-lg fs-5 apply-btn w-100"> Apply <i
+                                class="fa-sharp fa-solid fa-arrow-right"></i> </button>
+
                     </div>
                 </div>
             </div>
@@ -383,12 +380,14 @@
                                     <div class="col-md-3 pe-2 fs-6 theme-color"> Rating</div>
                                     <div class="col-md-9 fs-6 theme-color">
                                         <div class="small-ratings">
-                                            <i class="fa fa-star rating-color"></i>
-                                            <i class="fa fa-star rating-color"></i>
-                                            <i class="fa fa-star rating-color"></i>
-                                            <i class="fa fa-star rating-color"></i>
-                                            <i class="fa fa-star rating-color"></i>
-                                            <span class="text-muted">(by 125 Volunteers)</span>
+                                            @for ($i=1;$i<=5;$i++,$avg_rating--)
+                                                @if($avg_rating<=0)
+                                                    <i class="far fa-star rating-color"></i>
+                                                @else
+                                                    <i class="fa fa-star rating-color"></i>
+                                                @endif
+                                            @endfor
+                                            <span class="text-muted">(by {{$count_rating}} Volunteers)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -473,6 +472,20 @@
         $(document).ready(function(){
             getComment();
             getVolunteers(1);
+            $('button[id="mission_application_btn"]').on('click',function(){
+                $.ajax({
+                    url: "{{url('api/new-mission-application')}}",
+                    type: "POST",
+                    data: {
+                        user_id: $('.rating').data('user_id'),
+                        mission_id: $('.rating').data('mission_id'),
+                        approval_status: 'PENDING',
+                    },
+                    success: function(result){
+                        alert(result);
+                    }
+                })
+            })
             $('input[name^="rating_"]').on('click', function(){
                 let rating = $(this).val();
                 $.ajax({

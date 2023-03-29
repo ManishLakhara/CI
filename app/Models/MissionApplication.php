@@ -9,9 +9,14 @@ class MissionApplication extends Model
 {
     use HasFactory;
     protected $primaryKey = 'mission_application_id';
+    protected $fillable = [
+        'user_id',
+        'mission_id',
+        'approval_status',
+    ];
 
     public function mission() {
-        return $this->belongTo(Mission::class, 'mission_id');
+        return $this->hasMany(Mission::class, 'mission_id');
     }
 
     public function user() {
