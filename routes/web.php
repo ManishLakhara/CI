@@ -107,6 +107,9 @@ Route::resource('cmspage', CmsPageController::class);
 Route::get('cms',[CmsPagesController::class, 'index'])->name('policy-page');
 Route::get('index',[LandingPageController::class, 'index'])->name('landing.index')->middleware('auth');
 Route::get('index-filter',[LandingPageController::class, 'filterApply'])->name('landing.filterApply')->middleware('auth');
+Route::get('index/find-city',[LandingPageController::class, 'findCity']);
+Route::get('index/find-theme',[LandingPageController::class, 'findTheme']);
+Route::get('index/find-skill',[LandingPageController::class, 'findSkill']);
 Route::get('filter-data',[LandingPageController::class,'filterData']);
 
 Route::put('update-profile', [UserEditProfileController::class,'updateProfile'])->name('update-profile');
@@ -116,6 +119,5 @@ Route::post('logout', [UserEditProfileController::class,'logout'])->name('logout
 //Route::post('update-password', [UserEditProfileController::class, 'updatePassword'])->name('update-password')->middleware('auth');
 
 Route::get('mission-page/{mission_id}',[MissionDetailController::class,'main'])->name('mission-page');
-
 
 Route::resource('timesheet',VolunteeringTimesheetController::class);

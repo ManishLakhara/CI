@@ -15,6 +15,8 @@
     #cms-toggle { display: none;}
   }
 
+
+
 .from_untill {
     border-radius: 23px;
     max-width: fit-content;
@@ -140,6 +142,9 @@
 .mission-title {
     font-size: 1.5rem;
 }
+#mission-title:hover {
+    color:#f88634;
+}
 
 .mission-short-description {
     color: #757575;
@@ -154,12 +159,13 @@
 }
 
 .rating-color {
-    color: #fbc634 !important;
+    color: #f88634 !important;
 }
 
 .small-ratings i {
     color: #cecece;
 }
+
 
 .apply-btn {
     color: #f88634;
@@ -167,6 +173,10 @@
     border-color: #f88634;
     border-radius: 23px;
     max-width: 133px;
+}
+.apply-btn:hover{
+    background-color:  #f88634;
+    color: white;
 }
 .time-border {
     position: absolute;
@@ -293,7 +303,7 @@ small {
     width: 1em;
     font-size: 40px;
     font-weight: 300;
-    color: #FFD600;
+    color: #f88634;
     cursor: pointer
 }
 
@@ -316,3 +326,17 @@ small {
     opacity: 0.4
 }
 
+.progress-bar{
+    background-color: #f88634;
+}
+
+.progress {
+    width: 20em;
+}
+
+.current-status {
+    top: 1em;
+}
+.current-status .badge {
+    border-radius: 0px 23px 23px 0px;
+}

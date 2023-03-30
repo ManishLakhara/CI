@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -34,6 +35,10 @@ class Mission extends Model
     protected $primaryKey = 'mission_id';
     protected $dates = ['deleted_at'];
 
+    public function skill(): BelongsToMany {
+        return $this->belongsToMany(Skill::class, 'mission_skills','mission_id','skill_id');
+    }
+
     public function country(): HasOne {
         return $this->hasOne(Country::class, 'country_id','country_id');
     }
@@ -57,11 +62,11 @@ class Mission extends Model
     }
 
     public function missionRating() {
-        return $this->hasMany(MissionMedia::class, 'mission_id');
+        return $this->hasMany(MissionRating::class, 'mission_id','mission_id');
     }
 
     public function missionSkill(){
-        return $this->belongsTo(MissionSkill::class, 'mission_id','mission_id');
+        return $this->hasMany(MissionSkill::class, 'mission_id','mission_id');
     }
 
     public function story() {

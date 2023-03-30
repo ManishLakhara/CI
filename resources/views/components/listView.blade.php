@@ -102,35 +102,47 @@
                         </div>
                     </div>
                     <div class="col-sm-2">
+                        <?php
+                            $user_rating = $item->missionRating;
+                            $rating = $user_rating->pluck('rating')->toArray();
+                            $count = count($rating);
+                            $avg_rating = ceil(array_sum($rating)/$count);
+                        ?>
                         <div class="small-ratings">
-                            <i class="fa fa-star rating-color"></i>
-                            <i class="fa fa-star rating-color"></i>
-                            <i class="fa fa-star rating-color"></i>
-                            <i class="fa fa-star rating-color"></i>
-                            <i class="fa fa-star rating-color"></i>
+                            @for ($i=0;$i<5;$i++,$avg_rating--)
+                                @if($avg_rating>0)
+                                    <i class="fa fa-star rating-color"></i>
+                                @else
+                                    <i class="fa fa-star"></i>
+                                @endif
+                            @endfor
                         </div>
                     </div>
                 </div>
-                <div class="h4 theme-color pt-4">
-                    {{ $item->title }}
+                <div id="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
+                    <div class="h4 theme-color pt-4" id="mission-title">
+                        {{ $item->title }}
+                    </div>
+                    <p class='mission-short-description'>
+                        {{ $item->short_description }}
+                    </p>
                 </div>
-                <p class='mission-short-description'>
-                    {{ $item->short_description }}
-                </p>
                 <div class="row justify-content-between">
                     <div class="col">
-                        <div class="row">
-                            <div class="col-lg-6">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 align-item-center">
                                 <div class="d-flex">
-                                    <div class="d-flex align-items-center ">
-                                        <div class="px-1">
-                                            <img src={{ asset('Images/seats-left.png') }} alt="">
+                                    @if ($item->timeMission!=null)
+                                        <div class="d-flex align-items-center ">
+                                            <div class="px-1">
+                                                <img src={{ asset('Images/seats-left.png') }} alt="">
+                                            </div>
+                                            <div class="px-2 d-flex flex-column align-items-start">
+                                                <span class="theme-color fs-5 font-weight-bolder">{{$item->timeMission->total_seats}}<br></span>
+                                                <span class="text-muted">Seats left</span>
+                                            </div>
                                         </div>
-                                        <div class="px-2 d-flex flex-column align-items-start">
-                                            <span class="theme-color fs-5 font-weight-bolder">10 <br></span>
-                                            <span class="text-muted">Seats left</span>
-                                        </div>
-                                    </div>
+                                    @endif
                                     @if ($item->timeMission!=null)
                                         <div class='d-flex align-items-center'>
                                             <div class="px-1">
@@ -146,9 +158,9 @@
                                             <div class="px-1">
                                                 <img src={{ asset('Images/achieved.png') }} alt="">
                                             </div>
-                                            <div class=" px-2 d-flex flex-column align-items-start">
+                                            <div class="px-2 d-flex flex-column ">
                                                 <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="80" aria-valuemax="100"></div>
+                                                    <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                                 <span class="text-muted"><small>{{$item->goalMission->goal_value}} Achieved</small></span>
                                             </div>
@@ -174,7 +186,12 @@
                                             <img src={{ asset('Images/settings.png') }} alt="">
                                         </div>
                                         <div class=" px-2 d-flex flex-column align-items-start">
-                                            <small class="p-2 fs-6 theme-color"> Skills <br> {{$item->missionSkill->skill->skill_name}}</small>
+                                            <small class="p-2 fs-6 theme-color"> Skills <br>
+                                                @foreach ($item->skill as $i_skill)
+                                                    {{$i_skill->skill_name}}
+                                                    @break
+                                                @endforeach
+                                                </small>
                                         </div>
                                     </div>
                                 </div>

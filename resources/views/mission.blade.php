@@ -115,8 +115,15 @@
                                     <img src={{ asset('Images/achieved.png') }} alt="">
                                 </div>
                                 <div class="d-flex flex-column ps-2 w-100">
+                                    <style>
+                                    .progress-bar{
+                                        background-color: #f88634;
+                                    }
+                                    .progress {
+                                        width: 20em;
+                                    }</style>
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <small class="text-muted fs-6">{{$mission->goalMission->goal_value}} achieved</small>
                                 </div>
@@ -282,9 +289,10 @@
                 </div>
                 <div class="row py-4 justify-content-center align-item-center" >{{--Apply Button--}}
                     <div class="col-6 align-self-center">
+                        @if(count($mission->missionApplication->where('user_id',$user_id))===0)
                         <button type="button" id="mission_application_btn" class="btn btn-lg fs-5 apply-btn w-100"> Apply <i
-                                class="fa-sharp fa-solid fa-arrow-right"></i> </button>
-
+                            class="fa-sharp fa-solid fa-arrow-right"></i> </button>
+                        @endif
                     </div>
                 </div>
             </div>
