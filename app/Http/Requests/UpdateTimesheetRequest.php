@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Models\Mission;
 
-class StoreTimesheetRequest extends FormRequest
+class UpdateTimesheetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -74,7 +74,7 @@ class StoreTimesheetRequest extends FormRequest
                 'date',
                 'after_or_equal:' . $mission->start_date,
                 'before_or_equal:' . $mission->end_date,
-                'before:tomorrow', // Ensure the date is not in the future
+                'before:tomorrow',
             ],
 
         ];
