@@ -16,10 +16,10 @@ class MissionApplication extends Model
     ];
 
     public function mission() {
-        return $this->hasMany(Mission::class, 'mission_id');
+        return $this->hasOne(Mission::class, 'mission_id','mission_id');
     }
 
     public function user() {
-        return $this->belongTo(user::class, 'user_id');
+        return $this->hasOne(user::class, 'user_id', 'user_id');
     }
 }

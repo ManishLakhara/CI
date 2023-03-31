@@ -57,7 +57,7 @@
                         </span>
                     </div>
                 </a>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin-mission-application">
                     <div class='container'>
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
                         <i class="fa-solid fa-folder text-white"></i>
@@ -66,7 +66,7 @@
                         </span>
                     </div>
                 </a>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin-story">
                     <div class='container'>
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
                         <i class="fa-brands fa-canadian-maple-leaf text-white"></i>

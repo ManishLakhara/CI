@@ -15,8 +15,10 @@ use App\Http\Controllers\admin\ForgetPasswordController;
 use App\Http\Controllers\Admin\AdminPasswordResetController;
 use App\Http\Controllers\admin\MissionController;
 use App\Http\Controllers\admin\CmsPageController;
+use App\Http\Controllers\admin\StoryController;
 use App\Http\Controllers\CmsPagesController;
 use App\Http\Controllers\ShareYourStoryController;
+use App\Http\Controllers\MissionApplicationController;
 use App\Http\Controllers\UserEditProfileController;
 use App\Http\Controllers\VolunteeringTimesheetController;
 
@@ -77,7 +79,7 @@ Route::post('resetpassword', [ForgetPasswordController::class, 'resetpassword'])
 Route::post('admin-check-email', [ForgetPasswordController::class, 'admincheckEmail'])->name('admin.check.email');
 Route::get('resetpassword', [ForgetPasswordController::class, 'resetpassword'])->name('resetpassword');
 Route::post('resetpassword2', [AdminPasswordResetController::class, 'resetPassword'])->name('resetpassword2');
-
+Route::get('admin-mission-application',[MissionApplicationController::class, 'index']);
 Route::get('adminresetpage/{token}', function () {
     return view('admin.auth.resetpassword');
 
@@ -86,15 +88,16 @@ Route::get('adminresetpage/{token}', function () {
 Route::post('admin-password-resetting', [AdminPasswordResetController::class, 'adminPasswordResetting'])->name('adminPasswordResetting');
 
 // Route::get('adminresetpage',function(){
-//     return view('admin.auth.login');
-// });
-// Route::get('missiontheme/delete/{slug}', [MissionThemeController::class,'delete']);
-// Route::post('missiontheme/new',[MissionThemeController::class,'new'])->name('missiontheme.new');
-// Route::get('missiontheme',[MissionThemeController::class,'getAll']);
-// Route::get('missionskill',[SkillController::class,'getAll']);
-// Route::post('missionskill/new',[SkillController::class,'new'])->name('missionskill.new');
-// Route::get('missionskill/delete/{slug}', [SkillController::class,'delete']);
+    //     return view('admin.auth.login');
+    // });
+    // Route::get('missiontheme/delete/{slug}', [MissionThemeController::class,'delete']);
+    // Route::post('missiontheme/new',[MissionThemeController::class,'new'])->name('missiontheme.new');
+    // Route::get('missiontheme',[MissionThemeController::class,'getAll']);
+    // Route::get('missionskill',[SkillController::class,'getAll']);
+    // Route::post('missionskill/new',[SkillController::class,'new'])->name('missionskill.new');
+    // Route::get('missionskill/delete/{slug}', [SkillController::class,'delete']);
 
+Route::resource('admin-story',StoryController::class);
 Route::resource('missiontheme', MissionThemeController::class)->withTrashed();
 Route::resource('missionskill', MissionSkillController::class)->withTrashed();
 Route::resource('user', UserController::class)->withTrashed();

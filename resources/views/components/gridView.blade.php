@@ -1,26 +1,34 @@
-<div id="gridViewContent" class="row py-3" id="missions">
+<div id="gridViewContent" class="row" id="missions">
     @foreach ($data as $item)
         {{-- This is grid view --}}
     <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center">
         <div class="py-1">
-            @if(count($item->missionApplication->where('user_id',$user_id))!==0)
-                <div id="bagde_{{$item->mission_id}}" class="position-absolute current-status">
-                    <span class="badge bg-success fs-6">Applied</span>
-                </div>
-            @endif
-                <div hidden class="position-absolute current-status">
-                    <span id="bagde_{{$item->mission_id}}" class="badge bg-success fs-6">Applied</span>
-                </div>
-            <img class="card-img-top"
-                src={{ asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png') }}
-                alt="">
-            <div class="position-relative">
 
+            {{-- <div class="position-absolute current-status">
+                <span id="bagde_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
+            </div> --}}
+            <div class="position-relative" style="width: auto; height: auto;">
+
+                @if(count($item->missionApplication->where('user_id',$user_id))!==0)
+                <div class="position-absolute current-status">
+                    @if($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='PENDING'
+                    || $item->missionApplication->where('user_id',$user_id)->first()->approval_status=='APPROVE'
+                    )
+                    <span class="badge bg-success fs-6">Applied</span>
+                    @elseif ($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='DECLINE')
+                    <span class="badge bg-danger fs-6">Decline</span>
+                    @endif
+                </div>
+                @endif
+
+                <span class="position-absolute parent_mission_location">
+                    <span class="mission_location px-2 py-1">
+                        <img src={{ asset('Images/pin.png') }} alt=""><span
+                            class="text-white px-2">{{ $item->city->name }}</span>
+                    </span>
+                </span>
 
                 <div class="position-absolute parent_like_btn">
-                    {{-- <label for="img1">
-                        <input type="radio" name="imgbackground" id="img1" class="d-none imgbgchk py-1" value="">
-                        <i class="fa-regular fa-heart fs-4"></i> --}}
                     <button id="mission_like_btn_{{$item->mission_id}}_{{$user_id}}" type="button" class="like_btn py-1">
                         <?php $set=false;
                                 $value='0';?>
@@ -33,6 +41,8 @@
                                 @break
                             @endif
                         @endforeach
+
+
                         @if($set==false)
                         <i class="fa-regular fa-heart fs-4"></i>
                         @endif
@@ -42,6 +52,7 @@
                     >
                     {{-- </label> --}}
                 </div>
+
                 <div class="position-absolute parent_add_btn">
                     <button class="add_btn py-1" id="misison_invite_btn_{{$item->mission_id}}_{{$user_id}}" data-toggle="modal" data-target="#invite_user_modal_{{$item->mission_id}}_{{$user_id}}"><img src={{ asset('Images/user.png') }}
                             alt=""></button>
@@ -87,16 +98,14 @@
                         </div>
                     </div>
                 </div>
-                <span class="position-absolute parent_mission_location">
-                    <span class="mission_location px-2 py-1">
-                        <img src={{ asset('Images/pin.png') }} alt=""><span
-                            class="text-white px-2">{{ $item->city->name }}</span>
-                    </span>
-                </span>
+
+                <img class=" img-fluid w-100 h-100 card-img-top"
+                src={{ asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png') }}
+                alt="">
             </div>
         </div>
-        <div class="text-center" style="margin-top: -25px">
-            <span class="fs-4 px-2 from_untill">
+        <div class="text-center" style="z-index: 1; margin-top: -25px">
+            <span class="fs-4 px-2 from_untill" style="">
                 {{ $item->missionTheme->title }}
             </span>
         </div>

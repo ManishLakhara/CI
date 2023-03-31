@@ -441,6 +441,7 @@
                 $(location).attr('href',"{{url('mission-page/')}}"+'/'+$(this).data('mission_id'));
             });
             $('button[id^="mission_application_btn_"]').on('click',function(){
+                mission_id=$(this).data('mission_id');
                 $.ajax({
                     url: "{{url('api/new-mission-application')}}",
                     type: "POST",
@@ -450,12 +451,12 @@
                         approval_status: 'PENDING',
                     },
                     success: function(result){
-                        $('#badge_'+$(this).data('mission_id')).show();
                         alert(result);
-
+                        $('#badge_'+mission_id).prop('display','block');
                     }
                 })
                 $(this).hide();
+
                 $('#mission_detail_btn_'+$(this).data('mission_id')).show();
             });
             $(document).on('click','.pagination a', function(event){

@@ -56,37 +56,31 @@
 }
 
 .parent_mission_location{
-    top: -14rem;
+    top: 1rem;
     right: 0.8rem;
 }
 
 
 
 @media screen and (max-width: 1399px) {
-    .parent_mission_location{
-        top: -12rem;
-    }
+
 }
 
 @media screen and (max-width: 991px) {
-    .parent_mission_location{
-        top: -11rem;
-    }
+
 }
 @media screen and (max-width: 767px) {
-    .parent_mission_location{
-        top: -16rem;
+    .list-view-images{
+        display: none;
     }
 }
 
 @media screen and (max-width: 467px) {
-    .parent_mission_location{
-        top: -11rem;
-    }
+
 }
 
 .parent_add_btn {
-    top: -4rem;
+    bottom: 1.5em;
     right: 0.8rem;
 }
 
@@ -96,7 +90,7 @@
 }
 
 .parent_like_btn {
-    top: -8rem;
+    bottom: 5em;
     right: 0.8rem;
 }
 
@@ -105,25 +99,11 @@
     right: 1.8rem
 }
 
-@media screen and (max-width: 1199px) {
-    .parent_like_btn_l{
-        top: -8.5em;
-    }
-    .parent_add_btn_l{
-        top: -5.5em;
-    }
-}
+/* @media screen and (max-width: 1199){
 
-@media screen and (max-width: 1199){
-    .parent_mission_location_l{
-        top: -11em;
-    }
-}
+} */
 
-.parent_mission_location_l{
-    top: -13em;
-    right: 1.8rem;
-}
+
 .policy {
 
     position: absolute;
@@ -331,7 +311,7 @@ small {
 }
 
 .progress {
-    width: 20em;
+    width: 18em;
 }
 
 .current-status {
@@ -340,3 +320,4 @@ small {
 .current-status .badge {
     border-radius: 0px 23px 23px 0px;
 }
+

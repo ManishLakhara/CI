@@ -1,9 +1,9 @@
 <div class="row py-3" id="listViewContent" style="display: none;">
     @foreach ($data as $item)
         {{-- This is list view --}}
-        <div class="row">
-            <div class="col-md-4 py-2 text-center">
-                <img class="img-fluid" src="{{asset("Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png")}}" alt="">
+        <div class="row py-3">
+            <div class="col-md-5 py-2 list-view-images">
+                <img class="img-fluid w-100 h-100" src="{{asset("Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png")}}" alt="">
                 <div class="text-center" style="margin-top: -20px">
                     <span class="fs-4 px-2 from_untill">
                         {{ $item->missionTheme->title }}
@@ -36,47 +36,6 @@
                     <div class="position-absolute parent_add_btn_l">
                         <button class="add_btn py-1"id="misison_invite_btn_{{$item->mission_id}}_{{$user_id}}" data-toggle="modal" data-target="#invite_user_modal_{{$item->mission_id}}_{{$user_id}}"><img src={{ asset('Images/user.png') }}
                                 alt=""></button>
-                        {{-- <!-- Modal -->
-                        <div class="modal fade w-100" id="invite_user_modal_{{$item->mission_id}}_{{$user_id}}" tabindex="-1" role="dialog" aria-labelledby="invite_user_modal_{{$item->mission_id}}_{{$user_id}}Label" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h5 class="modal-title" id="invite_user_modal_{{$item->mission_id}}_{{$user_id}}Label">Invite Your Friends</h5>
-                                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">First</th>
-                                                <th scope="col">last</th>
-                                                <th scope="col">email</th>
-                                                <th scope="col">Invite</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($users as $user)
-                                                <tr>
-                                                    <th>{{$user->first_name}}</th>
-                                                    <td>{{$user->last_name}}</td>
-                                                    <td>{{$user->email}}</td>
-                                                    <td>
-                                                        <input type="checkbox" id="invite_{{$item->mission_id}}_{{$user->user_id}}_{{$user_id}}" value="{{$user->user_id}}">
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                     <span class="position-absolute parent_mission_location_l">
                         <span class="mission_location px-2 py-1">
@@ -86,7 +45,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col p-2">
+            <div class="col-md-7 p-2">
                 <div class="row align-items-start">
                     <div class="col">
                         <div class="d-flex">
