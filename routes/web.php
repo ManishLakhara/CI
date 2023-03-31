@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AdminPasswordResetController;
 use App\Http\Controllers\admin\MissionController;
 use App\Http\Controllers\admin\CmsPageController;
 use App\Http\Controllers\CmsPagesController;
+use App\Http\Controllers\ShareYourStoryController;
 use App\Http\Controllers\UserEditProfileController;
 use App\Http\Controllers\VolunteeringTimesheetController;
 
@@ -121,3 +122,5 @@ Route::post('logout', [UserEditProfileController::class,'logout'])->name('logout
 Route::get('mission-page/{mission_id}',[MissionDetailController::class,'main'])->name('mission-page');
 
 Route::resource('timesheet',VolunteeringTimesheetController::class);
+
+Route::get('share-your-story',[ShareYourStoryController::class,'index']);
