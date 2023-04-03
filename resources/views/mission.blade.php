@@ -371,7 +371,6 @@
                                         @foreach ($skills as $skill)
                                             {{$skill}},
                                         @endforeach
-
                                     </div>
                                 </div>
                             </div>

@@ -9,7 +9,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Support\Facades\Request;
 
 
 class UserController extends Controller
@@ -24,12 +24,15 @@ class UserController extends Controller
             [function ($query) use ($request) {
                 if (($s = $request->s)) {
                     $query->orWhere('first_name', 'LIKE', '%' . $s . '%')
-                        ->orWhere('last_name', 'LIKE', '%' . $s . '%')
-                        ->get();
+                          ->orWhere('last_name', 'LIKE', '%' . $s . '%')
+                          ->orWhere('email', 'LIKE', '%' . $s . '%')
+                          ->orWhere('employee_id', 'LIKE', '%' . $s . '%')
+                          ->orWhere('department', 'LIKE', '%' . $s . '%')
+                          ->get();
                 }
             }]
         ])->paginate(10)
-            ->appends(['s' => $request->s]);
+          ->appends(['s' => $request->s]);
 
 
         //$data = User::orderBy('user_id','desc')->paginate(10);

@@ -68,7 +68,8 @@ class StoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $story= Story::find($id);
+        return view('admin.story.edit', compact('story'));
     }
 
     /**
@@ -84,18 +85,34 @@ class StoryController extends Controller
      */
     public function updateToPublished(Request $request, string $id)
     {
-        $story = Story::find($id);
-        $story->status = 'PUBLISHED';
-        $story->save();
-        return back()->with('success', "Successfully status updated to PUBLISHED");
+        if($request->ajax()){
+            $story = Story::find($id);
+            $story->status = 'PUBLISHED';
+            $story->save();
+            return "This Story is Now Published";
+        }else{
+            $story = Story::find($id);
+            $story->status = 'PUBLISHED';
+            $story->save();
+            return back()->with('success', "Successfully status updated to PUBLISHED");
+        }
+
     }
 
     public function updateToDeclined(Request $request, string $id)
     {
-        $story = Story::find($id);
-        $story->status = 'DECLINED';
-        $story->save();
-        return back()->with('success', "Successfully status updated to DECLINED");
+        if($request->ajax()){
+            $story = Story::find($id);
+            $story->status = 'DECLINED';
+            $story->save();
+            return "This Story is Now Declined";
+        }else{
+            $story = Story::find($id);
+            $story->status = 'DECLINED';
+            $story->save();
+            return back()->with('success', "Successfully status updated to DECLINED");
+        }
+
     }
 
     /**

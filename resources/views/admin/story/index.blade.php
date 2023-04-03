@@ -57,7 +57,7 @@
                             <span class="border px-2 py-1 text-success border-success" style="border-radius: 23px;">
                                 PUBLISHED
                             </span>
-                        @else   
+                        @else
                             <a  id="application_a_{{$mt->story_id}}" href="{{route('admin-story.published', $mt->story_id)}}">
                                 <img src="{{asset('Images/correct-icon.svg')}}" width="25px" height="25px" alt="">
                             </a>
@@ -88,23 +88,4 @@
     </table>
     @include('admin.layouts.pagination')
 </div>
-<script>
-    $(document).ready( function(Event){
-        $('button[id^=application_a_]')on('click', function(){
-            let story_id = this.id.split('_')[2];
-            console.log(this.id);
-            // $.ajax({
-            //     url: "{{route('admin-story.update',"+story_id+")}}",
-            //     type: 'get',
-            //     data: {
-            //         story_id: story_id;
-            //         status: 'PUBLISHED';
-            //     },
-            //     success: function(result){
-            //         alert("result");
-            //     }
-            // })
-        })
-    });
-</script>
 @endsection

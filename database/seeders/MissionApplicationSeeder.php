@@ -18,7 +18,7 @@ class MissionApplicationSeeder extends Seeder
         $missions = Mission::all()->pluck('mission_id');
         $users = User::all()->pluck('user_id');
         foreach ($missions as $mission) {
-            for($i=25;$i>0;$i--){
+            for($i=15;$i>0;$i--){
                 MissionApplication::create([
                     'mission_id' => $mission,
                     'user_id' => fake()->randomElement($users),
