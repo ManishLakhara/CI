@@ -96,7 +96,8 @@ Route::post('admin-password-resetting', [AdminPasswordResetController::class, 'a
     // Route::get('missionskill',[SkillController::class,'getAll']);
     // Route::post('missionskill/new',[SkillController::class,'new'])->name('missionskill.new');
     // Route::get('missionskill/delete/{slug}', [SkillController::class,'delete']);
-
+Route::get('admin-story-published/{story_id}',[StoryController::class,'updateToPublished'])->name('admin-story.published');
+Route::get('admin-story-declined/{story_id}',[StoryController::class,'updateToDeclined'])->name('admin-story.declined');
 Route::resource('admin-story',StoryController::class);
 Route::resource('missiontheme', MissionThemeController::class)->withTrashed();
 Route::resource('missionskill', MissionSkillController::class)->withTrashed();

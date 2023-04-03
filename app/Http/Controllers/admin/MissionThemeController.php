@@ -8,7 +8,7 @@ use App\Http\Requests\StoreMissionThemeRequest;
 use App\Http\Requests\UpdateMissionThemeRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use App\Models\Country;
 use App\Models\City;
 
@@ -24,11 +24,11 @@ class MissionThemeController extends Controller
             [function ($query) use ($request) {
                 if (($s = $request->s)) {
                     $query->orWhere('title', 'LIKE', '%' . $s . '%')
-                        
+
                         ->get();
                 }
             }]
-        ])->orderBy('mission_theme_id', 'desc') 
+        ])->orderBy('mission_theme_id', 'desc')
             ->paginate(10)
             ->appends(['s' => $request->s]);
 

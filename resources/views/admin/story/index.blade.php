@@ -12,6 +12,23 @@
     </h1>
     @include('admin.components.successAlert')
 
+    <div class="col-sm-4 relative w-100 py-4">
+        <form action="{{ route('admin-story.index') }}" method="GET">
+            @csrf
+            <label for="search" class="sr-only">
+                Search
+            </label>
+            <div class="d-flex border rounded w-100">
+                <button type="submit" class="btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                <div class="form-outline w-100">
+                  <input type="search" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0" />
+                </div>
+            </div>
+        </form>
+    </div>
+
     <table class="table table-responsive border-start border-end">
         <thead style="background-color: #F8F9FC">
             <tr>
@@ -25,6 +42,7 @@
             @foreach ($data as $mt)
                 <tr>
                     <td>
+
                         {{$mt->title}}
                     </td>
                     <td>
@@ -34,16 +52,35 @@
                         {{$mt->user->first_name}} {{$mt->user->last_name}}
                     </td>
                     <td>
-                        <a id="application_a_{{$mt->story_id}}">
-                            <img src="{{asset('Images/correct-icon.svg')}}" width="25px" height="25px" alt="">
-                        </a>
-                        <a id="application_r_{{$mt->story_id}}">
-                            <img src="{{asset('Images/cancle-icon.svg')}}" width="25px" height="25px" alt="">
-                        </a>
-                        <a class="btn btn-white"href="{{ route('admin-story.edit', $mt->story_id) }}">
-                            {{-- <img src="Images/edit.png" height="22px" width="22px" alt="edit"> --}}
-                            <i class="fas fa-edit"></i>
-                        </a>
+                        <a  href="{{route('admin-story.show', $mt->story_id)}}"><button class="btn btn-outline border px-2 py-1" style="border-radius: 23px;">View</button></a>
+                        @if($mt->status=='PUBLISHED')
+                            <span class="border px-2 py-1 text-success border-success" style="border-radius: 23px;">
+                                PUBLISHED
+                            </span>
+                        @else   
+                            <a  id="application_a_{{$mt->story_id}}" href="{{route('admin-story.published', $mt->story_id)}}">
+                                <img src="{{asset('Images/correct-icon.svg')}}" width="25px" height="25px" alt="">
+                            </a>
+                        @endif
+                        @if($mt->status=="DECLINED")
+                            <span class="border px-2 py-1 text-danger border-danger" style="border-radius: 23px;">
+                                DECLINED
+                            </span>
+                        @else
+                            <a id="application_r_{{$mt->story_id}}" href="{{route('admin-story.declined', $mt->story_id)}}">
+                                <img src="{{asset('Images/cancle-icon.svg')}}" width="25px" height="25px" alt="">
+                            </a>
+                        @endif
+
+                        <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $mt->story_id }}"
+                            class="btn btn-white">
+                            <img src="Images/bin.png" alt="delete">
+                        </button>
+                        <!-- Modal -->
+                        @include('admin.components.deleteModal', [
+                            'id' => $mt->story_id,
+                            'form_action' => 'admin-story.destroy',
+                        ])
                     </td>
                 </tr>
             @endforeach
@@ -51,4 +88,23 @@
     </table>
     @include('admin.layouts.pagination')
 </div>
+<script>
+    $(document).ready( function(Event){
+        $('button[id^=application_a_]')on('click', function(){
+            let story_id = this.id.split('_')[2];
+            console.log(this.id);
+            // $.ajax({
+            //     url: "{{route('admin-story.update',"+story_id+")}}",
+            //     type: 'get',
+            //     data: {
+            //         story_id: story_id;
+            //         status: 'PUBLISHED';
+            //     },
+            //     success: function(result){
+            //         alert("result");
+            //     }
+            // })
+        })
+    });
+</script>
 @endsection

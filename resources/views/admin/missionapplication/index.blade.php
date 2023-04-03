@@ -32,6 +32,24 @@
             </div>
         </div> --}}
 
+        <div class="col-sm-4 relative w-100 py-4">
+            <form action="{{ url('admin-mission-application') }}" method="GET">
+                @csrf
+                <label for="search" class="sr-only">
+                    Search
+                </label>
+                <div class="d-flex border rounded w-100">
+                    <button type="submit" class="btn">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    <div class="form-outline w-100">
+                      <input type="search" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
         <table class="table table-responsive border-start border-end">
             <thead style="background-color: #F8F9FC">
                 <tr>

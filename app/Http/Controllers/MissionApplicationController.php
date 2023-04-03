@@ -10,25 +10,25 @@ use Illuminate\Support\Facades\Auth;
 class MissionApplicationController extends Controller
 {
     public function index(Request $request){
-        // $data = MissionApplication::where([
-        //     [function ($query) use ($request) {
-        //         if (($s = $request->s)) {
-        //             $query->orWhere('jdksjf', 'LIKE', '%' . $s . '%')
-        //                 ->get();
-        //         }
-        //     }]
-        // ])->paginate(10)
-        //  ->appends(['s' => $request->s]);
-        // $data = MissionApplication::orderByRaw("FIELD('approval_status' , 'DECLINE', 'APPROVE', PENDING)")
-        //     ->paginate(10)
-        //     ->appends(['s' => $request->s]);
-        $data = MissionApplication::orderByRaw("CASE approval_status
+        $data = MissionApplication::whereHas('mission', function ($query) use ($request) {
+                                            if(($s = $request->s)) {
+                                                $query->where('title', 'LIKE', '%'.$s.'%');
+                                            }
+                                        })
+                                           ->orWhereHas('user', function ($query) use ($request) {
+                                            if(($s = $request->s)) {
+                                                $query->where('first_name','LIKE','%'.$s.'%')
+                                                      ->orWhere('last_name', 'LIKE','%'.$s.'%');
+                                            }
+                                           })
+                                           ->orderByRaw("CASE approval_status
                                                 WHEN 'PENDING' THEN 1
                                                 WHEN 'APPROVE' THEN 2
                                                 WHEN 'DECLINE' THEN 3
                                                 END")
-            ->paginate(10)
-            ->appends(['s' => $request->s]);
+                                            ->orderBy('created_at', 'desc')
+                                            ->paginate(10)
+                                            ->appends(['s' => $request->s]);
 
         return view('admin.missionapplication.index',compact('data'));
     }
@@ -44,7 +44,6 @@ class MissionApplicationController extends Controller
         $application->save();
         return("success");
     }
-
     public function rejectApplication(Request $request){
         $application = MissionApplication::find($request->mission_application_id);
         $application->approval_status = "DECLINE";
