@@ -6,7 +6,7 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="border-bottom"><span style="text-decoration-line: underline">User</span></h1>
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> User </span></ul>
 
         <form action="{{ route('user.store') }}" method="post">
             @csrf

@@ -7,16 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\User;
 use \Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller {
-    /* This is controller for Authentication of user 
-     * i.e volunteer  
+    /* This is controller for Authentication of user
+     * i.e volunteer
     */
     public function index()
     {
-        return view('login.login');
+        $banners = Banner::orderBy('sort_order','asc')->get();
+        return view('login.login',compact('banners'));
     }
 
     public function logout(){
@@ -39,7 +41,7 @@ class AuthController extends Controller {
     public function register(RegisterRequest $request){
 
         if(User::where('email',$request->email)->count()===0){
-            
+
             $user = User::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,

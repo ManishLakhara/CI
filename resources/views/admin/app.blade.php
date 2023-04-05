@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     @include('admin.layouts.head')
+
     <body class="sb-nav-fixed">
         @include('admin.layouts.header')
         <div id="layoutSidenav">
@@ -14,4 +15,8 @@
         </div>
         @include('admin.layouts.scripts')
     </body>
+    <script>
+        var currentpath = window.location.pathname.split('/')[1];
+        $('#'+currentpath).addClass('active');
+    </script>
 </html>

@@ -5,12 +5,9 @@
 @endsection
 
 @section('body')
-    <div class="container-fluid px-4">
-        <h1 class="mt-4">User</h1>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">User</li>
-        </ol>
-        <div class="card mb-4">
+    <div class="container-fluid">
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> User </span></ul>
+        <div class="card m-4">
             <div class="card-header">
                 <i class="fa-solid fa-pen-to-square text-black"></i>
             </div>
@@ -20,7 +17,7 @@
                     <form action="{{route('user.update',$user->user_id)}}" method="post">
                         @csrf
                         @method('PUT')
-                        <div class="form-row py-4"> 
+                        <div class="form-row py-4">
                             <div class="form-check">
                                 <input class="form-check-input" value="Images/volunteer1.png" type="radio" name="avatar" id="avatar1" @if($user->avatar=="Images/volunteer1.png") checked @endif>
                                 <label class="form-check-label" for="avatar1">
@@ -86,7 +83,7 @@
                             <div class="col-md-6">
                                 <label for="first_name">First Name</label>
                                 <input type="text" name="first_name" class="form-control" value={{$user->first_name}} id="">
-                               
+
                                 @error('first_name')
                                     <div class="text-danger">
                                         {{$message}}
@@ -203,7 +200,7 @@
                                     @isset($cities)
                                         @foreach($cities as $city)
                                             <option value="{{$city->city_id }}" {{$user->city_id==$city->city_id? 'selected':''}}>{{$city->name}}</option>
-                                        @endforeach 
+                                        @endforeach
                                     @endisset
                                     </select>
                                 @error('city_id')

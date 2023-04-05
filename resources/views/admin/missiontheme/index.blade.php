@@ -5,8 +5,8 @@
 @endsection
 @section('body')
     <div class="container-fluid px-4">
-        
-        <h1 class="border-bottom"> <span style="text-decoration-line: underline">Mission Theme</span></h1>
+
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> Mission Theme </span></ul>
         <!-- Success Alert -->
         @include('admin.components.successAlert')
 
@@ -44,7 +44,7 @@
                                 <a class="btn btn-white" href="{{ route('missiontheme.edit', $d->mission_theme_id) }}">
                                     <img src="Images/edit.png" height="22px" width="22px" alt="edit">
                                 </a>
-    
+
                                 <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $d->mission_theme_id }}"
                                     class="btn btn-white">
                                     <img src="Images/bin.png" alt="delete">

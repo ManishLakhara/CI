@@ -7,7 +7,7 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Mission Applications</h1>
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> Mission Application </span></ul>
 
         @include('admin.components.successAlert')
 

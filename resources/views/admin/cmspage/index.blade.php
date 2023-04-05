@@ -6,14 +6,10 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">CMS Page</h1>
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> CMS Page</span></ul>
         @include('admin.components.successAlert')
 
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">CMS Page</li>
-        </ol>
-
-        <div class="card mb-4">
+        <div class="card m-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
             </div>

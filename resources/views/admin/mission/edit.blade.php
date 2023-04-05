@@ -6,9 +6,9 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Edit Mission</h1>
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> Edit Mission </span></ul>
 
-        <form method="post" action="{{ route('mission.update', $mission->mission_id) }}" class="row g-3"
+        <form class="mt-3" method="post" action="{{ route('mission.update', $mission->mission_id) }}" class="row g-3"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -20,6 +20,7 @@
                         {{ $message }}
                     </div>
                 @enderror
+                <input type="number" hidden name="banner_id" value="{{$banner->banner_id}}">
             </div>
             <div class="col-md-6">
                 <label for="missionDesc" class="form-label">Mission Short Description</label>

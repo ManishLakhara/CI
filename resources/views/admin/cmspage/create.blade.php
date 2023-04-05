@@ -6,11 +6,8 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">CMS Page</h1>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">CMS Page</li>
-        </ol>
-        <div class="card mb-4">
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> CMS Page </span></ul>
+        <div class="card m-4">
             <div class="card-header">
                 <span>Add</span>
             </div>

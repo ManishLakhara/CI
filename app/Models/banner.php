@@ -11,4 +11,9 @@ class Banner extends Model
     use HasFactory;
     use SoftDeletes;
     protected $primaryKey = 'banner_id';
+    protected $fillable = [
+        'text',
+        'sort_order',
+        'image',
+    ];
 }

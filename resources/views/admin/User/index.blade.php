@@ -1,12 +1,11 @@
 @extends('admin.app')
-
 @section('title')
     User
 @endsection
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="border-bottom"><span style="text-decoration-line: underline">User</span></h1>
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> User </span></ul>
 
         <!-- Success Alert -->
         @include('admin.components.successAlert')
@@ -51,7 +50,7 @@
                                 <a class="btn btn-white" href="{{ route('user.edit', $d->user_id) }}">
                                     <img src="Images/edit.png" height="22px" width="22px" alt="edit">
                                 </a>
-    
+
                                 <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $d->user_id }}"
                                     class="btn btn-white">
                                     <img src="Images/bin.png" alt="delete">

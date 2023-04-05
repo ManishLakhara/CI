@@ -24,7 +24,6 @@ class MissionThemeController extends Controller
             [function ($query) use ($request) {
                 if (($s = $request->s)) {
                     $query->orWhere('title', 'LIKE', '%' . $s . '%')
-
                         ->get();
                 }
             }]

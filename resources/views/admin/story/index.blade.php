@@ -7,9 +7,7 @@
 
 @section('body')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">
-        Story
-    </h1>
+    <ul class="nav border-bottom"><span class="nav-link active fs-1"> Story </span></ul>
     @include('admin.components.successAlert')
 
     <div class="col-sm-4 relative w-100 py-4">

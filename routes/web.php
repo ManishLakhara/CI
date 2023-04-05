@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\ForgetPasswordController;
 use App\Http\Controllers\Admin\AdminPasswordResetController;
+use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\MissionController;
 use App\Http\Controllers\admin\CmsPageController;
 use App\Http\Controllers\admin\StoryController;
@@ -104,6 +105,7 @@ Route::resource('missionskill', MissionSkillController::class)->withTrashed();
 Route::resource('user', UserController::class)->withTrashed();
 Route::resource('mission', MissionController::class);
 Route::resource('cmspage', CmsPageController::class);
+Route::resource('banner',BannerController::class);
 //end backend route
 
 

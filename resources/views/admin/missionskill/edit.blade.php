@@ -6,7 +6,7 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="border-bottom"><span style="text-decoration-line: underline">Mission Skill</span></h1>
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> Edit Mission Skill </span></ul>
 
         <form class="py-4" action="{{ route('missionskill.update', $skill->skill_id) }}" method="post">
             @csrf

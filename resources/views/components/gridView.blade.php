@@ -1,13 +1,13 @@
 <div id="gridViewContent" class="row" id="missions">
     @foreach ($data as $item)
         {{-- This is grid view --}}
-    <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center">
-        <div class="py-1">
-
+    <div class="card col-lg-6 col-md-12 col-xxl-4 col-xl-6 border-0  pb-4 text-center">
+        <div class="d-flex justify-content-center py-1">
+            <div>
             {{-- <div class="position-absolute current-status">
                 <span id="bagde_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
             </div> --}}
-            <div class="position-relative" style="width: auto; height: auto;">
+            <div class="position-relative" style="width: 416px; height: 247px;">
 
                 @if(count($item->missionApplication->where('user_id',$user_id))!==0)
                 <div class="position-absolute current-status">
@@ -99,10 +99,11 @@
                     </div>
                 </div>
 
-                <img class=" img-fluid w-100 h-100 card-img-top"
-                src={{ asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-3.png') }}
+                <img class="img-fluid w-100 h-100 card-img-top"
+                src={{ asset('storage/'.$item->missionMedia->where('default','1')[0]->media_path) }}
                 alt="">
             </div>
+        </div>
         </div>
         <div class="text-center" style="z-index: 1; margin-top: -25px">
             <span class="fs-4 px-2 from_untill" style="">
@@ -127,7 +128,12 @@
                     $user_rating = $item->missionRating;
                     $rating = $user_rating->pluck('rating')->toArray();
                     $count = count($rating);
-                    $avg_rating = ceil(array_sum($rating)/$count);
+                    if($count=='0'){
+                        $avg_rating = 0;
+                    }
+                    else{
+                        $avg_rating = ceil(array_sum($rating)/$count);
+                    }
                 ?>
                 <div class="small-ratings">
                     @for ($i=0;$i<5;$i++,$avg_rating--)

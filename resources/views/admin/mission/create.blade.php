@@ -6,9 +6,9 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Add Mission</h1>
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> Add Mission </span></ul>
 
-        <form method="post" action="{{ route('mission.store') }}" class="row g-3" enctype="multipart/form-data">
+        <form class="mt-3" method="post" action="{{ route('mission.store') }}" class="row g-3" enctype="multipart/form-data">
             @csrf
             <div class="col-md-6">
                 <label for="missionTitle" class="form-label">Mission Title</label>

@@ -6,7 +6,7 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Mission</h1>
+        <ul class="nav border-bottom"><span class="nav-link active fs-1"> Mission </span></ul>
 
         <!-- Success Alert -->
         @include('admin.components.successAlert')
@@ -40,11 +40,9 @@
                 <button type="submit" class="btn btn-primary float-end">Add</button>
         </form>
     </span> --}}
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">Missions</li>
-        </ol>
 
-        <div class="card mb-4">
+
+        <div class="card m-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
             </div>
