@@ -25,13 +25,13 @@
                   </div>
                   <div class="form-group">
                     <label for="" class="login-text">Password</label>
-                    <input type="password" class="form-control m-1" name="password" required id="" placeholder="" value=""> 
+                    <input type="password" class="form-control m-1" name="password" required id="" placeholder="" value="">
                     @error('password')
                     <div class="text-danger">
                         {{$message}}
                     </div>
                     @enderror
-                  </div> 
+                  </div>
                   <button type="submit" class="btn btn-outline-warning mt-3" style="width: 100%; border-radius: 23px">Login</button>
                </form>
 
@@ -39,7 +39,7 @@
                 <div class="alert alert-danger">
                     {{ session('status')}}
                 </div>
-               @endif
+               @endif   
 
 
                 @include('components.lostyourpassword')

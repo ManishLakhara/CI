@@ -130,3 +130,6 @@ Route::get('mission-page/{mission_id}',[MissionDetailController::class,'main'])-
 Route::resource('timesheet',VolunteeringTimesheetController::class);
 
 Route::get('share-your-story',[ShareYourStoryController::class,'index']);
+
+
+Route::resource('stories', ShareYourStoryController::class);

@@ -16,7 +16,7 @@ class MissionDetailController extends Controller
     public function main($mission_id){
         $user=Auth::user();
         $mission = Mission::where('mission_id',$mission_id)
-                            ->get()[0];
+                            ->first();
         $users = User::where('user_id','!=',Auth::user()->user_id)
         ->orderBy('user_id','asc')
         ->get();
