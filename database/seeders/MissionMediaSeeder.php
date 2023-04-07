@@ -26,13 +26,21 @@ class MissionMediaSeeder extends Seeder
         ];
         $mission_ids = Mission::all()->pluck('mission_id');
         foreach ($mission_ids as $mission_id){
-            MissionMedia::create([
-                'mission_id' => $mission_id,
-                'default' => '1',
-                'media_name' => fake()->word(),
-                'media_type' => 'png',
-                'media_path' => fake()->randomElement($paths)
-            ]);
+            for($i=0;$i<5;$i++){
+                if($i==0){
+                    $default='1';
+                }
+                else{
+                    $default="0";
+                }
+                MissionMedia::create([
+                    'mission_id' => $mission_id,
+                    'default' => $default,
+                    'media_name' => fake()->word(),
+                    'media_type' => 'png',
+                    'media_path' => fake()->randomElement($paths)
+                ]);
+            }
         }
     }
 }

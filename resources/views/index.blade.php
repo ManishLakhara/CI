@@ -342,6 +342,24 @@
                 $(this).hide();
                 $('#mission_detail_btn_'+$(this).data('mission_id')).css('display','block');
             });
+            $('button[id^="mission_application_l_btn_"]').on('click',function(){
+                mission_id=$(this).data('mission_id');
+                $.ajax({
+                    url: "{{url('api/new-mission-application')}}",
+                    type: "POST",
+                    data: {
+                        user_id: $(this).data('user_id'),
+                        mission_id: $(this).data('mission_id'),
+                        approval_status: 'PENDING',
+                    },
+                    success: function(result){
+                        $('#applied_badge_'+mission_id).css('display','block');
+                    }
+                })
+                $(this).hide();
+                $('#mission_detail_l_btn_'+$(this).data('mission_id')).show();
+                $('#applied_l_badge_'+$(this).data('mission_id')).show()
+            });
             $(document).on('click','.pagination a', function(event){
                 event.preventDefault();
                 var page = $(this).attr('href').split('page=')[1];

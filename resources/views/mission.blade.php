@@ -12,46 +12,20 @@
             <div class="col-lg-6">{{--This is carousel Code--}}
                 <div class="carousel-thumbnail">
                     <div class="top-image">
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Animal-welfare-&-save-birds-campaign-1.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-5.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-2.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Nourish-the-Children-in--African-country.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Plantation-and-Afforestation-programme.png')}}" alt="">
-                        </div>
+                        @foreach ($mission->missionMedia as $media)
+                            <div class="image p-1">
+                                <img class="img-fluid w-100 h-100" src={{asset('storage/'.$media->media_path)}} alt="">
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="slidebar-nav">
                     <div class="multiple-items">
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Animal-welfare-&-save-birds-campaign-1.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-5.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Grow-Trees-On-the-path-to-environment-sustainability-2.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Nourish-the-Children-in--African-country.png')}}" alt="">
-                        </div>
-                        <div class="image p-1">
-                            <img class="img-fluid w-100 h-100" src="{{asset('Images/Plantation-and-Afforestation-programme.png')}}" alt="">
-                        </div>
+                        @foreach ($mission->missionMedia as $media)
+                            <div class="image p-1">
+                                <img class="img-fluid w-100 h-100" src={{asset('storage/'.$media->media_path)}} alt="">
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -507,6 +481,23 @@
                     }
                 })
             })
+            $('button[id^="mission_application_btn_"]').on('click',function(){
+                mission_id=$(this).data('mission_id');
+                $.ajax({
+                    url: "{{url('api/new-mission-application')}}",
+                    type: "POST",
+                    data: {
+                        user_id: $(this).data('user_id'),
+                        mission_id: $(this).data('mission_id'),
+                        approval_status: 'PENDING',
+                    },
+                    success: function(result){
+                        $('#applied_badge_'+mission_id).css('display','block');
+                    }
+                })
+                $(this).hide();
+                $('#mission_detail_btn_'+$(this).data('mission_id')).css('display','block');
+            });
             $(".downloadClick").on('click', function(){
                 var filename=$(this).data('filename');
                 console.log(filename);

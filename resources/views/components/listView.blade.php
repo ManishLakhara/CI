@@ -17,8 +17,8 @@
                             @elseif ($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='DECLINE')
                             <span class="badge bg-danger fs-6">Decline</span>
                             @endif
-                            <span id="applied_badge_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
                     @endif
+                    <span id="applied_l_badge_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
                 </div>
                     <span class="position-absolute parent_mission_location">
                         <span class="mission_location px-2 py-1">
@@ -184,12 +184,12 @@
                     </div>
                     <div class="col-xxl-3">
 
-                        <button type="button" id="mission_application_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"
+                        <button type="button" id="mission_application_l_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"
                             @if(count($item->missionApplication->where('user_id',$user_id))!==0) style="display: none;" @endif
                             > Apply <i
                                 class="fa-sharp fa-solid fa-arrow-right"></i> </button>
 
-                        <a href="{{route('mission-page',$item->mission_id)}}" id="mission_detail_btn_{{$item->mission_id}}"><button class="mx-2 btn btn-outline apply-btn fs-6 px-2"
+                        <a href="{{route('mission-page',$item->mission_id)}}"><button id="mission_detail_l_btn_{{$item->mission_id}}" class="mx-2 btn btn-outline apply-btn fs-6 px-2"
                             @if(count($item->missionApplication->where('user_id',$user_id))===0) style="display: none;" @endif
                             > View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                         </button></a>
