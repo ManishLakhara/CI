@@ -20,15 +20,15 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             //CountrySeeder::class,
-           // CitySeeder::class,
+            //CitySeeder::class,
             //SkillSeeder::class,
-            //MissionThemeSeeder::class,
-           // MissionSkillSeeder::class,
-            //MissionSeeder::class,
-           // UserSeeder::class,
+           // MissionThemeSeeder::class,
+          //  MissionSkillSeeder::class,
+            MissionSeeder::class,
+            UserSeeder::class,
            // GoalMissionSeeder::class,
             //TimeMissionSeeder::class,
-           // CommentSeeder::class,
+            CommentSeeder::class,
             MissionApplicationSeeder::class,
             MissionRatingSeeder::class,
         ]);

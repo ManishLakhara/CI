@@ -23,7 +23,7 @@ use App\Http\Controllers\ShareYourStoryController;
 use App\Http\Controllers\MissionApplicationController;
 use App\Http\Controllers\UserEditProfileController;
 use App\Http\Controllers\VolunteeringTimesheetController;
-
+use App\Http\Controllers\StoryListingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -135,3 +135,4 @@ Route::get('share-your-story',[ShareYourStoryController::class,'index']);
 
 Route::resource('stories', ShareYourStoryController::class);
 Route::get('download/{filename}',[DownloadController::class,'download']);
+Route::get('story-listing',[StoryListingController::class,'index']);

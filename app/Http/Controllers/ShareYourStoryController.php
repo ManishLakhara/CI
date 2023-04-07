@@ -152,7 +152,7 @@ class ShareYourStoryController extends Controller
 
                 foreach ($validatedData['photos'] as $photo) {
                     $imageName = $photo->getClientOriginalName();
-                    $imagePath = $photo->storeAs('storage/story_media', $imageName);
+                    $imagePath = $photo->storeAs('storage/story_media', $imageName,'public');
                     $extension = $photo->getClientOriginalExtension();
                     $media = new StoryMedia;
                     $media->story_id = $story->story_id;
