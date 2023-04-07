@@ -21,9 +21,9 @@ class StorySeeder extends Seeder
             Story::create([
                 'mission_id' => fake()->randomElement($mission_ids),
                 'user_id' => fake()->randomElement($user_ids),
-                'status' => fake()->randomElement(['PENDING','PUBLISHED','DECLINED']),
+                'status' => 'PUBLISHED',
                 'published_at' => fake()->date(),
-                'title' => fake()->words(5,true),
+                'title' => fake()->words(10,true),
                 'description' => fake()->words(50,true),
             ]);
         }

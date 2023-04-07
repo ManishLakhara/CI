@@ -15,7 +15,7 @@ class StoryListingController extends Controller
 
         $user = Auth::user();
 
-        $published_stories = Story::where('status', 'PUBLISHED')->paginate(3);
+        $published_stories = Story::where('status', 'PUBLISHED')->paginate(9);
         // foreach ($published_stories as $story) {
         //     $story_media = StoryMedia::where('story_id', $story->story_id)
         //                               ->whereIn('type', ['jpg', 'jpeg', 'png'])
