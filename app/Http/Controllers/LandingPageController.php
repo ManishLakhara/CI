@@ -45,7 +45,7 @@ class LandingPageController extends Controller
         $users = User::where('user_id','!=',Auth::user()->user_id)
                        ->orderBy('user_id','asc')
                        ->get();
-        $data = $data->paginate(9);
+        $data = $data->orderBy('created_at','desc')->paginate(9);
         return view('index', compact('data','count','countries','cities','themes','skills','favorite','users')); // Create view by name missiontheme/index.blade.php
         // $data = Mission::where([
         //     ['title', '!=', Null],

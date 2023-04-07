@@ -27,7 +27,7 @@ class MissionThemeController extends Controller
                         ->get();
                 }
             }]
-        ])->orderBy('mission_theme_id', 'desc')
+        ])->orderBy('created_at','desc')
             ->paginate(10)
             ->appends(['s' => $request->s]);
 

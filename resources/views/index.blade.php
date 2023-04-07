@@ -336,13 +336,11 @@
                         approval_status: 'PENDING',
                     },
                     success: function(result){
-                        alert(result);
-                        $('#badge_'+mission_id).prop('display','block');
+                        $('#applied_badge_'+mission_id).css('display','block');
                     }
                 })
                 $(this).hide();
-
-                $('#mission_detail_btn_'+$(this).data('mission_id')).show();
+                $('#mission_detail_btn_'+$(this).data('mission_id')).css('display','block');
             });
             $(document).on('click','.pagination a', function(event){
                 event.preventDefault();

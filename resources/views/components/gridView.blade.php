@@ -1,16 +1,13 @@
-<div id="gridViewContent" class="row" id="missions">
+<div id="gridViewContent" class="row gx-2" id="missions">
     @foreach ($data as $item)
         {{-- This is grid view --}}
     <div class="card col-lg-6 col-md-12 col-xxl-4 col-xl-6 border-0  pb-4 text-center">
         <div class="d-flex justify-content-center py-1">
             <div>
-            {{-- <div class="position-absolute current-status">
-                <span id="bagde_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
-            </div> --}}
-            <div class="position-relative" style="width: 416px; height: 247px;">
 
-                @if(count($item->missionApplication->where('user_id',$user_id))!==0)
+            <div class="position-relative" style="width: 416px; height: 247px;">
                 <div class="position-absolute current-status">
+                @if(count($item->missionApplication->where('user_id',$user_id))!==0)
                     @if($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='PENDING'
                     || $item->missionApplication->where('user_id',$user_id)->first()->approval_status=='APPROVE'
                     )
@@ -18,8 +15,9 @@
                     @elseif ($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='DECLINE')
                     <span class="badge bg-danger fs-6">Decline</span>
                     @endif
-                </div>
                 @endif
+                <span id="applied_badge_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
+                </div>
 
                 <span class="position-absolute parent_mission_location">
                     <span class="mission_location px-2 py-1">
@@ -100,8 +98,9 @@
                 </div>
 
                 <img class="img-fluid w-100 h-100 card-img-top"
-                src={{ asset('storage/'.$item->missionMedia->where('default','1')[0]->media_path) }}
-                alt="">
+                @if($item->missionMedia->where('default','1')->first())
+                src={{ asset('storage/'.$item->missionMedia->where('default','1')->first()->media_path) }}
+                @endif alt="">
             </div>
         </div>
         </div>

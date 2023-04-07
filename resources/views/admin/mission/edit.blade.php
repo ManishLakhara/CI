@@ -20,7 +20,6 @@
                         {{ $message }}
                     </div>
                 @enderror
-                <input type="number" hidden name="banner_id" value="{{$banner->banner_id}}">
             </div>
             <div class="col-md-6">
                 <label for="missionDesc" class="form-label">Mission Short Description</label>

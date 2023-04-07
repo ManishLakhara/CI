@@ -250,17 +250,17 @@
                 <div class="row pt-3"> {{--This is cards --}}
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
                         <div class="card" style="height: 9em">
-                            <div class="card-body">
-                              <h5 class="card-title"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
+                            <div class="card-body d-flex flex-column justify-content-end">
+                              <h5 class="card-title mb-auto"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
                                 <h6 class="card-subtitle text-muted">City</h6>
                                 <p class="card-text fs-7">{{$mission->city->name}}</p>
-                              </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
                         <div class="card" style="height: 9em">
-                            <div class="card-body">
-                              <h5 class="card-title"><img src={{asset('Images/web.png')}} alt=""></h5>
+                            <div class="card-body d-flex flex-column justify-content-end">
+                              <h5 class="card-title mb-auto"><img src={{asset('Images/web.png')}} alt=""></h5>
                               <h6 class="card-subtitle text-muted">Theme</h6>
                               <p class="card-text">{{$mission->missionTheme->title}}</p>
                             </div>
@@ -268,8 +268,8 @@
                     </div>
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
                         <div class="card" style="height: 9em">
-                            <div class="card-body">
-                              <h5 class="card-title"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
+                            <div class="card-body d-flex flex-column justify-content-end">
+                              <h5 class="card-title mb-auto"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
                               <h6 class="card-subtitle text-muted">Date</h6>
                               <p class="card-text">
                                 {{date('d-m-Y', strtotime($mission->start_date))}}
@@ -279,8 +279,8 @@
                     </div>
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
                         <div class="card" style="height: 9em">
-                            <div class="card-body">
-                              <h5 class="card-title"><img src={{asset('Images/organization.png')}} alt=""></h5>
+                            <div class="card-body d-flex flex-column justify-content-end">
+                              <h5 class="card-title mb-auto"><img src={{asset('Images/organization.png')}} alt=""></h5>
                               <h6 class="card-subtitle text-muted">Organization</h6>
                               <p class="card-text">{{$mission->organization_name}}</p>
                             </div>
@@ -320,15 +320,30 @@
                             <h1 class="fs-4 py-1 theme-color">Challenges</h1>
                             <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, quasi? Dicta fugiat, saepe exercitationem laudantium dignissimos odio veniam expedita culpa sequi quia. Eveniet consequatur quas ratione ut exercitationem consequuntur accusamus.</p>
                             <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, quasi? Dicta fugiat, saepe exercitationem laudantium dignissimos odio veniam expedita culpa sequi quia. Eveniet consequatur quas ratione ut exercitationem consequuntur accusamus.</p>
+                            @if(count($mission->missionDocument)!=0)
+                                <h1 class="fs-4 py-1 theme-color">Documents</h1>
+                            @endif
 
-                            <h1 class="fs-4 py-1 theme-color">Documents</h1>
                             <div class="row">
-                                <div class="p-1 col-lg-4 col-md-6 col-12">
-                                    <button class="btn py-2 btn-outline border text-center" style="border-radius: 23px">
-                                        <img src={{asset('Images/pdf.png')}} alt=""> random-pdf-type-doc
-                                    </button>
-                                </div>
-                                <div class="p-1 col-lg-4 col-md-6 col-12">
+                                @foreach($mission->missionDocument as $document)
+                                    <div class="p-1 col-lg-4 col-md-6 col-12">
+                                        <button class="downloadClick btn py-2 btn-outline border text-center" data-filename="{{$document->document_name}}" style="border-radius: 23px">
+                                            <div class="d-flex">
+                                                <img
+                                                @if($document->document_type=='pdf')
+                                                    src={{asset('Images/pdf.png')}}
+                                                @elseif($document->document_type=='doc')
+                                                    src={{asset('Images/doc.png')}}
+                                                @elseif($document->document_type=="xlsx")
+                                                    src={{asset('Images/xlsx.png')}}
+                                                @endif
+                                                alt="">
+                                                <span class="fs-7">{{explode('_',$document->document_name)[1]}}</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                @endforeach
+                                {{-- <div class="p-1 col-lg-4 col-md-6 col-12">
                                     <button class="btn py-2 btn-outline border text-center" style="border-radius: 23px">
                                         <img src={{asset('Images/doc.png')}} alt=""> random-doc-type-doc
                                     </button>
@@ -337,7 +352,7 @@
                                     <button class="btn py-2 btn-outline border text-center" style="border-radius: 23px">
                                         <img src={{asset('Images/xlsx.png')}} alt=""> random-xlsx-type-doc
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="tab-pane fade" id="organization-detail" role="tabpanel" aria-labelledby="organization-detail-tab">
@@ -421,11 +436,10 @@
         <div class="d-flex justify-content-center py-4">
             <h1 class="fs-2 theme-color">Related Mission</h1>
         </div>
-        <div class="container">
-            @include('components.gridView')
-            {{-- @include('admin.layouts.pagination') --}}
-        </div>
 
+    </div>
+    <div class="container-fluid">
+        @include('components.gridView')
     </div>
     <script>
         function getComment(){
@@ -490,6 +504,27 @@
                     },
                     success: function(result){
                         alert(result);
+                    }
+                })
+            })
+            $(".downloadClick").on('click', function(){
+                var filename=$(this).data('filename');
+                console.log(filename);
+                $.ajax({
+                    type:"GET",
+                    url: "{{ url('download/:filename')}}".replace(':filename',filename),
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function (blob) {
+                        var url = URL.createObjectURL(blob);
+                        var link = document.createElement('a');
+                        link.href = url;
+                        link.download = filename;
+                        link.click();
+                    },
+                    error: function () {
+                        console.log('Document download failed!');
                     }
                 })
             })

@@ -13,9 +13,9 @@
                 Policy
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="{{route('policy-page')}}">Action</a>
+                <a class="dropdown-item" href="{{route('policy-page')}}">Another action</a>
+                <a class="dropdown-item" href="{{route('policy-page')}}">Something else here</a>
               </div>
             </div>
           </div>

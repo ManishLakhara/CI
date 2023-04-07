@@ -36,11 +36,11 @@ class StoryController extends Controller
                             $query->where('title', 'like', '%' . $s . '%');
                         }
                     })
-                      ->orderByRaw("CASE status
-                                    WHEN 'PENDING' THEN 1
-                                    WHEN 'PUBLISHED' THEN 2
-                                    WHEN 'DECLINED' THEN 3
-                                    END")
+                    //   ->orderByRaw("CASE status
+                    //                 WHEN 'PENDING' THEN 1
+                    //                 WHEN 'PUBLISHED' THEN 2
+                    //                 WHEN 'DECLINED' THEN 3
+                    //                 END")
                       ->where('status','!=','DRAFT')
                       ->paginate(10)
                       ->appends(['s' => $request->s]);
@@ -85,14 +85,10 @@ class StoryController extends Controller
      */
     public function updateToPublished(Request $request, string $id)
     {
-        $story = Story::find($id);
-        $story->status = 'PUBLISHED';
-        $story->save();
-        if($request->ajax()){
-            return "This Story is Now Published";
-        }else{
-            return back()->with('success', "Successfully status updated to PUBLISHED");
-        }
+            $story = Story::find($id);
+            $story->status = 'PUBLISHED';
+            $story->save();
+            return redirect()->route('admin-story.index')->with('success', "Successfully status updated to PUBLISHED");
     }
 
     public function updateToDeclined(Request $request, string $id)
@@ -100,11 +96,7 @@ class StoryController extends Controller
         $story = Story::find($id);
         $story->status = 'DECLINED';
         $story->save();
-        if($request->ajax()){
-            return "This Story is Now Declined";
-        }else{
-            return back()->with('success', "Successfully status updated to DECLINED");
-        }
+        return redirect()->route('admin-story.index')->with('success', "Successfully status updated to DECLINED");
     }
 
     /**
@@ -115,6 +107,6 @@ class StoryController extends Controller
         $story = new Story;
         $story->find($id)
               ->delete();
-        return back()->with('success','Successfully Deleted');
+        return redirect()->route('admin-story.index')->with('success','Successfully Deleted');
     }
 }

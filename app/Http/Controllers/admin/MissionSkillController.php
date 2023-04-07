@@ -25,7 +25,8 @@ class MissionSkillController extends Controller
                         ->get();
                 }
             }]
-        ])->paginate(10)
+        ])->orderBy('created_at','desc')
+            ->paginate(10)
             ->appends(['s' => $request->s]);
         //$data = Skill::orderBy('skill_id','desc')->paginate(10);
         return view("admin.missionskill.index", compact('data'));

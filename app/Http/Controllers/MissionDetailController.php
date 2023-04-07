@@ -40,7 +40,11 @@ class MissionDetailController extends Controller
             $rating += $value;
         }
         $count_rating=count($rating_a);
-        $avg_rating=ceil($rating/$count_rating);
+        if($count_rating==0){
+            $avg_rating=0;
+        }else{
+            $avg_rating=ceil($rating/$count_rating);
+        }
         return view('mission',compact('mission','users','skills','data','favorite','my_rating','avg_rating','count_rating'));
     }
     public function showVolunteer(Request $request){

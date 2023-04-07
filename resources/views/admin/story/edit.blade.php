@@ -83,59 +83,17 @@
     </div>
     <div class="row py-4 ">
         <div class="col">
-            <button id="publish" data-story_id="{{$story->story_id}}"
-            @if($story->status=="PUBLISHED") disabled
-            @endif
-            class="btn mx-2 btn-success">
-            @if($story->status=='PUBLISHED')
-                PUBLISHED
-            @else
-                Publish
-            @endif
+            <a href="{{route('admin-story.published',$story->story_id)}}" id="publish_btn" data-story_id="{{$story->story_id}}" class="btn btn-outline-primary">Publish</a>
+            <a href="{{route('admin-story.declined',$story->story_id)}}" id="decline_btn" data-story_id="{{$story->story_id}}" class="btn btn-outline-secondary">Decline</a>
+            <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $story->story_id }}"
+                class="btn btn-outline-danger">
+                Delete
             </button>
-            <button id="decline" data-story_id="{{$story->story_id}}"
-            @if($story->status=="DECLINED") disabled
-            @endif
-            class="btn mx-2 btn-secondary">
-            @if($story->status=='DECLINED')
-                DECLINED
-            @else
-                Decline
-            @endif
-            </button>
-            {{-- <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $story->story_id }}" class="btn mx-2 btn-danger">Delete</button> --}}
+            <!-- Modal -->
+            @include('admin.components.deleteModal', [
+                'id' => $story->story_id,
+                'form_action' => 'admin-story.destroy',
+            ])
         </div>
     </div>
-    <script>
-        $(document).ready( function(event){
-            event.preventDefault();
-            $('#publish').on('click', function(){
-                $(this).prop('disabled', true);
-                $('#decline').prop('disabled', false);
-                $('#decline').text('Decline');
-                $('#publish').text('published');
-                // $.ajax({
-                //     url: "{{url('admin-story-published/"+$(this).data("story_id")+"')}}",
-                //     type: 'get',
-                //     success: function(result){
-                //         alert(result);
-                //     }
-                // })
-            })
-            $('#decline').on('click', function(event){
-                event.preventDefault();
-                $(this).prop('disabled', true);
-                $('#publish').prop('disabled', false);
-                $('#publish').text('Publish');
-                $('#decline').text('declined');
-                // $.ajax({
-                //     url: "{{url('admin-story-declined/"+$(this).data("story_id")+"')}}",
-                //     type: 'get',
-                //     success: function(result){
-                //         alert(result);
-                //     }
-                // })
-            })
-        })
-    </script>
 @endsection

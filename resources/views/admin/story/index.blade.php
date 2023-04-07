@@ -40,7 +40,6 @@
             @foreach ($data as $mt)
                 <tr>
                     <td>
-
                         {{$mt->title}}
                     </td>
                     <td>

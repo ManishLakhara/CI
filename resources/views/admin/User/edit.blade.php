@@ -153,12 +153,12 @@
                             <div class="col-md-6">
                                 <label for="department">Department</label>
                                 <select id="inputState" name="department" class="form-control">
-                                    <option value="{{NULL}}" selected>Choose...</option>
-                                    <option value="HR" {{ $user->department =="HR"? 'selected' : '' }}>HR</option>
-                                    <option value="Development" {{ $user->department =="DEVELOPER"? 'selected' : '' }}>Development</option>
-                                    <option value="Sales" {{ $user->department =="SALES"? 'selected' : '' }}>Sales</option>
-                                    <option value="Deployment" {{ $user->department =="DEPLOYER"? 'selected' : '' }}>Deployment</option>
-                                    <option value="Manager" {{ $user->department =="MANAGER"? 'selected' : '' }}>Manager</option>
+                                    <option value="{{NULL}}">Choose...</option>
+                                    <option value="HR" @if($user->department=="HR") selected @endif>HR</option>
+                                    <option value="Development"  @if($user->department=="Development") selected @endif>Development</option>
+                                    <option value="Sales"  @if($user->department=="Sales") selected @endif>Sales</option>
+                                    <option value="Deployment"  @if($user->department=="Deployment") selected @endif>Deployment</option>
+                                    <option value="Manager"  @if($user->department=="Manager") selected @endif>Manager</option>
                                 </select>
                                 @error('department')
                                     <div class="text-danger">

@@ -17,13 +17,14 @@
         <table class="table table-responsive border-start border-end">
             <thead style="background-color: #F8F9FC">
                 <tr>
-                    <th width="25%">S.No</th>
-                    <th width="25%">Title</th>
-                    <th width="25%">Status</th>
-                    <th width="25%">Action</th>
+                    <th width="500px">S.No</th>
+                    <th width="500px">Title</th>
+                    <th width="500px">Status</th>
+                    <th width="500px">Action</th>
                 </tr>
             </thead>
             <tbody>
+                {{-- $--}}
                 @foreach ($data as $d)
                     <tr>
                         <td>{{ $d->mission_theme_id}}</td>

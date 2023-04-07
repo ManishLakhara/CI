@@ -4,9 +4,12 @@
         <div class="row  py-3">
             <div class="col-lg-12 col-xl-4 py-2">
                 <div class="position-relative">
-                    <img class="img-fluid w-100" src="{{asset('storage/'.$item->missionMedia->where('default','1')[0]->media_path)}}" alt="">
+                    <img class="img-fluid w-100"
+                    @if($item->missionMedia->where('default','1')->first()!= Null)
+                        src="{{asset('storage/'.$item->missionMedia->where('default','1')[0]->media_path)}}"
+                    @endif alt="">
+                    <div class="position-absolute current-status">
                     @if(count($item->missionApplication->where('user_id',$user_id))!==0)
-                        <div class="position-absolute current-status">
                             @if($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='PENDING'
                             || $item->missionApplication->where('user_id',$user_id)->first()->approval_status=='APPROVE'
                             )
@@ -14,9 +17,9 @@
                             @elseif ($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='DECLINE')
                             <span class="badge bg-danger fs-6">Decline</span>
                             @endif
-                        </div>
+                            <span id="applied_badge_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
                     @endif
-
+                </div>
                     <span class="position-absolute parent_mission_location">
                         <span class="mission_location px-2 py-1">
                             <img src={{ asset('Images/pin.png') }} alt=""><span
@@ -157,8 +160,7 @@
                                             <img src={{ asset('Images/calender.png') }} alt="">
                                         </div>
                                         <div class=" px-2 d-flex flex-column align-items-start">
-                                            <small class="p-2 fs-8">From
-                                                {{ date('d-m-Y', strtotime($item->start_date)) }} <br> untill
+                                            <small class="p-2 fs-8">
                                                 {{ date('d-m-Y', strtotime($item->end_date)) }}
                                             </small>
                                         </div>
@@ -181,13 +183,17 @@
                         </div>
                     </div>
                     <div class="col-xxl-3">
-                        @if(count($item->missionApplication->where('user_id',$user_id))===0)
-                            <button type="button" id="mission_application_btn" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"> Apply <i
+
+                        <button type="button" id="mission_application_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"
+                            @if(count($item->missionApplication->where('user_id',$user_id))!==0) style="display: none;" @endif
+                            > Apply <i
                                 class="fa-sharp fa-solid fa-arrow-right"></i> </button>
-                        @else
-                        <a href="{{route('mission-page',$item->mission_id)}}"><button id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 btn btn-outline apply-btn fs-6 px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
+
+                        <a href="{{route('mission-page',$item->mission_id)}}" id="mission_detail_btn_{{$item->mission_id}}"><button class="mx-2 btn btn-outline apply-btn fs-6 px-2"
+                            @if(count($item->missionApplication->where('user_id',$user_id))===0) style="display: none;" @endif
+                            > View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                         </button></a>
-                        @endif
+
                     </div>
                 </div>
             </div>

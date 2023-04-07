@@ -18,6 +18,7 @@ use App\Http\Controllers\admin\MissionController;
 use App\Http\Controllers\admin\CmsPageController;
 use App\Http\Controllers\admin\StoryController;
 use App\Http\Controllers\CmsPagesController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\ShareYourStoryController;
 use App\Http\Controllers\MissionApplicationController;
 use App\Http\Controllers\UserEditProfileController;
@@ -133,3 +134,4 @@ Route::get('share-your-story',[ShareYourStoryController::class,'index']);
 
 
 Route::resource('stories', ShareYourStoryController::class);
+Route::get('download/{filename}',[DownloadController::class,'download']);
