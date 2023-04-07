@@ -7,7 +7,7 @@
     <?php
     $user_id = Auth::user()->user_id;
     ?>
-   
+
     <div class="row">
         <div class="container-fluid">
 
@@ -86,21 +86,23 @@
                 <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center mb-5"
                     style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
                     {{-- <div class="py-1"> --}}
+                    <div class="image">
+                        <img class="img-fluid w-100 h-100 card-img-top"
+                            src="{{ asset('storage/' . $story->storyMedia->whereIn('type', ['jpeg', 'jpg', 'png'])->first()->path) }}"
+                            alt="">
 
-                    <img class="img-fluid w-100 h-100 card-img-top"
-                    src="{{ asset("storage/".$story->storyMedia->whereIn('type',['jpeg','jpg','png'])->first()->path) }}" alt="">
-
-                    {{-- <img class="d-block w-100 h-100"
+                        {{-- <img class="d-block w-100 h-100"
                             src="images/Grow-Trees-On-the-path-to-environment-sustainability-3.png" class="img-fluid"
                             alt="First slide"> --}}
-                    <div class="image__overlay">
-                        <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary" href="{{ url('sharestory') }}">View
-                            Details&nbsp;<i class="fa fa-arrow-right"></i></a>
+                        <div class="image__overlay">
+                            <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary"
+                                href="{{ route('story-details-page', $story->story_id) }}">View
+                                Details&nbsp;<i class="fa fa-arrow-right"></i></a>
+                        </div>
                     </div>
-                    {{-- </div> --}}
 
-                    <div class="text-center" style="margin-top:-25px;">
-                        <span class="fs-15 px-2 from_untill">
+                    <div class="text-center" style="margin-top:-15px;">
+                        <span class="fs-15 px-2 fromuntill">
                             {{ $story->mission->missiontheme->title }}</span>
                     </div>
                     <div class="card-body">
@@ -118,7 +120,7 @@
 
                 </div>
             @endforeach
-
+            <hr>
         </div>
         <div class="d-flex p-3 justify-content-end">
             {!! $published_stories->links('pagination::bootstrap-4') !!}
@@ -131,30 +133,31 @@
         {!! $published_stories->links('pagination::bootstrap-4') !!}
     </div> --}}
 
-<script>
-    function getAjax(page){
+    <script>
+        function getAjax(page) {
             $.ajax({
-                url: "{{ url('story-listing') }}"+'?page='+page,
+                url: "{{ url('story-listing') }}" + '?page=' + page,
                 type: "get",
-                success: function(result){
+                success: function(result) {
                     $('#my-story').html(result);
                     runQuery();
                 }
             })
         }
-    function runQuery(){
-        $(".pagination a").on('click',function(event){
-            event.preventDefault();
-            var page = $(this).attr('href').split('page=')[1];
-            console.log(page);
-            getAjax(page);
-        })
-    }
-    $(document).ready(function(){
-        runQuery();
 
-    })
-</script>
+        function runQuery() {
+            $(".pagination a").on('click', function(event) {
+                event.preventDefault();
+                var page = $(this).attr('href').split('page=')[1];
+                console.log(page);
+                getAjax(page);
+            })
+        }
+        $(document).ready(function() {
+            runQuery();
+
+        })
+    </script>
     <style>
         .image {
             position: relative;
@@ -185,66 +188,22 @@
         }
 
         .image__overlay>* {
-            transform: translateY(50px);
-            / transform: translateX(200px);/ / transform: matrix(100%);/
+            transform: translateY(50%);
         }
 
         .image__overlay:hover {
-            opacity: 1;
+            opacity: 0.5;
 
 
         }
 
-        .cardimage {
+        .px-2 {
             position: relative;
-            width: 100%;
-
-        }
-
-        .cardimg-fluid {
-            display: block;
-            width: 100%;
-
-        }
-
-        .cardtheme {
-
-            margin-top: -25px;
-
-        }
-
-        .cardform_untill {
             border-radius: 23px;
             max-width: fit-content;
             padding-bottom: 0.5rem;
             background-color: white;
-        }
-
-        .cardimage__overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.25s;
-        }
-
-        .cardimage__overlay>* {
-            transform: translateY(20px);
-            / transform: translateX(200px);/ / transform: matrix(100%);/
-        }
-
-        .cardimage__overlay:hover {
-            opacity: 1;
-
-
+            z-index: 10;
         }
     </style>
 @endsection

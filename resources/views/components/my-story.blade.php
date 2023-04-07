@@ -11,7 +11,7 @@
                     src="images/Grow-Trees-On-the-path-to-environment-sustainability-3.png" class="img-fluid"
                     alt="First slide"> --}}
             <div class="image__overlay">
-                <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary" href="{{ url('sharestory') }}">View
+                <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary" href="{{route('story-details-page',$story->story_id)}}">View
                     Details&nbsp;<i class="fa fa-arrow-right"></i></a>
             </div>
             {{-- </div> --}}

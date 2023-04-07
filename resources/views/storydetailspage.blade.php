@@ -7,46 +7,115 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-6 mt-5">
-                {{-- <img src="{{ asset('images/growsharestory.png') }}" alt=""> --}}
-                <img class="d-block w-100 h-100" src="{{ asset('images/growsharestory.png') }}" class="img-fluid" alt="First slide">
+
+                {{-- <img class="d-block w-100 h-100" src="{{ asset('images/growsharestory.png') }}" class="img-fluid"
+                    alt="First slide"> --}}
+                <div class="col-lg-6 w-100 h-100">{{-- This is carousel Code --}}
+                    <div class="carousel-thumbnail">
+                        <div class="top-image">
+                            @foreach ($story->storyMedia as $media)
+                                <div class="image p-1">
+                                    <img class="img-fluid w-100 h-100" src={{ asset('storage/' . $media->path) }}
+                                        alt="">
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="slidebar-nav">
+                        <div class="multiple-items">
+                            @foreach ($story->storyMedia as $media)
+                                <div class="image p-1">
+                                    <img class="img-fluid w-100 h-100" src={{ asset('storage/' . $media->path) }}
+                                        alt="">
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <div class="col-xl-6 mt-5">
                 <div class="row">
                     <div class="d-flex justify-content-start">
-                        <img class="rounded-circle px-2 ms-3 mb-2 " id="header-avatar" src="{{ asset($story->user->avatar) }}"
-                            alt="Profile" >
+                        <img class="rounded-circle px-2 ms-3 mb-2 " id="header-avatar"
+                            src="{{ asset($story->user->avatar) }}" alt="Profile">
 
                     </div>
                     <div class="col-xl-12">
-                        <span class="ms-4 px-2" id="userAvatar">{{ $story->user->first_name }} {{ $story->user->last_name }}</span>
+                        <span class="ms-4 px-2" id="userAvatar">{{ $story->user->first_name }}
+                            {{ $story->user->last_name }}</span>
 
                         <button type="button" class="btn px-2   btn-outline-secondary float-end rounded-pill "><i
                                 class="fa fa-eye"></i>&nbsp;12,000 Views</button>
                     </div>
 
-                    <div class="row ms-3 mt-3">
-                        {{-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio natus quia quos laudantium nemo quod
-                        fugit illo pariatur voluptatum deleniti corrupti, ex facilis dolorem sint qui labore nulla autem
-                        eveniet.<br><br>
-                        Itaque id culpa doloremque. Veritatis aliquid nihil enim error sit ad, minima, ab distinctio neque
-                        impedit eaque inventore nesciunt qui dolorem nam, laborum eum veniam quos eligendi sunt soluta
-                        sapiente!<br><br>
-                        Amet nesciunt quasi ut debitis sit soluta qui quia ipsum quidem laboriosam sequi obcaecati dolores
-                        animi, sapiente tempore nulla eligendi temporibus fugit possimus aliquam repudiandae cum iure at!
-                        Ipsam, vero.
-                        <br><br>
-                        Fuga optio omnis dolorum laboriosam ullam, cupiditate autem explicabo dolorem. Repudiandae a enim,
-                        doloribus ad est voluptatem eos ipsum inventore nihil veritatis eum excepturi quae mollitia
-                        reprehenderit eius magnam doloremque.
-                        Excepturi similique at asperiores facere porro. --}}
-                        {!!  $story->user->why_i_volunteer  !!}
-                    </div>
+                    <div class="row ms-3 mt-3">{!! $story->user->why_i_volunteer !!}</div>
                     <div class="row">
                         <div class=" mt-4">
-                            <button type="button" class="btn px-4  ms-5 btn-outline-secondary  rounded-pill "><i
+                            <button type="button" class="btn px-4  ms-5 btn-outline-secondary  rounded-pill"
+                                id="story_invite_btn_{{ $story->story_id }}_{{ $user->user_id }}" data-toggle="modal"
+                                data-target="#invite_user_modal_{{ $story->story_id }}_{{ $user->user_id }}"><i
                                     class="fa fa-square"></i>&nbsp;Recommend to a Co-Worker</button>
-                            <a href="{{route('mission-page',$story->mission_id)}}"
+
+
+
+                            <div class="position-absolute parent_add_btn">
+
+                                <div class="modal fade w-100"
+                                    id="invite_user_modal_{{ $story->story_id }}_{{ $user->user_id }}" tabindex="-1"
+                                    role="dialog"
+                                    aria-labelledby="invite_user_modal_{{ $story->story_id }}_{{ $user->user_id }}Label"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"
+                                                    id="invite_user_modal_{{ $story->story_id }}_{{ $user->user_id }}Label">
+                                                    Invite Your Friends</h5>
+                                                <button type="button" class="close btn" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">First</th>
+                                                            <th scope="col">last</th>
+                                                            <th scope="col">email</th>
+                                                            <th scope="col">Invite</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($userdetails as $userdetail)
+                                                            <tr>
+                                                                <th>{{ $userdetail->first_name }}</th>
+                                                                <td>{{ $userdetail->last_name }}</td>
+                                                                <td>{{ $userdetail->email }}</td>
+                                                                <td>
+                                                                    <input type="checkbox"
+                                                                        id="invite_{{ $story->story_id }}_{{ $userdetail->user_id }}_{{ $user->user_id }}"
+                                                                        value="{{ $userdetail->user_id }}">
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <a href="{{ route('mission-page', $story->mission_id) }}"
                                 class="btn px-4 btn-outline-warning rounded-pill ms-3">Open Mission&nbsp;<i
                                     class="fa fa-arrow-right"></i></a>
                         </div>
@@ -61,40 +130,88 @@
                     aria-controls="home" aria-selected="flase"
                     style="border:none; border-bottom: 2px solid #5c5c5c;
                     color: #474747;
-                    font-weight: 500; font-family: Roboto; font-size:large" >{{ $story->title }}</a>
+                    font-weight: 500; font-family: Roboto; font-size:large">{{ $story->title }}</a>
             </ul>
             <div class="row mt-3 justify-content-center">
-                {{-- <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas enim, quo voluptatibus commodi obcaecati
-                    perspiciatis dolor mollitia necessitatibus eligendi odio vero quia cumque labore nemo tenetur laborum
-                    blanditiis? Cum, at?
-                    Fugit nam eligendi voluptates iusto, facilis quos est quibusdam cupiditate natus ut voluptatibus!
-                    Aliquam quidem qui illum ducimus officia, molestias dicta maxime nesciunt! Corrupti soluta consequuntur
-                    dolore porro, error officiis.<br><br>
-                    Pariatur, perferendis facilis! Quo illo alias doloribus, officiis maxime praesentium fugiat suscipit
-                    perspiciatis eaque commodi veritatis quia modi aperiam. In cumque porro voluptatibus ducimus nam ratione
-                    itaque quia quos unde!
-                    Itaque magnam aliquid aliquam. Velit, mollitia! Vel adipisci corrupti quod beatae amet iusto. Optio
-                    iure, consectetur, a laudantium reprehenderit culpa repellat numquam delectus doloribus, iusto modi qui
-                    eaque atque corporis?<br><br>
-                    Error quo accusantium ducimus, neque quaerat sequi rerum temporibus vitae excepturi eligendi vero animi
-                    praesentium ratione unde sint cum reprehenderit aut, eius asperiores perspiciatis voluptas dolore earum.
-                    Odio, illum beatae.<br><br>
-                    Nulla debitis fugit numquam cupiditate. Incidunt culpa, amet nemo accusamus pariatur harum cumque eum ut
-                    natus perferendis maxime, facere reiciendis maiores, laboriosam eligendi sunt exercitationem commodi
-                    quos officia ipsa inventore?<br><br>
-                    Quibusdam cum voluptatem accusamus illum, quam repellendus deleniti qui, illo distinctio, aperiam
-                    quisquam possimus? Totam, eum reiciendis? Veniam aliquam minima repellat expedita eaque vitae,
-                    recusandae possimus deserunt odit, culpa sapiente?<br><br>
-                    Mollitia optio nesciunt pariatur numquam, error ea ipsum ratione. Nemo reprehenderit inventore maiores
-                    placeat corrupti eligendi totam, aspernatur sequi voluptate, quos eius, officia obcaecati. Sequi odit
-                    voluptas reiciendis maiores dolorem!<br><br>
-                    Voluptatem error adipisci reiciendis harum? Qui corporis totam optio ex praesentium libero veritatis
-                    doloremque minus officiis omnis. Nulla eum nihil aliquam illum. Ad ipsa autem cupiditate blanditiis
-                    aspernatur expedita veritatis?
-                    Ex sapiente aliquid alias voluptatibus quis, odio voluptatem minus? Quasi fuga architecto blanditiis
-                    natus ut consectetur hic provident. Nam iure nostrum hic eligendi delectus voluptate magnam omnis quas
-                    vitae exercitationem?</p> --}} {!!  $story->description !!}
+                {!! $story->description !!}
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('.top-image').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                asNavFor: '.multiple-items'
+            });
+            $('.multiple-items').slick({
+                infinite: true,
+                arrows: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                asNavFor: '.top-image',
+                centerMode: false,
+                focusOnSelect: true,
+                responsive: [{
+                        breakpoint: 1399,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 1199,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 991,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 433,
+                        settings: {
+                            slidesToScroll: 1,
+                            slidesToShow: 1
+                        }
+                    },
+                ]
+            })
+        });
+        $('input[id^="invite_"]').on('click', function() {
+            if (this.checked) {
+                var story_id = this.id.split("_")[1];
+                var to_user_id = this.id.split('_')[2];
+                var from_user_id = this.id.split("_")[3];
+                console.log(story_id);
+                $.ajax({
+                    url: "{{ url('api/invite-users') }}",
+                    type: "POST",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        from_user_id: from_user_id,
+                        to_user_id: to_user_id,
+                        story_id: story_id,
+                    },
+                    success: function(data) {
+                        alert("Invite Send", 1000);
+                    },
+                })
+            }
+        });
+    </script>
 @endsection

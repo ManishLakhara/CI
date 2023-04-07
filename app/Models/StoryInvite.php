@@ -9,4 +9,10 @@ class StoryInvite extends Model
 {
     use HasFactory;
     protected $primaryKey = 'story_invite_id';
+
+    protected $fillable = [
+        'story_id',
+        'from_user_id',
+        'to_user_id',
+    ];
 }
