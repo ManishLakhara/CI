@@ -7,6 +7,7 @@
     #userAvatar {
         display: none;
     }
+    
 }
 @media screen and (max-width: 991px){
     #filler-gap { display: none;}
@@ -70,8 +71,21 @@
 
 }
 @media screen and (max-width: 767px) {
+    .my-filters{
+        display: none;
+    }
+    .my-filter-btn{
+        display: block;
+    }
 }
-
+@media screen and (min-width: 768px) {
+    .my-filter-btn{
+        display: none;
+    }
+    #filterToggler{
+        display: none;  
+    }
+}
 @media screen and (max-width: 467px) {
 
 }

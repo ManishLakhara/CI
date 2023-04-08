@@ -199,8 +199,8 @@ return [
         /*
         * Third Party Service Providers...
         */
-        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
-        Spatie\QueryBuilder\QueryBuilderServiceProvider::class,
+        //Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        //Spatie\QueryBuilder\QueryBuilderServiceProvider::class,
 
     ],
 
