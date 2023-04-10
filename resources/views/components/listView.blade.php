@@ -6,7 +6,7 @@
                 <div class="position-relative">
                     <img class="img-fluid w-100"
                     @if($item->missionMedia->where('default','1')->first()!= Null)
-                        src="{{asset('storage/'.$item->missionMedia->where('default','1')[0]->media_path)}}"
+                        src="{{asset('storage/'.$item->missionMedia->where('default','1')->first()->media_path)}}"
                     @endif alt="">
                     <div class="position-absolute current-status">
                     @if(count($item->missionApplication->where('user_id',$user_id))!==0)
@@ -67,8 +67,9 @@
                 </div>
             </div>
             <div class="col-md-12 col-lg-8 p-2">
-                <div class="row align-items-start">
-                    <div class="col">
+                <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
                         <div class="d-flex">
                             <div>
                                 <img src="{{asset('Images/pin1.png')}}" alt=""> {{$item->city->name}}
@@ -81,31 +82,35 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <?php
-                            $user_rating = $item->missionRating;
-                            $rating = $user_rating->pluck('rating')->toArray();
-                            $count = count($rating);
-                            if($count=='0'){
-                                $avg_rating = 0;
-                            }
-                            else{
-                                $avg_rating = ceil(array_sum($rating)/$count);
-                            }
-                        ?>
-                        <div class="small-ratings">
-                            @for ($i=0;$i<5;$i++,$avg_rating--)
-                                @if($avg_rating>0)
-                                    <i class="fa fa-star rating-color"></i>
-                                @else
-                                    <i class="fa fa-star"></i>
-                                @endif
-                            @endfor
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end">
+                            <div>
+                                <?php
+                                    $user_rating = $item->missionRating;
+                                    $rating = $user_rating->pluck('rating')->toArray();
+                                    $count = count($rating);
+                                    if($count=='0'){
+                                        $avg_rating = 0;
+                                    }
+                                    else{
+                                        $avg_rating = ceil(array_sum($rating)/$count);
+                                    }
+                                ?>
+                                <div class="small-ratings">
+                                    @for ($i=0;$i<5;$i++,$avg_rating--)
+                                        @if($avg_rating>0)
+                                            <i class="fa fa-star rating-color"></i>
+                                        @else
+                                            <i class="fa fa-star"></i>
+                                        @endif
+                                    @endfor
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div id="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
-                    <div class="h4 theme-color pt-4" id="mission-title">
+                    <div class="h4 theme-color pt-4 mission-title">
                         {{ $item->title }}
                     </div>
                     <p class='mission-short-description'>
@@ -184,19 +189,19 @@
                     </div>
                     <div class="col-xxl-3">
 
-                        <button type="button" id="mission_application_l_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"
+                        <button type="button" id="mission_application_l_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn w-100"
                             @if(count($item->missionApplication->where('user_id',$user_id))!==0) style="display: none;" @endif
                             > Apply <i
                                 class="fa-sharp fa-solid fa-arrow-right"></i> </button>
 
-                        <a href="{{route('mission-page',$item->mission_id)}}"><button id="mission_detail_l_btn_{{$item->mission_id}}" class="mx-2 btn btn-outline apply-btn fs-6 px-2"
+                        <a href="{{route('mission-page',$item->mission_id)}}"><button id="mission_detail_l_btn_{{$item->mission_id}}" class="w-100 mx-2 btn btn-outline apply-btn fs-6 px-2"
                             @if(count($item->missionApplication->where('user_id',$user_id))===0) style="display: none;" @endif
                             > View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                         </button></a>
 
                     </div>
                 </div>
-            </div>
+            </div></div>
         </div>
         {{-- Modal --}}
         <div class="modal fade w-100" id="invite_user_modal_{{$item->mission_id}}_{{$user_id}}" tabindex="-1" role="dialog" aria-labelledby="invite_user_modal_{{$item->mission_id}}_{{$user_id}}Label" aria-hidden="true">

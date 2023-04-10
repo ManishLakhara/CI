@@ -15,8 +15,8 @@
                 </div>
                </form>
                <div>
-                <button class="my-filter-btn navbar-toggler btn btn-white" 
-                type="button" data-bs-toggle="collapse" 
+                <button class="my-filter-btn navbar-toggler btn btn-white"
+                type="button" data-bs-toggle="collapse"
                 data-bs-target="#filterToggler"><i class="fa-solid fa-bars"></i></button>
               </div>
             </div>

@@ -111,7 +111,7 @@
         </div>
         <div class="card-body">
             <div id="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
-            <h4 class='mission-title theme-color'>{{ $item->title }}
+            <h4 class='theme-color mission-title'>{{ $item->title }}
             </h4>
             <p class='card-text mission-short-description'>
                 {{ $item->short_description }}

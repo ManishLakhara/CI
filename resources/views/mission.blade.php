@@ -49,13 +49,13 @@
 
                 <div class="row py-2">
                     <div class="col-lg-6 col-12 py-2 py-sm-4 ">
-                        @if (true)
+                        @if ($mission->timeMission!=null)
                             <div class="d-flex justify-content-start ">
                                 <div class="px-1">
                                     <img src={{ asset('Images/seats-left.png') }} alt="">
                                 </div>
                                 <div class="px-2 d-flex flex-column align-items-start">
-                                    <span class="theme-color fs-5 font-weight-bolder"> 10 <br></span>
+                                    <span class="theme-color fs-5 font-weight-bolder">{{$mission->timeMission->total_seats}}<br></span>
                                     <span class="text-muted">Seats left</span>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                                     <img src={{ asset('Images/Already-volunteered.png') }} alt="">
                                 </div>
                                 <div class="px-2 d-flex flex-column align-items-start">
-                                    <span class="theme-color fs-5 font-weight-bolder">{{$item->timeMission->total_seats}}<br></span>
+                                    <span class="theme-color fs-5 font-weight-bolder">40<br></span>
                                     <span class="text-muted"><small>Already volunteered</small></span>
                                 </div>
                             </div>
@@ -317,16 +317,6 @@
                                         </button>
                                     </div>
                                 @endforeach
-                                {{-- <div class="p-1 col-lg-4 col-md-6 col-12">
-                                    <button class="btn py-2 btn-outline border text-center" style="border-radius: 23px">
-                                        <img src={{asset('Images/doc.png')}} alt=""> random-doc-type-doc
-                                    </button>
-                                </div>
-                                <div class="p-1 col-lg-4 col-md-6 col-12">
-                                    <button class="btn py-2 btn-outline border text-center" style="border-radius: 23px">
-                                        <img src={{asset('Images/xlsx.png')}} alt=""> random-xlsx-type-doc
-                                    </button>
-                                </div> --}}
                             </div>
                         </div>
                         <div class="tab-pane fade" id="organization-detail" role="tabpanel" aria-labelledby="organization-detail-tab">

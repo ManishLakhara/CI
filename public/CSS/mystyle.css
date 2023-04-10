@@ -132,8 +132,12 @@
 }
 .mission-title {
     font-size: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
-#mission-title:hover {
+.mission-title:hover {
     color:#f88634;
 }
 

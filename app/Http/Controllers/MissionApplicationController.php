@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mission;
 use App\Models\MissionApplication;
+use App\Models\TimeMission;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,10 +44,24 @@ class MissionApplicationController extends Controller
         $application = MissionApplication::find($request->mission_application_id);
         $application->approval_status = "APPROVE";
         $application->save();
+        $mission = Mission::find($application->mission_id);
+        if($mission->timeMission){
+            $timeMission = TimeMission::find($mission->timeMission->time_mission_id);
+            $timeMission->total_seats -= $timeMission->total_seats;
+            $timeMission->save();
+        }
         return("success");
     }
     public function rejectApplication(Request $request){
         $application = MissionApplication::find($request->mission_application_id);
+        if($application->approval_status == "APPROVE"){
+            $mission = Mission::find($application->mission_id);
+            if($mission->timeMission){
+                $timeMission = TimeMission::find($mission->timeMission->time_mission_id);
+                $timeMission->total_seats += $timeMission->total_seats;
+                $timeMission->save();
+            }
+        }
         $application->approval_status = "DECLINE";
         $application->save();
         return("rejected");
