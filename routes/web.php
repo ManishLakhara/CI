@@ -107,6 +107,8 @@ Route::resource('missionskill', MissionSkillController::class)->withTrashed();
 Route::resource('user', UserController::class)->withTrashed();
 Route::resource('mission', MissionController::class);
 Route::resource('cmspage', CmsPageController::class);
+//Route::resource('cmspage', CmsPageController::class, ['middleware' => ['auth', 'admin']]);
+
 Route::resource('banner',BannerController::class);
 //end backend route
 
@@ -138,3 +140,8 @@ Route::resource('stories', ShareYourStoryController::class);
 Route::get('download/{filename}',[DownloadController::class,'download']);
 Route::get('story-listing',[StoryListingController::class,'index']);
 Route::get('story-details-page/{story_id}',[StoryDetailController::class,'index'])->name('story-details-page');
+//Route::get('story-edit/{story_id}',[StoryListingController::class,'edit'])->name('story-edit-page');
+Route::resource('mystories', StoryListingController::class);
+Route::post('mystories/{story_id}', [StoryListingController::class,'updateDraft'])->name('mystories.updateDraft');
+
+//Route::put('mystories/{story_id}',[StoryListingController::class,'update'])->name('mystories-update');

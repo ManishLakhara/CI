@@ -16,7 +16,6 @@ class StoryMediaSeeder extends Seeder
     {
         $story_ids = Story::all()->pluck('story_id');
         $paths = [
-            'storage/story_media/Animal-welfare-&-save-birds-campaign.png',
             'storage/story_media/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png',
             'storage/story_media/Education-Supplies-for-Every--Pair-of-Shoes-Sold-1.png',
             'storage/story_media/Grow-Trees-On-the-path-to-environment-sustainability-4.png',

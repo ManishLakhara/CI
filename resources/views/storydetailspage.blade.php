@@ -46,7 +46,7 @@
                             {{ $story->user->last_name }}</span>
 
                         <button type="button" class="btn px-2   btn-outline-secondary float-end rounded-pill "><i
-                                class="fa fa-eye"></i>&nbsp;12,000 Views</button>
+                                class="fa fa-eye"></i>&nbsp;{{ count($story->storyView) }}</button>
                     </div>
 
                     <div class="row ms-3 mt-3">{!! $story->user->why_i_volunteer !!}</div>

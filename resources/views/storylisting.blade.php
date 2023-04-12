@@ -8,6 +8,8 @@
     $user_id = Auth::user()->user_id;
     ?>
 
+@include('admin.components.successAlert')
+
     <div class="row">
         <div class="container-fluid">
 
@@ -22,59 +24,10 @@
                     <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary" href="{{ url('share-your-story') }}">Share
                         Your
                         Story <i class="fa fa-arrow-right"></i></a>
-                    {{-- <p class="image_description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi officiis similique animi quibusdam, ratione quia aliquam quae provident vero ullam incidunt exercitationem nulla labore tempora sapiente dolorum asperiores amet vel.</p> --}}
+
                 </div>
             </div>
-            {{-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100 h-100" src="images/growsharestory.png" class="img-fluid"
-                            alt="First slide">
 
-                        <div class="carousel-caption d-none d-md-block">
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip.</p>
-                            <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary"
-                                href="{{ url('sharestory') }}">Share Your Story <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100 h-100" src="images/growsharestory.png" class="img-fluid"
-                            alt="Second slide">
-                        <div class="carousel-caption d-none d-md-block">
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip.</p>
-                            <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary"
-                                href="{{ url('sharestory') }}">Share Your Story <i class="fa fa-arrow-right"></i></a>
-                        </div>
-
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100 h-100" src="images/growsharestory.png" class="img-fluid"
-                            alt="Third slide">
-                        <div class="carousel-caption d-none d-md-block">
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip.</p>
-                            <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary"
-                                href="{{ url('sharestory') }}">Share Your Story <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div> --}}
         </div>
     </div>
     <div>
@@ -82,6 +35,53 @@
 
     <div class="container mt-5" id="my-story">
         <div class="row">
+
+            @foreach ($draft_stories as $mystory)
+            <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center mb-5"
+                style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+
+                <div class="image">
+                    <img class="img-fluid w-100 h-100 card-img-top"
+                        src="{{ asset('storage/' . $mystory->storyMedia->whereIn('type', ['jpeg', 'jpg', 'png'])->first()->path) }}"
+                        alt="">
+
+
+                        @if($mystory->status == 'PUBLISHED')
+                    <div class="image__overlay">
+                        <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary"
+                            href="{{ route('story-details-page', $mystory->story_id) }}">View
+                            Details&nbsp;<i class="fa fa-arrow-right"></i></a>
+                    </div>
+                    @endif
+
+                    @if($mystory->status == 'DRAFT')
+                    <div class="image__overlay">
+                        <a class="btn px-3 mr-2 rounded-pill btn-outline-secondary"
+                        href="{{route('mystories.edit',$mystory->story_id)}}">Edit Story
+                            Details&nbsp;<i class="fa fa-arrow-right"></i></a>
+                    </div>
+                    @endif
+                </div>
+
+                <div class="text-center" style="margin-top:-15px;">
+                    <span class="fs-15 px-2 fromuntill">
+                        {{ $mystory->mission->missiontheme->title }}</span>
+                </div>
+                <div class="card-body">
+                    <h4 class='mission-title theme-color'>{{ $mystory->title }}</h4>
+                    <p class='card-text mission-short-description'>
+                        {{ strip_tags($mystory->description) }}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-start">
+                    <img class="rounded-circle px-3 " id="header-avatar" src="{{ asset($mystory->user->avatar) }}"
+                        alt="Profile" style="height:54px">
+                    <span class="mt-3" id="userAvatar">{{ $mystory->user->first_name }}
+                        {{ $mystory->user->last_name }}</span>
+                </div>
+
+            </div>
+        @endforeach
             @foreach ($published_stories as $story)
                 <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center mb-5"
                     style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">

@@ -29,6 +29,7 @@ class AdminAuthController extends Controller
         $credentionals = $request->only('email','password');
         if(Auth::guard('admin')->attempt($credentionals)){
             return view('admin.index');
+            // return redirect()->route('user.index')->with('success',' You have login');
         } else {
             return redirect()->intended('adminlogin')->with('status','Oppes! You have entered wrong password');
         }

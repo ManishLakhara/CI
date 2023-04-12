@@ -12,6 +12,7 @@ use App\Http\Controllers\MissionInviteController;
 use App\Http\Controllers\MissionRatingController;
 use App\Http\Controllers\UserEditProfileController;
 use App\Http\Controllers\StoryInviteController;
+use App\Http\Controllers\StoryListingController;
 use App\Models\MissionApplication;
 
 /*
@@ -44,3 +45,4 @@ Route::post('new-mission-application',[MissionApplicationController::class,'newM
 Route::get('approve-application',[MissionApplicationController::class,'approveApplication']);
 Route::get('reject-application',[MissionApplicationController::class,'rejectApplication']);
 Route::post('invite-users', [StoryInviteController::class, 'inviteUser']);
+

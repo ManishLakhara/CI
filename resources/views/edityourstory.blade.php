@@ -5,9 +5,10 @@
 
 
 @section('content')
-    <form id="story-form" action="{{ route('stories.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="story-form" action="{{ route('mystories.update', $story->story_id) }}" method="POST"
+        enctype="multipart/form-data">
         @csrf
-
+        @method('PUT')
         <div class="container mt-5">
             <h2>Share Your Story</h2>
             <div id="story-error" class="alert alert-danger" role="alert" style="display: none;"></div>
@@ -18,7 +19,8 @@
                     <select class="form-control" id="missionSelect" name="mission_id">
                         <option value="" disabled selected>Select Mission</option>
                         @foreach ($appliedMissions as $mission)
-                            <option value="{{ $mission->mission_id }}">{{ $mission->title }}</option>
+                            <option value="{{ $mission->mission_id }}" @if ($mission->mission_id == $story->mission_id) selected @endif>
+                                {{ $mission->title }}</option>
                         @endforeach
                     </select>
                     @error('mission_id')
@@ -31,7 +33,7 @@
                 <div class="col-lg-4">
                     <label for="title" class="form-label">My Story Title</label>
                     <input type="text" class="form-control" id="title" name='title' placeholder="Enter your title"
-                        value="{{ old('title') }}" placeholder="Enter story title">
+                        placeholder="Enter story title" value="{{ $story->title }}">
                     @error('title')
                         <div class="text-danger">
                             {{ $message }}
@@ -43,7 +45,7 @@
                     <label for="inputdate" class="form-label">Date</label>
                     <div class='input-group date' id='datetimepicker1'>
                         <input type='datetime-local' class="form-control" id='published_at' name='published_at'
-                            value="{{ old('published_at') }}" placeholder="Select date">
+                            placeholder="Select date" value="{{ date('Y-m-d\TH:i:s', strtotime($story->published_at)) }}">
                     </div>
                     @error('published_at')
                         <div class="text-danger">
@@ -56,7 +58,7 @@
             <div class="row">
                 <div class="col-lg-12 mt-5">
                     <label for="summary-ckeditor" class="form-label">My Story</label>
-                    <textarea name="description" class="story-textarea" id="summary-ckeditor">{{ old('description') }}</textarea>
+                    <textarea name="description" class="story-textarea" id="summary-ckeditor">{{ $story->description }}</textarea>
                 </div>
                 @error('description')
                     <div class="text-danger">
@@ -65,19 +67,26 @@
                 @enderror
             </div>
 
-            {{-- <div class="row">
-                <div class="col-lg-12 mt-5">
-                    <label for="missionVideo" class="form-label">Enter Video URL</label>
-                    <textarea class="form-control" id="orgVideo" name="path" placeholder="Enter your url"></textarea>
-                </div>
-            </div> --}}
             <div class="row">
                 <div class="col-lg-12 mt-5">
                     <label for="orgVideo" class="form-label">Enter Video URL</label>
-                    <textarea class="form-control" id="path" name="path[]" placeholder="Enter your url"></textarea>
+                    <textarea class="form-control" id="path" name="path[]" placeholder="Enter your url">
+@foreach ($storyvideoMedia as $videomedia)
+{{ $videomedia->path }}&#13;&#10;
+@endforeach
+</textarea>
+                    @error('path.*')
+                        <div class="text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
+                {{-- @foreach ($storyvideoMedia as $videomedia)
+                <div class="theme-color border p-2 m-2 from_untill">
+                    {{ $videomedia->path }} <button type="button" data-story_media_id="{{ $videomedia->story_media_id }}" class="story_media btn btn-white"><i class="fa fa-times"></i></button>
+                </div>
+                @endforeach --}}
             </div>
-
             <div class="row">
                 <div class="col-lg-12 mt-5">
                     <label for="UploadYourPhotos" class="form-label">Upload your Photos</label>
@@ -90,7 +99,25 @@
                     </div>
                     <input type="file" id="file-input" name="photos[]" onchange="handleFiles(this.files);" multiple
                         hidden />
-                    <div id="preview"></div>
+                    @error('photos.*')
+                        <div class="text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    <div id="preview">
+                        @foreach ($storyimageMedia as $imagemedia)
+                            <div style="position:relative; display:inline-block; margin-right:10px;margin-left:10px;">
+                                <img src="{{ asset('storage/' . $imagemedia->path) }}" alt="" width="118px"
+                                    height="118px">
+                                {{-- <i class="fa fa-times" style="position:absolute; top:0px; right:0px; background-color:black; color:white; border-radius:10%; padding:4px; cursor:pointer;"
+                                       onclick="removeImage('{{ $imagemedia->path }}')"></i> --}}
+                                <button type="button" class="close_preview_img"
+                                    data-story_media_id="{{ $imagemedia->story_media_id }}"
+                                    style="position:absolute; top:0px; right:0px; background-color:black; color:white; border-radius:10%; padding:4px; cursor:pointer;"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
 
@@ -98,38 +125,51 @@
             <div class="row">
 
                 <div class=" mt-4">
-                    <button type="button" class="btn px-4  btn-outline-secondary  rounded-pill float-start">Cancel</button>
+                    <a type="button" class="btn px-4  btn-outline-secondary  rounded-pill float-start"
+                        href="{{ route('mystories.index') }}">Cancel</a>
                     <button type="submit" class="btn px-3 btn-outline-warning ms-3 rounded-pill float-end"
-                        id="submit-button" disabled>
+                        id="submit-button">
                         Submit</button>
-                    <button type="button" id="story_save"
+
+                    <button type="button" id="edit_story_save" data-story_id={{ $story->story_id }}
                         class="btn px-4 btn-outline-warning rounded-pill float-end">Save</button>
+
                 </div>
             </div>
 
         </div>
     </form>
-
-
-
-
-
-
-
-
     <script>
-        //var uploadedFiles = [];
+        var uploadedFiles = [
+            @foreach ($storyimageMedia as $imagemedia)
+                '{{ $imagemedia->path }}',
+            @endforeach
+        ];
+        var deleteFiles = [];
         var recentuploadFiles = [];
+
+        // function removeImage(path) {
+        // var imageDiv = event.target.parentNode;
+        // imageDiv.parentNode.removeChild(imageDiv);
+        // // console.log(path);
+        // //Remove the image from the uploadedFiles array
+        // // var index = uploadedFiles.indexOf(path);
+        // // if (index !== -1) {
+        // //     uploadedFiles.splice(index, 1);
+        // // }
+        // uploadedFiles = uploadedFiles.filter(item => item != path);
+        // console.log(uploadedFiles);
+        // }
         function handleFiles(files) {
             console.log(files);
             var preview = document.getElementById("preview");
             for (let i = 0; i < files.length; i++) {
                 console.log(files[i]);
                 let file = files[i];
-                if (recentuploadFiles.includes(file.name)) {
+                if (uploadedFiles.includes('storage/story_media/' + file.name)) {
                     continue;
                 }
-                //uploadedFiles = [...uploadedFiles, file.name];
+                uploadedFiles = [...uploadedFiles, file.name];
                 recentuploadFiles = [...recentuploadFiles, file];
                 var reader = new FileReader();
                 reader.onload = function(event) {
@@ -151,7 +191,6 @@
                     closeIcon.onclick = function() {
                         div.parentNode.removeChild(div);
                         recentuploadFiles = recentuploadFiles.filter(item => item.name != file.name);
-
                     };
                     div.appendChild(closeIcon);
                     preview.appendChild(div);
@@ -164,29 +203,45 @@
             var files = event.dataTransfer.files;
             handleFiles(files);
         }
-
         document.getElementById("drop-zone").addEventListener("click", function(event) {
             event.preventDefault();
             document.getElementById("file-input").click();
         });
 
-        $(document).ready(function(event) {
-            $('#story_save').on('click', function(event) {
+        // function close_new_preview() {
+        //     $('button[class="close_new_preview"]').on('click', function() {
+        //         $(this).parent().remove();
+        //         recentuploadFiles = recentuploadFiles.filter(item => item.name != $(this).data('path'));
+        //     })
+        // }
+        $(document).ready(function() {
+            $('#submit-button').on('click', function() {
+                for (var i = 0; i < recentuploadFiles.length; i++) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'photos[]',
+                    }).prop('files', recentuploadFiles[i]).appendTo('form');
+                }
+                $('<input>').attr({
+                        type: 'hidden',
+                        name: 'removedPhotos',
+                        value: deleteFiles,
+                    }).appendTo('form');
+                });
 
+
+            $('#edit_story_save').on('click', function(event) {
                 event.preventDefault();
-
                 var value = CKEDITOR.instances['summary-ckeditor'].getData();
-
                 // Get the selected files
                 var files = document.getElementById("file-input").files;
-
                 // Create a new FormData object
                 var formData = new FormData();
-
                 // Append the uploaded files to the FormData object
                 for (var i = 0; i < recentuploadFiles.length; i++) {
                     formData.append('photos[]', recentuploadFiles[i], recentuploadFiles[i].name);
                 }
+                formData.append('removedPhotos', deleteFiles);
 
                 // Append other form data to the FormData object
                 formData.append('_token', "{{ csrf_token() }}");
@@ -194,27 +249,31 @@
                 formData.append('title', $('#title').val());
                 formData.append('published_at', $('#published_at').val());
                 formData.append('description', value);
-
                 // Split the path input by new lines
                 var path = $('#path').val().split('\n');
-
                 for (var i = 0; i < path.length; i++) {
                     if(path[i].length!=0){
                         formData.append('path[]', path[i]);
                     }
                 }
 
+
+                console.log(formData.getAll('path[]'));
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
                 $.ajax({
                     type: 'post',
-                    url: '{{ route('stories.store') }}',
+                    url: "{{ route('mystories.updateDraft', ':story_id') }}".replace(':story_id', $(
+                        this).data('story_id')),
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function(id) {
-                        alert("Saved to Draft");
-                        var link = document.createElement('a');
-                        link.href = "{{ route('mystories.edit',':id') }}".replace(':id',id);
-                        link.click();
+                    success: function(response) {
+                        alert(response);
+
                     },
                     error: function(response) {
                     var errors = response.responseJSON.errors;
@@ -226,6 +285,33 @@
                 },
                 })
             })
+            $('button[class="close_preview_img"]').on('click', function() {
+                deleteFiles = [...deleteFiles, $(this).data('story_media_id')];
+                $(this).parent().remove();
+            });
         })
+            // $('#submit-button').on('click', function() {
+            // var path = $('#path').val().split('\n');
+            // console.log(path);
+            // })
+        // $(document).ready(function(event) {
+
+        //     close_preview();
+        //     $('#submit-button').on('click', function() {
+
+        //     var files = $('#file-input')[0].files;
+        //     for (var i = 0; i < files.length; i++) {
+        //         $('<input>').attr({
+        //             type: 'hidden',
+        //             name: 'photos[]',
+        //         }).prop('files', files[i]).appendTo('form');
+        //     }
+        //     $('<input>').attr({
+        //             type: 'hidden',
+        //             name: 'photosPath[]',
+        //             value: uploadedFiles
+        //         }).appendTo('form');
+        //     });
+        // })
     </script>
 @endsection
