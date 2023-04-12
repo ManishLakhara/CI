@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Mission;
 use App\Models\MissionApplication;
 use App\Models\TimeMission;
@@ -14,15 +15,17 @@ class MissionApplicationController extends Controller
     public function index(Request $request){
         $data = MissionApplication::whereHas('mission', function ($query) use ($request) {
                                             if(($s = $request->s)) {
-                                                $query->where('title', 'LIKE', '%'.$s.'%');
+                                                $query->where('title', 'LIKE', '%'.$s.'%')
+                                                      ->orWhere('mission_id','LIKE', '%'.$s.'%');
                                             }
                                         })
                                            ->orWhereHas('user', function ($query) use ($request) {
                                             if(($s = $request->s)) {
                                                 $query->where('first_name','LIKE','%'.$s.'%')
-                                                      ->orWhere('last_name', 'LIKE','%'.$s.'%');
+                                                      ->orWhere('last_name', 'LIKE','%'.$s.'%')
+                                                      ->orWhere('user_id', 'LIKE','%'.$s.'%');
                                             }
-                                           })
+                                        })
                                            ->orderByRaw("CASE approval_status
                                                 WHEN 'PENDING' THEN 1
                                                 WHEN 'APPROVE' THEN 2
@@ -31,7 +34,6 @@ class MissionApplicationController extends Controller
                                             ->orderBy('created_at', 'desc')
                                             ->paginate(10)
                                             ->appends(['s' => $request->s]);
-
         return view('admin.missionapplication.index',compact('data'));
     }
     public function newMissionApplication(Request $request){
@@ -40,6 +42,7 @@ class MissionApplicationController extends Controller
         MissionApplication::create($request->post());
         return "Mission Application Request submitted";
     }
+    
     public function approveApplication(Request $request){
         $application = MissionApplication::find($request->mission_application_id);
         $application->approval_status = "APPROVE";

@@ -20,8 +20,8 @@
                 <button type="submit" class="btn">
                     <i class="fas fa-search"></i>
                   </button>
-                <div class="form-outline w-100">
-                  <input type="search" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0" />
+                <div class="form-outline py-2 w-100">
+                  <input type="search" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0 py-2" />
                 </div>
             </div>
         </form>

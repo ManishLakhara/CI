@@ -22,8 +22,8 @@ class StoreMissionThemeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:255',
-            'status' => 'required',
+            'title' => 'required|max:255|unique:mission_themes',
+            'status' => 'required|in:0,1',
         ];
     }
 }

@@ -121,7 +121,7 @@
         //var uploadedFiles = [];
         var recentuploadFiles = [];
         function handleFiles(files) {
-            console.log(files);
+            //console.log(files);
             var preview = document.getElementById("preview");
             for (let i = 0; i < files.length; i++) {
                 console.log(files[i]);

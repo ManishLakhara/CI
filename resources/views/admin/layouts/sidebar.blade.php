@@ -1,6 +1,6 @@
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav zindex-sticky bg-orange" id="sidenavAccordion">
-        <div class="sb-sidenav-menu align-content-center">
+        <div class="sb-sidenav-menu align-content-center" style="z-index: 10">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading text-white">NAVIGATION</div>
                 <a class="nav-link" href="{{route('user.index')}}">

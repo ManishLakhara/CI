@@ -24,7 +24,7 @@ class StoreBannerRequest extends FormRequest
         return [
             'text' => 'required',
             'photo' => 'required|max:512',
-            'sort_order' => 'required|unique:banners,sort_order',
+            'sort_order' => 'required|unique:banners,sort_order|gt:0',
         ];
     }
 }

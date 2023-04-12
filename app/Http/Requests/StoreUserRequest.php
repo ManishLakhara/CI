@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -21,20 +22,21 @@ class StoreUserRequest extends FormRequest
      */
     public function rules() : array
     {
+        $userId = $this->route('user') ? $this->route('user'): null;
         return [
-            'first_name' => 'required|max:16',
-            'last_name' => 'required|max:16',
-            'email' => 'bail|required|email|max:128',
-            'phone_number' => 'bail|required|numeric',
+            'first_name' => 'required|max:16|alpha',
+            'last_name' => 'required|max:16|alpha',
+            'email' => 'bail|required|email|max:128|unique:users',
+            'phone_number' => 'required|numeric|digits:10|unique:users',
             'password' => 'required|min:8',
             'confirm_password' => 'bail|required|same:password',
-            'employee_id' => 'numeric',
+            'employee_id' => 'bail|numeric|unique:users',
             'avatar' => 'required',
             'department' => 'required',
             'profile_text' => 'required',
             'country_id' => 'required',
             'city_id' => 'required',
-            'status'=>'required',
+            'status' => 'required|in:0,1',
         ];
     }
 }

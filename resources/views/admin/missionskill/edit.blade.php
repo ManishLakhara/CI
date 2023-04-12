@@ -12,7 +12,12 @@
             @csrf
             @method('PUT')
             <label for="skill_name">Skill Name</label>
-            <input type="text" class='form-control' name='skill_name' value='{{ $skill->skill_name }}'>
+            <input type="text" class='form-control' name='skill_name'
+            @if (old('skill_name')==null)
+                value='{{ $skill->skill_name }}'
+            @else
+                value="{{old('skill_name')}}"
+            @endif>
             @error('skill_name')
                 <div class="text-danger">
                     {{ $message }}
@@ -20,14 +25,30 @@
             @enderror
 
             <div class="py-4">
-                <label class="float-start px-2" for="options-outlined">Status</label>
-                <input type="radio" class="btn-check " name="status" value='1' id="success-outlined"
-                    @if ($skill->status == 1) checked @endif>
-                <label class="btn btn-outline-success px-3" for="success-outlined">Active</label>
-
-                <input type="radio" class="btn-check" value='0' name="status" id="danger-outlined"
-                    @if ($skill->status == 0) checked @endif>
-                <label class="btn btn-outline-danger px-3" for="danger-outlined">Inactive</label>
+                <label for="status">Status</label>
+                    <select name="status" id="status" class="form-control" required>
+                        <option value="0"
+                            @if (old('status') == null)
+                                @if ($skill->status == '0')
+                                    selected
+                                @endif
+                            @else
+                                @if (old('status') == '0') selected
+                                @endif
+                            @endif
+                            >Inactive</option>
+                        <option value="1"
+                            @if (old('status')==null)
+                                @if ($skill->status == '1')
+                                    selected
+                                @endif
+                            @else
+                                @if (old('status')=='1')
+                                    selected
+                                @endif
+                            @endif
+                        >Active</option>
+                    </select>
                 @error('status')
                     <div class="text-danger">
                         {{ $message }}

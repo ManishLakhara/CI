@@ -1,9 +1,10 @@
 @extends('layouts.loginapp')
 @section('content')
     <div class="container-fluid">
-        <div class="row justify-content-center" style="width: 100%; height: 100%;">
+        <div class="row justify-content-between" style="width: 100%; height: 100%;">
             <div class="col-md-8 align-self-center">
                 @include('components.carosel')
+            </div>
             <div class="col-md-4 align-self-center" style="padding: 4%;">
 
                 @if(session('success'))
@@ -39,7 +40,7 @@
                 <div class="alert alert-danger">
                     {{ session('status')}}
                 </div>
-               @endif   
+               @endif
 
 
                 @include('components.lostyourpassword')

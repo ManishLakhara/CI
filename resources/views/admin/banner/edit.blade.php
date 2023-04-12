@@ -42,10 +42,12 @@
         </div></div>
     </form>
 
+    <div id="Preview-photo">
     <h4> selected Photo</h4>
     <div class="row justify-content-center"><div class="col-md-6" style="width: '600px'; height: '900px';" id="show_photo">
         <img class="img-fluid w-100 h-100"src="{{asset('storage/'.$banner->image)}}" alt="{{$banner->image}}">
     </div></div>
+    </div>
 </div>
 
 

@@ -11,7 +11,7 @@
     <div class="carousel-inner">
         @foreach ($banners as $banner)
             <div class="carousel-item active">
-                <div class="overlay-image" style='background-image: url({{asset('storage/'.$banner->image)}});'></div>
+                <div class="overlay-image" style='background-image: url({{asset("Images/Grow-Trees-On-the-path-to-environment-sustainability-4.png")}});'></div>
                 <div class="container">
                     {!!$banner->text!!}
                 </div>

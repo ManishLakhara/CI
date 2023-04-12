@@ -23,7 +23,7 @@
                             <button type="submit" class="btn">
                                 <i class="fas fa-search"></i>
                               </button>
-                            <div class="form-outline w-100">
+                            <div class="form-outline py-2 w-100">
                               <input type="search" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0" />
                             </div>
                         </div>
@@ -50,8 +50,10 @@
                         {{$mt->mission->title}}
                         </td>
                         <td>{{$mt->mission->mission_id}}</td>
-                        <td>{{$mt->user->user_id}}</td>
-                        <td>{{$mt->user->first_name}} {{$mt->user->last_name}}</td>
+                        <td>@if(isset($mt->user->user_id))
+                                {{$mt->user->user_id}}
+                            @endif</td>
+                        <td>@if(isset($mt->user->first_name)){{$mt->user->first_name}}@endif @if(isset($mt->user->last_name)){{$mt->user->last_name}}@endif</td>
                         <td>{{$mt->applied_at}}</td>
                         <td>
                             <div class="pt-2">
@@ -85,8 +87,6 @@
                                         >
                                         <img src="{{asset('Images/cancle-icon.svg')}}" width="25px" height="25px" alt="">
                                     </a>
-
-
                             </div>
                         </td>
                     </tr>

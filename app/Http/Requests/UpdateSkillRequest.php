@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSkillRequest extends FormRequest
 {
@@ -21,9 +22,14 @@ class UpdateSkillRequest extends FormRequest
      */
     public function rules(): array
     {
+        $skillId = $this->route('missionskill');
         return [
-            'skill_name' => 'required|max:64',
-            'status' => 'required',
+            'skill_name' => ['required','max:64',
+                                Rule::unique('skills')->where(function($query){
+                                    $query->whereNull('deleted_at');
+                                })->ignore($skillId,'skill_id')
+        ],
+            'status' => 'required|in:0,1',
         ];
     }
 }

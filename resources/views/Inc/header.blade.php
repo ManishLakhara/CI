@@ -1,6 +1,6 @@
 <header>
   <div class="container-fluid border-bottom">
-    <div class="container">
+    <div class="container-fluid w-100 ">
       <div class="d-flex justify-content-between border-bottom py-1 align-items-center">
         <div class="col-md-4 col-sm-6">
           <div class="d-flex justify-content-end">

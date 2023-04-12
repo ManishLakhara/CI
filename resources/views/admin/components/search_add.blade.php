@@ -10,10 +10,10 @@
                     <button type="submit" class="btn">
                         <i class="fas fa-search"></i>
                       </button>
-                    <div class="form-outline w-100">
+                    <div class="form-outline w-100 py-2">
                       <input type="search" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0" />
                     </div>
-                </div>    
+                </div>
             </form>
         </div>
         <div class="col-sm-4 pb-3 p-2  text-right">

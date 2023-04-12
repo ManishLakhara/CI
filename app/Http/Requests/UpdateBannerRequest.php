@@ -26,7 +26,7 @@ class UpdateBannerRequest extends FormRequest
 
         return [
             'text' => 'required',
-            'sort_order' => 'required','integer',
+            'sort_order' => 'required','integer','gt:0',
                             Rule::unique('banners')->where(function($query){
                                 $query->where('deleted_at','!=',Null);
                             })->ignore($bannerId),

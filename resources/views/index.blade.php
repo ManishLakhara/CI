@@ -6,7 +6,7 @@
 ?>
         @include('components.search-filter');
 
-    <form id="form_f"  action="{{route('landing.index')}}" method="POST" style="display: none">
+    {{-- <form id="form_f"  action="{{route('landing.index')}}" method="POST" style="display: none">
         @csrf
         <input  type="text" name="country_f" id="country_f_id" value="{{ request()->input('country_f') }}"/>
         <input  type="text" name="city_f" id="city_f_id" value="{{ request()->input('city_f') }}"/>
@@ -15,7 +15,7 @@
         <input type="text" multiple name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f') }}"/>
         <input type="number" name="sort" id="sort" value="{{request()->input('sort')}}"/>
         <button class="btn" type="submit" id="submit_f_id"></button>
-    </form>
+    </form> --}}
 
     </div>
     <div class="container py-4">
@@ -369,7 +369,7 @@
             });
         }
         function badgeRunJQueryCountry(id){
-            $('[id^="close_country_button_:id"]'.replace(':id',id)).click(function(){
+            $('[id="close_country_button_:id"]'.replace(':id',id)).click(function(){
                 let id = this.id.split('_')[3];
                 $('#country_option_'+id).prop('checked', false);
                 countries = countries.filter(item => item != id);
@@ -385,7 +385,7 @@
             })
         }
         function badgeRunJQueryCity(id){
-            $('[id^="close_city_button_:id"]'.replace(':id',id)).click(function(){
+            $('[id="close_city_button_:id"]'.replace(':id',id)).click(function(){
                 $('#city_option_'+id).prop('checked', false);
                 removeBadge(id,'city');
                 cities = cities.filter(item => item != id);
@@ -398,7 +398,7 @@
             })
         }
         function badgeRunJQueryTheme(id){
-            $('[id^="close_mission_button_:id"]'.replace(':id',id)).click(function(){
+            $('[id="close_mission_button_:id"]'.replace(':id',id)).click(function(){
                 $('#mission_theme_option_'+id).prop('checked', false);
                 removeBadge(id,'mission');
                 themes = themes.filter(item => item != id);
@@ -410,7 +410,7 @@
             })
         }
         function badgeRunJQuerySkill(id){
-            $('[id^="close_skill_button_:id"]'.replace(':id',id)).click(function(){
+            $('[id="close_skill_button_:id"]'.replace(':id',id)).click(function(){
                 $('#skill_option_'+id).prop('checked', false);
                 removeBadge(id,'skill');
                 skills = skills.filter(item => item != id);

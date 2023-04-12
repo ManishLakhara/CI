@@ -6,7 +6,7 @@ use App\Http\Controllers\LandingPageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FavouriteMissionController;
-use App\Http\Controllers\MissionApplicationController;
+use App\Http\Controllers\admin\MissionApplicationController;
 use App\Http\Controllers\MissionDetailController;
 use App\Http\Controllers\MissionInviteController;
 use App\Http\Controllers\MissionRatingController;

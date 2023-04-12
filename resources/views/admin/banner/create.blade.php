@@ -20,7 +20,7 @@
         @enderror
 
     <label for="sort_order" class="my-3 form-label">Sort Order</label>
-    <input type="number" value="{{old('sort_order')}}" class="form-control" id="sort_order" name="sort_order">
+    <input type="number" min="1" value="{{old('sort_order')}}" class="form-control" id="sort_order" name="sort_order">
     @error('sort_order')
         <div class="text-danger">
             {{$message}}
@@ -29,7 +29,7 @@
 
     <div>
         <label for="formFileLg" class="my-3 form-label">Photo</label>
-        <input type="file" value="{{old('photo')}}" class="form-control form-control-lg" id="formFileLg" name="photo">
+        <input type="file" value="{{old('photo')}}" class="form-control form-control-lg" onchange="handleFiles(this.files);" id="formFileLg" name="photo">
     </div>
     @error('photo')
         <div class="text-danger">
@@ -42,6 +42,9 @@
         <button type="submit" class="btn mx-2 btn-outline-warning" > Submit </button>
         </div></div>
     </form>
+
+    {{-- <div id="preview-photo">
+    </div> --}}
     <script>
         CKEDITOR.replace('editor1');
     </script>

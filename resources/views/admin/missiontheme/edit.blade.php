@@ -12,30 +12,49 @@
             @csrf
             @method('PUT')
             <label for="title">Title</label>
-            <input type="text" class='form-control' name='title' value='{{ $missionTheme->title }}'>
+            <input type="text" class='form-control' name='title'
+            @if (old('title') == null)
+                value="{{ $missionTheme->title }}"
+            @else
+                value="{{ old('title') }}"
+            @endif>
             @error('title')
+            <div class="text-danger">
+                {{ $message }}
+            </div>
+            @enderror
+                <div class="py-4">
+            <label for="status">Status</label>
+            <select name="status" id="status" class="form-control" required>
+                <option value="0"
+                    @if (old('status') == null)
+                        @if ($missionTheme->status == '0')
+                            selected
+                        @endif
+                    @else
+                        @if (old('status') == '0') selected
+                        @endif
+                    @endif
+                    >Inactive</option>
+                <option value="1"
+                    @if (old('status')==null)
+                        @if ($missionTheme->status == '1')
+                            selected
+                        @endif
+                    @else
+                        @if (old('status')=='1')
+                            selected
+                        @endif
+                    @endif
+                >Active</option>
+            </select>
+            @error('status')
                 <div class="text-danger">
                     {{ $message }}
                 </div>
             @enderror
-
-            <div class="py-4">
-                <label class="float-start px-2" for="options-outlined">Status</label>
-                <input type="radio" class="btn-check " name="status" value='1' id="success-outlined"
-                    @if ($missionTheme->status == 1) checked @endif>
-                <label class="btn btn-outline-success px-3" for="success-outlined">Active</label>
-
-                <input type="radio" class="btn-check" value='0' name="status" id="danger-outlined"
-                    @if ($missionTheme->status == 0) checked @endif>
-                <label class="btn btn-outline-danger pxv-3" for="danger-outlined">Inactive</label>
-                @error('status')
-                    <div class="text-danger">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <button type="submit" class='btn btn-warning'> Submit Edit</button>
-        </form>
-
+    </div>
+    <button type="submit" class='btn btn-warning'> Submit Edit</button>
+    </form>
     </div>
 @endsection

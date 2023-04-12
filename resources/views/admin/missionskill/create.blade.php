@@ -17,14 +17,11 @@
                 </div>
             @enderror
             <div class="py-4"> {{-- This is Status Radio button --}}
-                <label class="float-start px-2" for="options-outlined">Status</label>
-                <input type="radio" class="btn-check " name="status" {{ old('status') == 1 ? 'checked' : '' }}
-                    value='1' id="success-outlined">
-                <label class="btn btn-outline-success px-3" for="success-outlined">Active</label>
-                <input type="radio" class="btn-check" value='0' {{ old('status') == 0 ? 'checked' : '' }}
-                    name="status" id="danger-outlined">
-                <label class="btn btn-outline-danger px-3" for="danger-outlined">Inactive</label>
-
+                <label for="status">Status</label>
+                                <select name="status" id="status" class="form-control" required>
+                                    <option value="0" @if(old('status')=="0")? selected @endif >Inactive</option>
+                                    <option value="1" @if(old('status')=="1")? selected @endif >Active</option>
+                                </select>
                 @error('status')
                     <div class="text-danger">
                         {{ $message }}

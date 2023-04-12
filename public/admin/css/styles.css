@@ -1,4 +1,17 @@
 @charset "UTF-8";
+/* @font-face {
+    font-family: 'Natosans';
+    src: url('fonts/natosans-regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Natosans';
+    src: url('fonts/natosans-bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+  } */
 /*!
 * Start Bootstrap - SB Admin v7.0.5 (https://startbootstrap.com/template/sb-admin)
 * Copyright 2013-2022 Start Bootstrap
@@ -63,12 +76,24 @@
   --bs-body-color: #212529;
   --bs-body-bg: #fff;
 }
+*{
+    font-family: 'Natosans', sans-serif;
+}
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
+
+/* input[type="radio"]:checked+label img{
+    border-width: 2px;
+    border-color: #000;
+} */
+.form-check-input:checked + .form-check-label img{
+    border: 5px solid #F88634;
+    box-shadow: 0 0 5px #F88634;
+  }
 
 .nav-link.active {
     border-bottom: 2px solid #333;
@@ -2510,6 +2535,7 @@ textarea.form-control-lg {
   -webkit-print-color-adjust: exact;
           color-adjust: exact;
 }
+
 .form-check-input[type=checkbox] {
   border-radius: 0.25em;
 }

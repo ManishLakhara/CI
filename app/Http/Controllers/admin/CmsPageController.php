@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Models\CmsPage;
 use App\Http\Requests\StoreCmsPageRequest;
 use App\Http\Requests\UpdateCmsPageRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CmsPageController extends Controller
 {

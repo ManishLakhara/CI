@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     @include('admin.layouts.head')
-
     <body class="sb-nav-fixed">
+
         @include('admin.layouts.header')
         <div id="layoutSidenav">
             @include('admin.layouts.sidebar')
@@ -10,7 +10,7 @@
                 <main>
                     @yield('body')
                 </main>
-                @include('admin.layouts.footer')
+                {{-- //@include('admin.layouts.footer') --}}
             </div>
         </div>
         @include('admin.layouts.scripts')

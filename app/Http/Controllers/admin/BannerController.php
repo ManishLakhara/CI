@@ -46,7 +46,7 @@ class BannerController extends Controller
         $banner->sort_order = $request->sort_order;
              //This is photo storing code
         $photo = $request->file('photo');
-        $imageName = uniqid().'.'.$photo->getClientOriginalExtension();
+        $imageName = $photo->getClientOriginalName().'.'.uniqid().'.'.$photo->getClientOriginalExtension();
         $imagePath = $photo->storeAs('banner',$imageName, 'public');
         $banner->image = $imagePath;
         $banner->save();
@@ -81,11 +81,10 @@ class BannerController extends Controller
         $banner->sort_order = $request->sort_order;
         if($request->photo!=null){
             $photo = $request->file('photo');
-            $imageName = uniqid().'.'.$photo->getClientOriginalExtension();
+            $imageName = $photo->getClientOriginalName().'.'.uniqid().'.'.$photo->getClientOriginalExtension();
             $imagePath = $photo->storeAs('banner',$imageName, 'public');
             $banner->image = $imagePath;
         }
-
         $banner->update();
         return redirect()->route('banner.index')->with('success',"Successfully Updated");
     }
