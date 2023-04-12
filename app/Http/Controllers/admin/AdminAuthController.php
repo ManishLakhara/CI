@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Session;
 
 class AdminAuthController extends Controller
 {
@@ -24,7 +24,7 @@ class AdminAuthController extends Controller
      public function customLogin(Request $request){
         $request->validate([
             'email' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:8',
         ]);
         $credentionals = $request->only('email','password');
         if(Auth::guard('admin')->attempt($credentionals)){
@@ -35,6 +35,13 @@ class AdminAuthController extends Controller
         }
     }
 
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        Session::flush();
+
+        return redirect()->route('adminlogin');
+    }
 
 
 

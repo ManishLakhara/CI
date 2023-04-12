@@ -6,14 +6,14 @@
 
 @section('body')
     <div class="container-fluid px-4">
-        <ul class="nav border-bottom"><span class="nav-link active fs-1"> CMS Page </span></ul>
+        {{-- <ul class="nav border-bottom"><span class="nav-link active fs-1"> CMS Page </span></ul> --}}
         <div class="card mb-4">
             <div class="card-header">
-                <span>Edit</span>
+                <h4>Edit</h4>
             </div>
 
             <div class="card-body">
-                <div class="container">
+                {{-- <div class="container"> --}}
                     <form action="{{ route('cmspage.update', $cmsPage->cms_page_id) }}" method="post">
                         @csrf
                         @method('PUT')
@@ -76,7 +76,7 @@
                         </div>
 
                     </form>
-                </div>
+                {{-- </div> --}}
             </div>
         </div>
 

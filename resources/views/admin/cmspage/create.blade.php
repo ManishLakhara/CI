@@ -9,16 +9,16 @@
         <ul class="nav border-bottom"><span class="nav-link active fs-1"> CMS Page </span></ul>
         <div class="card m-4">
             <div class="card-header">
-                <span>Add</span>
+                <h4>Add</h4>
             </div>
 
             <div class="card-body">
-                <div class="container">
+                {{-- <div class="container"> --}}
                     <form action="{{ route('cmspage.store') }}" method="post">
                         @csrf
 
                         <div class="form-row">
-                            <div class="col-md-12 mb-3">
+                            <div class="col-12 mb-3">
                                 <label for="Title">Title</label>
                                 <input type="text" name="title" class="form-control" id="" value="{{ old('title') }}">
 
@@ -73,7 +73,7 @@
                         </div>
 
                     </form>
-                </div>
+                {{-- </div> --}}
             </div>
         </div>
 

@@ -107,7 +107,7 @@ Route::resource('missionskill', MissionSkillController::class)->withTrashed();
 Route::resource('user', UserController::class)->withTrashed();
 Route::resource('mission', MissionController::class);
 Route::resource('cmspage', CmsPageController::class);
-//Route::resource('cmspage', CmsPageController::class, ['middleware' => ['auth', 'admin']]);
+//Route::resource('cmspage', CmsPageController::class, ['middleware' => ['admin']]);
 
 Route::resource('banner',BannerController::class);
 //end backend route
@@ -145,3 +145,4 @@ Route::resource('mystories', StoryListingController::class);
 Route::post('mystories/{story_id}', [StoryListingController::class,'updateDraft'])->name('mystories.updateDraft');
 
 //Route::put('mystories/{story_id}',[StoryListingController::class,'update'])->name('mystories-update');
+Route::get('adminlogout', [AdminAuthController::class,'logout'])->name('adminlogout');

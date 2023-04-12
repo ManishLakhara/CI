@@ -16,14 +16,23 @@
                                         <form method="post"  action="{{ route('admincustomlogin') }}">
                                             @csrf
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" name="email" value='' placeholder="name@example.com" required />
+                                                <input class="form-control" id="inputEmail" type="email" name="email" value='' placeholder="name@example.com"  />
                                                 <label for="inputEmail">Email address</label>
+                                                @error('email')
+                                                <div class="text-danger">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
 
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" name="password" value='' placeholder="Password" required/>
+                                                <input class="form-control" id="inputPassword" type="password" name="password" value='' placeholder="Password" />
                                                 <label for="inputPassword">Password</label>
-
+                                                @error('password')
+                                                <div class="text-danger">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                             </div>
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
@@ -34,7 +43,7 @@
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <a class="small" href="{{ route('forgetpassword') }}">Forgot Password?</a>
-                                                
+
                                             </div>
                                         </form>
                                     </div>

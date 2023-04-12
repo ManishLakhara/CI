@@ -9,10 +9,10 @@
         <ul class="nav border-bottom"><span class="nav-link active fs-1"> CMS Page</span></ul>
         @include('admin.components.successAlert')
 
-        <div class="card m-4">
-            <div class="card-header">
+        <div class="card m-4" style="border:none">
+            {{-- <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-            </div>
+            </div> --}}
 
             <div class="card-body">
 
@@ -22,7 +22,9 @@
                 ])
 
                 <table class="table table-responsive border-start border-end">
-                    <thead class="table-light">
+                    {{-- <thead class="table-light" style="background-color: #F8F9FC"> --}}
+                    <thead style="background-color: #F8F9FC">
+
                         <tr>
                             <th class="col-lg-8">Title</th>
                             <th class="col-lg-4">Status</th>
@@ -35,11 +37,11 @@
                                 <td>{{ $d->title }}</td>
                                 <td>
                                     @if ($d->status)
-                                        <div class="h5 text-success">
+                                        <div class="h5" style="color: #14C506">
                                             Active
                                         </div>
                                     @else
-                                        <div class="h5 text-danger">
+                                        <div class="h5">
                                             Inactive
                                         </div>
                                     @endif
