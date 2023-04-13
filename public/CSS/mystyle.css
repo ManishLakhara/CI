@@ -6,7 +6,13 @@
 *::before {
     box-sizing: border-box;
 }
+.carousel-indicators li {
+    background-color: #ccc;
+}
 
+.carousel-indicators .active {
+    background-color: #555;
+}
 @media screen and (max-width: 580px) {
     #userAvatar {
         display: none;

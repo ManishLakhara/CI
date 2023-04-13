@@ -12,7 +12,7 @@
             @csrf
             <div class="form-row py-4">
                 <div class="form-check">
-                    <input hidden class="form-check-input" value="Images/volunteer1.png" type="radio" name="avatar" id="avatar1"
+                    <input hidden checked class="form-check-input" value="Images/volunteer1.png" type="radio" name="avatar" id="avatar1"
                         @if (old('avatar') == 'Images/volunteer1.png') checked @endif>
                     <label class="form-check-label" for="avatar1">
                         <img class="rounded-circle" height="100px" width="100px" src={{ asset('Images/volunteer1.png') }}
@@ -76,7 +76,7 @@
                     </label>
                 </div>
                 <div class="form-check">
-                    <input hidden required class="form-check-input" value="Images/volunteer9.png" type="radio" name="avatar"
+                    <input hidden class="form-check-input" value="Images/volunteer9.png" type="radio" name="avatar"
                         id="avatar9" @if (old('avatar') == 'Images/volunteer9.png') checked @endif>
                     <label class="form-check-label" for="avatar9">
                         <img class="rounded-circle" height="100px" width="100px"
@@ -88,7 +88,7 @@
                     <div class="text-danger">
                         {{$message}}
                     </div>
-                @enderror
+            @enderror
             <div class="form-row">
                 <div class="col-md-6">
                     <label for="first_name">First Name</label>

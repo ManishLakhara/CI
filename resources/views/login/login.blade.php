@@ -1,8 +1,8 @@
 @extends('layouts.loginapp')
 @section('content')
-    <div class="container-fluid">
-        <div class="row justify-content-between" style="width: 100%; height: 100%;">
-            <div class="col-md-8 align-self-center">
+    <div class="container-fluid w-100">
+        <div class="row h-100 w-100">
+            <div class="col-md-8 align-self-center" style="padding: 0%">
                 @include('components.carosel')
             </div>
             <div class="col-md-4 align-self-center" style="padding: 4%;">
@@ -17,7 +17,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="" class="login-text">Email Address</label>
-                    <input type="email" class="form-control m-1" name="email" id="" required aria-describedby="emailHelpId" placeholder="" value="">
+                    <input type="email" class="form-control m-1" name="email" id="" required aria-describedby="emailHelpId" placeholder="" value="{{old('email')}}">
                     @error('email')
                     <div class="text-danger">
                         {{$message}}
@@ -26,7 +26,7 @@
                   </div>
                   <div class="form-group">
                     <label for="" class="login-text">Password</label>
-                    <input type="password" class="form-control m-1" name="password" required id="" placeholder="" value="">
+                    <input type="password" class="form-control m-1" name="password" required id="" placeholder="" value="{{old('password')}}">
                     @error('password')
                     <div class="text-danger">
                         {{$message}}

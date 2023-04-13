@@ -1,15 +1,18 @@
 @extends('layouts.loginapp')
 @section('content')
     <div class="container-fluid">
-        <div class="row justify-content-start" style="width: 100%; height: 100%;">
-            <div class="col-md-8 align-self-center">
+        <div class="row h-100 w-100">
+            <div class="col-md-8 align-self-center" style="padding: 0%">
                 @include('components.carosel')
-                <div class="col-md-4 align-self-center" style="padding: 4%;">
-                    @if (session('status'))
-                    <div class="alert alert-danger">
-                        {{ session('status') }}
-                    </div>
-                    @endif
+            </div>
+            <div class="col-md-4 align-self-center" style="padding: 4%;">
+
+                @if (session('status'))
+                <div class="alert alert-danger">
+                    {{ session('status') }}
+                </div>
+                @endif
+
                     <form action="{{ route('post-register') }}" method='post'>
                         @csrf
                         <label for="inputFirstName" class="col-form-label"> First Name</label>
@@ -21,7 +24,7 @@
                             </div>
                             @enderror
                         </div>
-                        
+
                         <label for="inputLastName" class="col-form-label"> Last Name</label>
                         <div class="col">
                             <input type="text" class="form-control"  name="last_name" id="" value="">
@@ -77,13 +80,12 @@
                         </div>
                     </form>
 
-                    
-
                     @include('components.lostyourpassword')
 
                     @include('components.loginnow')
-                    
+
                     @include('components.privacypolicy')
-                    
-                    
+            </div>
+        </div>
+    </div>
 @endsection

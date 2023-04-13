@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\controller;
+use App\Http\Requests\ForgotRequest;
 use App\Mail\ResetPassword;
 use App\Models\PasswordReset;
 use App\Models\User;
@@ -12,11 +13,16 @@ use Illuminate\Support\Str;
 class PasswordResetController extends Controller
 {
 
-    public function resetPassword(Request $request)
+    public function resetPassword(ForgotRequest $request)
     {
-            $request->validate([
-                'email' => 'required',
-            ]);
+            $rules = [
+                'email' => 'bail|email|required|exists:users,email|unique:password_resets,email',
+            ];
+            $customMessages = [
+                'unique' => "Reset password Link have already been send",
+                'exists' => "This :attribute have not been registered yet!",
+            ];
+            $this->validate($request, $rules, $customMessages);
             $link='<a style="text-decoration:none;" href="{{route(\'register\')}}">Create an account</a>';
             if(User::where('email',$request->email)->get()->isEmpty()){
                 return back()->with('status',' This '.$request->email.' is not Registered. Please register here '.$link);
@@ -25,11 +31,6 @@ class PasswordResetController extends Controller
                     'email' => 'required|email',
                 ]);
            $token = Str::random(60);
-
-                if(PasswordReset::where('email',$request->email)->get()->count()==0){
-                    return back()->with('status','user All ready exists');
-                }
-
                 $user = new PasswordReset;
                 $user['email'] = $request->email;
                 $user['token'] = $token;
@@ -47,20 +48,17 @@ class PasswordResetController extends Controller
         $request->validate(
             ['token' => 'required',
              'password' => 'required | min:8',
-             'confirm-password' => 'required | min:8',
+             'confirm-password' => 'required | min:8 | same:password',
              ]
         );
 
-        if($request['password']!==$request['confirm-password']){
-            return back()->with('error',"confirm password is different from password");
-        }
+        $reset = PasswordReset::where('token',$request['token'])->first();
+        $email = $reset->email;
 
-        $reset = PasswordReset::where('token',$request['token'])->get();
-        $email = $reset[0]->email;
-
-        $user = User::where('email',$email)->get()[0];
+        $user = User::where('email',$email)->first();
         $user->password = bcrypt($request['password']);
         $user->save();
+        $reset->delete();
         return redirect()->intended('/')->with('success','Hurry!! Password have been Successfully updated');
     }
 }

@@ -13,9 +13,10 @@ $token = substr($_SERVER['REQUEST_URI'],-60);
 ?>
 @section('content')
 <div class="container-fluid">
-    <div class="row justify-content-start" style="width: 100%; height: 100%;">
-        <div class="col-md-8 align-self-center">
+    <div class="row h-100 w-100">
+        <div class="col-md-8" style="padding: 0%">
             @include('components.carosel')
+        </div>
         <div class="col-md-4 align-self-center" style="padding: 4%;">
             <h4 style="text-align: center;" >Forgot Password</h4>
                 <p style="text-align: center;">
@@ -27,7 +28,7 @@ $token = substr($_SERVER['REQUEST_URI'],-60);
                     @csrf
                      <label for="inputNewPassword" class="col-form-label">New Password</label>
                      <div class="col">
-                        <input type="password" class="form-control" id="" name='password' value="">
+                        <input type="password" class="form-control" name='password' value="">
                         @error('password')
                                 <div class="text-danger">
                                     {{$message}}
@@ -37,7 +38,7 @@ $token = substr($_SERVER['REQUEST_URI'],-60);
 
                      <label for="inputConfirmPassword" class="col-form-label">Confirm Password</label>
                      <div class="col">
-                        <input type="password" class="form-control" name="confirm-password" id="" value="">
+                        <input type="password" class="form-control" name="confirm-password"  value="">
                         @error('confirm-password')
                                 <div class="text-danger">
                                     {{$message}}
@@ -70,4 +71,6 @@ $token = substr($_SERVER['REQUEST_URI'],-60);
 
                 @include('components.privacypolicy')
         </div>
+    </div>
+</div>
 @endsection

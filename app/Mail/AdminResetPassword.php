@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Banner;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -58,6 +59,7 @@ class AdminResetPassword extends Mailable
 
     public function build()
     {
+        $banners = Banner::orderBy('sort_order','asc')->get();
         $user['name'] = $this->name;
         $user['token'] = $this->token;
 

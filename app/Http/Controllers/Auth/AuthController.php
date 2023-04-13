@@ -34,7 +34,7 @@ class AuthController extends Controller {
         if(Auth::attempt($credentionals)){
             return redirect()->intended('index');
         } else {
-            return redirect()->intended('/')->with('status','Oppes! Credentials Passed are INCORRECT');
+            return redirect()->intended('/')->with('status','Oppes! Incorrect Password');
         }
     }
 
@@ -54,5 +54,9 @@ class AuthController extends Controller {
         else{
             return redirect()->intended('register')->with('status', 'user-Already exists');
         }
+    }
+    public function forgot(){
+        $banners = Banner::orderBy('sort_order','asc')->get();
+        return view('login.forgot',compact('banners'));
     }
 }

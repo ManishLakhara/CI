@@ -25,6 +25,8 @@ use App\Http\Controllers\StoryDetailController;
 use App\Http\Controllers\UserEditProfileController;
 use App\Http\Controllers\VolunteeringTimesheetController;
 use App\Http\Controllers\StoryListingController;
+use App\Models\Banner;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,20 +39,17 @@ use App\Http\Controllers\StoryListingController;
 */
 //frontend Routes
 Route::get('/', [AuthController::class, 'index'])->name('login');
-Route::get('index', function () {
-    return view('index');
-})->name('index');
 Route::get('logout', [AuthController::class, 'logout']);
 Route::post('custom-login', [AuthController::class, 'postLogin'])->name('login.custom');
-Route::get('forgot', function () {
-    return view('login.forgot');
-})->name('forgot.password');
+Route::get('forgot',[AuthController::class,'forgot'])->name('forgot.password');
 Route::post('reset', [PasswordResetController::class, 'resetPassword'])->name('check.email');
 Route::get('register', function () {
-    return view('register.register');
+    $banners = Banner::orderBy('sort_order','asc')->get();
+    return view('register.register', compact('banners'));
 })->name('register');
 Route::get('forgot-password/{token}', function ($token) {
-    return view('reset', [$token]);
+    $banners = Banner::orderBy('sort_order','asc')->get();
+    return view('reset', compact('token','banners'));
 });
 Route::post('register', [AuthController::class, 'register'])->name('post-register');
 Route::post('password-resetting', [PasswordResetController::class, 'passwordResetting'])->name('password-resetting');
