@@ -11,41 +11,13 @@
         <!-- Success Alert -->
         @include('admin.components.successAlert')
 
-        {{-- <span class="border-bottom">
-        <form action="{{route('missiontheme.create')}}" method="post">
-            @csrf
-            <div class='row m-3'>
-            <div>
-                <label for="title">Title</label><input type="text" class="form-control" name="title" id="">
-                @error('title')
-                    <div class="text-danger">
-                        {{$message}}
-                    </div>
-                @enderror
-            </div>
-            <div class="container-fluid py-3">
-
-                <label class="float-start px-2" for="options-outlined">Status</label>
-                <input type="radio" class="btn-check " name="status" value='1' id="success-outlined">
-                <label class="btn btn-outline-success px-3"  for="success-outlined">Active</label>
-                <input type="radio" class="btn-check" value='0' name="status" id="danger-outlined">
-                <label class="btn btn-outline-danger px-3" for="danger-outlined">Inactive</label>
-
-                @error('status')
-                    <div class="text-danger">
-                        {{$message}}
-                    </div>
-                @enderror
-
-                <button type="submit" class="btn btn-primary float-end">Add</button>
-        </form>
-    </span> --}}
 
 
-        <div class="card m-4">
-            <div class="card-header">
+
+        <div class="card m-4" style="border:none">
+            {{-- <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-            </div>
+            </div> --}}
 
             <div class="card-body">
 
@@ -54,10 +26,10 @@
                     'add' => 'mission.create',
                 ])
 
-                <table class="table table-responsive">
+                <table class="table table-responsive border-start border-end">
                     <thead class="table-light">
                         <tr>
-                            <th class="col-lg-5">Mission Title</th>
+                            <th class="col-lg-6">Mission Title</th>
                             <th class="col-lg-2">Mission Type</th>
                             <th class="col-lg-2">Start Date</th>
                             <th class="col-lg-2">End Date</th>
@@ -75,7 +47,7 @@
 
                                     <a class="btn btn-white"href="{{ route('mission.edit', $d->mission_id) }}">
                                         {{-- <img src="Images/edit.png" height="22px" width="22px" alt="edit"> --}}
-                                        <i class="fas fa-edit"></i>
+                                        <i class="far fa-edit" style="color:orange;"></i>
                                     </a>
 
                                     <button type="button" data-toggle="modal"

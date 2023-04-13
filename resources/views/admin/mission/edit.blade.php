@@ -12,6 +12,7 @@
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <div class="row">
             <div class="col-md-6">
                 <label for="missionTitle" class="form-label">Mission Title</label>
                 <input type="text" class="form-control" id="missionTitle" name='title' value='{{ $mission->title }}'>
@@ -31,7 +32,9 @@
                     </div>
                 @enderror
             </div>
-            <div class="col-12">
+        </div>
+        <div class="row">
+             <div class="col-12">
                 <label for="inputAddress" class="form-label">Mission Description</label>
                 <textarea name="description" id="editor1">{{ $mission->description }}</textarea>
                 @error('description')
@@ -41,6 +44,8 @@
                 @enderror
 
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <label for="country">Country</label>
                 <select name="country_id" class="form-control" id="country-dropdown">
@@ -74,7 +79,8 @@
                     </div>
                 @enderror
             </div>
-
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <label for="orgName" class="form-label">Mission Organisation Name</label>
                 <input type="text" class="form-control" id="orgName" name='organization_name'
@@ -84,6 +90,8 @@
                 <label for="exampleFormControlTextarea1" class="form-label">Mission Organisation Detail</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name='organization_detail'>{{ $mission->organization_detail }}</textarea>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Mission Start Date</label>
                 <div class='input-group date' id='datetimepicker1'>
@@ -105,13 +113,14 @@
                     </div>
                 @enderror
             </div>
-
+        </div>
+            <div class="row">
             <div class="col-md-6">
                 <label for="inputType" class="form-label">Mission Type</label>
                 <select id="inputType" class="form-select" name='mission_type' onchange="handleMissionTypeChange(this)">
                     <option value="none" selected="" disabled="" hidden="">select mission type</option>
-                    <option value="time" {{ $mission->mission_type === 'TIME' ? 'selected' : '' }}>Time</option>
-                    <option value="goal" {{ $mission->mission_type === 'GOAL' ? 'selected' : '' }}>Goal</option>
+                    <option value="TIME" {{ $mission->mission_type === 'TIME' ? 'selected' : '' }}>Time</option>
+                    <option value="GOAL" {{ $mission->mission_type === 'GOAL' ? 'selected' : '' }}>Goal</option>
                 </select>
                 @error('mission_type')
                     <div class="text-danger">
@@ -131,7 +140,8 @@
                     </div>
                 @enderror
             </div>
-
+            </div>
+            <div class="row">
             <div class="col-md-6">
                 <label for="missionRegDeadline" class="form-label">Mission Registration Deadline</label>
                 <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'
@@ -155,7 +165,8 @@
                     </div>
                 @enderror
             </div>
-
+            </div>
+            <div class="row">
             <div class="col-md-6">
                 <label for="goal_value" class="form-label">Goal Value</label>
                 <input type="text" class="form-control" id="goal_value" name='goal_value'
@@ -183,6 +194,8 @@
                 </select>
 
             </div>
+            </div>
+            <div class="row">
             <div class="col-md-6">
                 <label for="mission_skills">Mission Skills</label>
                 <div class="dropdown">
@@ -228,6 +241,8 @@
                     @endforeach
                 </div>
             </div>
+            </div>
+            <div class="row">
             <div class="col-md-6">
                 <label class="form-label" for="customFile">Mission Documents</label>
                 <input type="file" class="form-control" id="customFile" name="document_name[]" multiple />
@@ -255,6 +270,8 @@
                     <option value="monthly" @if ($mission->availability == 'monthly') selected @endif>Monthly</option>
                 </select>
             </div>
+            </div>
+            <div class="row">
             <div class="col-md-6">
                 <label for="missionVideo" class="form-label">Mission Video</label>
 
@@ -286,9 +303,13 @@
                     </div>
                 @enderror
             </div>
-
-            <div class="col-12">
+            </div>
+            <div class="row mt-3">
+            <div class="col-6">
                 <button type="submit" class="btn btn-primary">Submit Edit</button>
+            </div>
+            <div class="col-6">
+                <a class="btn btn-primary pull-right float-end" href="{{ route('mission.index') }}">cancel</a>
             </div>
         </form>
     </div>
@@ -330,10 +351,10 @@
 
         function handleMissionTypeChange(selectElement) {
             const selectedMissionType = selectElement.value;
-            if (selectedMissionType === 'time') {
+            if (selectedMissionType === 'TIME') {
                 disableGoalObjectiveTextAndGoalValue();
                 enableTotalSeatsAndRegistrationDeadline();
-            } else if (selectedMissionType === 'goal') {
+            } else if (selectedMissionType === 'GOAL') {
                 disableTotalSeatsAndRegistrationDeadline();
                 enableGoalObjectiveTextAndGoalValue();
             }
@@ -345,9 +366,9 @@
 
         // Initialize field states based on the initial mission type value
         const initialMissionType = missionTypeSelect.value;
-        if (initialMissionType === 'time') {
+        if (initialMissionType === 'TIME') {
             disableGoalObjectiveTextAndGoalValue();
-        } else if (initialMissionType === 'goal') {
+        } else if (initialMissionType === 'GOAL') {
             disableTotalSeatsAndRegistrationDeadline();
         }
     </script>

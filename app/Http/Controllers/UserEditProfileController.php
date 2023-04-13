@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Country;
 use App\Models\City;
 use App\Http\Requests\UpdateUserProfileRequest;
+use App\Models\ContactUs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
@@ -183,5 +184,25 @@ class UserEditProfileController extends Controller
         Session::flush();
 
         return redirect()->route('login');
+    }
+
+    public function contactus(Request $request)
+    {
+
+        $request->validate([
+            'user_id' => 'required',
+            'subject' => 'required|max:255',
+            'message' => 'required|max:40000',
+        ]);
+
+        //dd($request->user_id);
+            $contactUs = new ContactUs;
+            $contactUs->user_id = $request->user_id;
+            $contactUs->subject = $request->subject;
+            $contactUs->message = $request->message;
+
+
+
+        $contactUs->save();
     }
 }

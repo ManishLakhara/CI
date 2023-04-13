@@ -70,4 +70,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(TimeSheet::class, 'user_id');
     }
+    
 }

@@ -120,7 +120,7 @@
                                 <div class="col mt-4">
                                     <label for="why_i_volunteer">Why I Volunteer?</label>
                                     <textarea class="form-control mt-2" id="why_i_volunteer" name="why_i_volunteer"
-                                        placeholder="Enter your comments...">{{ $user->why_i_volunteer }}</textarea>
+                                        placeholder="Enter your comments...">{!! $user->why_i_volunteer !!}</textarea>
                                     @error('why_i_volunteer')
                                         <div class="text-danger">
                                             {{ $message }}
@@ -593,7 +593,7 @@
             });
         });
     </script>
-    {{-- @section('contactus')
+    @section('contactus')
     @include('inc.contactus')
-@endsection --}}
+@endsection
 @endsection

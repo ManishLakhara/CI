@@ -96,4 +96,7 @@ class Mission extends Model
     public function userSkill() {
         return $this->hasOne(UserSkill::class, 'mission_id');
     }
+    public function contactUs() {
+        return $this->hasMany(ContactUs::class, 'contact_us_id');
+    }
 }

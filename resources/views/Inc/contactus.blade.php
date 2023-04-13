@@ -7,7 +7,7 @@
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content p-3">
-                    <form action="" method="post">
+                    <form id="contactusform" method="post">
                         @csrf
                         @method('POST')
                         <div>
@@ -43,6 +43,7 @@
                                     <textarea class="form-control mt-2" id="message" name="message" placeholder="Enter your message..." name="message"></textarea>
                                 </div>
                             </div>
+                            <div id="contactus-error" class="alert alert-danger" role="alert" style="display: none;"></div>
 
                         </div>
 
@@ -51,6 +52,8 @@
                                 <button type="button" class="btn btn-outline-secondary px-4"
                                     style="border-radius: 23px" data-dismiss="modal">cancel</button>
                             </div>
+                            <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->user_id }}">
+
                             <div class="px-1">
                                 <button type="submit" class="btn btn-outline effects px-4"
                                     style="border-color: #f88634 ;border-radius: 23px; color: #f88634"
@@ -66,3 +69,27 @@
         </div>
     </div>
 </div>
+<script>
+    $('#contactusform').submit(function(event) {
+        event.preventDefault();
+        var user_id = $('#user_id').val();
+        $.ajax({
+            type: 'POST',
+            url: "{{ url('api/users/contact-us') }}",
+            data: $(this).serialize(),
+            success: function(response) {
+                $('#contactusModal').modal('hide');
+                location.reload();
+                alert('your message has been conveyed successfully!');
+            },
+            error: function(response) {
+                var errors = response.responseJSON.errors;
+                var errorHtml = '';
+                $.each(errors, function(key, value) {
+                    errorHtml += '<p>' + value + '</p>';
+                });
+                $('#contactus-error').html(errorHtml).show();
+            },
+        });
+    });
+</script>

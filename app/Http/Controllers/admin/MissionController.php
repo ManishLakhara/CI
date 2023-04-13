@@ -95,20 +95,20 @@ class MissionController extends Controller
             }
         }
 
-        // handle mission images
+        //  mission images code
         $images = $request->file('media_name');
         if ($images) {
             foreach ($images as $key => $image) {
-                // generate unique name for the image
+                // generating unique name for the image with uniqueid
                 $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
 
-                // save image to storage/mission_media directory with the generated name
+                // save image to storage/mission_media directory with the above generated name
                 $imagePath = $image->storeAs('mission_media', $imageName, 'public');
 
                 // get file extension
                 $extension = $image->getClientOriginalExtension();
 
-                // create mission media entry for the image
+               //saving in database
                 $missionMedia = new MissionMedia([
                     'mission_id' => $mission->mission_id,
                     'media_name' => $image->getClientOriginalName(),
@@ -122,7 +122,7 @@ class MissionController extends Controller
         }
 
 
-        // handle mission video
+        // mission video code
         $videoUrl = $request->input('media_names');
         if ($videoUrl) {
             // check if youtube url is valid
@@ -140,7 +140,7 @@ class MissionController extends Controller
                 $missionMedia->save();
             }
         }
-
+       // missiob skill code
         foreach ($request->input('skill_id') as $skill_id) {
             $missionSkill = new MissionSkill([
                 'skill_id' => $skill_id,
@@ -223,7 +223,9 @@ class MissionController extends Controller
 
         $mission = Mission::find($id);
         $currentMissionType = $mission->mission_type;
+        //dd($currentMissionType);
         $newMissionType = $request->post('mission_type');
+        //dd($newMissionType);
         $mission->fill($request->post())->save();
 
         $mission->update($request->all());

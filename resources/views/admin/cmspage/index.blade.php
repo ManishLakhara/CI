@@ -41,7 +41,7 @@
                                             Active
                                         </div>
                                     @else
-                                        <div class="h5">
+                                        <div class="h5 text-danger">
                                             Inactive
                                         </div>
                                     @endif
@@ -49,7 +49,8 @@
                                 <td>
 
                                     <a class="btn btn-white" href="{{ route('cmspage.edit', $d->cms_page_id) }}">
-                                        <img src="Images/edit.png" height="22px" width="22px" alt="edit">
+                                        {{-- <img src="Images/edit.png" height="22px" width="22px" alt="edit"> --}}
+                                          <i class="far fa-edit" style="color:orange;"></i>
                                     </a>
                                     <button type="button" data-toggle="modal"
                                         data-target="#deleteModal-{{ $d->cms_page_id }}" class="btn btn-white">
