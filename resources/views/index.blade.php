@@ -4,7 +4,23 @@
     $user_id = Auth::user()->user_id;
 
 ?>
-        @include('components.search-filter')
+  @if (session('success'))
+  <div class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+      {{ session('success') }}
+  </div>
+@endif
+        @include('components.search-filter');
+
+    {{-- <form id="form_f"  action="{{route('landing.index')}}" method="POST" style="display: none">
+        @csrf
+        <input  type="text" name="country_f" id="country_f_id" value="{{ request()->input('country_f') }}"/>
+        <input  type="text" name="city_f" id="city_f_id" value="{{ request()->input('city_f') }}"/>
+        <input type="text" name="s" id="search_f_id" value="{{ request()->input('s') }}"/>
+        <input type="text" name="theme_f" id="theme_f_id" value="{{ request()->input('theme_f')}}" />
+        <input type="text" multiple name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f') }}"/>
+        <input type="number" name="sort" id="sort" value="{{request()->input('sort')}}"/>
+        <button class="btn" type="submit" id="submit_f_id"></button>
+    </form> --}}
 
     </div>
     <div class="container py-4">

@@ -91,6 +91,7 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('adminlogout', [AdminAuthController::class,'logout'])->name('adminlogout');
 });
 
+
 Route::group(['middleware' => ['user']], function(){
 
     Route::get('index',[LandingPageController::class, 'index'])->name('landing.index');

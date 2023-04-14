@@ -48,7 +48,10 @@
                     <select name="country_id" class="form-control" id="country-dropdown">
                         <option value="none" selected="" disabled="" hidden="">select country</option>
                         @foreach ($countries as $country)
-                            <option value="{{ $country->country_id }}">{{ $country->name }}</option>
+                            {{-- <option value="{{ $country->country_id }}">{{ $country->name }}</option> --}}
+                            <option value="{{ $country->country_id }}"
+                                {{ old('country_id') == $country->country_id ? 'selected' : '' }}>{{ $country->name }}
+                            </option>
                         @endforeach
                     </select>
                     @error('country_id')

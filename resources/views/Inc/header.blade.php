@@ -6,7 +6,7 @@
           <div class="d-flex justify-content-end">
             @yield('cms-toggle')
             <div class="px-4">
-              <a  class="btn text-muted no-decor" href="#">Stories</a>
+              <a  class="btn text-muted no-decor" href="{{ route('mystories.index') }}">Stories</a>
             </div>
             <div class="dropdown show ">
               <a class="btn text-muted btn-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
