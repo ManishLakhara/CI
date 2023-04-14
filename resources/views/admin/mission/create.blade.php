@@ -130,12 +130,10 @@
 
                 <div class="col-md-6">
                     <label for="text" class="form-label">Total Seats</label>
-                    {{-- <input type="text" class="form-control" id="text" name='total_seats' disabled
-                        value="{{ old('total_seats') }}"> --}}
-
-                        <input type="text" class="form-control" id="text" name='total_seats'
-                        {{ old('mission_type') == 'time' && old('total_seats') ? '' : 'disabled' }}
+                    <input type="text" class="form-control" id="text" name='total_seats' disabled
                         value="{{ old('total_seats') }}">
+
+
 
                     @error('total_seats')
                         <div class="text-danger">
@@ -147,11 +145,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="missionRegDeadline" class="form-label">Mission Registration Deadline</label>
-                    {{-- <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'
-                        disabled value="{{ old('registration_deadline') }}"> --}}
-                        <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'
-                        {{ old('mission_type') == 'time' && old('registration_deadline') ? '' : 'disabled' }}
-                        value="{{ old('registration_deadline') }}">
+                    <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'
+                        disabled value="{{ old('registration_deadline') }}">
+
                     @error('registration_deadline')
                         <div class="text-danger">
                             {{ $message }}
@@ -160,11 +156,9 @@
                 </div>
                 <div class="col-md-6">
                     <label for="goal_objective_text" class="form-label">Goal Objective Text</label>
-                    {{-- <input type="text" class="form-control" id="goal_objective_text" name='goal_objective_text'
-                        disabled value="{{ old('goal_objective_text') }}"> --}}
-                        <input type="text" class="form-control" id="goal_objective_text" name='goal_objective_text'
-                        {{ old('mission_type') == 'goal' && old('goal_objective_text') ? '' : 'disabled' }}
-                        value="{{ old('goal_objective_text') }}">
+                    <input type="text" class="form-control" id="goal_objective_text" name='goal_objective_text'
+                        disabled value="{{ old('goal_objective_text') }}">
+
                     @error('goal_objective_text')
                         <div class="text-danger">
                             {{ $message }}
@@ -175,11 +169,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="goal_value" class="form-label">Goal Value</label>
-                    {{-- <input type="text" class="form-control" id="goal_value" name='goal_value' disabled
-                        value="{{ old('goal_value') }}"> --}}
-                        <input type="text" class="form-control" id="goal_value" name='goal_value'
-                        {{ old('mission_type') == 'goal' && old('goal_value') ? '' : 'disabled' }}
+                    <input type="text" class="form-control" id="goal_value" name='goal_value' disabled
                         value="{{ old('goal_value') }}">
+
                     @error('goal_value')
                         <div class="text-danger">
                             {{ $message }}
@@ -371,31 +363,59 @@
     <script>
         $(document).ready(function() {
 
-    var missionType = $('#inputType').val();
+            var missionType = $('#inputType').val();
 
 
-    toggleFields(missionType);
+            toggleFields(missionType);
 
 
-    $('#inputType').change(function() {
+            $('#inputType').change(function() {
 
-        var selectedMissionType = $(this).val();
+                var selectedMissionType = $(this).val();
 
-        toggleFields(selectedMissionType);
-    });
+                toggleFields(selectedMissionType);
+            });
 
 
-    function toggleFields(missionType) {
-        if (missionType === 'time') {
-            $('#text').prop('disabled', false);
-            $('#missionRegDeadline').prop('disabled', false);
-        } else if (missionType === 'goal') {
-            $('#text').prop('disabled', true);
-            $('#missionRegDeadline').prop('disabled', true);
-        }
-    }
-});
+            function toggleFields(missionType) {
+                if (missionType === 'time') {
+                    $('#text').prop('disabled', false);
+                    $('#missionRegDeadline').prop('disabled', false);
+                } else if (missionType === 'goal') {
+                    $('#text').prop('disabled', true);
+                    $('#missionRegDeadline').prop('disabled', true);
+                }
+            }
+        });
+    </script>
 
+    <script>
+        $(document).ready(function() {
+
+            var missionType = $('#inputType').val();
+
+
+            toggleFields(missionType);
+
+
+            $('#inputType').change(function() {
+
+                var selectedMissionType = $(this).val();
+
+                toggleFields(selectedMissionType);
+            });
+
+
+            function toggleFields(missionType) {
+                if (missionType === 'goal') {
+                    $('#goal_objective_text').prop('disabled', false);
+                    $('#goal_value').prop('disabled', false);
+                } else if (missionType === 'time') {
+                    $('#goal_objective_text').prop('disabled', true);
+                    $('#goal_value').prop('disabled', true);
+                }
+            }
+        });
     </script>
 @endsection
 add
