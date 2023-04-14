@@ -30,10 +30,10 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="fs-2" style="color: #414141">
+                <div class="fs-2" style="color: #414141; overflow-wrap:break-word;">
                     {{$mission->title}}
                 </div>
-                <div class="fs-4 py-3 text-secondary">
+                <div class="fs-4 py-3 text-secondary" style="overflow-wrap:break-word;">
                     {{$mission->short_description}}
                 </div>
                 <div class="Border-top py-4"></div>
@@ -176,6 +176,7 @@
                     </div>
                 <div class="Border-top"></div>
                 <div class="d-flex justify-content-center position-relative" style="margin-top: -35px">
+                    @if($mission->missionApplication->where('user_id',$user_id)->first()!=Null && $mission->missionApplication->where('user_id',$user_id)->first()->approval_status=="APPROVE")
                         <div class='rating bg-white' data-mission_id="{{$mission->mission_id}}" data-user_id="{{$user_id}}">
                             <input type="radio" name="rating_5"
                             @if ($my_rating!=null)
@@ -213,21 +214,15 @@
                             @endif
                             value="1" id="1"><label for="1">☆</label>
                         </div>
-                    {{-- <small class="p-2 fs-6 text-center text-secondary" style="background-color: white">
-                        <span class="far fa-star fs-5 "></span>
-                        <span class="far fa-star fs-5 "></span>
-                        <span class="far fa-star fs-5 "></span>
-                        <span class="far fa-star fs-5 "></span>
-                        <span class="far fa-star fs-5"></span>
-                    </small> --}}
+                    @endif
                 </div>
-                <div class="row pt-3"> {{--This is cards --}}
+                <div class="row pt-3 mt-4">
                     <div class="col-xxl-3 col-md-6 col-6 col-xs-12 p-2">
                         <div class="card" style="height: 9em">
                             <div class="card-body d-flex flex-column justify-content-end">
                               <h5 class="card-title mb-auto"><img src={{ asset('Images/pin1.png') }} alt=""></h5>
                                 <h6 class="card-subtitle text-muted">City</h6>
-                                <p class="card-text fs-7">{{$mission->city->name}}</p>
+                                <p class="card-text fs-7" style="overflow-wrap:break-word">{{$mission->city->name}}</p>
                             </div>
                         </div>
                     </div>
@@ -236,7 +231,7 @@
                             <div class="card-body d-flex flex-column justify-content-end">
                               <h5 class="card-title mb-auto"><img src={{asset('Images/web.png')}} alt=""></h5>
                               <h6 class="card-subtitle text-muted">Theme</h6>
-                              <p class="card-text">{{$mission->missionTheme->title}}</p>
+                              <p class="card-text" style="overflow-wrap:break-word">{{$mission->missionTheme->title}}</p>
                             </div>
                         </div>
                     </div>
@@ -264,7 +259,7 @@
                 <div class="row py-4 justify-content-center align-item-center" >{{--Apply Button--}}
                     <div class="col-6 align-self-center">
                         @if(count($mission->missionApplication->where('user_id',$user_id))===0)
-                        <button type="button" id="mission_application_btn" class="btn btn-lg fs-5 apply-btn w-100"> Apply <i
+                        <button type="button" id="mission_application_btn" data-user_id="{{$user_id}}" data-mission_id="{{$mission->mission_id}}" class="btn btn-lg fs-5 apply-btn w-100"> Apply <i
                             class="fa-sharp fa-solid fa-arrow-right"></i> </button>
                         @endif
                     </div>
@@ -288,12 +283,10 @@
                     <div class="tab-content pt-4" id="myTabContent">
                         <div class="tab-pane fade show active" id="mission-detail" role="tabpanel" aria-labelledby="mission-detail-tab">
                             <h1 class="fs-4 py-1 theme-color">Introduction</h1>
-                            <p class="text-muted">{{$mission->short_description}}</p>
-                            <p class="text-muted">{!!$mission->description!!}</p>
+                            <p class="text-muted" style="overflow-wrap: break-word">{{$mission->short_description}}</p>
 
                             <h1 class="fs-4 py-1 theme-color">Challenges</h1>
-                            <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, quasi? Dicta fugiat, saepe exercitationem laudantium dignissimos odio veniam expedita culpa sequi quia. Eveniet consequatur quas ratione ut exercitationem consequuntur accusamus.</p>
-                            <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, quasi? Dicta fugiat, saepe exercitationem laudantium dignissimos odio veniam expedita culpa sequi quia. Eveniet consequatur quas ratione ut exercitationem consequuntur accusamus.</p>
+                            <p class="text-muted">{!!$mission->description!!}</p>
                             @if(count($mission->missionDocument)!=0)
                                 <h1 class="fs-4 py-1 theme-color">Documents</h1>
                             @endif
@@ -341,6 +334,7 @@
                     <div class="card px-4">
                         <div class="card-body">
                             <div class="card-title fs-4">
+
                                 <ul class="nav border-bottom"><span class="nav-link active"> Information </span></ul>
                             </div>
                             <div class="card-text py-3">
@@ -462,11 +456,12 @@
                     url: "{{url('api/new-mission-application')}}",
                     type: "POST",
                     data: {
-                        user_id: $('.rating').data('user_id'),
-                        mission_id: $('.rating').data('mission_id'),
+                        user_id: $(this).data('user_id'),
+                        mission_id: $(this).data('mission_id'),
                         approval_status: 'PENDING',
                     },
                     success: function(result){
+                        $('#mission_application_btn').remove();
                         alert(result);
                     }
                 })

@@ -42,15 +42,15 @@ class MissionApplicationController extends Controller
         MissionApplication::create($request->post());
         return "Mission Application Request submitted";
     }
-    
+
     public function approveApplication(Request $request){
         $application = MissionApplication::find($request->mission_application_id);
         $application->approval_status = "APPROVE";
         $application->save();
         $mission = Mission::find($application->mission_id);
-        if($mission->timeMission){
+        if($mission->timeMission!=null){
             $timeMission = TimeMission::find($mission->timeMission->time_mission_id);
-            $timeMission->total_seats -= $timeMission->total_seats;
+            $timeMission->total_seats = $timeMission->total_seats-1;
             $timeMission->save();
         }
         return("success");
@@ -61,7 +61,7 @@ class MissionApplicationController extends Controller
             $mission = Mission::find($application->mission_id);
             if($mission->timeMission){
                 $timeMission = TimeMission::find($mission->timeMission->time_mission_id);
-                $timeMission->total_seats += $timeMission->total_seats;
+                $timeMission->total_seats = $timeMission->total_seats+1;
                 $timeMission->save();
             }
         }

@@ -83,32 +83,31 @@ class LandingPageController extends Controller
             }
             if(isset($request->sort)){
                 switch($request->sort){
-                    case '1':
+
+                    case '1': // Newest
                         $datas = $datas->orderBy('start_date','desc');
                         break;
-                    case '2':
+                    case '2': // Oldest
                         $datas = $datas->orderBy('start_date','asc');
                         break;
-                    case '3':
-
+                    case '3': // Lowest Availabel Seat
                         $datas = $datas->select('missions.*')
-                                     ->leftJoin('time_missions','time_missions.mission_id','=','missions.mission_id')
-                                     ->orderBy('time_missions.created_at','desc')
+                                     ->join('time_missions','time_missions.mission_id','=','missions.mission_id')
                                      ->orderBy('time_missions.total_seats', 'asc');
 
 
                         break;
-                    case '4':
+                    case '4': // Highest Availabel Seat
                         $datas = $datas->select('missions.*')
-                                     ->leftJoin('time_missions','time_missions.mission_id','=','missions.mission_id')
+                                     ->Join('time_missions','time_missions.mission_id','=','missions.mission_id')
                                      ->orderBy('time_missions.total_seats', 'desc');
                         break;
-                    case '5':
+                    case '5': // My Facovorites
                         $datas = $datas->select('missions.*')
                                      ->leftJoin('favorite_missions','favorite_missions.mission_id','=','missions.mission_id')
                                      ->orderBy('favorite_missions.created_at', 'desc');
                         break;
-                    case '6':
+                    case '6': // Registration DeadLine
                         $datas = $datas->select('missions.*')
                                      ->leftJoin('time_missions','time_missions.mission_id','=','missions.mission_id')
                                      ->orderBy('time_missions.registration_deadline', 'desc');

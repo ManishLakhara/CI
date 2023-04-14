@@ -1,7 +1,7 @@
 <div class="row py-3" id="listViewContent" style="display: none;">
     @foreach ($data as $item)
         {{-- This is list view --}}
-        <div class="row  py-3">
+        <div class="row py-3">
             <div class="col-lg-12 col-xl-4 py-2">
                 <div class="position-relative">
                     <img class="img-fluid w-100"
@@ -9,7 +9,7 @@
                         src="{{asset('storage/'.$item->missionMedia->where('default','1')->first()->media_path)}}"
                     @endif alt="">
                     <div class="position-absolute current-status">
-                    @if(count($item->missionApplication->where('user_id',$user_id))!==0)
+                    @if($item->missionApplication->where('user_id',$user_id)->first()!=Null)
                             @if($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='PENDING'
                             || $item->missionApplication->where('user_id',$user_id)->first()->approval_status=='APPROVE'
                             )
@@ -17,6 +17,16 @@
                             @elseif ($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='DECLINE')
                             <span class="badge bg-danger fs-6">Decline</span>
                             @endif
+                    @endif
+                    @if($item->end_date < now())
+                    <div class="position-absolute current-status" style="top: 0">
+                        <span class="badge bg-Warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
+                    </div>
+                    @endif
+                    @if($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now())
+                        <div class="position-absolute current-status" style="top: 0">
+                            <span class="badge bg-Warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
+                        </div>
                     @endif
                     <span id="applied_l_badge_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
                 </div>
@@ -66,9 +76,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-8 p-2">
+            <div class="col-lg-12 col-xl-8 p-2">
                 <div class="container">
-                <div class="row">
+                <div class="row w-100">
                     <div class="col-md-8">
                         <div class="d-flex">
                             <div>
@@ -188,7 +198,7 @@
                         </div>
                     </div>
                     <div class="col-xxl-3">
-
+                        @if($item->end_date >= now() && !($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now()))
                         <button type="button" id="mission_application_l_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn w-100"
                             @if(count($item->missionApplication->where('user_id',$user_id))!==0) style="display: none;" @endif
                             > Apply <i
@@ -198,7 +208,7 @@
                             @if(count($item->missionApplication->where('user_id',$user_id))===0) style="display: none;" @endif
                             > View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                         </button></a>
-
+                        @endif
                     </div>
                 </div>
             </div></div>

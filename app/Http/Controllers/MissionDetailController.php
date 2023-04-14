@@ -49,7 +49,8 @@ class MissionDetailController extends Controller
     }
     public function showVolunteer(Request $request){
         if($request->ajax()){
-            $recent_a = MissionApplication::where('mission_id',$request->mission_id)->get()->pluck('user_id');
+            $recent_a = MissionApplication::where('approval_status','APPROVE')
+                                            ->where('mission_id',$request->mission_id)->get()->pluck('user_id');
             $volunteers = User::whereIn('user_id',$recent_a)->paginate(9);
             return view('components.recentvolunteers',compact('volunteers'))->render();
         }

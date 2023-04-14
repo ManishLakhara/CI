@@ -7,7 +7,7 @@
 
             <div class="position-relative" style="width: 416px; height: 247px;">
                 <div class="position-absolute current-status">
-                @if(count($item->missionApplication->where('user_id',$user_id))!==0)
+                @if($item->missionApplication->where('user_id',$user_id)->first()!=Null)
                     @if($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='PENDING'
                     || $item->missionApplication->where('user_id',$user_id)->first()->approval_status=='APPROVE'
                     )
@@ -220,14 +220,15 @@
                 <div class="border"></div>
             </div>
             <div class="d-flex justify-content-center">
-
-                @if(count($item->missionApplication->where('user_id',$user_id))===0)
-                <button type="button" id="mission_application_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"> Apply <i
-                    class="fa-sharp fa-solid fa-arrow-right"></i> </button>
-                @else
-                <a href="{{route('mission-page',$item->mission_id)}}"><button id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 btn btn-outline apply-btn fs-6 px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
-                </button></a>
-                @endif
+               @if($item->end_date >= now() && !($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now()))
+                    @if(count($item->missionApplication->where('user_id',$user_id))===0)
+                        <button type="button" id="mission_application_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"> Apply <i
+                            class="fa-sharp fa-solid fa-arrow-right"></i> </button>
+                     @else
+                        <a href="{{route('mission-page',$item->mission_id)}}"><button id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 btn btn-outline apply-btn fs-6 px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
+                            </button></a>
+                    @endif
+               @endif
                 <a href="{{route("mission-page",$item->mission_id)}}">
                 <button style="display: none;" id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 fs-6 btn btn-outline apply-btn px-2" style="width: fit-content"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                 </button></a>
