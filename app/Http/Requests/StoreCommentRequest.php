@@ -22,10 +22,10 @@ class StoreCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required',
-            'mission_id' => 'required',
+            'user_id' => 'required|exists:users,user_id|numeric',
+            'mission_id' => 'required|exists:missions,mission_id|numeric',
             'text' => 'required|max:600',
-            'approval_status' => 'required'
+            'approval_status' => 'required|in:PUBLISHED,PENDING'
         ];
     }
 }

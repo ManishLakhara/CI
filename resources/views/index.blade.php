@@ -4,18 +4,7 @@
     $user_id = Auth::user()->user_id;
 
 ?>
-        @include('components.search-filter');
-
-    {{-- <form id="form_f"  action="{{route('landing.index')}}" method="POST" style="display: none">
-        @csrf
-        <input  type="text" name="country_f" id="country_f_id" value="{{ request()->input('country_f') }}"/>
-        <input  type="text" name="city_f" id="city_f_id" value="{{ request()->input('city_f') }}"/>
-        <input type="text" name="s" id="search_f_id" value="{{ request()->input('s') }}"/>
-        <input type="text" name="theme_f" id="theme_f_id" value="{{ request()->input('theme_f')}}" />
-        <input type="text" multiple name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f') }}"/>
-        <input type="number" name="sort" id="sort" value="{{request()->input('sort')}}"/>
-        <button class="btn" type="submit" id="submit_f_id"></button>
-    </form> --}}
+        @include('components.search-filter')
 
     </div>
     <div class="container py-4">
@@ -89,57 +78,27 @@
         function removeBadge(id,type){
             $('#close_'+type+'_parent_'+id).remove();
         }
-        function updateCityDropdown(country_id){
-            $('#city_dropper').html('');
-            $.ajax({
-                url: "{{ url('api/fetch-city')}}",
-                type: "POST",
-                data: {
-                    country_id: country_id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
-                success: function(result) {
-                    $.each(result.cities, function(key, value){
-                        html = "";
-                        $('#city_dropper').append("<div class='form-check'>"+
-                            "<input class='form-check-input' type='checkbox' value="+value.city_id+" id='city_option_"+value.city_id+"'>"+
-                            "<label class='form-check-label text-secondary' for='city_option_"+value.city_id+"' id='city_label_"+value.city_id+"'>"+value.name+"</label>"+
-                            "</div>" );
-                    });
-                }
-            });
-            return;
-        }
-        // function getPreviousValue(){
-        //     skills = $('#skill_f_id').val().split(',');
-        //     skills.forEach(skill => {
-        //         if(skill!=""){
-        //             $('#skill_option_'+skill).prop('checked', true);
-        //             getBadge(skill,$('#skill_label_'+skill).text(),'skill');
+        // function updateCityDropdown(country_id){
+        //     $('#city_dropper').html('');
+        //     $.ajax({
+        //         url: "{{ url('api/fetch-city')}}",
+        //         type: "POST",
+        //         data: {
+        //             country_id: country_id,
+        //             _token: '{{ csrf_token() }}'
+        //         },
+        //         dataType: 'json',
+        //         success: function(result) {
+        //             $.each(result.cities, function(key, value){
+        //                 html = "";
+        //                 $('#city_dropper').append("<div class='form-check'>"+
+        //                     "<input class='form-check-input' type='checkbox' value="+value.city_id+" id='city_option_"+value.city_id+"'>"+
+        //                     "<label class='form-check-label text-secondary' for='city_option_"+value.city_id+"' id='city_label_"+value.city_id+"'>"+value.name+"</label>"+
+        //                     "</div>" );
+        //             });
         //         }
         //     });
-        //     themes = $('#theme_f_id').val().split(',');
-        //     themes.forEach(theme => {
-        //         if(theme!=""){
-        //             $('#mission_theme_option_'+theme).prop('checked', true);
-        //             getBadge(theme,$('#theme_label_'+theme).text(),'mission');
-        //         }
-        //     });
-        //     countries = $('#country_f_id').val().split(',');
-        //     countries.forEach(country => {
-        //         if(country!=""){
-        //             $('#country_option_'+country).prop('checked', true);
-        //             getBadge(country,$('#country_label_'+country).text(),'country');
-        //         }
-        //     });
-        //     // cities = $('#city_f_id').val().split(',');
-        //     // cities.forEach(city => {
-        //     //     if(cities!=""){
-        //     //         $('#city_option_'+city).prop('checked', true);
-        //     //         getBadge(city,$('#city_label_'+city).text(),'city');
-        //     //     }
-        //     // });
+        //     return;
         // }
         function getNextFilter(page){
             $.ajax({
@@ -225,6 +184,10 @@
                     removeBadge(city_id, 'city');
                     cities = cities.filter(item => item != city_id);
                 }
+                if(cities.length==0){
+                    $('[id^="close_mission_button_"]').click();
+                    $('#theme_drop_down_menu').prop('disabled', true);
+                }
                 $('#city_f_id').val(cities);
                 getNextFilter(1);
                 getTheme();
@@ -244,6 +207,10 @@
                     themes = themes.filter(item => item != mission_theme_id);
                 }
                 $('#theme_f_id').val(themes);
+                if(themes.length==0){
+                    $('[id^="close_skill_button_"]').click();
+                    $('#skill_drop_down_menu').prop('disabled', true);
+                }
                 getNextFilter(1);
                 getSkill();
             });
@@ -377,9 +344,8 @@
                 if(countries.length==0){
                     $('#clear_all').hide();
                     $('[id^="close_city_button_"]').click();
-                    $('#skill_drop_down_menu').prop('disabled', true);
-                    $('#theme_drop_down_menu').prop('disabled', true);
                     $('#city_drop_down_menu').prop('disabled', true);
+                    $('#clear-filter').hide();
                 }
                 getNextFilter(1);
             })
@@ -391,7 +357,6 @@
                 cities = cities.filter(item => item != id);
                 if(cities.length==0){
                     $('[id^="close_mission_button_"]').click();
-                    $('#skill_drop_down_menu').prop('disabled', true);
                     $('#theme_drop_down_menu').prop('disabled', true);
                 }
                 getNextFilter(1);
@@ -420,6 +385,18 @@
         $(document).ready(function(Event) {
             console.log('started');
             runJquery();
+            $('.my-filter-btn').on('click',function(){
+                $('#See_filters').toggle('hidden');
+            })
+            $(window).on('resize', function() {
+                var windowWidth = $(window).width();
+                if(windowWidth <= 767){
+                    $('#See_filters').css('display','none');
+                }
+                if(windowWidth >= 768){
+                    $('#See_filters').show();
+                }
+            })
             $('#grid-view').on('click', function() {
                 $('#grid-view-label').css({'background-color': '#D9D9D9'});
                 $('#list-view-label').css({'background-color': 'white'});
@@ -481,10 +458,18 @@
                 else{
                     removeBadge(country_id, 'country');
                     countries = countries.filter(item => item != country_id);
+                    }
+
+                if(countries.length==0){
+                    $('#clear_all').hide();
+                    $('#city_drop_down_menu').prop('disabled', true);
+                    $('[id^="close_city_button_"]').click();
+
+                    $('#clear-filter').hide();
                 }
                 $('#country_f_id').val(countries);
                 getNextFilter(1);
-                badgeRunJQueryCountry();
+                badgeRunJQueryCountry(country_id);
                 getCity();
             }),
             // this is city dropdown

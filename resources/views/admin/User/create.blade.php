@@ -211,6 +211,9 @@
                 <div class="col-md-5">
                     <label for="city">city</label>
                     <select required class="form-control" name="city_id" id="city-dropdown">
+                        @if(old('city_id'))
+                            <option value="{{old('city_id')}}">Old Selected value</option>
+                        @endif
                     </select>
                     @error('city_id')
                         <div class="text-danger">

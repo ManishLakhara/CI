@@ -24,10 +24,18 @@ class RegisterRequest extends FormRequest
         return [
             'first_name' => 'required|max:16|alpha',
             'last_name' => 'required|max:16|alpha',
-            'phone_number' => 'required|numeric|digits:10',
-            'email' => 'required|email',
+            'phone_number' => 'required|numeric|digits:10|unique:users,phone_number',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             'confirm_password' => 'required|same:password',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.unique' => "This :attribute have been already registered",
+            'phone_number' => "This :attribute have been already registered",
         ];
     }
 }

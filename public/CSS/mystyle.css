@@ -17,7 +17,6 @@
     #userAvatar {
         display: none;
     }
-
 }
 @media screen and (max-width: 991px){
     #filler-gap { display: none;}
@@ -27,7 +26,12 @@
   }
 
 
-
+  input[type="radio"]:checked + label {
+    border: 2px solid black;
+  }
+  .rounded-circle:focus {
+    box-shadow: none;
+  }
 .from_untill {
     border-radius: 23px;
     max-width: fit-content;
@@ -80,10 +84,7 @@
 @media screen and (max-width: 991px) {
 
 }
-@media screen and (max-width: 767px) {
-    .my-filters{
-        display: none;
-    }
+ @media screen and (max-width: 767px) {
     .my-filter-btn{
         display: block;
     }
@@ -92,12 +93,10 @@
     .my-filter-btn{
         display: none;
     }
-    #filterToggler{
-        display: none;
-    }
 }
-@media screen and (max-width: 467px) {
-
+.dropdown-menu {
+    max-height: 10em;
+    overflow:auto;
 }
 
 .parent_add_btn {

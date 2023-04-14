@@ -31,10 +31,14 @@ class UpdateUserRequest extends FormRequest
                             $query->whereNull('deleted_at');
                         })->ignore($userId,'user_id')],
             'phone_number' => ['required','numeric','digits:10',
-                                Rule::unique('users')->ignore($userId,'user_id')],
+                                Rule::unique('users')->where(function($query){
+                                    $query->whereNull('deleted_at');
+                                })->ignore($userId,'user_id')],
             'employee_id' => ['nullable','numeric',
-                                Rule::unique('users')->ignore($userId,'user_id')],
-            'avatar' => 'required',
+                                Rule::unique('users')->where(function($query){
+                                    $query->whereNull('deleted_at');
+                                })->ignore($userId,'user_id')],
+            'avatar' => 'nullable',
             'department' => 'required',
             'profile_text' => 'required',
             'country_id' => 'required',

@@ -18,5 +18,11 @@
     <script>
         var currentpath = window.location.pathname.split('/')[1];
         $('#'+currentpath).addClass('active');
+        $(window).on('resize', function() {
+            var windowWidth = $(window).width();
+            if(windowWidth >= 768){
+                $('#sb-sidenav').show();
+            }
+        })
     </script>
 </html>

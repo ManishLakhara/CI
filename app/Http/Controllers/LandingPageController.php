@@ -78,7 +78,8 @@ class LandingPageController extends Controller
                 $skill_id_array = explode(',',$request->skills);
                 $datas = $datas->select('missions.*')
                                ->join('mission_skills','mission_skills.mission_id','=','missions.mission_id')
-                               ->whereIn('mission_skills.skill_id',$skill_id_array);
+                               ->whereIn('mission_skills.skill_id',$skill_id_array)
+                               ->distinct();
             }
             if(isset($request->sort)){
                 switch($request->sort){

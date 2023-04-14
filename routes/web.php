@@ -92,7 +92,7 @@ Route::group(['middleware' => ['admin']], function(){
 });
 
 Route::group(['middleware' => ['user']], function(){
-    Route::get('cms',[CmsPagesController::class, 'index'])->name('policy-page');
+
     Route::get('index',[LandingPageController::class, 'index'])->name('landing.index');
     Route::get('index-filter',[LandingPageController::class, 'filterApply'])->name('landing.filterApply');
     Route::get('index/find-city',[LandingPageController::class, 'findCity']);
@@ -112,7 +112,7 @@ Route::group(['middleware' => ['user']], function(){
     Route::resource('mystories', StoryListingController::class);
     Route::post('mystories/{story_id}', [StoryListingController::class,'updateDraft'])->name('mystories.updateDraft');
 });
-
+Route::get('cms',[CmsPagesController::class, 'index'])->name('policy-page');
 //backend routes
 
 // Route::get('adminresetpage',function(){

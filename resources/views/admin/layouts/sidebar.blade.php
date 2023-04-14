@@ -1,5 +1,12 @@
-<div id="layoutSidenav_nav">
-    <nav class="sb-sidenav accordion sb-sidenav zindex-sticky bg-orange" id="sidenavAccordion">
+<style>
+    #layoutSidenav_nav {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+</style>
+<div class="navbar-collapse" id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav zindex-sticky bg-orange"  id="sidenavAccordion">
         <div class="sb-sidenav-menu align-content-center" style="z-index: 10">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading text-white">NAVIGATION</div>

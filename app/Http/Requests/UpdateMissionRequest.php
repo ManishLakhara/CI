@@ -22,12 +22,12 @@ class UpdateMissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:128',
+            'title' => 'required|max:128|alpha_num',
             'short_description' => 'required',
             'description' => 'required',
-            'theme_id' => 'required',
-            'city_id' => 'required',
-            'country_id' => 'required',
+            'theme_id' => 'required|exists:mission_themes,mission_theme_id',
+            'city_id' => 'required|exists:cities,city_id',
+            'country_id' => 'required|exists:countries,country_id',
             'mission_type' => 'required',
             'status' => 'required',
             'document_name.*' => 'mimes:pdf,doc,docx',

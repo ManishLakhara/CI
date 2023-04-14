@@ -43,7 +43,7 @@
                         <td>
                             <div class="d-flex">
                                 <a class="btn btn-white" href="{{ route('missiontheme.edit', $d->mission_theme_id) }}">
-                                    <img src="Images/edit.png" height="22px" width="22px" alt="edit">
+                                    <i class="far fa-edit" style="color:#F88634;"></i>
                                 </a>
 
                                 <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $d->mission_theme_id }}"

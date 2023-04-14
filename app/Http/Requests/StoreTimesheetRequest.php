@@ -30,8 +30,6 @@ class StoreTimesheetRequest extends FormRequest
         return [
 
             'mission_id' => 'required',
-
-
             'notes' => 'required|string',
 
             'action' => [

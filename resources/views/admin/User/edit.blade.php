@@ -85,6 +85,17 @@
                                 </label>
                             </div>
                         </div>
+                        {{-- <div class="row align-items-center py-3">
+                            <div class="col"><span class="fs-4">Update users Profile Images</span></div>
+                            <div class="col">
+                                <label for="avatar" style="cursor: pointer;">
+                                    <img src="{{asset($user->avatar)}}"
+                                        alt="profile-photo" class="img-fluid rounded-circle mt-5" style="width: 115px; height: 115px;">
+                                </label>
+                                <input type="file" id="avatar" name="avatar" style="display: none;">
+                            </div>
+                        </div> --}}
+
                         @error('avatar')
                                 <div class="text-danger">
                                     {{ $message }}
@@ -271,7 +282,11 @@
                                     <option value={{ null }} selected>Select Country</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->country_id }}"
-                                            {{ $user->country_id == $country->country_id ? 'selected' : '' }}>
+                                            @if(old('country_id')==Null)
+                                            {{ $user->country_id == $country->country_id ? 'selected' : '' }}
+                                            @else
+                                            {{ old('country_id') == $country->country_id ? 'selected' : ''}}
+                                            @endif>
                                             {{ $country->name }}</option>
                                     @endforeach
                                 </select>
@@ -285,11 +300,15 @@
                                 <label for="city">city</label>
                                 <select class="form-control" name="city_id" id="city-dropdown">
                                     @isset($cities)
+                                        @if(old('city_id')==null)
                                         @foreach ($cities as $city)
                                             <option value="{{ $city->city_id }}"
                                                 {{ $user->city_id == $city->city_id ? 'selected' : '' }}>{{ $city->name }}
                                             </option>
                                         @endforeach
+                                        @else
+                                        <option value="{{ old('city_id')}}">Old Selected Value</option>
+                                            @endif
                                     @endisset
                                 </select>
                                 @error('city_id')

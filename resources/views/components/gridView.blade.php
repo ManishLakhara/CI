@@ -1,7 +1,7 @@
 <div id="gridViewContent" class="row gx-2" id="missions">
     @foreach ($data as $item)
         {{-- This is grid view --}}
-    <div class="card col-lg-6 col-md-12 col-xxl-4 col-xl-6 border-0  pb-4 text-center">
+    <div class="card col-lg-6 col-md-12 col-xxl-4 col-xl-6 border-0 pb-4 text-center">
         <div class="d-flex justify-content-center py-1">
             <div>
 
@@ -16,7 +16,20 @@
                     <span class="badge bg-danger fs-6">Decline</span>
                     @endif
                 @endif
+                @if($item->end_date < now())
+                    <div class="position-absolute current-status" style="top: 0">
+                        <span class="badge bg-Warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
+                    </div>
+                @endif
+                @if($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now())
+                    <div class="position-absolute current-status" style="top: 0">
+                        <span class="badge bg-Warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
+                    </div>
+                @endif
+
+
                 <span id="applied_badge_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
+
                 </div>
 
                 <span class="position-absolute parent_mission_location">

@@ -24,7 +24,7 @@ CKEDITOR.replace( 'summary-ckeditor' );
                 },
                 dataType: 'json',
                 success: function(result) {
-                    $('#city-dropdown').html('<option value="">Select City</option>');
+                    $('#city-dropdown').html('<option disabled value="">Select City</option>');
                     $.each(result.cities, function(key, value) {
                         $("#city-dropdown").append('<option value="' + value.city_id + '">' + value.name + '</option>');
                     });
