@@ -116,8 +116,10 @@
                     <label for="inputType" class="form-label">Mission Type</label>
                     <select id="inputType" class="form-select" name='mission_type' value="{{ old('mission_type') }}">
                         <option value="none" selected="" disabled="" hidden="">select mision type</option>
-                        <option value="time">Time</option>
-                        <option value="goal">Goal</option>
+                        {{-- <option value="time">Time</option>
+                        <option value="goal">Goal</option> --}}
+                        <option value="time" {{ old('mission_type') == 'time' ? 'selected' : '' }}>Time</option>
+                        <option value="goal" {{ old('mission_type') == 'goal' ? 'selected' : '' }}>Goal</option>
                     </select>
                     @error('mission_type')
                         <div class="text-danger">
@@ -128,7 +130,13 @@
 
                 <div class="col-md-6">
                     <label for="text" class="form-label">Total Seats</label>
-                    <input type="text" class="form-control" id="text" name='total_seats' disabled>
+                    {{-- <input type="text" class="form-control" id="text" name='total_seats' disabled
+                        value="{{ old('total_seats') }}"> --}}
+
+                        <input type="text" class="form-control" id="text" name='total_seats'
+                        {{ old('mission_type') == 'time' && old('total_seats') ? '' : 'disabled' }}
+                        value="{{ old('total_seats') }}">
+
                     @error('total_seats')
                         <div class="text-danger">
                             {{ $message }}
@@ -139,8 +147,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="missionRegDeadline" class="form-label">Mission Registration Deadline</label>
-                    <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'
-                        disabled value="{{ old('registration_deadline') }}">
+                    {{-- <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'
+                        disabled value="{{ old('registration_deadline') }}"> --}}
+                        <input type="date" class="form-control" id="missionRegDeadline" name='registration_deadline'
+                        {{ old('mission_type') == 'time' && old('registration_deadline') ? '' : 'disabled' }}
+                        value="{{ old('registration_deadline') }}">
                     @error('registration_deadline')
                         <div class="text-danger">
                             {{ $message }}
@@ -149,8 +160,11 @@
                 </div>
                 <div class="col-md-6">
                     <label for="goal_objective_text" class="form-label">Goal Objective Text</label>
-                    <input type="text" class="form-control" id="goal_objective_text" name='goal_objective_text'
-                        disabled value="{{ old('goal_objective_text') }}">
+                    {{-- <input type="text" class="form-control" id="goal_objective_text" name='goal_objective_text'
+                        disabled value="{{ old('goal_objective_text') }}"> --}}
+                        <input type="text" class="form-control" id="goal_objective_text" name='goal_objective_text'
+                        {{ old('mission_type') == 'goal' && old('goal_objective_text') ? '' : 'disabled' }}
+                        value="{{ old('goal_objective_text') }}">
                     @error('goal_objective_text')
                         <div class="text-danger">
                             {{ $message }}
@@ -161,7 +175,10 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="goal_value" class="form-label">Goal Value</label>
-                    <input type="text" class="form-control" id="goal_value" name='goal_value' disabled
+                    {{-- <input type="text" class="form-control" id="goal_value" name='goal_value' disabled
+                        value="{{ old('goal_value') }}"> --}}
+                        <input type="text" class="form-control" id="goal_value" name='goal_value'
+                        {{ old('mission_type') == 'goal' && old('goal_value') ? '' : 'disabled' }}
                         value="{{ old('goal_value') }}">
                     @error('goal_value')
                         <div class="text-danger">
@@ -178,8 +195,13 @@
                         </option>
                         @foreach ($mission_theme as $theme)
                             <option value="{{ $theme->mission_theme_id }}">{{ $theme->title }}</option>
+                            {{-- <option value="{{ $theme->mission_theme_id}}"
+                                {{ old('mission_theme_id') == $theme->mission_theme_id ? 'selected' : '' }}>{{ $theme->title }}
+                            </option> --}}
                         @endforeach
                     </select>
+
+
 
                 </div>
 
@@ -194,11 +216,23 @@
                         </button>
                         <div class="dropdown-menu col-md-6" aria-labelledby="dropdownMenuButton"
                             style="max-height: 200px; overflow-y: auto;">
-                            @foreach ($mission_skills as $skill)
+                            {{-- @foreach ($mission_skills as $skill)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="skill_id[]"
                                         value="{{ $skill->skill_id }}" id="skill-{{ $skill->skill_id }}">
                                     <label class="form-check-label" for="skill-{{ $skill->skill_id }}">
+                                        {{ $skill->skill_name }}
+                                    </label>
+                                </div>
+                            @endforeach --}}
+                            @foreach ($mission_skills as $skill)
+                                <div class="form-check">
+                                    <input class="form-check-input" style="margin-left: 10px;" type="checkbox"
+                                        name="skill_id[]" value="{{ $skill->skill_id }}"
+                                        id="skill-{{ $skill->skill_id }}"
+                                        @if (is_array(old('skill_id')) && in_array($skill->skill_id, old('skill_id'))) checked @endif>
+                                    <label class="form-check-label" style="margin-left: 50px;"
+                                        for="skill-{{ $skill->skill_id }}">
                                         {{ $skill->skill_name }}
                                     </label>
                                 </div>
@@ -237,17 +271,23 @@
                 <div class="col-md-6">
                     <label for="inputAvailable" class="form-label">Mission Availability</label>
                     <select id="inputAvailable" class="form-select" name='availability'>
-                        <option>Daily</option>
+                        {{-- <option>Daily</option>
                         <option>Weekly</option>
                         <option>Week-end</option>
-                        <option>Monthly</option>
+                        <option>Monthly</option> --}}
+                        <option value="Daily" {{ old('availability') == 'Daily' ? 'selected' : '' }}>Daily</option>
+                        <option value="Weekly" {{ old('availability') == 'Weekly' ? 'selected' : '' }}>Weekly</option>
+                        <option value="Week-end" {{ old('availability') == 'Week-end' ? 'selected' : '' }}>Week-end
+                        </option>
+                        <option value="Monthly" {{ old('availability') == 'Monthly' ? 'selected' : '' }}>Monthly</option>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="missionVideo" class="form-label">Mission Video</label>
-                    <input type="text" class="form-control" id="orgVideo" name="media_names">
+                    <input type="text" class="form-control" id="orgVideo" name="media_names"
+                        value="{{ old('media_names') }}">
                     @error('media_names')
                         <div class="text-danger">
                             {{ $message }}
@@ -257,8 +297,10 @@
                 <div class="col-md-6">
                     <label for="status">Status</label>
                     <select name="status" id="status" class="form-control" required>
-                        <option value="0">Inactive</option>
-                        <option value="1" selected>Active</option>
+                        {{-- <option value="0">Inactive</option>
+                        <option value="1" selected>Active</option> --}}
+                        <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
+                        <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Active</option>
                     </select>
 
 
@@ -324,6 +366,36 @@
                 goalValueInput.value = '';
             }
         });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+    var missionType = $('#inputType').val();
+
+
+    toggleFields(missionType);
+
+
+    $('#inputType').change(function() {
+
+        var selectedMissionType = $(this).val();
+
+        toggleFields(selectedMissionType);
+    });
+
+
+    function toggleFields(missionType) {
+        if (missionType === 'time') {
+            $('#text').prop('disabled', false);
+            $('#missionRegDeadline').prop('disabled', false);
+        } else if (missionType === 'goal') {
+            $('#text').prop('disabled', true);
+            $('#missionRegDeadline').prop('disabled', true);
+        }
+    }
+});
+
     </script>
 @endsection
 add
