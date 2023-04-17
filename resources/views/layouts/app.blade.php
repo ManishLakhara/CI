@@ -67,6 +67,8 @@
     <script src={{ asset('JS/jquery.min.js') }}></script>
 </body>
 @include('layouts.scripts')
-@yield('contactus')
+@auth
+    @yield('contactus')
+@endauth
 
 </html>
