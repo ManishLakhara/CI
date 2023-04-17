@@ -27,7 +27,7 @@
                                         <form method="post" action="{{route('adminPasswordResetting')}}">
                                             @csrf
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" name="password"  placeholder="Password" required/>
+                                                <input class="form-control" id="inputPassword" type="password" name="password"  placeholder="Password" />
                                                 <label for="inputPassword">New Password</label>
                                                 @error('password')
                                                 <div class="text-danger">
@@ -36,7 +36,7 @@
                                             @enderror
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" name="confirm-password"  placeholder="Password" required/>
+                                                <input class="form-control" id="inputPassword" type="password" name="confirm-password"  placeholder="Password"/>
                                                 <label for="inputPassword">Confirm New Password</label>
                                                 @error('confirm-password')
                                                 <div class="text-danger">

@@ -16,7 +16,7 @@
                                         <form method="post"  action="{{ route('admincustomlogin') }}">
                                             @csrf
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" name="email" value='' placeholder="name@example.com"  />
+                                                <input class="form-control" id="inputEmail" type="email" name="email" value="{{ old('email') }}"/>
                                                 <label for="inputEmail">Email address</label>
                                                 @error('email')
                                                 <div class="text-danger">
@@ -26,7 +26,7 @@
 
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" name="password" value='' placeholder="Password" />
+                                                <input class="form-control" id="inputPassword" type="password" name="password" value="{{ old('password') }}"/>
                                                 <label for="inputPassword">Password</label>
                                                 @error('password')
                                                 <div class="text-danger">
@@ -47,7 +47,17 @@
                                             </div>
                                         </form>
                                     </div>
+                                    @if(session('status'))
+                                    <div class="alert alert-danger">
+                                        {{ session('status')}}
+                                    </div>
+                                   @endif
 
+                                   @if(session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success')}}
+                                    </div>
+                                   @endif
                                 </div>
                             </div>
                         </div>
