@@ -53,7 +53,6 @@
                             @endif
                         @endforeach
 
-
                         @if($set==false)
                         <i class="fa-regular fa-heart fs-4"></i>
                         @endif
@@ -118,7 +117,7 @@
         </div>
         </div>
         <div class="text-center" style="z-index: 1; margin-top: -25px">
-            <span class="fs-4 px-2 from_untill" style="">
+            <span class="position-relative fs-4 px-2 from_untill" >
                 {{ $item->missionTheme->title }}
             </span>
         </div>
@@ -131,7 +130,7 @@
             </p>
             <div class="d-flex py-2 justify-content-between">
                 <div>
-                    <span class="theme-color">
+                    <span class="theme-color" style="display: inline-block; max-width: 150px; line-height: 1em; white-space: normal; overflow: hidden; text-overflow: ellipsis;">
                         {{ $item->organization_name }}
                     </span>
                 </div>
@@ -178,14 +177,13 @@
                                     <span class="text-muted">Seats left</span>
                                 </div>
                             </div>
-                        @endif
-                        @if(false)
+                        @elseif(collect($item->goalMission)->isNotEmpty())
                             <div class="d-flex align-items-center ">
                                 <div class="px-1">
                                     <img src={{ asset('Images/Already-volunteered.png') }} alt="">
                                 </div>
                                 <div class="px-2 d-flex flex-column align-items-start">
-                                    <span class="theme-color fs-5 font-weight-bolder">{{$item->timeMission->total_seats}}<br></span>
+                                    <span class="theme-color fs-5 font-weight-bolder">{{$item->missionApplication->where('approval_status','APPROVE')->count()}}<br></span>
                                     <span class="text-muted"><small>Already volunteered</small></span>
                                 </div>
                             </div>

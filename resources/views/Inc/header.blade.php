@@ -6,6 +6,9 @@
           <div class="d-flex justify-content-end">
             @yield('cms-toggle')
             <div class="px-4">
+                <a  class="btn text-muted no-decor" href="{{ route('landing.index') }}">Home</a>
+              </div>
+            <div class="px-4">
               <a  class="btn text-muted no-decor" href="{{ route('mystories.index') }}">Stories</a>
             </div>
             <div class="dropdown show ">

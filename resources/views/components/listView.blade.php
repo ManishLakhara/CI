@@ -63,7 +63,7 @@
                                 alt=""></button>
                     </div>
                     <div class="text-center" style="z-index: 1; margin-top: -25px">
-                        <span class="fs-4 px-2 from_untill" style="">
+                        <span class="fs-4 px-2 from_untill">
                             {{ $item->missionTheme->title }}
                         </span>
                     </div>
@@ -74,14 +74,14 @@
                 <div class="row w-100">
                     <div class="col-md-8">
                         <div class="d-flex">
-                            <div>
-                                <img src="{{asset('Images/pin1.png')}}" alt=""> {{$item->city->name}}
+                            <div class="d-flex align-items-center">
+                                <img src="{{asset('Images/pin1.png')}}" alt=""> <span >{{$item->city->name}}</span>
                             </div>
-                            <div class="px-2">
-                                <img src="{{asset('Images/web.png')}}" alt=""> {{$item->missionTheme->title}}
+                            <div class="px-2 d-flex align-items-center">
+                                <img src="{{asset('Images/web.png')}}" alt=""> <span >{{$item->missionTheme->title}}</span>
                             </div>
-                            <div class="px-2">
-                                <img src="{{asset('Images/organization.png')}}" alt=""> {{$item->organization_name}}
+                            <div class="px-2 d-flex align-items-center">
+                                <img src="{{asset('Images/organization.png')}}" alt=""><span >{{$item->organization_name}}</span>
                             </div>
                         </div>
                     </div>
@@ -135,6 +135,16 @@
                                                 <span class="text-muted">Seats left</span>
                                             </div>
                                         </div>
+                                    {{-- @elseif (collect($item->goalMission)->isNotEmpty())
+                                        <div class="col-6 d-flex align-items-center">
+                                            <div class="px-1">
+                                                <img src={{ asset('Images/Already-volunteered.png') }} alt="">
+                                            </div>
+                                            <div class="px-2 d-flex flex-column align-items-start">
+                                                <span class="theme-color fs-5 font-weight-bolder">{{$item->missionApplication->where('approval_status','APPROVE')->count()}}<br></span>
+                                                <span class="text-muted"><small>Already volunteered</small></span>
+                                            </div>
+                                        </div> --}}
                                     @endif
                                     @if ($item->timeMission!=null)
                                         <div class='col-6 d-flex align-items-center'>

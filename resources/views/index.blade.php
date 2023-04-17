@@ -10,18 +10,6 @@
   </div>
 @endif
         @include('components.search-filter');
-
-    {{-- <form id="form_f"  action="{{route('landing.index')}}" method="POST" style="display: none">
-        @csrf
-        <input  type="text" name="country_f" id="country_f_id" value="{{ request()->input('country_f') }}"/>
-        <input  type="text" name="city_f" id="city_f_id" value="{{ request()->input('city_f') }}"/>
-        <input type="text" name="s" id="search_f_id" value="{{ request()->input('s') }}"/>
-        <input type="text" name="theme_f" id="theme_f_id" value="{{ request()->input('theme_f')}}" />
-        <input type="text" multiple name="skill_f" id="skill_f_id" value="{{ request()->input('skill_f') }}"/>
-        <input type="number" name="sort" id="sort" value="{{request()->input('sort')}}"/>
-        <button class="btn" type="submit" id="submit_f_id"></button>
-    </form> --}}
-
     </div>
     <div class="container py-4">
         <div class="d-flex">
@@ -31,7 +19,6 @@
                 <button class="btn close" id="filter-clear"> clear All</button>
             </div>
         </div>
-
     </div>
 @if($count!=0)
     <div class=" container  py-3">
@@ -45,10 +32,10 @@
                     <select id="selectsort" class="custom-select w-100 border-1 text-muted">
                         <option disabled selected>Sort by</option>
                         <option value="1" @if(request()->input('sort')=='1') selected @endif>Newest</option>
-                        <option value="2"@if(request()->input('sort')=='2') selected @endif>Oldest</option>
-                        <option value="3"@if(request()->input('sort')=='3') selected @endif>Lowest available seats</option>
-                        <option value="4"@if(request()->input('sort')=='4') selected @endif>Highest available seats</option>
-                        <option value="5"@if(request()->input('sort')=='5') selected @endif>My favourites</option>
+                        <option value="2" @if(request()->input('sort')=='2') selected @endif>Oldest</option>
+                        <option value="3" @if(request()->input('sort')=='3') selected @endif>Lowest available seats</option>
+                        <option value="4" @if(request()->input('sort')=='4') selected @endif>Highest available seats</option>
+                        <option value="5" @if(request()->input('sort')=='5') selected @endif>My favourites</option>
                         <option value="6" @if(request()->input('sort')=='6') selected @endif>Registration deadline</option>
                     </select>
                 </div>
@@ -94,28 +81,6 @@
         function removeBadge(id,type){
             $('#close_'+type+'_parent_'+id).remove();
         }
-        // function updateCityDropdown(country_id){
-        //     $('#city_dropper').html('');
-        //     $.ajax({
-        //         url: "{{ url('api/fetch-city')}}",
-        //         type: "POST",
-        //         data: {
-        //             country_id: country_id,
-        //             _token: '{{ csrf_token() }}'
-        //         },
-        //         dataType: 'json',
-        //         success: function(result) {
-        //             $.each(result.cities, function(key, value){
-        //                 html = "";
-        //                 $('#city_dropper').append("<div class='form-check'>"+
-        //                     "<input class='form-check-input' type='checkbox' value="+value.city_id+" id='city_option_"+value.city_id+"'>"+
-        //                     "<label class='form-check-label text-secondary' for='city_option_"+value.city_id+"' id='city_label_"+value.city_id+"'>"+value.name+"</label>"+
-        //                     "</div>" );
-        //             });
-        //         }
-        //     });
-        //     return;
-        // }
         function getNextFilter(page){
             $.ajax({
                 url: "{{url('index-filter')}}"+"?page="+page+"&s="+search+"&countries="+countries+"&cities="+cities+"&themes="+themes+"&skills="+skills+"&sort="+sort,
@@ -468,12 +433,8 @@
                 sort=$('#selectsort').val();
                 $('#sort').val(sort);
                 getNextFilter(1);
+
             }),
-            // $('#refresh-apply').on('click', function() {
-            //     $('#search_input').val('');
-            //     $('#filter-clear').click();
-            //     search = $("#search_input").val();
-            // }),
             $('#grid-view').on('click', function() {
                 view=0;
                 $('#gridViewContent').show();
@@ -514,53 +475,6 @@
                 badgeRunJQueryCountry(country_id);
                 getCity();
             }),
-            // this is city dropdown
-            // $('input[id^=city_option_]').on('change',function(){
-            //     let city_id = this.id.split('_')[2];
-            //     let city_name = $('#city_label_'+city_id).text();
-            //     if(this.checked){
-            //         getBadge(city_id,city_name,'city');
-            //         cities.push(city_id);
-            //     }
-            //     else{
-            //         removeBadge(city_id, 'city');
-            //         cities.pop(city_id);
-            //     }
-            //     $('#city_f_id').val(cities);
-            //     getNextFilter(1);
-            //     getTheme();
-            // }),
-            // this is theme dropdown
-            // $('input[id^=mission_theme_option_]').on('change', function(){
-            //     let mission_theme_id = this.id.split('_')[3];
-            //     let title = $('#theme_label_'+mission_theme_id).text();
-            //     if(this.checked){
-            //         getBadge(mission_theme_id,title,'theme');
-            //         themes.push(mission_theme_id);
-            //     }
-            //     else{
-            //         removeBadge(mission_theme_id,'theme');
-            //         themes.pop(mission_theme_id);
-            //     }
-            //     $('#theme_f_id').val(themes);
-            //     getNextFilter(1);
-            //     getSkill();
-            // })
-            // this is skill dropdown
-            // $('input[id^=skill_option_]').on('change', function(){
-            //     let skill_id = this.id.split('_')[2];
-            //     let skill_name = $('#skill_label_'+skill_id).text();
-            //     if(this.checked){
-            //         getBadge(skill_id, skill_name,'skill');
-            //         skills.push(skill_id);
-            //     }
-            //     else{
-            //         removeBadge(skill_id,'skill');
-            //         skills.pop(skill_id);
-            //     }
-            //     $('#skill_f_id').val(skills);
-            //     getNextFilter(1);
-            // })
             $('#clear_all').on('click', function() {
                 $('#badges').children().remove();
                 countries = [];

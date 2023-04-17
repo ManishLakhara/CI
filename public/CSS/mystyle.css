@@ -149,9 +149,17 @@
 .mission-title:hover {
     color:#f88634;
 }
-
 .mission-short-description {
     color: #757575;
+    display: -webkit-box;
+    /* max-width: 250px; */
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.no-overlaping{
+    max-width: 150px;
+    max-height: fit-content;
     display: -webkit-box;
     /* max-width: 250px; */
     -webkit-line-clamp: 2;

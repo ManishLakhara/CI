@@ -71,14 +71,13 @@
                                     <span class="text-muted">Seats left</span>
                                 </div>
                             </div>
-                        @endif
-                        @if(false)
+                        @elseif(collect($mission->goalMission)->isNotEmpty())
                             <div class="d-flex align-items-center ">
                                 <div class="px-1">
                                     <img src={{ asset('Images/Already-volunteered.png') }} alt="">
                                 </div>
                                 <div class="px-2 d-flex flex-column align-items-start">
-                                    <span class="theme-color fs-5 font-weight-bolder">40<br></span>
+                                    <span class="theme-color fs-5 font-weight-bolder">{{$mission->missionApplication->where('approval_status','APPROVE')->count()}}<br></span>
                                     <span class="text-muted"><small>Already volunteered</small></span>
                                 </div>
                             </div>
@@ -96,6 +95,12 @@
                                 </div>
                             </div>
                         @elseif($mission->goalMission)
+                        @php
+                            $achieved=0;
+                            foreach($mission->timeSheet->where('status','APPROVED') as $sheet){
+                                $achieved += $sheet->action;
+                            }
+                        @endphp
                             <div class='d-flex justify-content-start py-2 py-sm-4 w-lg-75 w-100'>
                                 <div class="px-1">
                                     <img src={{ asset('Images/achieved.png') }} alt="">
@@ -109,9 +114,9 @@
                                         width: 20em;
                                     }</style>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: {{$achieved}}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="{{$mission->goalMission->goal_value}}"></div>
                                     </div>
-                                    <small class="text-muted fs-6">{{$mission->goalMission->goal_value}} achieved</small>
+                                    <small class="text-muted fs-6">{{$achieved}} achieved</small>
                                 </div>
                             </div>
                         @endif
@@ -353,8 +358,16 @@
                                 <div class="row">
                                     <div class="col-md-3 fs-6 theme-color"> Skills</div>
                                     <div class="col-md-9 fs-6 theme-color">
+                                        @php
+                                            $count = count($skills);
+                                            $i = 0;
+                                        @endphp
+
                                         @foreach ($skills as $skill)
-                                            {{$skill}},
+                                            {{ $skill }}
+                                            @if(++$i !== $count)
+                                                ,
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
@@ -463,6 +476,9 @@
         $(document).ready(function(){
             getComment();
             getVolunteers(1);
+            $('[id^="click-to-details_"]').click(function(){
+                $(location).attr('href',"{{url('mission-page/')}}"+'/'+$(this).data('mission_id'));
+            });
             $('button[id="mission_application_btn"]').on('click',function(){
                 $.ajax({
                     url: "{{url('api/new-mission-application')}}",
