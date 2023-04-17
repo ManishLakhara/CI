@@ -24,9 +24,36 @@
     <title>Document</title>
 </head>
 <body>
+    @php
+        $user=Auth::user();
+    @endphp
     @include('inc.header')
     @yield('content')
     @include('inc.footer')
+    <script>
+        $('#contactusform').submit(function(event) {
+            event.preventDefault();
+            var user_id = $('#user_id').val();
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('api/users/contact-us') }}",
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#contactusModal').modal('hide');
+                    location.reload();
+                    alert('your message has been conveyed successfully!');
+                },
+                error: function(response) {
+                    var errors = response.responseJSON.errors;
+                    var errorHtml = '';
+                    $.each(errors, function(key, value) {
+                        errorHtml += '<p>' + value + '</p>';
+                    });
+                    $('#contactus-error').html(errorHtml).show();
+                },
+            });
+        });
+    </script>
     <script src={{ asset('JS/jquery.min.js') }}></script>
 </body>
     @include('layouts.scripts')

@@ -21,7 +21,7 @@
                         <span class="badge bg-Warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
                     </div>
                 @endif
-                @if($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now())
+                @if(($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now()) || ($item->TimeMission!=Null && $item->TimeMission->total_seats <= 0))
                     <div class="position-absolute current-status" style="top: 0">
                         <span class="badge bg-Warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
                     </div>
@@ -201,16 +201,21 @@
                                 </div>
                             </div>
                         @elseif($item->goalMission!=null)
+                        @php
+                            $achieved=0;
+                            foreach($item->timeSheet->where('status','APPROVED') as $sheet){
+                                $achieved += $sheet->action;
+                            }
+                        @endphp
                             <div class='d-flex align-items-center justify-content-start w-50'>
                                 <div class="px-1">
                                     <img src={{ asset('Images/achieved.png') }} alt="">
                                 </div>
-
                                 <div class="d-flex flex-column ps-2 w-100">
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: {{$achieved}}" aria-valuenow="50" aria-valuemin="0" aria-valuemax="{{$item->goalMission->goal_value}}"></div>
                                     </div>
-                                    <small class="fw-light text-secondary ps-1">{{$item->goalMission->goal_value}} achieved</small>
+                                    <small class="fw-light text-secondary ps-1">{{$achieved}} achieved</small>
                                 </div>
 
                             </div>
@@ -220,17 +225,28 @@
                 <div class="border"></div>
             </div>
             <div class="d-flex justify-content-center">
-               @if($item->end_date >= now() && !($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now()))
-                    @if(count($item->missionApplication->where('user_id',$user_id))===0)
+               {{-- @if($item->end_date >= now() && !($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now())) --}}
+                    {{-- @if((count($item->missionApplication->where('user_id',$user_id))===0))
                         <button type="button" id="mission_application_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"> Apply <i
                             class="fa-sharp fa-solid fa-arrow-right"></i> </button>
                      @else
                         <a href="{{route('mission-page',$item->mission_id)}}"><button id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 btn btn-outline apply-btn fs-6 px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                             </button></a>
-                    @endif
+                    @endif --}}
+               {{-- @endif --}}
+               @if($item->end_date>=now() &&
+                    !($item->timeMission!=Null &&
+                    $item->timeMission->registration_deadline < now()) &&
+                    ($item->end_date >now()) &&
+                    (collect($item->missionApplication->where('user_id',$user_id))->isEmpty()))
+                    <button type="button" id="mission_application_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"> Apply <i
+                        class="fa-sharp fa-solid fa-arrow-right"></i> </button>
+               @else
+                    <a href="{{route('mission-page',$item->mission_id)}}"><button id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 btn btn-outline apply-btn fs-6 px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
+                    </button></a>
                @endif
                 <a href="{{route("mission-page",$item->mission_id)}}">
-                <button style="display: none;" id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 fs-6 btn btn-outline apply-btn px-2" style="width: fit-content"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
+                <button style="display: none;" class="mission_detail_btn_{{$item->mission_id}}" class="mx-2 fs-6 btn btn-outline apply-btn px-2" style="width: fit-content"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                 </button></a>
 
             </div>

@@ -126,6 +126,41 @@ class LandingPageController extends Controller
         }
     }
 
+    public function findCountry(Request $request){
+        if($request->ajax()){
+            $datas = Mission::where([
+                ['title', '!=', Null],
+                [function ($query) use ($request) {
+                    if (($s = $request->s)){
+                        $query->orWhere('title','LIKE','%'.$s.'%')
+                            ->orWhere('mission_type', 'LIKE', '%'.$s.'%')
+                            ->get();
+                    }
+                }]
+            ]);
+            if($request->countries!=Null){
+                $datas = $datas->whereIn('country_id',$request->countries);
+            }
+            if($request->cities!=Null){
+                $datas = $datas->whereIn('city_id',$request->cities);
+            }
+            if($request->themes!=Null){
+                $datas = $datas->whereIn('theme_id',$request->themes);
+            }
+            if($request->skills!=Null){
+                $skill_id_array = explode(',',$request->skills);
+                $datas = $datas->select('missions.*')
+                               ->join('mission_skills','mission_skills.mission_id','=','missions.mission_id')
+                               ->whereIn('mission_skills.skill_id',$skill_id_array)
+                               ->distinct();
+            }
+            $countrys = $datas->pluck('country_id')->toArray();
+            $country_ids = array_unique($countrys);
+            $countries = Country::whereIn('country_id',$country_ids)->get(['country_id','name']);
+            return view('components.country-dropper', compact('countries'));
+        }
+    }
+
     public function findCity(Request $request){
         if($request->ajax()){
             $datas = Mission::where([

@@ -13,18 +13,30 @@
                 <div class="carousel-thumbnail">
                     <div class="top-image">
                         @foreach ($mission->missionMedia as $media)
-                            <div class="image p-1">
-                                <img class="img-fluid w-100 h-100" src={{asset('storage/'.$media->media_path)}} alt="">
-                            </div>
+                            @if($media->media_type=='png')
+                                <div class="image p-1">
+                                    <img class="img-fluid w-100 h-100" src={{asset('storage/'.$media->media_path)}} alt="">
+                                </div>
+                            {{-- @elseif ($media->media_type=='MP4')
+                                <div class="video-wrapper">
+                                    <iframe height="100%" width="100%" src="{{$media->media_path}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div> --}}
+                            @endif
                         @endforeach
                     </div>
                 </div>
                 <div class="slidebar-nav">
                     <div class="multiple-items">
                         @foreach ($mission->missionMedia as $media)
-                            <div class="image p-1">
-                                <img class="img-fluid w-100 h-100" src={{asset('storage/'.$media->media_path)}} alt="">
-                            </div>
+                            @if($media->media_type=='png')
+                                <div class="image p-1">
+                                    <img class="img-fluid w-100 h-100" src={{asset('storage/'.$media->media_path)}} alt="">
+                                </div>
+                                {{-- @elseif ($media->media_name=='MP4')
+                                <div class="video-wrapper">
+                                    <iframe height="100%" width="100%" src="http://www.youtube.com/embed/XGSy3_Czz8k?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div> --}}
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -48,7 +60,7 @@
                 </div>
 
                 <div class="row py-2">
-                    <div class="col-lg-6 col-12 py-2 py-sm-4 ">
+                    <div class="col-sm-6 py-2 py-sm-4 ">
                         @if ($mission->timeMission!=null)
                             <div class="d-flex justify-content-start ">
                                 <div class="px-1">
@@ -72,7 +84,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="col-lg-6 col-12 py-2">
+                    <div class="col-sm-6  py-2">
                         @if($mission->timeMission)
                             <div class='d-flex align-items-center'>
                                 <div class="px-1">

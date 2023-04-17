@@ -96,6 +96,7 @@ Route::group(['middleware' => ['user']], function(){
 
     Route::get('index',[LandingPageController::class, 'index'])->name('landing.index');
     Route::get('index-filter',[LandingPageController::class, 'filterApply'])->name('landing.filterApply');
+    Route::get('index/find-country',[LandingPageController::class, 'findCountry']);
     Route::get('index/find-city',[LandingPageController::class, 'findCity']);
     Route::get('index/find-theme',[LandingPageController::class, 'findTheme']);
     Route::get('index/find-skill',[LandingPageController::class, 'findSkill']);

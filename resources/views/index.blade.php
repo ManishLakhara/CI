@@ -147,10 +147,31 @@
                 },
                 success: function(result){
                     $('#city_dropper').html(result);
+                    fillCityOptions();
                     filterReloadJQueryCity();
                 }
             });
-
+        }
+        function fillCityOptions(){
+            if(cities.length!=0){
+                for(i=0;i<cities.length;i++){
+                    $('#city_option_'+cities[i]).prop('checked', true);
+                }
+            }
+        }
+        function fillThemeOptions(){
+            if(themes.length!=0){
+                for(i=0;i<themes.length;i++){
+                    $('#mission_theme_option_'+themes[i]).prop('checked', true);
+                }
+            }
+        }
+        function fillSkillOptions(){
+            if(skills.length!=0){
+                for(i=0;i<skills.length;i++){
+                    $('#skill_option_'+skills[i]).prop('checked', true);
+                }
+            }
         }
         function getTheme(){
             $('#theme_drop_down_menu').prop('disabled', false);
@@ -165,6 +186,7 @@
                 },
                 success: function(result){
                     $('#theme_dropper').html(result);
+                    fillThemeOptions();
                     filterReloadJQueryTheme();
                 }
             })
@@ -183,6 +205,7 @@
                 },
                 success: function(result){
                     $('#skill_dropper').html(result);
+                    fillSkillOptions();
                     filterReloadJQuerySkill();
                 }
             })
@@ -325,7 +348,7 @@
                     }
                 })
                 $(this).hide();
-                $('#mission_detail_btn_'+$(this).data('mission_id')).css('display','block');
+                $('.mission_detail_btn_'+$(this).data('mission_id')).css('display','block');
             });
             $('button[id^="mission_application_l_btn_"]').on('click',function(){
                 mission_id=$(this).data('mission_id');
@@ -401,6 +424,9 @@
         $(document).ready(function(Event) {
             console.log('started');
             runJquery();
+            $('#search_input').on('change',function(){
+                $('#search-mission').submit();
+            })
             $('.my-filter-btn').on('click',function(){
                 $('#See_filters').toggle('hidden');
             })

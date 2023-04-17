@@ -6,7 +6,9 @@
             <div class="col-md-2 px-4 text-muted ">
                 <a class="no-decor text-muted " href="#" data-toggle="modal" data-target="#contactusModal"> Contact Us</a>
             </div>
-            <div class="modal fade" id="contactusModal" tabindex="-1" role="dialog" aria-labelledby="contactusModalLabel"
+        </div>
+    </div>
+    <div class="modal fade" id="contactusModal" tabindex="-1" role="dialog" aria-labelledby="contactusModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content p-3">
@@ -67,33 +69,6 @@
                                     </div>
                                 </form>
                             </div>
-
                         </div>
-                    </div>
-        </div>
-    </div>
-    <script>
-        $('#contactusform').submit(function(event) {
-            event.preventDefault();
-            var user_id = $('#user_id').val();
-            $.ajax({
-                type: 'POST',
-                url: "{{ url('api/users/contact-us') }}",
-                data: $(this).serialize(),
-                success: function(response) {
-                    $('#contactusModal').modal('hide');
-                    location.reload();
-                    alert('your message has been conveyed successfully!');
-                },
-                error: function(response) {
-                    var errors = response.responseJSON.errors;
-                    var errorHtml = '';
-                    $.each(errors, function(key, value) {
-                        errorHtml += '<p>' + value + '</p>';
-                    });
-                    $('#contactus-error').html(errorHtml).show();
-                },
-            });
-        });
-    </script>
+            </div>
 </footer>
