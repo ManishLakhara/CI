@@ -12,6 +12,11 @@
 
     <div class="row">
         <div class="container-fluid">
+            @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
 
             <div class="image">
                 <img class="d-block w-100 h-100" src="images/growsharestory.png" class="img-fluid" alt="First slide">

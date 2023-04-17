@@ -19,21 +19,26 @@ class CheckDraftStatusMiddleware
 
 
 
-    public function handle(Request $request, Closure $next)
-    {
+     public function handle($request, Closure $next)
+     {
 
-        $storyId = $request->route('story_id');
-
-
-        $story = Story::findOrFail($storyId);
+         $routeName = $request->route()->getName();
+         $routeParams = $request->route()->parameters();
 
 
-        if ($story->status !== 'DRAFT') {
+         if ($routeName == 'mystories.show' && isset($routeParams['mystory'])) {
 
-            return response()->json(['error' => 'Only draft stories can be updated.'], 403);
-        }
+             return $next($request);
+         }
 
 
-        return $next($request);
-    }
+         $storyId = $request->route('mystory');
+         $story = Story::findOrFail($storyId);
+
+         if ($story->status != 'DRAFT') {
+             return redirect()->route('mystories.index')->with('error', 'You are not allowed to edit after submit.');
+         }
+
+         return $next($request);
+     }
 }

@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Validator;
 
 class StoryListingController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('CheckDraftStatus')->only(['edit', 'update','updateDraft']);
+    }
     public function index(Request $request)
     {
 

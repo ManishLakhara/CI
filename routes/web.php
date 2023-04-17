@@ -109,7 +109,7 @@ Route::group(['middleware' => ['user']], function(){
     Route::get('share-your-story',[ShareYourStoryController::class,'index']);
     Route::resource('stories', ShareYourStoryController::class);
     Route::get('download/{filename}',[DownloadController::class,'download']);
-    Route::get('story-listing',[StoryListingController::class,'index']);
+    Route::get('story-listing',[StoryListingController::class,'index'])->name('story-listing');
     Route::get('story-details-page/{story_id}',[StoryDetailController::class,'index'])->name('story-details-page');
     Route::resource('mystories', StoryListingController::class);
     Route::post('mystories/{story_id}', [StoryListingController::class,'updateDraft'])->name('mystories.updateDraft');
