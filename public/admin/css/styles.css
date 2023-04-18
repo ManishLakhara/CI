@@ -11370,11 +11370,11 @@ body {
   display: flex;
 }
 #layoutSidenav #layoutSidenav_nav {
-  flex-basis: 225px;
+  flex-basis: 300px;
   flex-shrink: 0;
   transition: transform 0.15s ease-in-out;
   z-index: 1038;
-  transform: translateX(-225px);
+  transform: translateX(-300px);
 }
 #layoutSidenav #layoutSidenav_content {
   position: relative;
@@ -11384,7 +11384,7 @@ body {
   min-width: 0;
   flex-grow: 1;
   min-height: calc(100vh - 56px);
-  margin-left: -225px;
+  margin-left: -300px;
 }
 
 .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
@@ -11414,10 +11414,10 @@ body {
   }
 
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
-    transform: translateX(-225px);
+    transform: translateX(-300px);
   }
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
-    margin-left: -225px;
+    margin-left: -300px;
   }
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
     display: none;
@@ -11427,7 +11427,7 @@ body {
   z-index: 1039;
 }
 .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
-  width: 225px;
+  width: 300px;
   height: 100vh;
   z-index: 1038;
 }
@@ -11438,7 +11438,7 @@ body {
   overflow-y: auto;
 }
 .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
-  padding-left: 225px;
+  padding-left: 300px;
   top: 56px;
 }
 
@@ -11787,4 +11787,37 @@ body {
 }
 .page-link{
     color:#757575;
+}
+.carousel-inner{
+    width: 900px;
+    height: 600px;
+}
+.carousel-indicators li {
+    background-color: black;
+}
+.carousel-indicators li:active {
+    background-color: green;
+}
+.pagination-container {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination li {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+@media (max-width: 768px) {
+    .pagination-container {
+        text-align: center;
+    }
+
+    .pagination li {
+        margin: 0 2px;
+    }
 }

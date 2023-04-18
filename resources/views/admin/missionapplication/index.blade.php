@@ -6,14 +6,14 @@
 @endsection
 
 @section('body')
-    <div class="container-fluid px-4">
+    <div class="container-fluid mt-4 px-4">
         <ul class="nav border-bottom"><span class="nav-link active fs-1"> Mission Application </span></ul>
 
         @include('admin.components.successAlert')
 
         <div class="mt-4 mb-4">
             <div class="row justify-content-between align-items-center">
-                <div class="col-sm-4 relative w-100">
+                <div class="col-sm-4">
                     <form action="#" method="GET">
                         @csrf
                         <label for="search" class="sr-only">

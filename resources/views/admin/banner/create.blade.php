@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-<div class="containter-fluid px-4">
+<div class="containter-fluid mt-4 px-4">
     <ul class="nav border-bottom"><span class="nav-link active fs-1"> Add Banner </span></ul>
 
     <form action="{{route('banner.store')}}" method="POST" enctype="multipart/form-data">

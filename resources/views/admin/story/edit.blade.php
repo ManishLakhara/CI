@@ -8,7 +8,7 @@
 
 @section('body')
 
-<div class="container-fluid px-4">
+<div class="container-fluid px-4 mt-4">
     <ul class="nav border-bottom"><span class="nav-link active fs-1"> Show Story </span></ul>
 
     @include('admin.components.successAlert')
@@ -32,31 +32,39 @@
     </div>
 
     <h4 class="mt-4">
-        Videos
+        Story Media
     </h4>
     <div class="row justify-content-center">
-    <div class='col-lg-6'>
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            @for($i=1;$i<=4;$i++)
-                <li data-target="#carouselExampleIndicators" data-slide-to="{{$i}}"></li>
-            @endfor
-            </ol>
-            <div class="carousel-inner">
-            <div class="carousel-item active">
-                <iframe allow="fullscreen" width="100%" height="600px" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
-            </div>
-            @for ($i=1;$i<=4;$i++)
-                <div class="carousel-item">
-                    <iframe allow="fullscreen" width="100%" height="600px" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+        <div class='col-lg-6'>
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    @php
+                        $start = 0;
+                    @endphp
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    @foreach ($story->storyMedia as $media)
+                        @if($start > 0)
+                            <li data-target="#carouselExampleIndicators" data-slide-to="{{$start}}" class=""></li>
+                        @endif
+                        @php $start++; @endphp
+                    @endforeach
+                </ol>
+                <div class="carousel-inner">
+                    @foreach ($story->storyMedia as $media)
+                        <div class="carousel-item @if($loop->first) active @endif">
+                            @if($media->type == 'video')
+
+                            @elseif($media->type == 'png')
+                                <img class="d-block w-100 h-100" src="{{ asset('storage/'.$media->path) }}" alt="Image">
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
-            @endfor
             </div>
         </div>
     </div>
-    </div>
-    <h4 class="mt-4">
+
+    {{-- <h4 class="mt-4">
         Photos
     </h4>
     <div class="row justify-content-center">
@@ -80,7 +88,7 @@
             </div>
         </div>
     </div>
-    </div>
+    </div> --}}
     <div class="row py-4 ">
         <div class="col">
             <a href="{{route('admin-story.published',$story->story_id)}}" id="publish_btn" data-story_id="{{$story->story_id}}" class="btn btn-outline-primary">Publish</a>

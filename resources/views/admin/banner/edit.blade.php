@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-<div class="containter-fluid px-4">
+<div class="containter-fluid mt-4 px-4">
     <ul class="nav border-bottom"><span class="nav-link active fs-1"> Edit Banner </span></ul>
     <form class="mt-3" action="{{route('banner.update',$banner->banner_id)}}" method="POST" enctype="multipart/form-data">
         @csrf

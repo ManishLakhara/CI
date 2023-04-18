@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-    <div class="container-fluid px-4">
+    <div class="container-fluid mt-4 px-4">
         <ul class="nav border-bottom"><span class="nav-link active fs-1"> Edit Mission Skill </span></ul>
 
         <form class="py-4" action="{{ route('missionskill.update', $skill->skill_id) }}" method="post">

@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-    <div class="container-fluid px-4">
+    <div class="container-fluid mt-4 px-4">
         <ul class="nav border-bottom"><span class="nav-link active fs-1"> Add Mission </span></ul>
 
         <form class="mt-3" method="post" action="{{ route('mission.store') }}" class="row g-3" enctype="multipart/form-data">

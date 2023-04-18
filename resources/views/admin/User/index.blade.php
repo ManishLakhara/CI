@@ -4,7 +4,7 @@
 @endsection
 
 @section('body')
-    <div class="container-fluid px-4">
+    <div class="container-fluid mt-4">
         <ul class="nav border-bottom"><span class="nav-link active fs-1"> User </span></ul>
 
         <!-- Success Alert -->

@@ -393,3 +393,26 @@ small {
 p{
     overflow-wrap: break-word;
 }
+.pagination-container {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination li {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+@media (max-width: 768px) {
+    .pagination-container {
+        text-align: center;
+    }
+
+    .pagination li {
+        margin: 0 2px;
+    }
+}

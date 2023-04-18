@@ -1,9 +1,9 @@
 
-    <nav class="position-absolute sb-topnav navbar bg-white navbar-expand navbar justify-content-between" style="padding:0%; z-index: 5;box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
+    <nav class="position-absolute sb-topnav navbar bg-white navbar-expand navbar justify-content-between" style="height:5em;padding:0%; z-index: 5;box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
         <div>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 px-3" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         </div>
-        <div class="position-absolute d-none d-lg-block" style="left: 245px">
+        <div class="position-absolute d-none d-lg-block px-4" style="left: 300px">
             <span>{{ (new DateTime())->sub(new DateInterval('PT6H30M'))->format('l, F j, Y, g:i A') }}</span>
         </div>
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">

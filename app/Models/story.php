@@ -30,7 +30,7 @@ class Story extends Model
     }
 
     public function storyMedia() {
-        return $this->hasMany(StoryMedia::class, 'story_id');
+        return $this->hasMany(StoryMedia::class, 'story_id','story_id');
     }
     public function storyView() {
         return $this->hasMany(StoryViews::class, 'story_id','story_id');
