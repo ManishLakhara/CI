@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Story;
+use App\Models\StoryMedia;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -90,8 +91,16 @@ class StoryController extends Controller
     public function updateToPublished(Request $request, string $id)
     {
             $story = Story::find($id);
+            if($request->media_declined_ids!==null){
+                foreach($request->media_declined_ids as $media_id){
+                    StoryMedia::find($media_id)->delete();
+                }
+            }
             $story->status = 'PUBLISHED';
             $story->save();
+            if($request->ajax()){
+                return "Successfully Published";
+            }
             return redirect()->route('admin-story.index')->with('success', "Successfully status updated to PUBLISHED");
     }
 

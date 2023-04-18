@@ -52,7 +52,7 @@ class ShareYourStoryController extends Controller
     {
 
         if ($request->ajax()) {
-            dd($request['photos']);
+            //dd($request['photos']);
             $validatedData = $request->validate(
                 [
                     'title' => 'required|string|max:255',

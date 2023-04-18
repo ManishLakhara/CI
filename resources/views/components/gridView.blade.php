@@ -117,11 +117,11 @@
         </div>
         </div>
         <div class="text-center" style="z-index: 1; margin-top: -25px">
-            <span class="position-relative fs-4 px-2 from_untill" >
+            <span class="position-relative fs-5 px-2 from_untill" >
                 {{ $item->missionTheme->title }}
             </span>
         </div>
-        <div class="card-body">
+        <div class="card-body text-start">
             <div id="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
             <h4 class='theme-color mission-title'>{{ $item->title }}
             </h4>
@@ -166,9 +166,9 @@
                     </small>
                 </div>
                 <div class="py-2">
-                    <div class="d-flex py-3 justify-content-between">
+                    <div class="row py-3 justify-content-between">
                         @if ($item->timeMission!=null)
-                            <div class="d-flex align-items-center ">
+                            <div class="col-md-6 d-flex align-items-center ">
                                 <div class="px-1">
                                     <img src={{ asset('Images/seats-left.png') }} alt="">
                                 </div>
@@ -178,7 +178,7 @@
                                 </div>
                             </div>
                         @elseif(collect($item->goalMission)->isNotEmpty())
-                            <div class="d-flex align-items-center ">
+                            <div class="col-md-6 d-flex align-items-center ">
                                 <div class="px-1">
                                     <img src={{ asset('Images/Already-volunteered.png') }} alt="">
                                 </div>
@@ -189,7 +189,7 @@
                             </div>
                         @endif
                         @if ($item->timeMission!=null)
-                            <div class='d-flex align-items-center'>
+                            <div class='col-md-6 d-flex align-items-center'>
                                 <div class="px-1">
                                     <img src={{ asset('Images/deadline.png') }} alt="">
                                 </div>
@@ -205,7 +205,7 @@
                                 $achieved += $sheet->action;
                             }
                         @endphp
-                            <div class='d-flex align-items-center justify-content-start w-50'>
+                            <div class='col-md-6 d-flex align-items-center justify-content-start w-50'>
                                 <div class="px-1">
                                     <img src={{ asset('Images/achieved.png') }} alt="">
                                 </div>

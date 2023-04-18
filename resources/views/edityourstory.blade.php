@@ -71,10 +71,10 @@
                 <div class="col-lg-12 mt-5">
                     <label for="orgVideo" class="form-label">Enter Video URL</label>
                     <textarea class="form-control" id="path" name="path[]" placeholder="Enter your url">
-@foreach ($storyvideoMedia as $videomedia)
-{{ $videomedia->path }}&#13;&#10;
-@endforeach
-</textarea>
+                        @foreach ($storyvideoMedia as $videomedia)
+                        {{ $videomedia->path }}&#13;&#10;
+                        @endforeach
+                        </textarea>
                     @error('path.*')
                         <div class="text-danger">
                             {{ $message }}

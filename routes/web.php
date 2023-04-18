@@ -38,7 +38,7 @@ use App\Models\Banner;
 |
 */
 //frontend Routes
-Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('logout', [AuthController::class, 'logout']);
 Route::post('custom-login', [AuthController::class, 'postLogin'])->name('login.custom');
 Route::get('forgot',[AuthController::class,'forgot'])->name('forgot.password');
@@ -93,7 +93,7 @@ Route::group(['middleware' => ['admin']], function(){
 
 
 Route::group(['middleware' => ['user']], function(){
-
+    Route::get('/',[LandingPageController::class, 'index']);
     Route::get('index',[LandingPageController::class, 'index'])->name('landing.index');
     Route::get('index-filter',[LandingPageController::class, 'filterApply'])->name('landing.filterApply');
     Route::get('index/find-country',[LandingPageController::class, 'findCountry']);
