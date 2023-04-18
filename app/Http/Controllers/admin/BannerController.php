@@ -7,6 +7,7 @@ use App\Http\Requests\StoreBannerRequest;
 use App\Http\Requests\UpdateBannerRequest;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BannerController extends Controller
 {
@@ -23,9 +24,13 @@ class BannerController extends Controller
                 }
             }]
         ])->orderBy('sort_order','asc')
-          ->paginate(10)
-          ->appends(['s'=>$request->s]);
-        return view('admin.banner.index', compact('data'));
+          ->paginate(10);
+
+        $pagination = $data->links()->render();
+        if($data instanceof LengthAwarePaginator){
+            $pagination = $data->appends(request()->all())->links('pagination.default');
+        }
+        return view('admin.banner.index', compact('data','pagination'));
     }
 
     /**

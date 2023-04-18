@@ -19,6 +19,7 @@ use App\Models\Skill;
 use App\Models\MissionSkill;
 use App\Models\GoalMission;
 use App\Models\TimeMission;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class MissionController extends Controller
 {
@@ -36,12 +37,15 @@ class MissionController extends Controller
                         ->get();
                 }
             }]
-        ])->orderByDesc('mission_id')->paginate(10)
-            ->appends(['s' => $request->s]);
+        ])->orderByDesc('mission_id')->paginate(10);
 
+        $pagination = $data->links()->render();
+        if($data instanceof LengthAwarePaginator) {
+            $pagination = $data->appends(request()->all())->links('pagination.default');
+        }
 
         //$data = MissionTheme::orderBy('mission_theme_id','desc')->paginate(10);
-        return view('admin.mission.index', compact('data')); // Create view by name missiontheme/index.blade.php
+        return view('admin.mission.index', compact('data','pagination')); // Create view by name missiontheme/index.blade.php
     }
 
     /**

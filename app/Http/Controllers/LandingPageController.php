@@ -12,6 +12,7 @@ use App\Models\MissionSkill;
 use App\Models\User;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -46,7 +47,11 @@ class LandingPageController extends Controller
                        ->orderBy('user_id','asc')
                        ->get();
         $data = $data->orderBy('created_at','desc')->paginate(9);
-        return view('index', compact('data','count','countries','cities','themes','skills','favorite','users')); // Create view by name missiontheme/index.blade.php
+        $pagination = $data->links()->render();
+        if ($data instanceof LengthAwarePaginator) {
+            $pagination = $data->appends(request()->all())->links('pagination.default');
+        }
+        return view('index', compact('data','count','countries','cities','themes','skills','favorite','users','pagination')); // Create view by name missiontheme/index.blade.php
     }
 
     public function filterApply(Request $request){
@@ -122,7 +127,11 @@ class LandingPageController extends Controller
             $users = User::where('user_id','!=',Auth::user()->user_id)
                         ->orderBy('user_id','asc')
                         ->get();
-            return view('components.gridListView', compact('count','data','favorite','users','user_id'));
+            $pagination = $data->links()->render();
+            if ($data instanceof LengthAwarePaginator) {
+                $pagination = $data->appends(request()->all())->links('pagination.default');
+            }
+            return view('components.gridListView', compact('count','data','favorite','users','user_id','pagination'));
         }
     }
 

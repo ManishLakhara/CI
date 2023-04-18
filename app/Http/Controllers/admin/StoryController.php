@@ -7,6 +7,7 @@ use App\Models\Story;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Kyslik\ColumnSortable\ColumnSortableServiceProvider;
 
 class StoryController extends Controller
@@ -42,9 +43,12 @@ class StoryController extends Controller
                     //                 WHEN 'DECLINED' THEN 3
                     //                 END")
                       ->where('status','!=','DRAFT')
-                      ->paginate(10)
-                      ->appends(['s' => $request->s]);
-        return view('admin.story.index', compact('data'));
+                      ->paginate(10);
+        $pagination = $data->links()->render();
+        if($data instanceof LengthAwarePaginator){
+            $pagination = $data->appends(request()->all())->links('pagination.default');
+        }
+        return view('admin.story.index', compact('data','pagination'));
     }
 
     /**

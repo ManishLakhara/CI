@@ -8,6 +8,7 @@ use App\Models\MissionApplication;
 use App\Models\TimeMission;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class MissionApplicationController extends Controller
@@ -32,9 +33,12 @@ class MissionApplicationController extends Controller
                                                 WHEN 'DECLINE' THEN 3
                                                 END")
                                             ->orderBy('created_at', 'desc')
-                                            ->paginate(10)
-                                            ->appends(['s' => $request->s]);
-        return view('admin.missionapplication.index',compact('data'));
+                                            ->paginate(10);
+        $pagination = $data->links()->render();
+        if($data instanceof LengthAwarePaginator){
+            $pagination = $data->appends(request()->all())->links('pagination.default');
+        }
+        return view('admin.missionapplication.index',compact('data','pagination'));
     }
     public function newMissionApplication(Request $request){
         $req = MissionApplication::where('mission_id',$request->mission_id)

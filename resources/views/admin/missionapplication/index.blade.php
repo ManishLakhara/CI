@@ -93,7 +93,7 @@
                 @endforeach
             </tbody>
         </table>
-        @include('admin.layouts.pagination')
+        {!!$pagination!!}
     </div>
     <script>
         $(document).ready(function(){

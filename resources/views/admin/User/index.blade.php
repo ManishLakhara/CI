@@ -67,6 +67,6 @@
             </tbody>
 
         </table>
-        @include('admin.layouts.pagination')
+        {!!$pagination!!}
     </div>
 @endsection

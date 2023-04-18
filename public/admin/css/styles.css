@@ -11763,3 +11763,28 @@ body {
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
     color: #F88634;
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination li.active a {
+    background-color: #f88634;
+    border-color: #f88634;
+}
+
+.pagination li a:hover {
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+.page-item.active .page-link{
+    background-color: #f88634;
+    border-color: #f88634;
+}
+.page-link{
+    color:#757575;
+}

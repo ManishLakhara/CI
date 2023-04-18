@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Models\CmsPage;
 use App\Http\Requests\StoreCmsPageRequest;
 use App\Http\Requests\UpdateCmsPageRequest;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class CmsPageController extends Controller
@@ -26,12 +27,15 @@ class CmsPageController extends Controller
                         ->get();
                 }
             }]
-        ])->paginate(10)
-            ->appends(['s' => $request->s]);
+        ])->paginate(10);
+
+        $pagination = $data->links()->render();
+        if($data instanceof LengthAwarePaginator){
+            $pagination = $data->appends(request()->all())->links('pagination.default');
+        }
 
 
-
-        return view('admin.cmspage.index', compact('data'));
+        return view('admin.cmspage.index', compact('data','pagination'));
     }
 
     /**

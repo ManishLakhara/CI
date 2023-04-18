@@ -1,6 +1,6 @@
 <div class="mt-4 mb-4">
     <div class="row justify-content-between align-items-center">
-        <div class="col-sm-4 relative w-100">
+        <div class="col-sm-4 relative">
             <form action="{{ route($form_action) }}" method="GET">
                 @csrf
                 <label for="search" class="sr-only">

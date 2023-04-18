@@ -67,7 +67,7 @@
                     </tbody>
 
                 </table>
-                @include('admin.layouts.pagination')
+                {!!$pagination!!}
             </div>
         </div>
     </div>

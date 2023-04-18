@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserController extends Controller
 {
@@ -31,12 +31,13 @@ class UserController extends Controller
                           ->get();
                 }
             }]
-        ])->paginate(10)
-          ->appends(['s' => $request->s]);
-
-
+        ])->paginate(10);
+        $pagination = $data->links()->render();
+        if($data instanceof LengthAwarePaginator){
+            $pagination = $data->appends(request()->all())->links('pagination.default');
+        }
         //$data = User::orderBy('user_id','desc')->paginate(10);
-        return view('admin.user.index', compact('data')); // Create view by name missiontheme/index.blade.php
+        return view('admin.user.index', compact('data','pagination')); // Create view by name missiontheme/index.blade.php
     }
 
     /**

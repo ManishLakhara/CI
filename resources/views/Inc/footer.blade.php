@@ -1,6 +1,6 @@
 <footer>
     <hr>
-    <div class="position-sticky container policy" style="bottom: 10px; z-index: 1">
+    <div class="position-sticky container policy" style="bottom: 0; z-index: 1">
         <div class="d-flex col">
             <a class="no-decor text-muted" href="{{ route('policy-page') }}"> Privacy Policy</a>
             <div class="col-md-2 px-4 text-muted ">

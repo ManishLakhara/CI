@@ -9,7 +9,7 @@
       {{ session('success') }}
   </div>
 @endif
-        @include('components.search-filter');
+        @include('components.search-filter')
     </div>
     <div class="container py-4">
         <div class="d-flex">
