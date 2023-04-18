@@ -267,12 +267,12 @@ input[type="datetime"]:focus,
     background-color: #414141;
 }
 
-@font-face {
+/* @font-face {
     font-family: NatoSans;
     src: url("../fonts/JotRegular.ttf");
     font-weight: normal;
     font-style: normal;
-}
+} */
 
 .goal-range {
     background: #f88634;

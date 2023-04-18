@@ -57,22 +57,14 @@ class StoreTimesheetRequest extends FormRequest
                 'max:59',
             ],
 
-            // 'date_volunteered' => [
-            //     'required',
-
-            //     'before_or_equal:today',
-            //     Rule::exists('missions', 'start_date')->where(function ($query) {
-            //         $query->where('mission_id', $this->input('mission_id'));
-            //     }),
-
-            // ],
+           
 
             'date_volunteered' => [
                 'required',
                 'date',
                 'after_or_equal:' . $mission->start_date,
                 'before_or_equal:' . $mission->end_date,
-                'before:tomorrow', // Ensure the date is not in the future
+                'before:tomorrow', // checking and making sure the date is not in the future
             ],
 
         ];

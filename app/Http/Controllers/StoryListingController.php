@@ -8,6 +8,7 @@ use App\Models\StoryMedia;
 use App\Models\Mission;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MissionApplication;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 
 class StoryListingController extends Controller
@@ -24,19 +25,16 @@ class StoryListingController extends Controller
         $draft_stories = Story::where('user_id', $user->user_id)->where('status', 'DRAFT')->get();
 
         $published_stories = Story::where('status', 'PUBLISHED')->paginate(9);
-        // foreach ($published_stories as $story) {
-        //     $story_media = StoryMedia::where('story_id', $story->story_id)
-        //                               ->whereIn('type', ['jpg', 'jpeg', 'png'])
-        //                               ->first();
-        //     if ($story_media) {
-        //         $story->image_path = Storage::url($story_media->path);
-        //     }
-        // }
+        $pagination = $published_stories->links()->render();
+        if($published_stories instanceof LengthAwarePaginator){
+            $pagination = $published_stories->appends(request()->all())->links('pagination.default');
+        }
+
 
         if ($request->ajax()) {
-            return view('components.my-story', compact('published_stories'));
+            return view('components.my-story', compact('published_stories','pagination'));
         } else {
-            return view('storylisting', compact('user', 'published_stories', 'draft_stories'));
+            return view('storylisting', compact('user', 'published_stories', 'draft_stories','pagination'));
         }
     }
 

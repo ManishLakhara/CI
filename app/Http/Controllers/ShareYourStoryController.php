@@ -52,24 +52,33 @@ class ShareYourStoryController extends Controller
     {
 
         if ($request->ajax()) {
-            $validatedData = $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'required|max:40000',
-                'mission_id' => 'required',
-                'published_at' => 'required|date',
-                'path' => 'nullable|array|max:20',
-                'path.*' => 'required|url',
-                'photos' => 'nullable|array|max:20',
-                'photos.*' => 'image|max:4096|mimes:jpg,jpeg,png,',
-            ],
-             [
-                'url' => 'The video URL must be a valid URL.',
-                'path.max'=> 'maximum 20 URL can be uploaded',
-                'mimes' => 'The :attribute field must be a file of type: :values.',
-                'published_at.required' => 'The date field is required.',
-                 'photos.*' => 'photo size should not be more then 4 MB',
-                 'photos.max' => 'maximum 20 photos can be uploaded',
-            ]);
+            dd($request['photos']);
+            $validatedData = $request->validate(
+                [
+                    'title' => 'required|string|max:255',
+                    'description' => 'required|max:40000',
+                    'mission_id' => 'required',
+                    'published_at' => 'required|date',
+                    'path' => 'nullable|array|max:20',
+
+                    'path.*' => [
+                        'required',
+                        'url',
+                        'regex:/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/i'
+                    ],
+                    'photos' => 'array|max:20|min:1',
+                    'photos.*' => 'image|max:4096|mimes:jpg,jpeg,png,',
+                ],
+                [
+                    'url' => 'The video URL must be a valid URL.',
+                    'path.max' => 'maximum 20 URL can be uploaded',
+                    'mimes' => 'The :attribute field must be a file of type: :values.',
+                    'published_at.required' => 'The date field is required.',
+                    'photos.*' => 'photo size should not be more then 4 MB',
+                    'photos.max' => 'maximum 20 photos can be uploaded',
+                    'path.*.regex' => 'please enter a valid youtube URL on index :index of the video URL'
+                ]
+            );
 
 
 

@@ -10,8 +10,8 @@
 
                 {{-- <img class="d-block w-100 h-100" src="{{ asset('images/growsharestory.png') }}" class="img-fluid"
                     alt="First slide"> --}}
-                <div class="col-lg-6 w-100 h-100">{{-- This is carousel Code --}}
-                    <div class="carousel-thumbnail">
+                {{-- <div class="col-lg-6 w-100 h-100">{{-- This is carousel Code --}}
+                {{-- <div class="carousel-thumbnail">
                         <div class="top-image">
                             @foreach ($story->storyMedia as $media)
                                 <div class="image p-1">
@@ -28,6 +28,77 @@
                                     <img class="img-fluid w-100 h-100" src={{ asset('storage/' . $media->path) }}
                                         alt="">
                                 </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div> --}}
+                <div class="col-lg-6 w-100 h-100">
+                    {{-- This is carousel Code --}}
+                    <div class="carousel-thumbnail">
+                        <div class="top-image">
+                            @foreach ($story->storyMedia as $media)
+                                @if (in_array($media->type, ['jpeg', 'jpg', 'png']))
+                                    <div class="image p-1">
+                                        <img class="img-fluid w-100 h-100" src="{{ asset('storage/' . $media->path) }}"
+                                            alt="">
+                                    </div>
+
+                                    {{-- @elseif ($media->type == 'video')
+                                <div class="image p-1">
+                                    <div class="video-container">
+                                        <div class="play-button"></div>
+                                        <iframe src="https://www.youtube.com/embed/{{ $media->path }}?enablejsapi=1"
+                                            frameborder="0" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            @endif --}}
+                                @elseif ($media->type == 'video')
+                                    <div class="image p-1">
+                                        <div class="video-container">
+                                            <div class="play-button"></div>
+                                            @php
+                                                $video_id = '';
+                                                parse_str(parse_url($media->path, PHP_URL_QUERY), $query);
+                                                if (isset($query['v'])) {
+                                                    $video_id = $query['v'];
+                                                } elseif (preg_match('/^https?:\/\/(?:www\.)?youtu\.be\/(.+)$/', $media->path, $matches)) {
+                                                    $video_id = $matches[1];
+                                                }
+                                            @endphp
+                                            <iframe src="https://www.youtube.com/embed/{{ $video_id }}?enablejsapi=1"
+                                                frameborder="0" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="slidebar-nav">
+                        <div class="multiple-items">
+                            @foreach ($story->storyMedia as $media)
+                            @if (in_array($media->type, ['jpeg', 'jpg', 'png']))
+                                <div class="image p-1">
+                                    <img class="img-fluid w-100 h-100" src="{{ asset('storage/' . $media->path) }}"
+                                        alt="">
+                                </div>
+                                @elseif ($media->type == 'video')
+                                    <div class="image p-1">
+                                        <div class="video-container">
+                                            {{-- <div class="play-button"></div> --}}
+                                            @php
+                                                $video_id = '';
+                                                parse_str(parse_url($media->path, PHP_URL_QUERY), $query);
+                                                if (isset($query['v'])) {
+                                                    $video_id = $query['v'];
+                                                } elseif (preg_match('/^https?:\/\/(?:www\.)?youtu\.be\/(.+)$/', $media->path, $matches)) {
+                                                    $video_id = $matches[1];
+                                                }
+                                            @endphp
+                                            <iframe src="https://www.youtube.com/embed/{{ $video_id }}?enablejsapi=1"
+                                                frameborder="0" allowfullscreen disabled></iframe>
+                                        </div>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -137,7 +208,7 @@
             </div>
         </div>
     </div>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('.top-image').slick({
                 slidesToShow: 1,
@@ -213,5 +284,200 @@
                 })
             }
         });
+    </script> --}}
+
+    <style>
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+
+        .play-button:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 25px solid white;
+        }
+    </style>
+
+
+    <script>
+        $(document).ready(function() {
+            var player;
+
+            $('.top-image').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                asNavFor: '.multiple-items',
+                onInit: function() {
+                    $('.play-button').on('click', function() {
+                        player.playVideo();
+                    });
+                }
+            });
+
+            $('.multiple-items').slick({
+                infinite: true,
+                arrows: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                asNavFor: '.top-image',
+                centerMode: false,
+                focusOnSelect: true,
+                responsive: [{
+                        breakpoint: 1399,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 1199,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 991,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 433,
+                        settings: {
+                            slidesToScroll: 1,
+                            slidesToShow: 1
+                        }
+                    },
+                ]
+            });
+            $('.multiple-items').on('init', function(event, slick) {
+                var currentSlide, player, autoplayVideo;
+                currentSlide = slick.currentSlide;
+                player = new YT.Player($(slick.$slides[currentSlide]).find('.js-video')[0], {
+                    height: '100%',
+                    width: '100%',
+                    videoId: $(slick.$slides[currentSlide]).find('.js-video').data('video-id'),
+                    playerVars: {
+                        autoplay: 0,
+                        modestbranding: 1,
+                        rel: 0,
+                        showinfo: 0,
+                        controls: 1,
+                        disablekb: 1,
+                        enablejsapi: 1,
+                        origin: window.location.hostname
+                    },
+                    events: {
+                        'onReady': function(event) {
+                            event.target.mute();
+                            event.target.playVideo();
+                        }
+                    }
+                });
+                autoplayVideo = function() {
+                    if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                        player.playVideo();
+                    }
+                };
+                $('.js-play').on('click', function() {
+                    $(this).removeClass('is-paused');
+                    player.playVideo();
+                });
+                $('.js-pause').on('click', function() {
+                    $(this).addClass('is-paused');
+                    player.pauseVideo();
+                });
+                $('.multiple-items').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+                    var currentSlidePlayer;
+                    currentSlidePlayer = new YT.Player($(slick.$slides[currentSlide]).find(
+                        '.js-video')[0], {
+                        height: '100%',
+                        width: '100%',
+                        videoId: $(slick.$slides[currentSlide]).find('.js-video').data(
+                            'video-id'),
+                        playerVars: {
+                            autoplay: 0,
+                            modestbranding: 1,
+                            rel: 0,
+                            showinfo: 0,
+                            controls: 1,
+                            disablekb: 1,
+                            enablejsapi: 1,
+                            origin: window.location.hostname
+                        },
+                        events: {
+                            'onReady': function(event) {
+                                event.target.mute();
+                                event.target.stopVideo();
+                            }
+                        }
+                    });
+                    currentSlidePlayer.stopVideo();
+                });
+                $('.multiple-items').on('afterChange', function(event, slick, currentSlide) {
+                    var currentSlidePlayer;
+                    var $currentSlide = $(slick.$slides[currentSlide]);
+                    if ($currentSlide.find('.js-video').length) {
+                        currentSlidePlayer = new YT.Player($currentSlide.find('.js-video')[0], {
+                            height: '100%',
+                            width: '100%',
+                            videoId: $currentSlide.find('.js-video').data('video-id'),
+                            playerVars: {
+                                autoplay: 0,
+                                modestbranding: 1,
+                                rel: 0,
+                                showinfo: 0,
+                                controls: 1,
+                                disablekb: 1,
+                                enablejsapi: 1
+                            }
+                        });
+                    }
+                });
+            });
+        });
     </script>
+
 @endsection

@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row gx-4">
     @foreach ($published_stories as $story)
-        <div class="card col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center mb-5"
+        <div class="card  col-lg-6 col-xl-4 col-md-6 border-0  pb-4 text-center mb-5"
             style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
             {{-- <div class="py-1"> --}}
 
@@ -36,6 +36,6 @@
         </div>
     @endforeach
     <div class="d-flex p-3 justify-content-end">
-        {!! $published_stories->links('pagination::bootstrap-4') !!}
+        {!! $pagination !!}
     </div>
 </div>
