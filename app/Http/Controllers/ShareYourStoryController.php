@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CmsPage;
 use App\Models\Mission;
 use App\Models\Story;
 use App\Models\StoryMedia;
@@ -34,11 +35,12 @@ class ShareYourStoryController extends Controller
             ->whereNotIn('mission_id', $sharedMissionIds)
             ->get();
 
+            $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
 
 
 
 
-        return view('shareyourstory', compact('user',  'appliedMissionIds', 'appliedMissions'));
+        return view('shareyourstory', compact('user',  'appliedMissionIds', 'appliedMissions','policies'));
     }
 
 

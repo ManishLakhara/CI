@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col-lg-12 mt-5">
                     <label for="summary-ckeditor" class="form-label">My Story</label>
-                    <textarea name="description" class="story-textarea" id="summary-ckeditor">{{ old('description') }}</textarea>
+                    <textarea name="description" class="story-textarea" id="editor1">{{ old('description') }}</textarea>
                 </div>
                 @error('description')
                     <div class="text-danger">
@@ -112,12 +112,15 @@
 
 
 
-
+    <script>
+        CKEDITOR.replace('editor1');
+    </script>
 
 
 
 
     <script>
+
         //var uploadedFiles = [];
         var recentuploadFiles = [];
         function handleFiles(files) {
@@ -175,7 +178,7 @@
 
                 event.preventDefault();
 
-                var value = CKEDITOR.instances['summary-ckeditor'].getData();
+                var value = CKEDITOR.instances['editor1'].getData();
 
                 // Get the selected files
                 var files = document.getElementById("file-input").files;

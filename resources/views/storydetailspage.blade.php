@@ -175,83 +175,7 @@
             </div>
         </div>
     </div>
-    {{-- <script>
-        $(document).ready(function() {
-            $('.top-image').slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: false,
-                fade: true,
-                asNavFor: '.multiple-items'
-            });
-            $('.multiple-items').slick({
-                infinite: true,
-                arrows: true,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                asNavFor: '.top-image',
-                centerMode: false,
-                focusOnSelect: true,
-                responsive: [{
-                        breakpoint: 1399,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 1199,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
-                        }
-                    },
-                    {
-                        breakpoint: 991,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 433,
-                        settings: {
-                            slidesToScroll: 1,
-                            slidesToShow: 1
-                        }
-                    },
-                ]
-            })
-        });
-        $('input[id^="invite_"]').on('click', function() {
-            if (this.checked) {
-                var story_id = this.id.split("_")[1];
-                var to_user_id = this.id.split('_')[2];
-                var from_user_id = this.id.split("_")[3];
-                console.log(story_id);
-                $.ajax({
-                    url: "{{ url('api/invite-users') }}",
-                    type: "POST",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        from_user_id: from_user_id,
-                        to_user_id: to_user_id,
-                        story_id: story_id,
-                    },
-                    success: function(data) {
-                        alert("Invite Send", 1000);
-                    },
-                })
-            }
-        });
-    </script> --}}
+
 
     <style>
         .video-container {
@@ -295,6 +219,7 @@
             border-left: 25px solid white;
         }
     </style>
+
 
 
     <script>
@@ -389,9 +314,10 @@
                     }
                 };
                 $('.js-play').on('click', function() {
+                    e.preventDefault();
                     $(this).removeClass('is-paused');
                     player.playVideo();
-                });
+                },{ passive: true });
                 $('.js-pause').on('click', function() {
                     $(this).addClass('is-paused');
                     player.pauseVideo();
