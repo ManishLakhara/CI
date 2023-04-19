@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\CmsPage;
 class LandingPageController extends Controller
 {
 
@@ -51,7 +51,8 @@ class LandingPageController extends Controller
         if ($data instanceof LengthAwarePaginator) {
             $pagination = $data->appends(request()->all())->links('pagination.default');
         }
-        return view('index', compact('data','count','countries','cities','themes','skills','favorite','users','pagination')); // Create view by name missiontheme/index.blade.php
+        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
+        return view('index', compact('data','count','countries','cities','themes','skills','favorite','users','pagination','policies')); // Create view by name missiontheme/index.blade.php
     }
 
     public function filterApply(Request $request){

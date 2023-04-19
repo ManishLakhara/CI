@@ -8,30 +8,7 @@
         <div class="row">
             <div class="col-xl-6 mt-5">
 
-                {{-- <img class="d-block w-100 h-100" src="{{ asset('images/growsharestory.png') }}" class="img-fluid"
-                    alt="First slide"> --}}
-                {{-- <div class="col-lg-6 w-100 h-100">{{-- This is carousel Code --}}
-                {{-- <div class="carousel-thumbnail">
-                        <div class="top-image">
-                            @foreach ($story->storyMedia as $media)
-                                <div class="image p-1">
-                                    <img class="img-fluid w-100 h-100" src={{ asset('storage/' . $media->path) }}
-                                        alt="">
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="slidebar-nav">
-                        <div class="multiple-items">
-                            @foreach ($story->storyMedia as $media)
-                                <div class="image p-1">
-                                    <img class="img-fluid w-100 h-100" src={{ asset('storage/' . $media->path) }}
-                                        alt="">
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div> --}}
+
                 <div class="col-lg-6 w-100 h-100">
                     {{-- This is carousel Code --}}
                     <div class="carousel-thumbnail">
@@ -42,16 +19,6 @@
                                         <img class="img-fluid w-100 h-100" src="{{ asset('storage/' . $media->path) }}"
                                             alt="">
                                     </div>
-
-                                    {{-- @elseif ($media->type == 'video')
-                                <div class="image p-1">
-                                    <div class="video-container">
-                                        <div class="play-button"></div>
-                                        <iframe src="https://www.youtube.com/embed/{{ $media->path }}?enablejsapi=1"
-                                            frameborder="0" allowfullscreen></iframe>
-                                    </div>
-                                </div>
-                            @endif --}}
                                 @elseif ($media->type == 'video')
                                     <div class="image p-1">
                                         <div class="video-container">
@@ -76,11 +43,11 @@
                     <div class="slidebar-nav">
                         <div class="multiple-items">
                             @foreach ($story->storyMedia as $media)
-                            @if (in_array($media->type, ['jpeg', 'jpg', 'png']))
-                                <div class="image p-1">
-                                    <img class="img-fluid w-100 h-100" src="{{ asset('storage/' . $media->path) }}"
-                                        alt="">
-                                </div>
+                                @if (in_array($media->type, ['jpeg', 'jpg', 'png']))
+                                    <div class="image p-1">
+                                        <img class="img-fluid w-100 h-100" src="{{ asset('storage/' . $media->path) }}"
+                                            alt="">
+                                    </div>
                                 @elseif ($media->type == 'video')
                                     <div class="image p-1">
                                         <div class="video-container">
@@ -478,6 +445,26 @@
                 });
             });
         });
+        $('input[id^="invite_"]').on('click', function() {
+            if (this.checked) {
+                var story_id = this.id.split("_")[1];
+                var to_user_id = this.id.split('_')[2];
+                var from_user_id = this.id.split("_")[3];
+                console.log(story_id);
+                $.ajax({
+                    url: "{{ url('api/invite-users') }}",
+                    type: "POST",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        from_user_id: from_user_id,
+                        to_user_id: to_user_id,
+                        story_id: story_id,
+                    },
+                    success: function(data) {
+                        alert("Invite Send", 1000);
+                    },
+                })
+            }
+        });
     </script>
-
 @endsection

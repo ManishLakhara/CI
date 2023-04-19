@@ -594,6 +594,6 @@
         });
     </script>
     @section('contactus')
-    @include('inc.contactus')
+   
 @endsection
 @endsection

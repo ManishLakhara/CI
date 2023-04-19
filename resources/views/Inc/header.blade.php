@@ -15,10 +15,22 @@
               <a class="btn text-muted btn-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Policy
               </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="{{route('policy-page')}}">Action</a>
-                <a class="dropdown-item" href="{{route('policy-page')}}">Another action</a>
-                <a class="dropdown-item" href="{{route('policy-page')}}">Something else here</a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="max-height: 15em;width: 30em;">
+
+                @foreach ($policies as $policy)
+                <li class="nav-item">
+                   
+                        <a href="{{ url('cms') . '#' . $policy->slug}}" style="cursor: pointer;text-decoration:none;">
+
+                        <div class="d-flex justify-content-between">
+                            <span class="nav-link text-dark">{{ $policy->title }}</span>
+
+                        </div>
+                    </a>
+
+                    <hr>
+                </li>
+            @endforeach
               </div>
             </div>
           </div>

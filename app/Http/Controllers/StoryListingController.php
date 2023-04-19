@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\MissionApplication;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\CmsPage;
 class StoryListingController extends Controller
 {
     public function __construct()
@@ -23,7 +23,7 @@ class StoryListingController extends Controller
         $user = Auth::user();
 
         $draft_stories = Story::where('user_id', $user->user_id)->where('status', 'DRAFT')->get();
-
+        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
         $published_stories = Story::where('status', 'PUBLISHED')->paginate(9);
         $pagination = $published_stories->links()->render();
         if($published_stories instanceof LengthAwarePaginator){
@@ -34,7 +34,7 @@ class StoryListingController extends Controller
         if ($request->ajax()) {
             return view('components.my-story', compact('published_stories','pagination'));
         } else {
-            return view('storylisting', compact('user', 'published_stories', 'draft_stories','pagination'));
+            return view('storylisting', compact('user', 'published_stories', 'draft_stories','pagination','policies'));
         }
     }
 

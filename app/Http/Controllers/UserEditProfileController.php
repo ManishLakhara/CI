@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Models\Skill;
 use App\Models\UserSkill;
-
+use App\Models\CmsPage;
 class UserEditProfileController extends Controller
 {
 
@@ -37,8 +37,8 @@ class UserEditProfileController extends Controller
             ->select('skills.skill_id', 'skills.skill_name')
             ->get();
 
-
-        return view('usereditprofile', compact('user', 'countries', 'cities', 'skills', 'selected_skills'));
+        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
+        return view('usereditprofile', compact('user', 'countries', 'cities', 'skills', 'selected_skills','policies'));
     }
 
 
@@ -196,10 +196,10 @@ class UserEditProfileController extends Controller
         ]);
 
         //dd($request->user_id);
-            $contactUs = new ContactUs;
-            $contactUs->user_id = $request->user_id;
-            $contactUs->subject = $request->subject;
-            $contactUs->message = $request->message;
+        $contactUs = new ContactUs;
+        $contactUs->user_id = $request->user_id;
+        $contactUs->subject = $request->subject;
+        $contactUs->message = $request->message;
 
 
 

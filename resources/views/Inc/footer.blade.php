@@ -58,7 +58,7 @@
                                 <button type="button" class="btn btn-outline-secondary px-4" style="border-radius: 23px"
                                     data-dismiss="modal">cancel</button>
                             </div>
-                            <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->user_id }}">
+                            <input type="hidden" id="user_user_id" name="user_id" value="{{ Auth::user()->user_id }}">
 
                             <div class="px-1">
                                 <button type="submit" class="btn btn-outline effects px-4"

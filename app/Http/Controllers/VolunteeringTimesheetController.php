@@ -11,7 +11,7 @@ use App\Models\MissionApplication;
 use App\Models\Mission;
 use App\Http\Requests\StoreTimeSheetRequest;
 use App\Http\Requests\UpdateTimesheetRequest;
-
+use App\Models\CmsPage;
 class VolunteeringTimesheetController extends Controller
 {
     /**
@@ -68,8 +68,8 @@ class VolunteeringTimesheetController extends Controller
         $goalmissions = Mission::whereIn('mission_id', $appliedGoalMissionIds)
             ->where('mission_type', 'GOAL')
             ->get();
-
-        return view('volunteeringtimesheet.index', compact('user', 'timesheets', 'appliedTimeMissionIds', 'timemissions', 'appliedGoalMissionIds', 'goalmissions', 'missions'));
+        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
+        return view('volunteeringtimesheet.index', compact('user', 'timesheets', 'appliedTimeMissionIds', 'timemissions', 'appliedGoalMissionIds', 'goalmissions', 'missions','policies'));
     }
 
     /**
