@@ -11,7 +11,7 @@ input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="datetime"]:focus,
 .carousel-indicators li {
-    background-color: #ccc;
+    background-color: white;
 }
 .pagination {
     display: flex;
