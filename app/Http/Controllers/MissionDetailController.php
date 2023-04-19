@@ -11,6 +11,7 @@ use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\CmsPage;
 class MissionDetailController extends Controller
 {
     public function main($mission_id){
@@ -45,7 +46,9 @@ class MissionDetailController extends Controller
         }else{
             $avg_rating=ceil($rating/$count_rating);
         }
-        return view('mission',compact('mission','users','skills','data','favorite','my_rating','avg_rating','count_rating'));
+
+        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
+        return view('mission',compact('mission','users','skills','data','favorite','my_rating','avg_rating','count_rating','policies'));
     }
     public function showVolunteer(Request $request){
         if($request->ajax()){

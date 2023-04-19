@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Story;
 use App\Models\StoryViews;
+use App\Models\CmsPage;
 
 class StoryDetailController extends Controller
 {
@@ -15,7 +16,7 @@ class StoryDetailController extends Controller
         $user = Auth::user();
 
         $story = Story::findOrFail($story_id);
-        if(StoryViews::where('user_id',$user->user_id)->where('story_id',$story->story_id)->first()==null){
+        if (StoryViews::where('user_id', $user->user_id)->where('story_id', $story->story_id)->first() == null) {
             StoryViews::create([
                 'story_id' => $story_id,
                 'user_id' => $user->user_id,
@@ -25,6 +26,7 @@ class StoryDetailController extends Controller
             ->orderBy('user_id', 'asc')
             ->get();
 
-        return view('storydetailspage', compact('user', 'story', 'userdetails'));
+        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
+        return view('storydetailspage', compact('user', 'story', 'userdetails','policies'));
     }
 }
