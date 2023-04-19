@@ -35,18 +35,18 @@
         <table class="table table-responsive border-start border-end">
             <thead style="background-color: #F8F9FC">
                 <tr>
-                    <th width="300px">Mission Title</th>
-                    <th width="300px">Mission Id</th>
-                    <th width="300px">User Id</th>
-                    <th width="300px">User Name</th>
-                    <th width="300px">Applied Date</th>
-                    <th width="300px">Action</th>
+                    <th class="fs-5 py-4 px-3 font-weight-light" width="300px">Mission Title</th>
+                    <th class="fs-5 py-4 font-weight-light" width="300px">Mission Id</th>
+                    <th class="fs-5 py-4 font-weight-light" width="300px">User Id</th>
+                    <th class="fs-5 py-4 font-weight-light" width="300px">User Name</th>
+                    <th class="fs-5 py-4 font-weight-light" width="300px">Applied Date</th>
+                    <th class="fs-5 py-4 font-weight-light" width="300px">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($data as $mt)
                     <tr>
-                        <td>
+                        <td class="px-3">
                         {{$mt->mission->title}}
                         </td>
                         <td>{{$mt->mission->mission_id}}</td>

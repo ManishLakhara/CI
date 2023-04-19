@@ -17,17 +17,17 @@
         <table class="table table-responsive border-start border-end">
             <thead style="background-color: #F8F9FC">
                 <tr>
-                    <th width="500px">S.No</th>
-                    <th width="500px">Title</th>
-                    <th width="500px">Status</th>
-                    <th width="500px">Action</th>
+                    <th class="fs-5 py-4 px-3 font-weight-light" width="500px">S.No</th>
+                    <th class="fs-5 py-4 font-weight-light" width="500px">Title</th>
+                    <th class="fs-5 py-4 font-weight-light" width="500px">Status</th>
+                    <th class="fs-5 py-4 font-weight-light" width="500px">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {{-- $--}}
                 @foreach ($data as $d)
                     <tr>
-                        <td>{{ $d->mission_theme_id}}</td>
+                        <td class="px-3">{{ $d->mission_theme_id}}</td>
                         <td>{{ $d->title }}</td>
                         <td>
                             @if ($d->status)
@@ -48,7 +48,7 @@
 
                                 <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $d->mission_theme_id }}"
                                     class="btn btn-white">
-                                    <img src="Images/bin.png" alt="delete">
+                                    <img src="Images/bin.png" style="width: 16px;height:20px" alt="delete">
                                 </button>
                                 <!-- Modal -->
                                 @include('admin.components.deleteModal', [

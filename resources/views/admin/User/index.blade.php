@@ -17,19 +17,19 @@
         <table class="table table-responsive border-start border-end">
             <thead style="background-color: #F8F9FC">
                 <tr>
-                    <th width="600px">First Name</th>
-                    <th width="600px">Last Name</th>
-                    <th width="600px">Email</th>
-                    <th width="600px">Employee Id</th>
-                    <th width="600px">Department</th>
-                    <th width="600px">Status</th>
-                    <th width="600px">Action</th>
+                    <th class="fs-5 py-4 px-3 font-weight-light" width="600px">First Name</th>
+                    <th class="fs-5 py-4  font-weight-light" width="600px">Last Name</th>
+                    <th class="fs-5 py-4  font-weight-light" width="600px">Email</th>
+                    <th class="fs-5 py-4  font-weight-light" width="600px">Employee Id</th>
+                    <th class="fs-5 py-4  font-weight-light" width="600px">Department</th>
+                    <th class="fs-5 py-4  font-weight-light" width="600px">Status</th>
+                    <th class="fs-5 py-4  font-weight-light" width="600px">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($data as $d)
                     <tr>
-                        <td>{{ $d->first_name }}</td>
+                        <td class="px-3">{{ $d->first_name }}</td>
                         <td>{{ $d->last_name }}</td>
                         <td>{{ $d->email }}</td>
                         <td>{{ $d->employee_id }}</td>
@@ -53,7 +53,7 @@
 
                                 <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $d->user_id }}"
                                     class="btn btn-white">
-                                    <img src="Images/bin.png" alt="delete">
+                                    <img src="Images/bin.png" style="width: 16px;height:20px" alt="delete">
                                 </button>
                                 <!-- Modal -->
                                 @include('admin.components.deleteModal', [

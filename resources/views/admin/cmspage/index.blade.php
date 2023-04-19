@@ -26,15 +26,15 @@
                     <thead style="background-color: #F8F9FC">
 
                         <tr>
-                            <th class="col-lg-8">Title</th>
-                            <th class="col-lg-4">Status</th>
-                            <th>Action</th>
+                            <th class="fs-5 py-4 px-3 font-weight-light col-lg-8">Title</th>
+                            <th class="fs-5 py-4 font-weight-light col-lg-4">Status</th>
+                            <th class="fs-5 py-4 font-weight-light">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $d)
                             <tr>
-                                <td>{{ $d->title }}</td>
+                                <td class="px-3">{{ $d->title }}</td>
                                 <td>
                                     @if ($d->status)
                                         <div class="h5" style="color: #14C506">
@@ -54,7 +54,7 @@
                                     </a>
                                     <button type="button" data-toggle="modal"
                                         data-target="#deleteModal-{{ $d->cms_page_id }}" class="btn btn-white">
-                                        <img src="Images/bin.png" alt="delete">
+                                        <img src="Images/bin.png" style="width: 16px;height:20px" alt="delete">
                                     </button>
                                     @include('admin.components.deleteModal', [
                                         'id' => $d->cms_page_id,

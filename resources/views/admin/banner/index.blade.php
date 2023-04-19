@@ -17,15 +17,15 @@
     <table class="table table-responsive border-start border-end">
         <thead style="background-color: #F8F9FC">
             <tr>
-                <th width="1000px">Image</th>
-                <th width="400px">Sort Order</th>
-                <th width="400px">Action</th>
+                <th class="fs-5 py-4 px-3 font-weight-light" width="1000px">Image</th>
+                <th class="fs-5 py-4 font-weight-light" width="400px">Sort Order</th>
+                <th class="fs-5 py-4 font-weight-light" width="400px">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $d)
                 <tr>
-                    <td>
+                    <td class="px-3">
                         {{$d->image}}
                     </td>
                     <td>
@@ -39,7 +39,7 @@
 
                         <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $d->banner_id }}"
                             class="btn btn-white">
-                            <img src="Images/bin.png" alt="delete">
+                            <img src="Images/bin.png" style="width: 16px;height:20px" alt="delete">
                         </button>
                         {{-- model --}}
                         @include('admin.components.deleteModal', [

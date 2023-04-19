@@ -30,16 +30,16 @@
     <table class="table table-responsive border-start border-end">
         <thead style="background-color: #F8F9FC">
             <tr>
-                <th width="500px">Story Title</th>
-                <th width="500px">Mission Title</th>
-                <th width="500px">User Full Name</th>
-                <th width="300px">Action</th>
+                <th class="fs-5 py-4 px-3 font-weight-light" width="500px">Story Title</th>
+                <th class="fs-5 py-4 font-weight-light" width="500px">Mission Title</th>
+                <th class="fs-5 py-4 font-weight-light" width="500px">User Full Name</th>
+                <th class="fs-5 py-4 font-weight-light" width="300px">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $mt)
                 <tr>
-                    <td>
+                    <td class="px-3">
                         {{$mt->title}}
                     </td>
                     <td>
@@ -71,7 +71,7 @@
 
                         <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $mt->story_id }}"
                             class="btn btn-white">
-                            <img src="Images/bin.png" alt="delete">
+                            <img src="Images/bin.png" style="width: 16px;height:20px" alt="delete">
                         </button>
                         <!-- Modal -->
                         @include('admin.components.deleteModal', [

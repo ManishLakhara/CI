@@ -29,17 +29,17 @@
                 <table class="table table-responsive border-start border-end">
                     <thead class="table-light">
                         <tr>
-                            <th class="col-lg-6">Mission Title</th>
-                            <th class="col-lg-2">Mission Type</th>
-                            <th class="col-lg-2">Start Date</th>
-                            <th class="col-lg-2">End Date</th>
-                            <th class="col-lg-1">Action</th>
+                            <th class="fs-5 py-4 px-3 font-weight-light col-lg-6">Mission Title</th>
+                            <th class="fs-5 py-4 font-weight-light col-lg-2">Mission Type</th>
+                            <th class="fs-5 py-4 font-weight-light col-lg-2">Start Date</th>
+                            <th class="fs-5 py-4 font-weight-light col-lg-2">End Date</th>
+                            <th class="fs-5 py-4 font-weight-light col-lg-1">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $d)
                             <tr>
-                                <td>{{ $d->title }}</td>
+                                <td class="px-3">{{ $d->title }}</td>
                                 <td>{{ $d->mission_type }}</td>
                                 <td>{{ $d->start_date }}</td>
                                 <td>{{ $d->end_date }}</td>
@@ -52,7 +52,7 @@
 
                                     <button type="button" data-toggle="modal"
                                         data-target="#deleteModal-{{ $d->mission_id }}" class="btn btn-white">
-                                        <img src="Images/bin.png" alt="delete">
+                                        <img src="Images/bin.png" style="width: 16px;height:20px" alt="delete">
                                     </button>
                                     <!-- Modal -->
                                     @include('admin.components.deleteModal', [
