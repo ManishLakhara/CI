@@ -183,7 +183,9 @@ class LandingPageController extends Controller
                     }
                 }]
             ]);
-            $datas = $datas->whereIn('country_id',$request->countries);
+            if($request->countries!=null){
+                $datas = $datas->whereIn('country_id',$request->countries);
+            }
             $citys = $datas->pluck('city_id')->toArray();
             $city_ids = array_unique($citys);
             $cities = City::whereIn('city_id',$city_ids)->get(['city_id','name']);
@@ -203,8 +205,12 @@ class LandingPageController extends Controller
                     }
                 }]
             ]);
-            $datas = $datas->whereIn('country_id',$request->countries);
-            $datas = $datas->whereIn('city_id', $request->cities);
+            if($request->countries!=null){
+                $datas = $datas->whereIn('country_id',$request->countries);
+            }
+            if($request->cities!=null){
+                $datas = $datas->whereIn('city_id', $request->cities);
+            }
             $theme_ids = $datas->pluck('theme_id')->toArray();
             $theme_ids = array_unique($theme_ids);
             $themes = MissionTheme::whereIn('mission_theme_id',$theme_ids)->get(['mission_theme_id','title']);
@@ -224,10 +230,16 @@ class LandingPageController extends Controller
                     }
                 }]
             ]);
-            $datas = $datas->whereIn('country_id',$request->countries);
-            $datas = $datas->whereIn('city_id', $request->cities);
-            $datas = $datas->whereIn('theme_id', $request->themes)
-                    ->with('skill');
+            if($request->countries!=null){
+                $datas = $datas->whereIn('country_id',$request->countries);
+            }
+            if($request->cities!=null){
+                $datas = $datas->whereIn('city_id', $request->cities);
+            }
+            if($request->themes){
+                $datas = $datas->whereIn('theme_id', $request->themes)
+                ->with('skill');
+            }
             $skill_ids = [];
             $mission_ids = $datas->pluck('mission_id');
             $skill_ids = MissionSkill::whereIn('mission_id',$mission_ids)->pluck('skill_id')->toArray();

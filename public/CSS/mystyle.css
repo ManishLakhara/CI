@@ -38,6 +38,19 @@ input[type="datetime"]:focus,
 .page-link{
     color:#757575;
 }
+@media screen and (min-width: 768px) {
+    #main_header_btn {
+        display: none;
+    }
+}
+@media screen and (max-width: 767px){
+    #main_header{
+        display: none;
+    }
+    #search-mission-id{
+        display:none;
+    }
+}
 @media screen and (max-width: 767px) {
     .container {
       margin: 0; /* remove margin on smaller screens */
@@ -50,11 +63,6 @@ input[type="datetime"]:focus,
 }
 .carousel-indicators .active {
     background-color: #555;
-}
-@media screen and (max-width: 580px) {
-    #userAvatar {
-        display: none;
-    }
 }
 @media screen and (max-width: 991px){
     #filler-gap { display: none;}
@@ -381,7 +389,7 @@ small {
 }
 
 .progress {
-    width: 18em;
+    width: auto;
 }
 
 .current-status {

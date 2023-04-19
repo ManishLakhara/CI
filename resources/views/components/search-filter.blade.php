@@ -1,11 +1,12 @@
-<div class="container-fluid border-bottom">
+<div id="search_filter" class="container-fluid border-bottom position-sticky" style="z-index:100;top:0%;background-color:white;">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 d-flex rounded justify-content-between align-items-center">
-                <form id="search-mission" style="margin: 0%; padding:0%;">
-                    @csrf
                 <div class="d-flex">
-                    <button type="submit" id="search-mission-id" class="btn">
+                    <button class="btn" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                        <i class="fa-solid fa-bars"></i>
+                      </button>
+                    <button type="button" id="search-mission-id" class="btn">
                         <i class="fas fa-search"></i>
                     </button>
                     <div>
@@ -13,10 +14,9 @@
                             value='{{ request()->input('s') }}' class="form-control border-0 py-3" />
                     </div>
                 </div>
-               </form>
-               <div>
+               <div class="text-end">
                 <button class="my-filter-btn btn btn-white"
-                type="button"><i class="fa-solid fa-bars"></i></button>
+                type="button"><i class="fa-solid fa-arrow-up-wide-short"></i></button>
               </div>
             </div>
             <div class="col-md-6 d-flex justify-content-around">
@@ -42,8 +42,7 @@
                                     </div>
                                 </div>
                             </div>
-                            </div>
-
+                        </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-sm-6">
                         <div class="col-sm-3 my-filters border-start input-group px-2" >

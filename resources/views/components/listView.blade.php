@@ -69,54 +69,56 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 col-xl-8 p-2">
-                <div class="container">
-                <div class="row w-100">
-                    <div class="col-md-8">
-                        <div class="d-flex">
-                            <div class="d-flex align-items-center">
+            <div class="col-lg-12 col-xl-8">
+            <div class="container px-0">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-start justify-content-sm-between">
+                            <div class="d-flex d-flex-inline align-items-center">
                                 <img src="{{asset('Images/pin1.png')}}" alt=""> <span >{{$item->city->name}}</span>
                             </div>
-                            <div class="px-2 d-flex align-items-center">
+                            <div class="d-flex d-flex-inline align-items-center">
                                 <img src="{{asset('Images/web.png')}}" alt=""> <span >{{$item->missionTheme->title}}</span>
-                            </div>
-                            <div class="px-2 d-flex align-items-center">
-                                <img src="{{asset('Images/organization.png')}}" alt=""><span >{{$item->organization_name}}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="d-flex justify-content-end">
-                            <div>
-                                <?php
-                                    $user_rating = $item->missionRating;
-                                    $rating = $user_rating->pluck('rating')->toArray();
-                                    $count = count($rating);
-                                    if($count=='0'){
-                                        $avg_rating = 0;
-                                    }
-                                    else{
-                                        $avg_rating = ceil(array_sum($rating)/$count);
-                                    }
-                                ?>
-                                <div class="small-ratings">
-                                    @for ($i=0;$i<5;$i++,$avg_rating--)
-                                        @if($avg_rating>0)
-                                            <i class="fa fa-star rating-color"></i>
-                                        @else
-                                            <i class="fa fa-star"></i>
-                                        @endif
-                                    @endfor
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-start justify-content-sm-between">
+                            <div class="d-flex d-flex-inline align-items-center">
+                                <img src="{{asset('Images/organization.png')}}" alt=""><span >{{$item->organization_name}}</span>
+                            </div>
+                            <div class="d-flex d-flex-inline">
+                                <div>
+                                    <?php
+                                        $user_rating = $item->missionRating;
+                                        $rating = $user_rating->pluck('rating')->toArray();
+                                        $count = count($rating);
+                                        if($count=='0'){
+                                            $avg_rating = 0;
+                                        }
+                                        else{
+                                            $avg_rating = ceil(array_sum($rating)/$count);
+                                        }
+                                    ?>
+                                    <div class="small-ratings">
+                                        @for ($i=0;$i<5;$i++,$avg_rating--)
+                                            @if($avg_rating>0)
+                                                <i class="fa fa-star rating-color"></i>
+                                            @else
+                                                <i class="fa fa-star"></i>
+                                            @endif
+                                        @endfor
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div id="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
-                    <div class="h4 theme-color pt-4 mission-title">
+                    <div class="h4 text-start theme-color pt-4 mission-title">
                         {{ $item->title }}
                     </div>
-                    <p class='mission-short-description'>
+                    <p class='text-start mission-short-description'>
                         {{ $item->short_description }}
                     </p>
                 </div>
@@ -126,25 +128,18 @@
                             <div class="col-lg-6 align-item-center">
                                 <div class="row">
                                     @if ($item->timeMission!=null)
+                                    @php
+                                        $seat_left = $item->timeMission->total_seats-$item->missionApplication->where('approval_status','APPROVE')->count();
+                                    @endphp
                                         <div class="col-6 d-flex align-items-center">
                                             <div class="px-1">
                                                 <img src={{ asset('Images/seats-left.png') }} alt="">
                                             </div>
                                             <div class="px-2 d-flex flex-column align-items-start">
-                                                <span class="theme-color fs-5 font-weight-bolder">{{$item->timeMission->total_seats}}<br></span>
+                                                <span class="theme-color fs-5 font-weight-bolder">{{$seat_left}}<br></span>
                                                 <span class="text-muted">Seats left</span>
                                             </div>
                                         </div>
-                                    {{-- @elseif (collect($item->goalMission)->isNotEmpty())
-                                        <div class="col-6 d-flex align-items-center">
-                                            <div class="px-1">
-                                                <img src={{ asset('Images/Already-volunteered.png') }} alt="">
-                                            </div>
-                                            <div class="px-2 d-flex flex-column align-items-start">
-                                                <span class="theme-color fs-5 font-weight-bolder">{{$item->missionApplication->where('approval_status','APPROVE')->count()}}<br></span>
-                                                <span class="text-muted"><small>Already volunteered</small></span>
-                                            </div>
-                                        </div> --}}
                                     @endif
                                     @if ($item->timeMission!=null)
                                         <div class='col-6 d-flex align-items-center'>
@@ -163,15 +158,15 @@
                                             $achieved += $sheet->action;
                                         }
                                     @endphp
-                                        <div class='col-6 d-flex align-items-center'>
+                                        <div class='col w-100 d-flex align-items-center'>
                                             <div class="px-1">
                                                 <img src={{ asset('Images/achieved.png') }} alt="">
                                             </div>
-                                            <div class="px-2 d-flex flex-column ">
-                                                <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" style="width: {{$achieved}}" aria-valuenow="" aria-valuemin="0" aria-valuemax="{{$item->goalMission->goal_value}}"></div>
+                                            <div class="px-2 w-100 d-flex flex-column ">
+                                                <div class="progress ">
+                                                    <div class="progress-bar" role="progressbar" style="width: {{($achieved/$item->goalMission->goal_value)*100}}%" aria-valuenow="{{$achieved}}" aria-valuemin="0" aria-valuemax="{{$item->goalMission->goal_value}}"></div>
                                                 </div>
-                                                <span class="text-muted"><small>{{$achieved}} Achieved</small></span>
+                                                <span class="text-muted text-start"><small>{{$achieved}} Achieved</small></span>
                                             </div>
                                         </div>
                                     @endif

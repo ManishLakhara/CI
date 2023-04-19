@@ -62,12 +62,15 @@
                 <div class="row py-2">
                     <div class="col-sm-6 py-2 py-sm-4 ">
                         @if ($mission->timeMission!=null)
+                            @php
+                                $seat_left = $mission->timeMission->total_seats-$mission->missionApplication->where('approval_status','APPROVE')->count();
+                            @endphp
                             <div class="d-flex justify-content-start ">
                                 <div class="px-1">
                                     <img src={{ asset('Images/seats-left.png') }} alt="">
                                 </div>
                                 <div class="px-2 d-flex flex-column align-items-start">
-                                    <span class="theme-color fs-5 font-weight-bolder">{{$mission->timeMission->total_seats}}<br></span>
+                                    <span class="theme-color fs-5 font-weight-bolder">{{$seat_left}}<br></span>
                                     <span class="text-muted">Seats left</span>
                                 </div>
                             </div>
@@ -114,7 +117,7 @@
                                         width: 20em;
                                     }</style>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: {{$achieved}}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="{{$mission->goalMission->goal_value}}"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: {{($achieved/$mission->goalMission->goal_value)*100}}%" aria-valuenow="{{$achieved}}" aria-valuemin="0" aria-valuemax="{{$mission->goalMission->goal_value}}"></div>
                                     </div>
                                     <small class="text-muted fs-6">{{$achieved}} achieved</small>
                                 </div>

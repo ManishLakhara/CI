@@ -176,8 +176,9 @@
         </div>
     </div>
 
-
+    
     <style>
+
         .video-container {
             position: relative;
             width: 100%;
@@ -225,6 +226,9 @@
     <script>
         $(document).ready(function() {
             var player;
+            document.addEventListener('touchstart', handler, {
+                passive: true
+            });
 
             $('.top-image').slick({
                 slidesToShow: 1,
@@ -317,7 +321,9 @@
                     e.preventDefault();
                     $(this).removeClass('is-paused');
                     player.playVideo();
-                },{ passive: true });
+                }, {
+                    passive: true
+                });
                 $('.js-pause').on('click', function() {
                     $(this).addClass('is-paused');
                     player.pauseVideo();

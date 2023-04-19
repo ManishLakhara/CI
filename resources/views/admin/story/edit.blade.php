@@ -34,6 +34,13 @@
     <h4 class="mt-4">
         Story Media
     </h4>
+    <div class="py-3">
+        @php $index=0;@endphp
+        @foreach ($story->storyMedia->where('type','video') as $videomedia)
+            <a class="btn border" href="{{$videomedia->path}}">video-{{$index}}</a>
+            @php $index++;@endphp
+        @endforeach
+    </div>
         <div id="preview">
             @foreach ($story->storyMedia->whereIn('type',['png','jpge','jpg']) as $imagemedia)
             <div style="position:relative; display:inline-block; margin-right:10px;margin-left:10px;">

@@ -21,13 +21,14 @@
         </div>
     </div>
 @if($count!=0)
-    <div class=" container  py-3">
-        <div class="d-flex py-4 justify-content-between">
-            <div>
-                <h4> <span class="light-theme-color">Explore</span> <span class="theme-color" id="noOfMission">{{$count}}
+<div class="container-fluid">
+    <div class="container py-3 text-center" id="all-mission">
+        <div class="row justify-content-between">
+            <div class="col-md-6 col-12">
+                <h4 class="fs-4 text-start"> <span class="light-theme-color text-center">Explore</span> <span class="theme-color" id="noOfMission">{{$count}}
                     </span> Mission </h4>
             </div>
-            <div class="d-flex">
+            <div class=" col-md-6 d-flex justify-content-md-end justify-content-between ">
                 <div class="input-group px-2" style="width: 200px ">
                     <select id="selectsort" class="custom-select w-100 border-1 text-muted">
                         <option disabled selected>Sort by</option>
@@ -53,6 +54,8 @@
             @include('components.gridListView')
         </div>
     </div>
+</div>
+
 @else
     @include('components.NoMissionFound')
 @endif
@@ -333,7 +336,7 @@
                 $('#mission_detail_l_btn_'+$(this).data('mission_id')).show();
                 $('#applied_l_badge_'+$(this).data('mission_id')).show()
             });
-            $(document).on('click','.pagination a', function(event){
+            $(document).one('click','.pagination a', function(event){
                 event.preventDefault();
                 var page = $(this).attr('href').split('page=')[1];
                 getNextFilter(page);
@@ -388,9 +391,11 @@
         }
         $(document).ready(function(Event) {
             console.log('started');
+            $('#home_page').hide();
             runJquery();
             $('#search_input').on('change',function(){
-                $('#search-mission').submit();
+                search=$(this).val();
+                getNextFilter(1);
             })
             $('.my-filter-btn').on('click',function(){
                 $('#See_filters').toggle('hidden');
@@ -399,9 +404,13 @@
                 var windowWidth = $(window).width();
                 if(windowWidth <= 767){
                     $('#See_filters').css('display','none');
+                    $('#all-mission').addClass('container-fluid');
+                    $('#all-mission').removeClass('container');
                 }
                 if(windowWidth >= 768){
                     $('#See_filters').show();
+                    $('#all-mission').addClass('container');
+                    $('#all-mission').removeClass('container-fluid');
                 }
             })
             $('#grid-view').on('click', function() {
@@ -461,14 +470,14 @@
                 else{
                     removeBadge(country_id, 'country');
                     countries = countries.filter(item => item != country_id);
+                    if(countries.length==0){
+                        $('#clear_all').hide();
+                        $('[id^="close_city_button_"]').click();
+                        $('#city_drop_down_menu').prop('disabled', true);
+
+
+                        $('#clear-filter').hide();
                     }
-
-                if(countries.length==0){
-                    $('#clear_all').hide();
-                    $('#city_drop_down_menu').prop('disabled', true);
-                    $('[id^="close_city_button_"]').click();
-
-                    $('#clear-filter').hide();
                 }
                 $('#country_f_id').val(countries);
                 getNextFilter(1);

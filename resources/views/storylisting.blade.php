@@ -139,6 +139,7 @@
     </div> --}}
 
     <script>
+        $('#story_page').hide();
         function getAjax(page) {
             $.ajax({
                 url: "{{ url('story-listing') }}" + '?page=' + page,

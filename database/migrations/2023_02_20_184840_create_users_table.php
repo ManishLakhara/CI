@@ -27,8 +27,8 @@ return new class extends Migration
             $table->unsignedBigInteger('city_id')->nullable();
             $table->foreign('city_id')->references('city_id')->on('cities');
             $table->text('profile_text')->nullable();
-            $table->string('linked_in_url', 255)->nullable();;
-            $table->string('title', 255)->nullable();;
+            $table->string('linked_in_url', 255)->nullable();
+            $table->string('title', 255)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
