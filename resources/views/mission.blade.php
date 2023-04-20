@@ -1,5 +1,8 @@
 
 @extends('layouts.app')
+@section('title')
+    Mission {{$mission->mission_id}}
+@endsection
 @section('content')
 <?php
     // use Carbon\Carbon;
@@ -15,12 +18,8 @@
                         @foreach ($mission->missionMedia as $media)
                             @if($media->media_type=='png')
                                 <div class="image p-1">
-                                    <img class="img-fluid w-100 h-100" src={{asset('storage/'.$media->media_path)}} alt="">
+                                    <img class="img-fluid w-100 h-100" style="width:588px;height:560px;flex-shrink:0;" src={{asset('storage/'.$media->media_path)}} alt="{{$media->type}}">
                                 </div>
-                            {{-- @elseif ($media->media_type=='MP4')
-                                <div class="video-wrapper">
-                                    <iframe height="100%" width="100%" src="{{$media->media_path}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div> --}}
                             @endif
                         @endforeach
                     </div>
@@ -30,12 +29,8 @@
                         @foreach ($mission->missionMedia as $media)
                             @if($media->media_type=='png')
                                 <div class="image p-1">
-                                    <img class="img-fluid w-100 h-100" src={{asset('storage/'.$media->media_path)}} alt="">
+                                    <img class="img-fluid w-100 h-100" src={{asset('storage/'.$media->media_path)}} alt="{{$media->type}}" style="width:139px;height:128px;flex-shrink:0;">
                                 </div>
-                                {{-- @elseif ($media->media_name=='MP4')
-                                <div class="video-wrapper">
-                                    <iframe height="100%" width="100%" src="http://www.youtube.com/embed/XGSy3_Czz8k?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div> --}}
                             @endif
                         @endforeach
                     </div>
@@ -48,7 +43,7 @@
                 <div class="fs-4 py-3 text-secondary" style="overflow-wrap:break-word;">
                     {{$mission->short_description}}
                 </div>
-                <div class="Border-top py-4"></div>
+                <div class="border-top py-4"></div>
 
 
                 <div class="text-center" style="margin-top: -60px;">
@@ -67,7 +62,7 @@
                             @endphp
                             <div class="d-flex justify-content-start ">
                                 <div class="px-1">
-                                    <img src={{ asset('Images/seats-left.png') }} alt="">
+                                    <img src={{ asset('Images/seats-left.png') }} alt="seat-left" style="width:25px;height:25px">
                                 </div>
                                 <div class="px-2 d-flex flex-column align-items-start">
                                     <span class="theme-color fs-5 font-weight-bolder">{{$seat_left}}<br></span>
@@ -77,7 +72,7 @@
                         @elseif(collect($mission->goalMission)->isNotEmpty())
                             <div class="d-flex align-items-center ">
                                 <div class="px-1">
-                                    <img src={{ asset('Images/Already-volunteered.png') }} alt="">
+                                    <img src={{ asset('Images/Already-volunteered.png') }} alt="already-volunteerd" style="width:26px;height:25px">
                                 </div>
                                 <div class="px-2 d-flex flex-column align-items-start">
                                     <span class="theme-color fs-5 font-weight-bolder">{{$mission->missionApplication->where('approval_status','APPROVE')->count()}}<br></span>
@@ -90,7 +85,7 @@
                         @if($mission->timeMission)
                             <div class='d-flex align-items-center'>
                                 <div class="px-1">
-                                    <img src={{ asset('Images/deadline.png') }} alt="">
+                                    <img src={{ asset('Images/deadline.png') }} alt="deadline" style="width:33px;height:33px">
                                 </div>
                                 <div class=" px-2 d-flex flex-column align-items-start">
                                     <span class="theme-color fs-5 font-weight-bolder">{{ date('d-m-Y', strtotime($mission->timeMission->registration_deadline)) }}<br></span>
@@ -106,7 +101,7 @@
                         @endphp
                             <div class='d-flex justify-content-start py-2 py-sm-4 w-lg-75 w-100'>
                                 <div class="px-1">
-                                    <img src={{ asset('Images/achieved.png') }} alt="">
+                                    <img src={{ asset('Images/achieved.png') }} alt="achieved" style="width:24px;height:24px">
                                 </div>
                                 <div class="d-flex flex-column ps-2 w-100">
                                     <style>
@@ -117,7 +112,7 @@
                                         width: 20em;
                                     }</style>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: {{($achieved/$mission->goalMission->goal_value)*100}}%" aria-valuenow="{{$achieved}}" aria-valuemin="0" aria-valuemax="{{$mission->goalMission->goal_value}}"></div>
+                                        <div class="progress-bar" name="progress" aria-label="goal-reached" role="progressbar" style="width: {{($achieved/$mission->goalMission->goal_value)*100}}%" aria-valuenow="{{$achieved}}" aria-valuemin="0" aria-valuemax="{{$mission->goalMission->goal_value}}"></div>
                                     </div>
                                     <small class="text-muted fs-6">{{$achieved}} achieved</small>
                                 </div>
@@ -125,10 +120,10 @@
                         @endif
                     </div>
                 </div>
-                <div class="Border-top"></div>
+                <div class="border-top"></div>
                 <div class="row py-4">
                     <div class="col-xxl-6 col-12 py-3">
-                        <button id="this_mission_like_btn_{{$mission->mission_id}}_{{$user_id}}" class="btn btn-outline-secondary w-100 border-2" style="border-radius: 23px">
+                        <button name="like_btn" id="this_mission_like_btn_{{$mission->mission_id}}_{{$user_id}}" class="btn btn-outline-secondary w-100 border-2" style="border-radius: 23px;">
                             @if($mission->favoriteMission==null)
                                 <?php $value=0?>
                                 <span class="text-center">
@@ -146,9 +141,9 @@
                         <input type="radio" name="imgbackground" id="this_mission_like_input_{{$mission->mission_id}}_{{$user_id}}" class="d-none imgbgchk py-1 hidden" style="display: none" value={{$value}}>
                     </div>
                     <div class="col-xxl-6 col-12 py-3">
-                        <button class="btn btn-outline-secondary w-100 border-2" id="misison_invite_btn_{{$mission->mission_id}}_{{$user_id}}" data-toggle="modal" data-target="#invite_user_modal_{{$mission->mission_id}}_{{$user_id}}" style="border-radius: 23px">
+                        <button name="recomment" class="btn btn-outline-secondary w-100 border-2" id="misison_invite_btn_{{$mission->mission_id}}_{{$user_id}}" data-toggle="modal" data-target="#invite_user_modal_{{$mission->mission_id}}_{{$user_id}}" style="border-radius: 23px;">
                             <span class="text-center">
-                                <img class="px-1" src={{ asset('Images/add1.png') }} alt="">
+                                <img class="px-1" src={{ asset('Images/add1.png') }} alt="recomment" style="width:30px;height:22px">
                                 Recommend to a Co-worker
                             </span>
                         </button>
@@ -158,7 +153,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                     <h5 class="modal-title" id="invite_user_modal_{{$mission->mission_id}}_{{$user_id}}Label">Invite Your Friends</h5>
-                                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                                    <button name="close" type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                     </div>
@@ -179,7 +174,7 @@
                                                     <td>{{$user->last_name}}</td>
                                                     <td>{{$user->email}}</td>
                                                     <td>
-                                                        <input type="checkbox" id="invite_{{$mission->mission_id}}_{{$user->user_id}}_{{$user_id}}" value="{{$user->user_id}}">
+                                                        <input type="checkbox" class="invite" data-from_user_id="{{$user_id}}" data-mission_id="{{$mission->mission_id}}" data-to_user_id="{{$user->user_id}}" value="{{$user->user_id}}">
                                                     </td>
                                                     </tr>
                                                 @endforeach
@@ -187,14 +182,14 @@
                                             </table>
                                     </div>
                                     <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button name="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     </div>
-                <div class="Border-top"></div>
+                <div class="border-top"></div>
                 <div class="d-flex justify-content-center position-relative" style="margin-top: -35px">
                     @if($mission->missionApplication->where('user_id',$user_id)->first()!=Null && $mission->missionApplication->where('user_id',$user_id)->first()->approval_status=="APPROVE")
                         <div class='rating bg-white' data-mission_id="{{$mission->mission_id}}" data-user_id="{{$user_id}}">
@@ -278,9 +273,11 @@
                 </div>
                 <div class="row py-4 justify-content-center align-item-center" >{{--Apply Button--}}
                     <div class="col-6 align-self-center">
-                        @if(count($mission->missionApplication->where('user_id',$user_id))===0)
-                        <button type="button" id="mission_application_btn" data-user_id="{{$user_id}}" data-mission_id="{{$mission->mission_id}}" class="btn btn-lg fs-5 apply-btn w-100"> Apply <i
-                            class="fa-sharp fa-solid fa-arrow-right"></i> </button>
+                        @if(!($mission->end_date < now() || ($mission->TimeMission!=Null && $mission->TimeMission->registration_deadline < now()) || ($mission->TimeMission!=Null && $mission->TimeMission->total_seats <= 0)))
+                            @if(count($mission->missionApplication->where('user_id',$user_id))===0)
+                                <button type="button" id="mission_application_btn" data-user_id="{{$user_id}}" data-mission_id="{{$mission->mission_id}}" class="btn btn-lg fs-5 apply-btn w-100"> Apply <i
+                                    class="fa-sharp fa-solid fa-arrow-right"></i> </button>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -291,13 +288,13 @@
                 <div class="col-md-7">
                     <ul class="nav border-bottom" id="myTab" role="tablist">
                         <li class="nav-item">
-                          <a class="nav-link active" id="mission-detail-tab" data-toggle="tab" href="#mission-detail" role="tab" aria-controls="mission-detail" aria-selected="false">Mission</a>
+                          <a name="mission_detail" class="nav-link active" id="mission-detail-tab" data-toggle="tab" href="#mission-detail" role="tab" aria-controls="mission-detail" aria-selected="false">Mission</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="organization-detail-tab" data-toggle="tab" href="#organization-detail" role="tab" aria-controls="organization-detail" aria-selected="false">Organization</a>
+                          <a name="organization_details" class="nav-link" id="organization-detail-tab" data-toggle="tab" href="#organization-detail" role="tab" aria-controls="organization-detail" aria-selected="true">Organization</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="Comment-detail-tab" data-toggle="tab" href="#Comment-detail" role="tab" aria-controls="Comment-detail" aria-selected="false">Comments</a>
+                          <a name="comment_post" class="nav-link" id="Comment-detail-tab" data-toggle="tab" href="#Comment-detail" role="tab" aria-controls="Comment-detail" aria-selected="false">Comments</a>
                         </li>
                     </ul>
                     <div class="tab-content pt-4" id="myTabContent">
@@ -324,7 +321,7 @@
                                                 @elseif($document->document_type=="xlsx")
                                                     src={{asset('Images/xlsx.png')}}
                                                 @endif
-                                                alt="">
+                                                alt="document_type" style="width:21px;height:24px">
                                                 <span class="fs-7">{{explode('_',$document->document_name)[1]}}</span>
                                             </div>
                                         </button>
@@ -477,6 +474,59 @@
             })
         }
         $(document).ready(function(){
+            $('.top-image').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                asNavFor: '.multiple-items'
+            })
+            $('.multiple-items').slick({
+                infinite: true,
+                arrows: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                asNavFor: '.top-image',
+                centerMode: false,
+                focusOnSelect: true,
+                responsive: [
+                    {
+                        breakpoint: 1399,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 1199,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 991,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 433,
+                        settings: {
+                            slidesToScroll: 1,
+                            slidesToShow: 1
+                        }
+                    },
+                ]
+            })
             getComment();
             getVolunteers(1);
             $('[id^="click-to-details_"]').click(function(){
@@ -580,10 +630,12 @@
                         }
                 })
             })
-            $("button[id^='mission_like_btn_']").on('click', function() {
-                var mission_id = this.id.split("_")[3];
-                var user_id = this.id.split("_")[4];
-                if($('#mission_like_input_'+mission_id+'_'+user_id).val()=='0'){
+            $("button[class^='mission_like_btn_']").on('click', function() {
+                // var mission_id = this.id.split("_")[3];
+                // var user_id = this.id.split("_")[4];
+                var mission_id = $(this).data('mission_id');
+                var user_id = $(this).data('user_id');
+                if($('.mission_like_input_'+mission_id+'_'+user_id).val()=='0'){
                     $.ajax({
                         url: "{{url('api/add-favourite')}}",
                         type: "POST",
@@ -593,13 +645,13 @@
                             user_id: user_id,
                         },
                         success: function(data) {
-                            $('#mission_like_input_'+mission_id+'_'+user_id).val(data);
-                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fas fa-heart fs-4"></i>');
+                            $('.mission_like_input_'+mission_id+'_'+user_id).val(data);
+                            $("button[class^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fas fa-heart fs-4"></i>');
                         }
                     });
                 }
                 else{
-                    let fav = $('#mission_like_input_'+mission_id+'_'+user_id).val()
+                    let fav = $('.mission_like_input_'+mission_id+'_'+user_id).val()
                     $.ajax({
                         url: "{{url('api/remove-favourite')}}",
                         type: "POST",
@@ -610,8 +662,8 @@
                             favorite_mission_id: fav,
                         },
                         success: function() {
-                            $('#mission_like_input_'+mission_id+'_'+user_id).val('0');
-                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fa-regular fa-heart fs-4"></i>');
+                            $('.mission_like_input_'+mission_id+'_'+user_id).val('0');
+                            $("button[class^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fa-regular fa-heart fs-4"></i>');
                         }
                     });
                 }
@@ -653,12 +705,11 @@
                     });
                 }
             })
-            $('input[id^="invite_"]').on('click', function() {
+            $('input[class="invite"]').on('click', function() {
                 if (this.checked) {
-                    var mission_id = this.id.split("_")[1];
-                    var to_user_id = this.id.split('_')[2];
-                    var from_user_id = this.id.split("_")[3];
-                    console.log(mission_id);
+                    var mission_id = $(this).data('mission_id');
+                    var from_user_id = $(this).data('from_user_id');
+                    var to_user_id = $(this).data('to_user_id');
                     $.ajax({
                         url: "{{url('api/invite-user')}}",
                         type: "POST",

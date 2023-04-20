@@ -423,3 +423,12 @@ p{
         margin: 0 2px;
     }
 }
+.carousel-thumbnail .slick-track {
+    height: 560px;
+  }
+.slidebar-nav .slick-track {
+    height: 115.61px;
+}
+  /* .slick-slide {
+    height: 100%;
+  } */

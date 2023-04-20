@@ -12,10 +12,10 @@
               <a class="btn text-muted no-decor" href="{{ route('mystories.index') }}">Stories</a>
             </div>
             <div id="policy_page" class="dropdown show ">
-              <a  class="btn text-muted btn-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a  class="btn text-muted btn-white dropdown-toggle" href="#" role="button" id="policy-dropper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Policy
               </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="max-height: 15em;width: 30em;">
+              <div class="dropdown-menu" aria-labelledby="policy-dropper" style="max-height: 15em;width: 30em;">
 
                 @foreach ($policies as $policy)
                 <li class="nav-item">
@@ -38,14 +38,14 @@
         </div>
 
         <div class="dropdown">
-          <a class="btn text-muted btn-white dropdown-toggle px-3" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="btn text-muted btn-white dropdown-toggle px-3" href="#" role="button" id="profile-dropper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img class="rounded-circle mx-3" id="header-avatar"
             src="{{ Auth::user()->avatar ? asset(Auth::user()->avatar) : asset('Images/user-img1.png') }}"
 
             alt="Profile" style="height:54px;width:54px;">
             <span id="userAvatar">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</span>
           </a>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <div class="dropdown-menu" aria-labelledby="profile-dropper">
               <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
               <a class="dropdown-item" href="{{ route('timesheet.index') }}">Volunteering Timesheet</a>
               <a class="dropdown-item" href="{{ route('edit-profile', ['user_id' => Auth::user()->user_id]) }}">Edit Profile </a>
@@ -58,14 +58,14 @@
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
         <div class="dropdown">
-            <a class="btn text-muted btn-white dropdown-toggle px-3" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="btn text-muted btn-white dropdown-toggle px-3" href="#" role="button" id="user_personals" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img class="rounded-circle mx-3" id="header-avatar"
               src="{{ Auth::user()->avatar ? asset(Auth::user()->avatar) : asset('Images/user-img1.png') }}"
 
               alt="Profile" style="height:54px;width:54px;">
               <span id="userAvatar">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <div class="dropdown-menu" aria-labelledby="user_personals">
                 <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                 <a class="dropdown-item" href="{{ route('timesheet.index') }}">Volunteering Timesheet</a>
                 <a class="dropdown-item" href="{{ route('edit-profile', ['user_id' => Auth::user()->user_id]) }}">Edit Profile </a>
@@ -75,16 +75,16 @@
     </div>
     <div class="offcanvas-body">
         <div class="p-2">
-            <a class="btn text-muted no-decor" href="{{ route('landing.index') }}">Home</a>
+            <a name="home-page" class="btn text-muted no-decor" href="{{ route('landing.index') }}">Home</a>
         </div>
         <div class="p-2">
-            <a  class="btn text-muted no-decor" href="{{ route('mystories.index') }}">Stories</a>
+            <a name="stories-page" class="btn text-muted no-decor" href="{{ route('mystories.index') }}">Stories</a>
         </div>
         <div class=" p-2 dropdown show">
-            <a class="btn text-muted btn-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a name="policy-page" class="btn text-muted btn-white dropdown-toggle" href="#" role="button" id="side-policy-dropper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Policy
             </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="max-height: 15em;width: 30em;">
+            <div class="dropdown-menu" aria-labelledby="side-policy-dropper" style="max-height: 15em;width: 30em;">
               @foreach ($policies as $policy)
               <li class="nav-item">
 

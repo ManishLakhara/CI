@@ -3,10 +3,10 @@
         <div class="row align-items-center">
             <div class="col-md-6 d-flex rounded justify-content-md-start justify-content-between align-items-center">
                 <div class="d-flex">
-                    <button class="btn" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                    <button class="btn" name="header-toggle" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                         <i class="fa-solid fa-bars"></i>
                       </button>
-                    <button type="button" id="search-mission-id" class="btn">
+                    <button type="button" name="search-btn" aria-label="search" id="search-mission-id" class="btn">
                         <i class="fas fa-search"></i>
                     </button>
                     <div>
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                <div class="text-end">
-                <button class="my-filter-btn btn btn-white"
+                <button name="filterButton" class="my-filter-btn btn btn-white"
                 type="button"><i class="fa-solid fa-arrow-up-wide-short"></i></button>
               </div>
             </div>
@@ -24,7 +24,7 @@
                     <div class="col-xl-3 col-lg-6 col-sm-6">
                         <div class="col-sm-3 my-filters border-start input-group px-2">
                             <div class="dropdown w-100">
-                                <button class="btn btn-none text-secondary form-select" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-none text-secondary form-select" name="countryDropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="float-start ps-0 pe-5">
                                         Country
                                     </span>
@@ -47,7 +47,7 @@
                     <div class="col-xl-3 col-lg-6 col-sm-6">
                         <div class="col-sm-3 my-filters border-start input-group px-2" >
                             <div class="dropdown w-100">
-                                <button disabled class="btn btn-none text-secondary form-select" type="button" id="city_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button disabled name="cityDropdown" class="btn btn-none text-secondary form-select" type="button" id="city_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="float-start ps-0 pe-5">
                                         City
                                     </span>
@@ -72,7 +72,7 @@
                     <div class="col-xl-3 col-lg-6 col-sm-6">
                         <div class="my-filters border-start input-group px-2">
                             <div class="dropdown w-100">
-                                <button class="btn btn-none text-secondary form-select" disabled type="button" id="theme_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button name="themeDropdown" class="btn btn-none text-secondary form-select" disabled type="button" id="theme_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="float-start ps-0 pe-5">
                                         Theme
                                     </span>
@@ -95,7 +95,7 @@
                     <div class="col-xl-3 col-lg-6 col-sm-6">
                         <div class="col-sm-3 my-filters border-start border-end input-group px-2">
                             <div class="dropdown w-100">
-                                <button class="btn btn-none text-secondary form-select" type="button" disabled id="skill_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button name="skill_dropdown" class="btn btn-none text-secondary form-select" type="button" disabled id="skill_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="float-start ps-0 pe-5">
                                         Skill
                                     </span>

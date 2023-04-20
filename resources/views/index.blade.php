@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+Landing Mission Page
+@endsection
 @section('content')
 <?php
     $user_id = Auth::user()->user_id;
@@ -16,7 +19,7 @@
             <div id="badges">
             </div>
             <div id="clear_all" style="display: none;">
-                <button class="btn close" id="filter-clear"> clear All</button>
+                <button name="clear" class="btn close" id="filter-clear"> clear All</button>
             </div>
         </div>
     </div>
@@ -41,19 +44,21 @@
                     </select>
                 </div>
                 <div class='d-flex px-3 justify-content-center align-items-center'>
-                    <input type="radio" class="btn-check px-1" name="view" value='0' checked  id="grid-view">
-                    <label  id="grid-view-label" class="btn p-1 rounded-circle" for="grid-view"><img src={{ asset('Images/grid.png') }}
-                            alt=""></label>
+
+                    <input type="radio" class="btn-check px-1" name="view" value='0' checked id="grid-view">
+                    <label  id="grid-view-label" class="btn p-1 rounded-circle" for="grid-view"><img style="width: 30px;height: 30px" src={{ asset('Images/grid.png') }}
+                        alt="gridview" ></label>
                     <input type="radio" class="btn-check px-1" name="view" id="list-view">
                     <label id="list-view-label" class="btn p-2 rounded-circle" value='1' for="list-view"><img
-                            src={{ asset('Images/list.png') }} alt=""></label>
+                        style="width:22px;width:22px" src={{ asset('Images/list.png') }} alt="list"></label>
                 </div>
             </div>
         </div>
-        <div  id="this_views">
+        <div  id="this_views" style="#0000000F">
             @include('components.gridListView')
         </div>
     </div>
+
 </div>
 
 @else
@@ -96,14 +101,14 @@
                 }
             })
         }
-        // function selectProperView(){
-        //     $('#noOfMission').text($('#noOfMission2').val());
-        //     if(view==1){
-        //                 $('#list-view').click();
-        //             }else{
-        //                 $('#grid-view').click();
-        //             }
-        // }
+        function selectProperView(){
+            $('#noOfMission').text($('#noOfMission2').val());
+            if(view==1){
+                        $('#list-view').click();
+                    }else{
+                        $('#grid-view').click();
+                    }
+        }
         function getCity(){
             $('#city_drop_down_menu').prop('disabled', false);
             $.ajax({
@@ -241,11 +246,12 @@
             })
         }
         function runJquery(){
-            $("button[id^='mission_like_btn_']").on('click', function() {
-                var mission_id = this.id.split("_")[3];
-                var user_id = this.id.split("_")[4];
-
-                if($('#mission_like_input_'+mission_id+'_'+user_id).val()=='0'){
+            $("button[class^='mission_like_btn_']").on('click', function() {
+                // var mission_id = this.id.split("_")[3];
+                // var user_id = this.id.split("_")[4];
+                var mission_id = $(this).data('mission_id');
+                var user_id = $(this).data('user_id');
+                if($('.mission_like_input_'+mission_id+'_'+user_id).val()=='0'){
                     $.ajax({
                         url: "{{url('api/add-favourite')}}",
                         type: "POST",
@@ -255,12 +261,12 @@
                             user_id: user_id,
                         },
                         success: function(data) {
-                            $('#mission_like_input_'+mission_id+'_'+user_id).val(data);
-                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fas fa-heart fs-4"></i>');
+                            $('.mission_like_input_'+mission_id+'_'+user_id).val(data);
+                            $("button[class^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fas fa-heart fs-4"></i>');
                         }
                     });
                 }else{
-                    let fav = $('#mission_like_input_'+mission_id+'_'+user_id).val()
+                    let fav = $('.mission_like_input_'+mission_id+'_'+user_id).val()
                     $.ajax({
                         url: "{{url('api/remove-favourite')}}",
                         type: "POST",
@@ -271,18 +277,17 @@
                             favorite_mission_id: fav,
                         },
                         success: function() {
-                            $('#mission_like_input_'+mission_id+'_'+user_id).val('0');
-                            $("button[id^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fa-regular fa-heart fs-4"></i>');
+                            $('.mission_like_input_'+mission_id+'_'+user_id).val('0');
+                            $("button[class^='mission_like_btn_"+mission_id+"_"+user_id+"']").html('<i class="fa-regular fa-heart fs-4"></i>');
                         }
                     });
                 }
             });
-            $('input[id^="invite_"]').on('click', function() {
+            $('input[class="invite"]').on('click', function() {
                 if (this.checked) {
-                    var mission_id = this.id.split("_")[1];
-                    var to_user_id = this.id.split('_')[2];
-                    var from_user_id = this.id.split("_")[3];
-                    console.log(mission_id);
+                    var mission_id = $(this).data('mission_id');
+                    var from_user_id = $(this).data('from_user_id');
+                    var to_user_id = $(this).data('to_user_id');
                     $.ajax({
                         url: "{{url('api/invite-user')}}",
                         type: "POST",
