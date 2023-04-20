@@ -176,7 +176,7 @@
         </div>
     </div>
 
-    
+
     <style>
 
         .video-container {
@@ -223,78 +223,113 @@
 
 
 
-    <script>
-        $(document).ready(function() {
-            var player;
-            document.addEventListener('touchstart', handler, {
-                passive: true
-            });
+<script>
 
-            $('.top-image').slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: false,
-                fade: true,
-                asNavFor: '.multiple-items',
-                onInit: function() {
-                    $('.play-button').on('click', function() {
-                        player.playVideo();
-                    });
+    $(document).ready(function() {
+        var player;
+        $('.top-image').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.multiple-items',
+            onInit: function() {
+                $('.play-button').on('click', function() {
+                    player.playVideo();
+                });
+            }
+        });
+        $('.multiple-items').slick({
+            infinite: true,
+            arrows: true,
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            asNavFor: '.top-image',
+            centerMode: false,
+            focusOnSelect: true,
+            responsive: [{
+                    breakpoint: 1399,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 1199,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 433,
+                    settings: {
+                        slidesToScroll: 1,
+                        slidesToShow: 1
+                    }
+                },
+            ]
+        });
+        $('.multiple-items').on('init', function(event, slick) {
+            var currentSlide, player, autoplayVideo;
+            currentSlide = slick.currentSlide;
+            player = new YT.Player($(slick.$slides[currentSlide]).find('.js-video')[0], {
+                height: '100%',
+                width: '100%',
+                videoId: $(slick.$slides[currentSlide]).find('.js-video').data('video-id'),
+                playerVars: {
+                    autoplay: 0,
+                    modestbranding: 1,
+                    rel: 0,
+                    showinfo: 0,
+                    controls: 1,
+                    disablekb: 1,
+                    enablejsapi: 1,
+                    origin: window.location.hostname
+                },
+                events: {
+                    'onReady': function(event) {
+                        event.target.mute();
+                        event.target.playVideo();
+                    }
                 }
             });
+            autoplayVideo = function() {
+                if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                    player.playVideo();
+                }
+            };
+            $('.js-play').on('click', function() {
 
-            $('.multiple-items').slick({
-                infinite: true,
-                arrows: true,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                asNavFor: '.top-image',
-                centerMode: false,
-                focusOnSelect: true,
-                responsive: [{
-                        breakpoint: 1399,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 1199,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
-                        }
-                    },
-                    {
-                        breakpoint: 991,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 433,
-                        settings: {
-                            slidesToScroll: 1,
-                            slidesToShow: 1
-                        }
-                    },
-                ]
+                $(this).removeClass('is-paused');
+                player.playVideo();
             });
-            $('.multiple-items').on('init', function(event, slick) {
-                var currentSlide, player, autoplayVideo;
-                currentSlide = slick.currentSlide;
-                player = new YT.Player($(slick.$slides[currentSlide]).find('.js-video')[0], {
+            $('.js-pause').on('click', function() {
+                $(this).addClass('is-paused');
+                player.pauseVideo();
+            });
+            $('.multiple-items').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+                var currentSlidePlayer;
+                currentSlidePlayer = new YT.Player($(slick.$slides[currentSlide]).find(
+                    '.js-video')[0], {
                     height: '100%',
                     width: '100%',
-                    videoId: $(slick.$slides[currentSlide]).find('.js-video').data('video-id'),
+                    videoId: $(slick.$slides[currentSlide]).find('.js-video').data(
+                        'video-id'),
                     playerVars: {
                         autoplay: 0,
                         modestbranding: 1,
@@ -308,34 +343,20 @@
                     events: {
                         'onReady': function(event) {
                             event.target.mute();
-                            event.target.playVideo();
+                            event.target.stopVideo();
                         }
                     }
                 });
-                autoplayVideo = function() {
-                    if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
-                        player.playVideo();
-                    }
-                };
-                $('.js-play').on('click', function() {
-                    e.preventDefault();
-                    $(this).removeClass('is-paused');
-                    player.playVideo();
-                }, {
-                    passive: true
-                });
-                $('.js-pause').on('click', function() {
-                    $(this).addClass('is-paused');
-                    player.pauseVideo();
-                });
-                $('.multiple-items').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
-                    var currentSlidePlayer;
-                    currentSlidePlayer = new YT.Player($(slick.$slides[currentSlide]).find(
-                        '.js-video')[0], {
+                currentSlidePlayer.stopVideo();
+            });
+            $('.multiple-items').on('afterChange', function(event, slick, currentSlide) {
+                var currentSlidePlayer;
+                var $currentSlide = $(slick.$slides[currentSlide]);
+                if ($currentSlide.find('.js-video').length) {
+                    currentSlidePlayer = new YT.Player($currentSlide.find('.js-video')[0], {
                         height: '100%',
                         width: '100%',
-                        videoId: $(slick.$slides[currentSlide]).find('.js-video').data(
-                            'video-id'),
+                        videoId: $currentSlide.find('.js-video').data('video-id'),
                         playerVars: {
                             autoplay: 0,
                             modestbranding: 1,
@@ -343,60 +364,33 @@
                             showinfo: 0,
                             controls: 1,
                             disablekb: 1,
-                            enablejsapi: 1,
-                            origin: window.location.hostname
-                        },
-                        events: {
-                            'onReady': function(event) {
-                                event.target.mute();
-                                event.target.stopVideo();
-                            }
+                            enablejsapi: 1
                         }
                     });
-                    currentSlidePlayer.stopVideo();
-                });
-                $('.multiple-items').on('afterChange', function(event, slick, currentSlide) {
-                    var currentSlidePlayer;
-                    var $currentSlide = $(slick.$slides[currentSlide]);
-                    if ($currentSlide.find('.js-video').length) {
-                        currentSlidePlayer = new YT.Player($currentSlide.find('.js-video')[0], {
-                            height: '100%',
-                            width: '100%',
-                            videoId: $currentSlide.find('.js-video').data('video-id'),
-                            playerVars: {
-                                autoplay: 0,
-                                modestbranding: 1,
-                                rel: 0,
-                                showinfo: 0,
-                                controls: 1,
-                                disablekb: 1,
-                                enablejsapi: 1
-                            }
-                        });
-                    }
-                });
+                }
             });
         });
-        $('input[id^="invite_"]').on('click', function() {
-            if (this.checked) {
-                var story_id = this.id.split("_")[1];
-                var to_user_id = this.id.split('_')[2];
-                var from_user_id = this.id.split("_")[3];
-                console.log(story_id);
-                $.ajax({
-                    url: "{{ url('api/invite-users') }}",
-                    type: "POST",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        from_user_id: from_user_id,
-                        to_user_id: to_user_id,
-                        story_id: story_id,
-                    },
-                    success: function(data) {
-                        alert("Invite Send", 1000);
-                    },
-                })
-            }
-        });
-    </script>
+    });
+    $('input[id^="invite_"]').on('click', function() {
+        if (this.checked) {
+            var story_id = this.id.split("_")[1];
+            var to_user_id = this.id.split('_')[2];
+            var from_user_id = this.id.split("_")[3];
+            console.log(story_id);
+            $.ajax({
+                url: "{{ url('api/invite-users') }}",
+                type: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    from_user_id: from_user_id,
+                    to_user_id: to_user_id,
+                    story_id: story_id,
+                },
+                success: function(data) {
+                    alert("Invite Send", 1000);
+                },
+            })
+        }
+    });
+</script>
 @endsection

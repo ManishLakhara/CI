@@ -16,8 +16,8 @@
                                         <form method="post"  action="{{ route('admincustomlogin') }}">
                                             @csrf
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" name="email" value="{{ old('email') }}"/>
-                                                <label for="inputEmail">Email address</label>
+                                                <input class="form-control" id="inputEmail" type="email" name="email" value="{{ old('email') }}" autocomplete="email"/>
+                                                <label for="inputEmail" class="text-primary">Email address</label>
                                                 @error('email')
                                                 <div class="text-danger">
                                                     {{ $message }}
@@ -26,8 +26,8 @@
 
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" name="password" value="{{ old('password') }}"/>
-                                                <label for="inputPassword">Password</label>
+                                                <input class="form-control" id="inputPassword" type="password" name="password" value="{{ old('password') }}"  autocomplete="on"/>
+                                                <label for="inputPassword" class="text-primary">Password</label>
                                                 @error('password')
                                                 <div class="text-danger">
                                                     {{ $message }}
