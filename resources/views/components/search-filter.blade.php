@@ -1,7 +1,7 @@
 <div id="search_filter" class="container-fluid border-bottom position-sticky" style="z-index:100;top:0%;background-color:white;">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-6 d-flex rounded justify-content-between align-items-center">
+            <div class="col-md-6 d-flex rounded justify-content-md-start justify-content-between align-items-center">
                 <div class="d-flex">
                     <button class="btn" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                         <i class="fa-solid fa-bars"></i>

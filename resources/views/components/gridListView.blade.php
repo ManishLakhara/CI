@@ -3,7 +3,6 @@
     @include('components.gridView')
     @include('components.listView')
     <div class="d-flex p-3 justify-content-center">
-        {{-- {!! $data->links('pagination::bootstrap-4') !!} --}}
         {!!$pagination!!}
     </div>
 @else

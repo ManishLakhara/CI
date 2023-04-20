@@ -67,6 +67,7 @@
         var sort = 0;
         var search = "";
         var view = 0;
+        var page = 1;
         function getBadge(id,name,type){
             $("#clear_all").show()
                     htmlstr = ""
@@ -86,7 +87,7 @@
         }
         function getNextFilter(page){
             $.ajax({
-                url: "{{url('index-filter')}}"+"?page="+page+"&s="+search+"&countries="+countries+"&cities="+cities+"&themes="+themes+"&skills="+skills+"&sort="+sort,
+                url: "{{url('index-filter')}}"+"?page="+page+"&s="+search+"&countries="+countries+"&cities="+cities+"&themes="+themes+"&skills="+skills+"&sort="+sort+"&view="+view,
                 type: "get",
                 success: function(result){
                     $('#this_views').html(result);
@@ -95,14 +96,14 @@
                 }
             })
         }
-        function selectProperView(){
-            $('#noOfMission').text($('#noOfMission2').val());
-            if(view==1){
-                        $('#list-view').click();
-                    }else{
-                        $('#grid-view').click();
-                    }
-        }
+        // function selectProperView(){
+        //     $('#noOfMission').text($('#noOfMission2').val());
+        //     if(view==1){
+        //                 $('#list-view').click();
+        //             }else{
+        //                 $('#grid-view').click();
+        //             }
+        // }
         function getCity(){
             $('#city_drop_down_menu').prop('disabled', false);
             $.ajax({
@@ -338,7 +339,7 @@
             });
             $(document).one('click','.pagination a', function(event){
                 event.preventDefault();
-                var page = $(this).attr('href').split('page=')[1];
+                page = $(this).attr('href').split('page=')[1];
                 getNextFilter(page);
             });
         }
@@ -414,13 +415,16 @@
                 }
             })
             $('#grid-view').on('click', function() {
-                $('#grid-view-label').css({'background-color': '#D9D9D9'});
-                $('#list-view-label').css({'background-color': 'white'});
+                // view=0
+                // getNextFilter(page);
+                // $('#grid-view-label').css({'background-color': '#D9D9D9'});
+                // $('#list-view-label').css({'background-color': 'white'});
             })
-            $('#grid-view').click();
             $('#list-view').on('click', function() {
-                $('#list-view-label').css({'background-color': '#D9D9D9'});
-                $('#grid-view-label').css({'background-color': 'white'});
+                // view=1
+                // getNextFilter(page);
+                // $('#list-view-label').css({'background-color': '#D9D9D9'});
+                // $('#grid-view-label').css({'background-color': 'white'});
             })
             $('#search-mission').on('submit', function(event){
                 event.preventDefault();

@@ -1,4 +1,4 @@
-<div id="gridViewContent" class="row gx-2" id="missions">
+<div id="gridViewContent" class="row pt-4 gx-2" id="missions">
     @foreach ($data as $item)
         {{-- This is grid view --}}
     <div class="card col-lg-6 col-md-12 col-xxl-4 col-xl-6 border-0 pb-4 text-center">

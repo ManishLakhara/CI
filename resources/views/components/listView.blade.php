@@ -1,4 +1,4 @@
-<div class="row py-3" id="listViewContent" style="display: none;">
+<div class="row pt-4 py-3" id="listViewContent" style="display: none;">
     @foreach ($data as $item)
         {{-- This is list view --}}
         <div class="row py-3">
@@ -63,7 +63,7 @@
                                 alt=""></button>
                     </div>
                     <div class="text-center" style="z-index: 1; margin-top: -25px">
-                        <span class="fs-4 px-2 from_untill">
+                        <span class="fs-5 px-2 from_untill">
                             {{ $item->missionTheme->title }}
                         </span>
                     </div>
@@ -114,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
+                <div class="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
                     <div class="h4 text-start theme-color pt-4 mission-title">
                         {{ $item->title }}
                     </div>
