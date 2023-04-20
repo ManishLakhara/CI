@@ -219,7 +219,7 @@
                                     <img src={{ asset('Images/achieved.png') }} alt="">
                                 </div>
                                 <div class="d-flex flex-column w-100">
-                                    <div class="progress">
+                                    <div class="progress w-100">
                                         <div class="progress-bar" style="width: {{($achieved/$item->goalMission->goal_value)*100}}%" role="progressbar" aria-valuenow="{{$achieved}}" aria-valuemin="0" aria-valuemax="{{$item->goalMission->goal_value}}"></div>
                                     </div>
                                     <small class="fw-light text-secondary ps-1">{{$achieved}} achieved</small>

@@ -9,7 +9,7 @@
 
 ?>
 
-<div class="d-flex justify-content-between pagination align-items-center" style="height: 3em">
+<div class="d-flex border-top justify-content-between pagination align-items-center" style="height: 3em">
     <a href="{{ $paginator->url($paginator->currentPage() - 1) }}" @if ($paginator->currentPage() == 1) disabled @endif
         aria-label="Previous">
         <span aria-hidden="true"><button class="btn theme-color h-100 border-end px-4"><i

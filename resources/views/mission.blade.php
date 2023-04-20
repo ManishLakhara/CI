@@ -404,7 +404,7 @@
                     </div>
                     <br>
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" style="padding:0%">
                             <div class="card-title fs-4">
                                 <ul class="nav border-bottom"><span class="nav-link active"> Recent Volunteers </span></ul>
                             </div>
