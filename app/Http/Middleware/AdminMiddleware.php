@@ -11,7 +11,7 @@ class AdminMiddleware
         if (auth()->guard('admin')->check()) {
             return $next($request);
         }
-
+        session()->put('url.intended', $request->fullUrl());
         return redirect('adminlogin')->with('error', 'You are not authorized to access this page.');
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 class AdminAuthController extends Controller
 {
     public function login(Request $request){
+
         return view('admin.auth.login');
     }
 
@@ -28,7 +29,9 @@ class AdminAuthController extends Controller
         ]);
         $credentionals = $request->only('email','password');
         if(Auth::guard('admin')->attempt($credentionals)){
-            return redirect()->route('user.index')->with('success',' You have login');
+            $intendedUrl = session()->get('url.intended', 'user');
+            return redirect()->intended($intendedUrl);
+            // return redirect()->route('user.index')->with('success',' You have login');
         } else {
             return redirect()->intended('adminlogin')->with('status','Oppes! You have entered wrong password');
         }
