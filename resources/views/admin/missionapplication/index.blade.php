@@ -14,7 +14,7 @@
         <div class="mt-4 mb-4">
             <div class="row justify-content-between align-items-center">
                 <div class="col-sm-4">
-                    <form action="#" method="GET">
+                    <form id="search-form" action="#" method="GET">
                         @csrf
                         <label for="search" class="sr-only">
                             Search
@@ -24,7 +24,7 @@
                                 <i class="fas fa-search"></i>
                               </button>
                             <div class="form-outline py-2 w-100">
-                              <input type="search" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0" />
+                              <input type="search" id="search-input" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0" />
                             </div>
                         </div>
                     </form>
@@ -40,7 +40,7 @@
                     <th class="fs-5 py-4 font-weight-light" width="300px">User Id</th>
                     <th class="fs-5 py-4 font-weight-light" width="300px">User Name</th>
                     <th class="fs-5 py-4 font-weight-light" width="300px">Applied Date</th>
-                    <th class="fs-5 py-4 font-weight-light" width="300px">Action</th>
+                    <th class="fs-5 py-4 font-weight-light text-center" width="300px">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,8 +55,8 @@
                             @endif</td>
                         <td>@if(isset($mt->user->first_name)){{$mt->user->first_name}}@endif @if(isset($mt->user->last_name)){{$mt->user->last_name}}@endif</td>
                         <td>{{$mt->applied_at}}</td>
-                        <td>
-                            <div class="pt-2">
+                        <td class="d-flex justify-content-center pe-4">
+
 
                                     <span id="application_status_a_{{$mt->mission_application_id}}" class="border rounded px-2 py-1 text-success border-success"
                                     @if($mt->approval_status!="APPROVE")
@@ -87,7 +87,7 @@
                                         >
                                         <img src="{{asset('Images/cancle-icon.svg')}}" width="25px" height="25px" alt="">
                                     </a>
-                            </div>
+
                         </td>
                     </tr>
                 @endforeach
@@ -97,6 +97,7 @@
     </div>
     <script>
         $(document).ready(function(){
+
             $('a[id^=application_a_]').on('click', function(event){
                 event.preventDefault();
                 let app_id=this.id.split('_')[2];
@@ -133,6 +134,36 @@
                     }
                 })
             })
+        var searchInput = $('#search-input');
+        var searchForm = $('#search-form');
+
+
+        var typingTimer;
+
+
+        searchInput.on('keyup', function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(performSearch, 1000);
+        });
+
+
+        searchInput.on('keydown', function() {
+            clearTimeout(typingTimer);
+        });
+
+
+        function performSearch() {
+
+            var query = searchInput.val();
+
+
+            if (query.trim() !== '') {
+                searchForm.submit();
+            }else {
+
+                searchForm.attr('action', "{{ url('admin-mission-application') }}").submit();
+            }
+        }
         })
     </script>
 @endsection

@@ -414,18 +414,6 @@
                     $('#all-mission').removeClass('container-fluid');
                 }
             })
-            $('#grid-view').on('click', function() {
-                // view=0
-                // getNextFilter(page);
-                // $('#grid-view-label').css({'background-color': '#D9D9D9'});
-                // $('#list-view-label').css({'background-color': 'white'});
-            })
-            $('#list-view').on('click', function() {
-                // view=1
-                // getNextFilter(page);
-                // $('#list-view-label').css({'background-color': '#D9D9D9'});
-                // $('#grid-view-label').css({'background-color': 'white'});
-            })
             $('#search-mission').on('submit', function(event){
                 event.preventDefault();
                 search = $('#search_input').val();

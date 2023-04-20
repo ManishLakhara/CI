@@ -11,7 +11,7 @@
     @include('admin.components.successAlert')
 
     <div class="col-sm-4 relative w-100 py-4">
-        <form action="{{ route('admin-story.index') }}" method="GET">
+        <form id="search-form" action="{{ route('admin-story.index') }}" method="GET">
             @csrf
             <label for="search" class="sr-only">
                 Search
@@ -21,7 +21,7 @@
                     <i class="fas fa-search"></i>
                   </button>
                 <div class="form-outline py-2 w-100">
-                  <input type="search" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0 py-2" />
+                  <input type="search" id="search-input" name="s" placeholder="Search" value='{{request()->input('s')}}' class="form-control border-0 py-2" />
                 </div>
             </div>
         </form>
@@ -33,7 +33,7 @@
                 <th class="fs-5 py-4 px-3 font-weight-light" width="500px">Story Title</th>
                 <th class="fs-5 py-4 font-weight-light" width="500px">Mission Title</th>
                 <th class="fs-5 py-4 font-weight-light" width="500px">User Full Name</th>
-                <th class="fs-5 py-4 font-weight-light" width="300px">Action</th>
+                <th class="fs-5 py-4 font-weight-light text-center" width="300px">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -85,4 +85,39 @@
     </table>
     {!!$pagination!!}
 </div>
+<script>
+    $(document).ready(function() {
+
+    var searchInput = $('#search-input');
+    var searchForm = $('#search-form');
+
+
+    var typingTimer;
+
+
+    searchInput.on('keyup', function() {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(performSearch, 500);
+    });
+
+
+    searchInput.on('keydown', function() {
+        clearTimeout(typingTimer);
+    });
+
+
+    function performSearch() {
+
+        var query = searchInput.val();
+
+
+        if (query.trim() !== '') {
+            searchForm.submit();
+        }else {
+
+            searchForm.attr('action', "{{ route('admin-story.index') }}").submit();
+        }
+    }
+    });
+</script>
 @endsection

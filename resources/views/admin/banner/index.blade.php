@@ -19,7 +19,7 @@
             <tr>
                 <th class="fs-5 py-4 px-3 font-weight-light" width="1000px">Image</th>
                 <th class="fs-5 py-4 font-weight-light" width="400px">Sort Order</th>
-                <th class="fs-5 py-4 font-weight-light" width="400px">Action</th>
+                <th class="fs-5 py-4 font-weight-light text-end" width="400px">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -31,8 +31,7 @@
                     <td>
                         {{$d->sort_order}}
                     </td>
-                    <td>
-
+                    <td class="d-flex justify-content-end">
                         <a class="btn btn-white"href="{{ route('banner.edit', $d->banner_id) }}">
                             <i class="fas fa-edit" style="color: #F88634"></i>
                         </a>

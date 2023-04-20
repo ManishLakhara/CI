@@ -73,7 +73,7 @@
             clearTimeout(typingTimer);
         });
 
-       
+
         function performSearch() {
 
             var query = searchInput.val();

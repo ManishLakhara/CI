@@ -20,6 +20,7 @@ class BannerController extends Controller
             [function ($query) use ($request){
                 if(($s = $request->s)) {
                     $query->where('image','LIKE','%'.$s.'%')
+                          ->where('sort_order','LIKE','%'.$s.'%')
                     ->get();
                 }
             }]

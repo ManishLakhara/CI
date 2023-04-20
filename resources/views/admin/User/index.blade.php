@@ -23,7 +23,7 @@
                     <th class="fs-5 py-4  font-weight-light" width="600px">Employee Id</th>
                     <th class="fs-5 py-4  font-weight-light" width="600px">Department</th>
                     <th class="fs-5 py-4  font-weight-light" width="600px">Status</th>
-                    <th class="fs-5 py-4  font-weight-light" width="600px">Action</th>
+                    <th class="fs-5 py-4  font-weight-light text-end pe-4" width="600px">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@
                             @endif
                         </td>
                         <td>
-                            <div class="d-flex">
+                            <div class="d-flex justify-content-end">
                                 <a class="btn btn-white" href="{{ route('user.edit', $d->user_id) }}">
                                     <i class="fas fa-edit" style="color: #F88634"></i>
                                 </a>

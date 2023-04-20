@@ -20,7 +20,7 @@
                     <th class="fs-5 py-4 px-3 font-weight-light" width="500px">S.No</th>
                     <th class="fs-5 py-4 font-weight-light" width="500px">Title</th>
                     <th class="fs-5 py-4 font-weight-light" width="500px">Status</th>
-                    <th class="fs-5 py-4 font-weight-light" width="500px">Action</th>
+                    <th class="fs-5 py-4 font-weight-light text-end pe-4" width="500px">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,7 +41,7 @@
                             @endif
                         </td>
                         <td>
-                            <div class="d-flex">
+                            <div class="d-flex justify-content-end">
                                 <a class="btn btn-white" href="{{ route('missiontheme.edit', $d->mission_theme_id) }}">
                                     <i class="far fa-edit" style="color:#F88634;"></i>
                                 </a>
