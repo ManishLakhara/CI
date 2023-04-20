@@ -41,9 +41,9 @@
                             <tr>
                                 <td class="px-3">{{ $d->title }}</td>
                                 <td>{{ $d->mission_type }}</td>
-                                <td>{{ $d->start_date }}</td>
-                                <td>{{ $d->end_date }}</td>
-                                <td>
+                                <td>{{\Carbon\Carbon::parse($d->start_date)->format('d-m-Y'); }}</td>
+                                <td>{{ \Carbon\Carbon::parse($d->end_date)->format('d-m-Y'); }}</td>
+                                <td class="d-flex">
 
                                     <a class="btn btn-white"href="{{ route('mission.edit', $d->mission_id) }}">
                                         {{-- <img src="Images/edit.png" height="22px" width="22px" alt="edit"> --}}

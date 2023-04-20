@@ -46,7 +46,7 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="d-flex">
 
                                     <a class="btn btn-white" href="{{ route('cmspage.edit', $d->cms_page_id) }}">
                                         {{-- <img src="Images/edit.png" height="22px" width="22px" alt="edit"> --}}
