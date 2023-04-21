@@ -58,4 +58,23 @@ class MissionDetailController extends Controller
             return view('components.recentvolunteers',compact('volunteers'))->render();
         }
     }
+    public function getRating($mission_id){
+        $my_rating = MissionRating::where('mission_id','=',$mission_id)
+                                    ->where('user_id','=',auth()->user())
+                                    ->first();
+        $rating_a = MissionRating::where('mission_id',$mission_id)
+                                ->get()
+                                ->pluck('rating');
+        $rating=0;
+        foreach ($rating_a as $value) {
+            $rating += $value;
+        }
+        $count_rating=count($rating_a);
+        if($count_rating==0){
+            $avg_rating=0;
+        }else{
+            $avg_rating=ceil($rating/$count_rating);
+        }
+        return view('components.rating',compact('avg_rating','count_rating'));
+    }
 }

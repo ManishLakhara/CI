@@ -45,8 +45,8 @@
 
                 <div class="text-center" style="margin-top: -60px;">
                     <small class="p-2 fs-6 border from_untill text-secondary">
-                        @if($mission->timeMission!=null) From {{ date('d-m-Y', strtotime($mission->start_date)) }} untill {{ date('d-m-Y', strtotime($mission->end_date)) }}
-                        @elseif($mission->goalMission!=null) {{$mission->goalMission->goal_objective_text}}
+                        @if(collect($mission->timeMission)->isNotEmpty()) From {{ date('d-m-Y', strtotime($mission->start_date)) }} untill {{ date('d-m-Y', strtotime($mission->end_date)) }}
+                        @elseif(collect($mission->goalMission)->isNotEmpty()) {{$mission->goalMission->goal_objective_text}}
                         @endif
                     </small>
                 </div>
@@ -381,16 +381,7 @@
                                 <div class="row">
                                     <div class="col-md-3 pe-2 fs-6 theme-color"> Rating</div>
                                     <div class="col-md-9 fs-6 theme-color">
-                                        <div class="small-ratings">
-                                            @for ($i=1;$i<=5;$i++,$avg_rating--)
-                                                @if($avg_rating<=0)
-                                                    <i class="far fa-star rating-color"></i>
-                                                @else
-                                                    <i class="fa fa-star rating-color"></i>
-                                                @endif
-                                            @endfor
-                                            <span class="text-muted">(by {{$count_rating}} Volunteers)</span>
-                                        </div>
+                                        <div id="rating" data-mission_id="{{ $mission->mission_id }}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -423,6 +414,18 @@
     </div>
     @push('script')
     <script>
+        function getRating(){
+            $.ajax({
+                url: "{{ url('api/get-rating/:mission_id') }}".replace(':mission_id',$('#rating').data('mission_id')),
+                type: 'get',
+                success: function(result){
+                    $('#rating').html(result);
+                },
+                error: function(errors){
+                    console.log(errors);
+                }
+            });
+        }
         function getComment(){
             const options = {
             weekday: 'long',
@@ -472,6 +475,7 @@
             })
         }
         $(document).ready(function(){
+            getRating();
             $('.top-image').slick({
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -595,6 +599,7 @@
                     },
                     success: function(response){
                         console.log(response);
+                        getRating();
                     }
                 })
             })

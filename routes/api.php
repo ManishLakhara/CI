@@ -34,7 +34,7 @@ Route::post('add-favourite', [FavouriteMissionController::class, 'addFavourite']
 Route::post('remove-favourite', [FavouriteMissionController::class, 'removeFavourite']);
 Route::post('invite-user', [MissionInviteController::class, 'inviteUser']);
 Route::post('/users/update-password', [UserEditProfileController::class, 'updatePassword'])->name('users.update-password');
-
+Route::get('get-rating/{mission_id}',[MissionDetailController::class, 'getRating']);
 
 Route::post('/users/update-skills', [UserEditProfileController::class, 'updateSkills'])->name('users.update-skills');
 Route::post('fetch-comment', [CommentController::class,'showComments']);

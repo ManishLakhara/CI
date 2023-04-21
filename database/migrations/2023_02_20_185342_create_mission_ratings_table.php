@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('user_id')->on('users');
             $table->unsignedBigInteger('mission_id');
             $table->foreign('mission_id')->references('mission_id')->on('missions');
-            $table->enum('rating', [1,2,3,4]);
+            $table->enum('rating', [1,2,3,4,5]);
             $table->timestamps();
             $table->softDeletes();
         });
