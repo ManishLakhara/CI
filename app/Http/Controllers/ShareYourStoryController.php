@@ -35,12 +35,12 @@ class ShareYourStoryController extends Controller
             ->whereNotIn('mission_id', $sharedMissionIds)
             ->get();
 
-            $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
+        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
 
 
 
 
-        return view('shareyourstory', compact('user',  'appliedMissionIds', 'appliedMissions','policies'));
+        return view('shareyourstory', compact('user',  'appliedMissionIds', 'appliedMissions', 'policies'));
     }
 
 
@@ -54,7 +54,7 @@ class ShareYourStoryController extends Controller
     {
 
         if ($request->ajax()) {
-            //dd($request['photos']);
+            //dd($request['     photos']);
             $validatedData = $request->validate(
                 [
                     'title' => 'required|string|max:255',
@@ -68,15 +68,17 @@ class ShareYourStoryController extends Controller
                         'url',
                         'regex:/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/i'
                     ],
-                    'photos' => 'array|max:20|min:1',
-                    'photos.*' => 'image|max:4096|mimes:jpg,jpeg,png,',
+                    // 'photos' => 'array|max:20|min:1',
+                    // 'photos.*' => 'image|max:4096|mimes:jpg,jpeg,png,',
+                    'photos' => 'required|array|min:1|max:20',
+                    'photos.*' => 'image|mimes:jpeg,jpg,png|max:4096'
                 ],
                 [
                     'url' => 'The video URL must be a valid URL.',
                     'path.max' => 'maximum 20 URL can be uploaded',
                     'mimes' => 'The :attribute field must be a file of type: :values.',
                     'published_at.required' => 'The date field is required.',
-                    'photos.*' => 'photo size should not be more then 4 MB',
+                    // 'photos.*' => 'photo size should not be more then 4 MB',
                     'photos.max' => 'maximum 20 photos can be uploaded',
                     'path.*.regex' => 'please enter a valid youtube URL on index :index of the video URL'
                 ]

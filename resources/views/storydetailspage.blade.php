@@ -370,6 +370,7 @@
                 }
             });
         });
+
     });
     $('input[id^="invite_"]').on('click', function() {
         if (this.checked) {

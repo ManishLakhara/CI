@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col-lg-12 mt-5">
                     <label for="summary-ckeditor" class="form-label">My Story</label>
-                    <textarea name="description" class="story-textarea" id="summary-ckeditor">{{ $story->description }}</textarea>
+                    <textarea name="description" class="story-textarea" id="editor1">{{ $story->description }}</textarea>
                 </div>
                 @error('description')
                     <div class="text-danger">
@@ -71,10 +71,8 @@
                 <div class="col-lg-12 mt-5">
                     <label for="orgVideo" class="form-label">Enter Video URL</label>
                     <textarea class="form-control" id="path" name="path[]" placeholder="Enter your url">
-                        @foreach ($storyvideoMedia as $videomedia)
-                        {{ $videomedia->path }}&#13;&#10;
-                        @endforeach
-                        </textarea>
+                        @foreach ($storyvideoMedia as $videomedia){{ $videomedia->path }}&#13;&#10;@endforeach
+                    </textarea>
                     @error('path.*')
                         <div class="text-danger">
                             {{ $message }}
@@ -104,7 +102,7 @@
                             {{ $message }}
                         </div>
                     @enderror
-                    <div id="preview">
+                    <div id="preview" data-prev_file="{{ $storyimageMedia->count() }}">
                         @foreach ($storyimageMedia as $imagemedia)
                             <div style="position:relative; display:inline-block; margin-right:10px;margin-left:10px;">
                                 <img src="{{ asset('storage/' . $imagemedia->path) }}" alt="" width="118px"
@@ -125,9 +123,9 @@
             <div class="row">
 
                 <div class=" mt-4">
-                    <a type="button" class="btn px-4  btn-outline-secondary  rounded-pill float-start"
+                    <a aria-label="cancel" type="button" class="btn px-4  btn-outline-secondary  rounded-pill float-start"
                         href="{{ route('mystories.index') }}">Cancel</a>
-                    <button type="submit" class="btn px-3 btn-outline-warning ms-3 rounded-pill float-end"
+                    <button aria-label="submit" type="submit" class="btn px-3 btn-outline-warning ms-3 rounded-pill float-end"
                         id="submit-button">
                         Submit</button>
 
@@ -139,6 +137,9 @@
 
         </div>
     </form>
+    <script>
+        CKEDITOR.replace('editor1');
+    </script>
     <script>
         var uploadedFiles = [
             @foreach ($storyimageMedia as $imagemedia)
@@ -232,7 +233,7 @@
 
             $('#edit_story_save').on('click', function(event) {
                 event.preventDefault();
-                var value = CKEDITOR.instances['summary-ckeditor'].getData();
+                var value = CKEDITOR.instances['editor1'].getData();
                 // Get the selected files
                 var files = document.getElementById("file-input").files;
                 // Create a new FormData object
@@ -251,40 +252,58 @@
                 formData.append('description', value);
                 // Split the path input by new lines
                 var path = $('#path').val().split('\n');
+                let count = 0;
+                let total_image = $('#preview').data('prev_file')+recentuploadFiles.length-deleteFiles.length;
+                console.log(total_image);
                 for (var i = 0; i < path.length; i++) {
-                    if(path[i].length!=0){
+                    if (path[i].trim().length !== 0) {
                         formData.append('path[]', path[i]);
+                        count++;
                     }
                 }
-
-
-                console.log(formData.getAll('path[]'));
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: 'post',
-                    url: "{{ route('mystories.updateDraft', ':story_id') }}".replace(':story_id', $(
-                        this).data('story_id')),
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        alert(response);
-
-                    },
-                    error: function(response) {
-                    var errors = response.responseJSON.errors;
-                    var errorHtml = '';
-                    $.each(errors, function(key, value) {
-                        errorHtml += '<p>' + value + '</p>';
+                if(total_image>20){
+                    alert("can't have more than 20 images");
+                }
+                else if(count > 0){
+                    alert("can't have no url")
+                }
+                else {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
                     });
-                    $('#story-error').html(errorHtml).show();
-                },
-                })
-            })
+                    $.ajax({
+                        type: 'post',
+                        url: "{{ url('mystories/draft/:story_id') }}".replace(':story_id', $(this).data('story_id')),
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            alert(response);
+                        },
+                        // error: function(response) {
+                        //     var errors = response.responseJSON.errors;
+                        //     var errorHtml = '';
+                        //     $.each(errors, function(key, value) {
+                        //         errorHtml += '<p>' + value + '</p>';
+                        //     });
+                        //     $('#story-error').html(errorHtml).show();
+                        // }
+                        error: function(response) {
+                        var errors = response.responseJSON.errors;
+
+                        $.each(errors, function(field, messages) {
+                            var $input = $('input[name="' + field + '"]');
+                            $input.addClass('border-red-500');
+                            if (field === 'name') {
+                                $input.next('.text-red-500').html(messages[0]);
+                            }
+                        });
+                    }
+                    });
+                }
+            });
             $('button[class="close_preview_img"]').on('click', function() {
                 deleteFiles = [...deleteFiles, $(this).data('story_media_id')];
                 $(this).parent().remove();

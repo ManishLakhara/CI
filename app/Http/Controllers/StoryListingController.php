@@ -15,7 +15,7 @@ class StoryListingController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('CheckDraftStatus')->only(['edit', 'update','updateDraft']);
+        $this->middleware('CheckDraftStatus')->only(['edit', 'update']);
     }
     public function index(Request $request)
     {
@@ -32,7 +32,7 @@ class StoryListingController extends Controller
 
 
         if ($request->ajax()) {
-            return view('components.my-story', compact('published_stories','pagination'));
+            return view('components.my-story', compact('published_stories','pagination','policies'));
         } else {
             return view('storylisting', compact('user', 'published_stories', 'draft_stories','pagination','policies'));
         }
@@ -54,31 +54,39 @@ class StoryListingController extends Controller
             ->toArray();
 
         $appliedMissions = Mission::whereIn('mission_id', $appliedMissionIds,)->get();
-        return view('edityourstory', compact('user', 'story', 'storyvideoMedia', 'appliedMissions', 'storyimageMedia'));
+        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
+        return view('edityourstory', compact('user', 'story', 'storyvideoMedia', 'appliedMissions', 'storyimageMedia','policies'));
     }
 
 
 
     public function updateDraft(Request $request, $story_id)
     {
-        $story = Story::findOrFail($story_id);
+        //$story = Story::findOrFail($story_id);
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|max:40000',
             'mission_id' => 'required',
             'published_at' => 'nullable|date',
-            'path' => 'array|max:20|required',
-            'path.*' => 'url',
-            'photos' => 'nullable|array|max:20',
-            'photos.*' => 'required|image|max:4096|mimes:jpg,jpeg,png,',
+            'path' => 'nullable|array|max:20',
+
+            'path.*' => [
+                'required',
+                'url',
+                'regex:/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/i',
+            ],
+            'photos' => 'array|max:20',
+            'photos.*' => 'image|max:4096|mimes:jpg,jpeg,png,',
         ],
                [
                 'url' => 'The video URL must be a valid URL.',
-                'path.max'=> 'maximum 20 URL can be uploaded',
+                'path.max' => 'maximum 20 URL can be uploaded',
                 'mimes' => 'The :attribute field must be a file of type: :values.',
                 'published_at.required' => 'The date field is required.',
                  'photos.*.max' => 'photo size should not be more then 4 MB',
                  'photos.max' => 'maximum 20 photos can be uploaded',
+                 'path.*.regex' => 'please enter a valid youtube URL on index :index of the video URL',
             ]
     );
         $story = Story::findOrFail($story_id);

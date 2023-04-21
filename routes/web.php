@@ -112,10 +112,10 @@ Route::group(['middleware' => ['user']], function(){
     Route::get('story-listing',[StoryListingController::class,'index'])->name('story-listing');
     Route::get('story-details-page/{story_id}',[StoryDetailController::class,'index'])->name('story-details-page');
     Route::resource('mystories', StoryListingController::class);
-    Route::post('mystories/{story_id}', [StoryListingController::class,'updateDraft'])->name('mystories.updateDraft');
 });
 Route::get('cms',[CmsPagesController::class, 'index'])->name('policy-page');
 //backend routes
+Route::post('mystories/draft/{story_id}', [StoryListingController::class,'updateDraft'])->name('mystories.updateDraft');
 
 // Route::get('adminresetpage',function(){
     //     return view('admin.auth.login');

@@ -206,7 +206,7 @@
                         formData.append('path[]', path[i]);
                     }
                 }
-
+                console.log(formData.getAll('path[]'));
                 $.ajax({
                     type: 'post',
                     url: '{{ route('stories.store') }}',
@@ -219,6 +219,7 @@
                         link.href = "{{ route('mystories.edit',':id') }}".replace(':id',id);
                         link.click();
                     },
+                    
                     error: function(response) {
                     var errors = response.responseJSON.errors;
                     var errorHtml = '';
