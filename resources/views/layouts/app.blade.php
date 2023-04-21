@@ -69,6 +69,7 @@
         });
     </script>
     <script src={{ asset('JS/jquery.min.js') }}></script>
+    @stack('script')
 </body>
 @include('layouts.scripts')
 @auth

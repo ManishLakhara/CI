@@ -46,10 +46,10 @@ Landing Mission Page
                 <div class='d-flex px-3 justify-content-center align-items-center'>
 
                     <input type="radio" class="btn-check px-1" name="view" value='0' checked id="grid-view">
-                    <label  id="grid-view-label" class="btn p-1 rounded-circle" for="grid-view"><img style="width: 30px;height: 30px" src={{ asset('Images/grid.png') }}
+                    <label  id="grid-view-label" class="p-1 rounded-circle" for="grid-view"><img style="width: 30px;height: 30px" src={{ asset('Images/grid.png') }}
                         alt="gridview" ></label>
                     <input type="radio" class="btn-check px-1" name="view" id="list-view">
-                    <label id="list-view-label" class="btn p-2 rounded-circle" value='1' for="list-view"><img
+                    <label id="list-view-label" class="p-2 rounded-circle" value='1' for="list-view"><img
                         style="width:22px;width:22px" src={{ asset('Images/list.png') }} alt="list"></label>
                 </div>
             </div>
@@ -64,8 +64,10 @@ Landing Mission Page
 @else
     @include('components.NoMissionFound')
 @endif
-    <script>
-        var countries = [];
+    @push('script')
+
+        <script>
+            var countries = [];
         var cities = [];
         var themes = [];
         var skills = [];
@@ -396,7 +398,6 @@ Landing Mission Page
             });
         }
         $(document).ready(function(Event) {
-            console.log('started');
             $('#home_page').hide();
             runJquery();
             $('#search_input').on('change',function(){
@@ -504,5 +505,7 @@ Landing Mission Page
                 getNextFilter(1);
             })
         });
-    </script>
+
+        </script>
+    @endpush
 @endsection

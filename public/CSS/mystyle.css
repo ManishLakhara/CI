@@ -10,9 +10,21 @@ textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="datetime"]:focus,
+.form-control:focus,
+.btn:focus {
+    box-shadow: none !important;
+}
+.form-select:focus{
+    border-color: white;
+}
 .carousel-indicators li {
     background-color: white;
 }
+.form-check-input:focus,
+label .btn-check:focus {
+    box-shadow: none;
+}
+
 .pagination {
     display: flex;
     justify-content: center;

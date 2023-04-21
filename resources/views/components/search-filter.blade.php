@@ -2,16 +2,16 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 d-flex rounded justify-content-md-start justify-content-between align-items-center">
-                <div class="d-flex">
+                <div class="d-flex w-100">
                     <button class="btn" name="header-toggle" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                         <i class="fa-solid fa-bars"></i>
                       </button>
                     <button type="button" name="search-btn" aria-label="search" id="search-mission-id" class="btn">
                         <i class="fas fa-search"></i>
                     </button>
-                    <div>
+                    <div class="w-100">
                         <input type="search" name="s" id="search_input" placeholder="Search Missions... "
-                            value='{{ request()->input('s') }}' class="form-control border-0 py-3" />
+                            value='{{ request()->input('s') }}' class="w-100 form-control border-0" />
                     </div>
                 </div>
                <div class="text-end">
@@ -25,7 +25,7 @@
                         <div class="col-sm-3 my-filters border-start input-group px-2">
                             <div class="dropdown w-100">
                                 <button class="btn btn-none text-secondary form-select" name="countryDropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="float-start ps-0 pe-5">
+                                    <span class="float-start py-2  ps-0 pe-5">
                                         Country
                                     </span>
                                 </button>
@@ -48,7 +48,7 @@
                         <div class="col-sm-3 my-filters border-start input-group px-2" >
                             <div class="dropdown w-100">
                                 <button disabled name="cityDropdown" class="btn btn-none text-secondary form-select" type="button" id="city_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="float-start ps-0 pe-5">
+                                    <span class="float-start py-2 ps-0 pe-5">
                                         City
                                     </span>
                                 </button>
@@ -73,7 +73,7 @@
                         <div class="my-filters border-start input-group px-2">
                             <div class="dropdown w-100">
                                 <button name="themeDropdown" class="btn btn-none text-secondary form-select" disabled type="button" id="theme_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="float-start ps-0 pe-5">
+                                    <span class="float-start py-2 ps-0 pe-5">
                                         Theme
                                     </span>
                                 </button>
@@ -96,7 +96,7 @@
                         <div class="col-sm-3 my-filters border-start border-end input-group px-2">
                             <div class="dropdown w-100">
                                 <button name="skill_dropdown" class="btn btn-none text-secondary form-select" type="button" disabled id="skill_drop_down_menu" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="float-start ps-0 pe-5">
+                                    <span class="float-start py-2 ps-0 pe-5">
                                         Skill
                                     </span>
                                 </button>

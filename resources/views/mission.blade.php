@@ -5,9 +5,6 @@
 @endsection
 @section('content')
 <?php
-    // use Carbon\Carbon;
-    // $currentDateTime = Carbon::now();
-    // $formattedDateTime = $currentDateTime->format('l, F j, Y, g:iA');
     $user_id = Auth::user()->user_id;
 ?>
     <div class="container">
@@ -424,6 +421,7 @@
     <div class="container-fluid">
         @include('components.gridView')
     </div>
+    @push('script')
     <script>
         function getComment(){
             const options = {
@@ -781,4 +779,5 @@
 
         });
     </script>
+    @endpush
 @endsection
