@@ -14,6 +14,7 @@
             </div>
         </div>
         @include('admin.layouts.scripts')
+        @stack('script')
     </body>
     <script>
         var currentpath = window.location.pathname.split('/')[1];
@@ -23,7 +24,13 @@
             if(windowWidth >= 768){
                 $('#sb-sidenav').show();
             }
-        })
+            if(windowWidth >=992){
+                $('.sb-nav-fixed').removeClass('sb-sidenav-toggled');
+            }
+        });
+        $('.navbar-close').on('click', function(){
+            $('.sb-nav-fixed').removeClass('sb-sidenav-toggled');
+        });
     </script>
 
 </html>

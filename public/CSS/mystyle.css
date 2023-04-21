@@ -432,3 +432,7 @@ p{
   /* .slick-slide {
     height: 100%;
   } */
+
+.theme-highlight:hover {
+    color:#f88634;
+}

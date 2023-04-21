@@ -6,7 +6,8 @@
 }
 </style>
 <div class="navbar-collapse" id="layoutSidenav_nav">
-    <nav class="sb-sidenav accordion sb-sidenav zindex-sticky bg-orange"  id="sidenavAccordion">
+    <button type="button" style="top:1em;right:1em;z-index:999;" class="btn-close position-absolute navbar-close" aria-label="Close"></button>
+    <nav class="sb-sidenav accordion sb-sidenav zindex-sticky bg-orange" data-bs-backdrop='true' id="sidenavAccordion">
         <div class="sb-sidenav-menu align-content-center" style="z-index: 10">
             <div class="nav">
                 <div class="text-white fs-6 pl-3">NAVIGATION</div>
