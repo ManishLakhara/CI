@@ -186,10 +186,10 @@
                         <option value="none" selected="" disabled="" hidden="">select mission theme
                         </option>
                         @foreach ($mission_theme as $theme)
-                            <option value="{{ $theme->mission_theme_id }}">{{ $theme->title }}</option>
-                            {{-- <option value="{{ $theme->mission_theme_id}}"
+                            {{-- <option value="{{ $theme->mission_theme_id }}">{{ $theme->title }}</option> --}}
+                            <option value="{{ $theme->mission_theme_id}}"
                                 {{ old('mission_theme_id') == $theme->mission_theme_id ? 'selected' : '' }}>{{ $theme->title }}
-                            </option> --}}
+                            </option>
                         @endforeach
                     </select>
 
