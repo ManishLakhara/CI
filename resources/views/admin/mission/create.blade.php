@@ -63,7 +63,7 @@
                 <div class="col-md-6">
                     <label for="city">City</label>
                     <select class="form-control" name="city_id" id="city-dropdown">
-                        <option value="none" selected="" disabled="" hidden=""></option>
+                        {{-- <option value="none" selected="" disabled="" hidden=""></option> --}}
 
                     </select>
                     @error('city_id')
@@ -186,10 +186,10 @@
                         <option value="none" selected="" disabled="" hidden="">select mission theme
                         </option>
                         @foreach ($mission_theme as $theme)
-                            <option value="{{ $theme->mission_theme_id }}">{{ $theme->title }}</option>
-                            {{-- <option value="{{ $theme->mission_theme_id}}"
-                                {{ old('mission_theme_id') == $theme->mission_theme_id ? 'selected' : '' }}>{{ $theme->title }}
-                            </option> --}}
+                            {{-- <option value="{{ $theme->mission_theme_id }}">{{ $theme->title }}</option> --}}
+                            <option value="{{ $theme->mission_theme_id}}"
+                                {{ old('theme_id') == $theme->mission_theme_id ? 'selected' : '' }}>{{ $theme->title }}
+                            </option>
                         @endforeach
                     </select>
 
