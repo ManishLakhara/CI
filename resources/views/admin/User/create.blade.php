@@ -238,6 +238,7 @@
             </div>
             <button class="btn btn-warning pull-right" type="submit"><i class="fa-solid fa-plus text-black"></i>
                 Add</button>
+            <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('user.index') }}">Cancle</a>
         </form>
 
     </div>

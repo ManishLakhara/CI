@@ -30,7 +30,7 @@ class StoreUserRequest extends FormRequest
             'phone_number' => 'required|numeric|digits:10|unique:users',
             'password' => 'required|min:8',
             'confirm_password' => 'bail|required|same:password',
-            'employee_id' => 'bail|numeric|unique:users',
+            'employee_id' => 'bail|numeric|unique:users|max:16',
             'avatar' => 'required',
             'department' => 'required',
             'profile_text' => 'required',

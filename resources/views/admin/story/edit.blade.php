@@ -65,6 +65,7 @@
                 class="btn btn-outline-danger">
                 Delete
             </button>
+            <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('stories.index') }}">Cancle</a>
             <!-- Modal -->
             @include('admin.components.deleteModal', [
                 'id' => $story->story_id,

@@ -28,7 +28,7 @@
                             <span class="badge bg-warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
                         </div>
                     @endif
-                    <span id="applied_l_badge_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
+                    <span id="applied_l_badge_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6 applied_badge_{{$item->mission_id}}">Applied</span>
                 </div>
                     <span class="position-absolute parent_mission_location">
                         <span class="mission_location px-2 py-1">
@@ -213,7 +213,7 @@
                         </button></a>
                         @endif
                         <a name="viewDetails" href="{{route("mission-page",$item->mission_id)}}">
-                            <button name="viewDetail" style="display: none;" id="mission_detail_l_btn_{{$item->mission_id}}" class="mx-2 fs-6 btn btn-outline apply-btn px-2" style="width: fit-content"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
+                            <button name="viewDetail" style="display: none; text-decoration: none;" id="mission_detail_l_btn_{{$item->mission_id}}" class="mx-2 fs-6 btn btn-outline apply-btn px-2" style="width: fit-content"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                             </button></a>
                     </div>
                 </div>

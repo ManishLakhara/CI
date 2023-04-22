@@ -36,24 +36,30 @@
         </div>
     @enderror
 
+    <div id="Preview-photo">
+        <h4 class="text-start"> selected Photo</h4>
+        <div class="row justify-content-center"><div class="col-md-6" style="width: '600px'; height: '900px';" id="show_photo">
+            <img class="img-fluid w-100 h-100"src="{{asset('storage/'.$banner->image)}}" alt="{{$banner->image}}">
+        </div></div>
+        </div>
+
     <div class="my-4 row justify-content-end"> <div class="col-md-4 text-end">
-        <button type="reset" class="btn mx-2 btn-outline-secondary"> cancle </button>
-        <button type="submit" class="btn mx-2 btn-outline-warning" > Save </button>
+        <button aria-label="reset" type="reset" data-old_description="{{ $banner->text }}" class="reset-button btn mx-2 btn-outline-secondary"> reset </button>
+        <button aria-label="submit" type="submit" class="btn mx-2 btn-outline-warning" > Save </button>
+        <a aria-label="cancle" class="btn mx-2 btn-secondary" href="{{ route('banner.index') }}">Cancle</a>
         </div></div>
     </form>
 
-    <div id="Preview-photo">
-    <h4> selected Photo</h4>
-    <div class="row justify-content-center"><div class="col-md-6" style="width: '600px'; height: '900px';" id="show_photo">
-        <img class="img-fluid w-100 h-100"src="{{asset('storage/'.$banner->image)}}" alt="{{$banner->image}}">
-    </div></div>
-    </div>
+    
 </div>
 
 
 
 <script>
     CKEDITOR.replace('editor1');
+    $('.reset-button').click(function() {
+            CKEDITOR.instances['editor1'].setData($(this).data('old_description'));
+        });
 </script>
 
 @endsection

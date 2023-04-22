@@ -341,6 +341,7 @@
                             <div class="col-md-4 py-4 d-flex justify-content-end align-self-end"> {{-- This is submit button --}}
                                 <button class="btn btn-warning" type="submit"><i
                                         class="fa-solid fa-pen-to-square text-black"></i> Update</button>
+                                <a aria-label="cancle" class="mx-4 btn btn-secondary" href="{{ route('user.index') }}">Cancle</a>
                             </div>
                         </div>
                     </form>

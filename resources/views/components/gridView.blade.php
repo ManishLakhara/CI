@@ -2,8 +2,8 @@
     @foreach ($data as $item)
         {{-- This is grid view --}}
     <div class="card col-lg-6 col-md-12 col-xxl-4 col-xl-6 border-0 pb-4 text-center">
-        <div class="d-flex justify-content-center py-1 h-100 w-100">
-            <div>
+        <div class="d-flex justify-content-center py-1 h-100">
+            <div class="w-100">
                 <div class="position-relative" style="max-width: 416px; height: 247px;">
                     <div class="position-absolute current-status">
                     @if($item->missionApplication->where('user_id',$user_id)->first()!=Null)
@@ -27,7 +27,7 @@
                     @endif
 
 
-                    <span id="applied_badge_{{$item->mission_id}}" style="display: none;" class="badge bg-success fs-6">Applied</span>
+                    <span id="applied_badge_{{$item->mission_id}}" style="display: none;" class="applied_badge_{{$item->mission_id}} badge bg-success fs-6">Applied</span>
 
                     </div>
 
@@ -70,7 +70,7 @@
                     <img class="img-fluid w-100 h-100 card-img-top"
                     @if($item->missionMedia->where('default','1')->first())
                     src={{ asset('storage/'.$item->missionMedia->where('default','1')->first()->media_path) }}
-                    @endif alt="defaultmissionImage" style="max-width:416px;height:247px">
+                    @endif alt="defaultmissionImage" style="width:416px;height:247px">
 
                     <div style="z-index: 1; margin-top: -1em">
                         <span class="position-relative fs-5 px-5 from_untill" >
@@ -208,8 +208,8 @@
                     <a name="missionDetail" href="{{route('mission-page',$item->mission_id)}}"><button name="missionDetail" id="mission_detail_btn_{{$item->mission_id}}" class="mx-2 btn btn-outline apply-btn fs-6 px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                     </button></a>
                @endif
-                <a name="go-to-mission-detail" href="{{route("mission-page",$item->mission_id)}}">
-                <button style="display: none;" name="missionDetailshow" class="mission_detail_btn_{{$item->mission_id}}" class="mx-2 fs-6 btn btn-outline apply-btn px-2" style="width: fit-content"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
+                <a name="go-to-mission-detail" style="text-decoration: none;" href="{{route("mission-page",$item->mission_id)}}">
+                <button style="display: none;width: fit-content;" name="missionDetailshow" class="mission_detail_btn_{{$item->mission_id}} mx-2 fs-6 btn btn-outline apply-btn px-2"> View Details  <i class=" fa-sharp fa-solid fa-arrow-right"></i>
                 </button></a>
 
             </div>

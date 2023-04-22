@@ -321,6 +321,9 @@ Landing Mission Page
                     },
                     success: function(result){
                         $('#applied_badge_'+mission_id).css('display','block');
+                        $('.applied_badge_'+mission_id).css('display','block');
+                        $('#mission_application_l_btn_'+mission_id).css('display','none');
+                        $('#mission_detail_l_btn_'+mission_id).css('display','block');
                     }
                 })
                 $(this).hide();
@@ -336,8 +339,12 @@ Landing Mission Page
                         mission_id: $(this).data('mission_id'),
                         approval_status: 'PENDING',
                     },
-                    success: function(result){
+                    success: function(result){ 
+                         
                         $('#applied_badge_'+mission_id).css('display','block');
+                        $('.applied_badge_'+mission_id).css('display','block');
+                        $('#mission_application_btn_'+mission_id).css('display','none');
+                        $('.mission_detail_btn_'+mission_id).css('display','block');
                     }
                 })
                 $(this).hide();

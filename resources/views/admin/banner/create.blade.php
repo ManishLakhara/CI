@@ -38,15 +38,17 @@
     @enderror
 
     <div class="my-4 row justify-content-end"> <div class="col-md-4 text-end">
-        <button type="reset" class="btn mx-2 btn-outline-secondary"> cancle </button>
-        <button type="submit" class="btn mx-2 btn-outline-warning" > Submit </button>
+        <button aria-label="reset" type="reset" class="reset-button btn mx-2 btn-outline-secondary"> Reset </button>
+        <button aria-label="submit" type="submit" class="btn mx-2 btn-outline-warning" > Submit </button>
+        <a aria-label="cancle" class="btn mx-2 btn-secondary" href="{{ route('banner.index') }}">Cancle</a>
         </div></div>
     </form>
 
-    {{-- <div id="preview-photo">
-    </div> --}}
     <script>
         CKEDITOR.replace('editor1');
+        $('.reset-button').click(function() {
+            CKEDITOR.instances['editor1'].setData('');
+        });
     </script>
 @endsection
 
