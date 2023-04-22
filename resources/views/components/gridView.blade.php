@@ -82,7 +82,7 @@
         </div>
 
         <div class="card-body py-2 text-start">
-            <div id="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
+            <div class="click-to-details_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}">
             <h4 class='theme-color mission-title'>{{ $item->title }}
             </h4>
             <p class='card-text mission-short-description'>
@@ -133,15 +133,12 @@
                 <div class="py-2">
                     <div class="row py-3 justify-content-between">
                         @if ($item->timeMission!=null)
-                            @php
-                                $seat_left = $item->timeMission->total_seats-$item->missionApplication->where('approval_status','APPROVE')->count();
-                            @endphp
                             <div class="col-md-6 d-flex align-items-center ">
                                 <div class="px-1">
                                     <img src={{ asset('Images/seats-left.png') }} alt="seats-left" style="width:25px;height:25px">
                                 </div>
                                 <div class="px-2 d-flex flex-column align-items-start">
-                                    <span class="theme-color fs-5 font-weight-bolder">{{$seat_left}}<br></span>
+                                    <span class="theme-color fs-5 font-weight-bolder">{{$item->timeMission->total_seats}}<br></span>
                                     <span class="text-muted">Seats left</span>
                                 </div>
                             </div>

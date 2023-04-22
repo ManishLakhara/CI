@@ -306,7 +306,7 @@ Landing Mission Page
                 }
             });
             //this is detail view page
-            $('[id^="click-to-details_"]').click(function(){
+            $('[class^="click-to-details_"]').click(function(){
                 $(location).attr('href',"{{url('mission-page/')}}"+'/'+$(this).data('mission_id'));
             });
             $('button[id^="mission_application_btn_"]').on('click',function(){

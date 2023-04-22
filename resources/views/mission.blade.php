@@ -54,15 +54,13 @@
                 <div class="row py-2">
                     <div class="col-sm-6 py-2 py-sm-4 ">
                         @if ($mission->timeMission!=null)
-                            @php
-                                $seat_left = $mission->timeMission->total_seats-$mission->missionApplication->where('approval_status','APPROVE')->count();
-                            @endphp
+                            
                             <div class="d-flex justify-content-start ">
                                 <div class="px-1">
                                     <img src={{ asset('Images/seats-left.png') }} alt="seat-left" style="width:25px;height:25px">
                                 </div>
                                 <div class="px-2 d-flex flex-column align-items-start">
-                                    <span class="theme-color fs-5 font-weight-bolder">{{$seat_left}}<br></span>
+                                    <span class="theme-color fs-5 font-weight-bolder">{{$mission->timeMission->total_seats}}<br></span>
                                     <span class="text-muted">Seats left</span>
                                 </div>
                             </div>
@@ -189,7 +187,11 @@
                 <div class="border-top"></div>
                 <div class="d-flex justify-content-center position-relative" style="margin-top: -35px">
                     @if($mission->missionApplication->where('user_id',$user_id)->first()!=Null && $mission->missionApplication->where('user_id',$user_id)->first()->approval_status=="APPROVE")
-                        <div class='rating bg-white' data-mission_id="{{$mission->mission_id}}" data-user_id="{{$user_id}}">
+                        <div class='rating bg-white'
+                        @if(isset($my_rating->rating))
+                         data-my_rating="{{ $my_rating->rating }}" 
+                         @endif
+                         data-mission_id="{{$mission->mission_id}}" data-user_id="{{$user_id}}">
                             <input type="radio" name="rating_5"
                             @if ($my_rating!=null)
                                 @if($my_rating->rating=='5')
@@ -476,6 +478,15 @@
         }
         $(document).ready(function(){
             getRating();
+            if($('.rating').data('my_rating')){
+                $('.rating').on('click',function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return false;
+                });
+                $('input[name^="rating_"]').prop('disabled',true);
+                console.log('disabled');
+            }
             $('.top-image').slick({
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -600,6 +611,7 @@
                     success: function(response){
                         console.log(response);
                         getRating();
+                        $('input[name^="rating_"]').prop('disabled',true);
                     }
                 })
             })

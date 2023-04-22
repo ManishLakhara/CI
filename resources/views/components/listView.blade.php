@@ -128,15 +128,13 @@
                             <div class="col-lg-6 align-item-center">
                                 <div class="row">
                                     @if ($item->timeMission!=null)
-                                    @php
-                                        $seat_left = $item->timeMission->total_seats-$item->missionApplication->where('approval_status','APPROVE')->count();
-                                    @endphp
+                                    
                                         <div class="col-6 d-flex align-items-center">
                                             <div class="px-1">
                                                 <img src={{ asset('Images/seats-left.png') }} alt="seat_left" style="width:25px;height:25px">
                                             </div>
                                             <div class="px-2 d-flex flex-column align-items-start">
-                                                <span class="theme-color fs-5 font-weight-bolder">{{$seat_left}}<br></span>
+                                                <span class="theme-color fs-5 font-weight-bolder">{{$item->timeMission->total_seats}}<br></span>
                                                 <span class="text-muted">Seats left</span>
                                             </div>
                                         </div>

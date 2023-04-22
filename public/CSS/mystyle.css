@@ -391,6 +391,7 @@ small {
     opacity: 1
 }
 
+
 .rating:hover>input:checked~label:before {
     opacity: 0.4
 }
