@@ -14,12 +14,12 @@
 
 
 
-        <div class="card m-4" style="border:none">
-            {{-- <div class="card-header">
+        {{-- <div class="card m-4" style="border:none">
+            <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-            </div> --}}
+            </div>
 
-            <div class="card-body">
+            <div class="card-body"> --}}
 
                 @include('admin.components.search_add', [
                     'form_action' => 'mission.index',
@@ -68,6 +68,6 @@
                 </table>
                 {!!$pagination!!}
             </div>
-        </div>
-    </div>
+        {{-- </div>
+    </div> --}}
 @endsection
