@@ -264,7 +264,7 @@
                 if(total_image>20){
                     alert("can't have more than 20 images");
                 }
-                else if(count > 0){
+                else if(total_image == 0){
                     alert("can't have no url")
                 }
                 else {

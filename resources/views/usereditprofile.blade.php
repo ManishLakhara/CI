@@ -9,9 +9,9 @@
 
         @method('PUT')
 
-        <div class="container">
+        <div class="container mx-auto">
             <div class="row">
-                <div class="col-lg-4 img-thumbnail mt-5 d-flex-column justify-content-center text-center"
+                <div class="col-lg-4 mx-auto img-thumbnail mt-5 d-flex-column justify-content-center text-center"
                     style="width: 330px;height:315px;">
                     <label for="avatar" style="cursor: pointer;">
                         <img src="{{ Auth::user()->avatar ? asset(Auth::user()->avatar) : asset('Images/user-img1.png') }}"
@@ -594,6 +594,6 @@
         });
     </script>
     @section('contactus')
-   
+
 @endsection
 @endsection
