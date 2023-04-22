@@ -22,15 +22,18 @@ class DatabaseSeeder extends Seeder
             //CountrySeeder::class,
             //CitySeeder::class,
             //SkillSeeder::class,
-           // MissionThemeSeeder::class,
-          //  MissionSkillSeeder::class,
+            MissionThemeSeeder::class,
+            MissionSkillSeeder::class,
             MissionSeeder::class,
             UserSeeder::class,
-           // GoalMissionSeeder::class,
-            //TimeMissionSeeder::class,
+             GoalMissionSeeder::class,
+            TimeMissionSeeder::class,
             CommentSeeder::class,
             MissionApplicationSeeder::class,
             MissionRatingSeeder::class,
+            MissionMediaSeeder::class,
+            StorySeeder::class,
+            StoryMediaSeeder::class,
         ]);
     }
 }
