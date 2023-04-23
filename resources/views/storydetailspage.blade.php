@@ -73,8 +73,8 @@
 
             </div>
             <div class="col-xl-6 mt-5">
-                <div class="row">
-                    <div class="d-flex justify-content-start">
+                <div class="row user">
+                    <div class="col-3 col-md-2 d-flex justify-content-start">
                         <img class="rounded-circle px-2 ms-3 mb-2 " id="header-avatar"
                             src="{{ asset($story->user->avatar) }}" alt="Profile">
 
@@ -89,7 +89,7 @@
 
                     <div class="row ms-3 mt-3">{!! $story->user->why_i_volunteer !!}</div>
                     <div class="row">
-                        <div class=" mt-4">
+                        <div class=" mt-4 responsiveuser">
                             <button type="button" class="btn px-4  ms-5 btn-outline-secondary  rounded-pill"
                                 id="story_invite_btn_{{ $story->story_id }}_{{ $user->user_id }}" data-toggle="modal"
                                 data-target="#invite_user_modal_{{ $story->story_id }}_{{ $user->user_id }}"><i
@@ -154,7 +154,7 @@
 
 
                             <a href="{{ route('mission-page', $story->mission_id) }}"
-                                class="btn px-4 btn-outline-warning rounded-pill ms-3">Open Mission&nbsp;<i
+                                class="btn px-4 btn-outline-warning rounded-pill ms-3 mx-sm-auto my-xs-5">Open Mission&nbsp;<i
                                     class="fa fa-arrow-right"></i></a>
                         </div>
                     </div>
@@ -164,13 +164,13 @@
         </div>
         <div class="col-xl-12">
             <ul class="nav nav-tabs mt-3 px-2" id="myTab" role="tablist">
-                <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button" role="tab"
+                <a class="nav-link active ms-sm-4" data-bs-toggle="tab" data-bs-target="#tab-1" type="button" role="tab"
                     aria-controls="home" aria-selected="flase"
                     style="border:none; border-bottom: 2px solid #5c5c5c;
                     color: #474747;
                     font-weight: 500; font-family: Roboto; font-size:large">{{ $story->title }}</a>
             </ul>
-            <div class="row mt-3 justify-content-center">
+            <div class="row mt-3 justify-content-center ms-sm-4">
                 {!! $story->description !!}
             </div>
         </div>
@@ -178,6 +178,13 @@
 
 
     <style>
+@media (max-width: 576px) {
+  .responsiveuser {
+   margib-top:20px;
+   display: flex !important;
+  }
+
+}
 
         .video-container {
             position: relative;

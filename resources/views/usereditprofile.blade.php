@@ -10,7 +10,7 @@
         @method('PUT')
 
         <div class="container mx-auto">
-            <div class="row">
+            <div class="row ms-md-5">
                 <div class="col-lg-4 mx-auto img-thumbnail mt-5 d-flex-column justify-content-center text-center"
                     style="width: 330px;height:315px;">
                     <label for="avatar" style="cursor: pointer;">
@@ -26,7 +26,7 @@
 
                 </div>
 
-                <div class="col-lg-8">
+                <div class="col-lg-8 ms-md-5 ps-md-5">
                     <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: 1px solid #ADADAD;">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active mt-5" data-bs-toggle="tab" data-bs-target="#tab-1" type="button"

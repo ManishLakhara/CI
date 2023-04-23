@@ -14,7 +14,7 @@
         <h2>Volunteering Timesheet</h2>
 
         <div class="row">
-            <div class="col-lg-6 border mt-3">
+            <div class="col-lg-5 border mt-3 col-sm-10 ms-sm-5">
                 <div class="mt-4">
                     <span>Volunteering Hours</span>
                     <button type="button" class="btn btn-outline-warning float-end me-3 mb-3 rounded-pill" data-toggle="modal"
@@ -229,7 +229,7 @@
 
             </div>
 
-            <div class="col-lg-5 border ms-5 mt-3">
+            <div class="col-lg-5 border ms-lg-5 mt-3 col-sm-10 ms-sm-5">
                 <div class="mt-4">
                     <span>Volunteering Goals</span>
                     <button type="button" class="btn  btn-outline-warning float-end me-3 mb-3 rounded-pill"
