@@ -7,6 +7,11 @@
     <?php
     $user_id = Auth::user()->user_id;
     ?>
+    <div class="container-fluid position-sticky" style="top:0%;background-color: white;z-index:999;">
+        <button class="btn" name="header-toggle" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+    </div>
 
     @include('admin.components.successAlert')
 

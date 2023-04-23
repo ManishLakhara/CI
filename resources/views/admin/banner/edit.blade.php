@@ -28,7 +28,7 @@
 
     <div>
         <label for="formFileLg" class="my-3 form-label">Update Photo</label>
-        <input type="file" value="{{$banner->image}}" class="form-control form-control-lg" id="formFileLg" name="photo">
+        <input type="file" value="{{$banner->image}}" onchange="handleFile(this.file)" class="form-control form-control-lg" id="formFileLg" name="photo">
     </div>
     @error('photo')
         <div class="text-danger">

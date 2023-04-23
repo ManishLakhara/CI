@@ -6,6 +6,7 @@
 *::before {
     box-sizing: border-box;
 }
+
 textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -58,6 +59,9 @@ label .btn-check:focus {
 @media screen and (max-width: 767px){
     #main_header{
         display: none;
+    }
+    .short-header{
+        display: block;
     }
     #search-mission-id{
         display:none;

@@ -5,6 +5,11 @@
 @endsection
 
 @section('content')
+<div class="container-fluid position-sticky" style="top:0%;background-color: white;z-index:999;">
+    <button class="btn" name="header-toggle" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+</div>
     <div class="container">
         <h2 class="mt-5 mx-4">Privacy and Cookies Policy</h2>
         <div class="row">

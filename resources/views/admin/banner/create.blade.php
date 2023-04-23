@@ -29,7 +29,7 @@
 
     <div>
         <label for="formFileLg" class="my-3 form-label">Photo</label>
-        <input type="file" value="{{old('photo')}}" class="form-control form-control-lg" onchange="handleFiles(this.files);" id="formFileLg" name="photo">
+        <input type="file" value="{{old('photo')}}" class="form-control form-control-lg" onchange="handleFiles(this.file);" id="formFileLg" name="photo">
     </div>
     @error('photo')
         <div class="text-danger">
@@ -44,11 +44,51 @@
         </div></div>
     </form>
 
+    <div id="preview"></div>
     <script>
         CKEDITOR.replace('editor1');
         $('.reset-button').click(function() {
             CKEDITOR.instances['editor1'].setData('');
         });
+        // function handleFiles(files) {
+        //     //console.log(files);
+        //     var preview = document.getElementById("preview");
+        //     // for (let i = 0; i < files.length; i++) {
+        //         console.log(files);
+        //         var file = files;
+        //         // if (recentuploadFiles.includes(file.name)) {
+        //         //     continue;
+        //         // }
+        //         //uploadedFiles = [...uploadedFiles, file.name];
+        //         // recentuploadFiles = [...recentuploadFiles, file];
+        //         var reader = new FileReader();
+        //         reader.onload = function(event) {
+        //             var src = event.target.result;
+        //             var div = document.createElement("div");
+        //             div.setAttribute("style",
+        //                 "position:relative; display:inline-block; margin-right:10px;margin-left:10px;");
+        //             var img = document.createElement("img");
+        //             img.setAttribute("src", src);
+        //             img.setAttribute("style", "width: 118px;height: 118px;");
+        //             div.appendChild(img);
+        //             var closeIcon = document.createElement("button");
+        //             closeIcon.setAttribute("class", "close_new_preview fa fa-times");
+        //             closeIcon.setAttribute("type", "button");
+        //             closeIcon.setAttribute("data-path", file.name);
+        //             closeIcon.setAttribute("style",
+        //                 "position:absolute; top:0px; right:0px; background-color:black; color:white; border-radius:10%; padding:4px; cursor:pointer;"
+        //             );
+        //             closeIcon.onclick = function() {
+        //                 div.parentNode.removeChild(div);
+        //                 // recentuploadFiles = recentuploadFiles.filter(item => item.name != file.name);
+
+        //             };
+        //             div.appendChild(closeIcon);
+        //             preview.appendChild(div);
+        //         };
+        //         reader.readAsDataURL(file);
+        //     // }
+        // }
     </script>
 @endsection
 

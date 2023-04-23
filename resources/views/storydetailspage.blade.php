@@ -4,6 +4,11 @@
 @endsection
 
 @section('content')
+<div class="container-fluid">
+    <button class="btn" name="header-toggle" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+</div>
     <div class="container">
         <div class="row">
             <div class="col-xl-6 mt-5">
