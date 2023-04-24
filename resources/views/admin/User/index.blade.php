@@ -47,7 +47,7 @@
                         </td>
                         <td>
                             <div class="d-flex justify-content-end">
-                                <a class="btn btn-white" href="{{ route('user.edit', $d->user_id) }}">
+                                <a aria-label="edit" class="btn btn-white" href="{{ route('user.edit', $d->user_id) }}">
                                     <i class="fas fa-edit" style="color: #F88634"></i>
                                 </a>
 

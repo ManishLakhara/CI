@@ -30,6 +30,7 @@ class UpdateBannerRequest extends FormRequest
                             Rule::unique('banners')->where(function($query){
                                 $query->where('deleted_at','!=',Null);
                             })->ignore($bannerId),
+            'photo' => 'bail|nullable|mimes:jpeg,jpg,png|max:4086'
         ];
     }
 }

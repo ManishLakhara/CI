@@ -48,10 +48,10 @@
                     height="118px">
                 {{-- <i class="fa fa-times" style="position:absolute; top:0px; right:0px; background-color:black; color:white; border-radius:10%; padding:4px; cursor:pointer;"
                        onclick="removeImage('{{ $imagemedia->path }}')"></i> --}}
-                <button type="button" class="close_preview_img"
+                {{-- <button type="button" class="close_preview_img"
                     data-story_media_id="{{ $imagemedia->story_media_id }}"
                     style="position:absolute; top:0px; right:0px; background-color:black; color:white; border-radius:10%; padding:4px; cursor:pointer;"><i
-                        class="fa fa-times"></i></button>
+                        class="fa fa-times"></i></button> --}}
             </div>
             @endforeach
         </div>
@@ -77,10 +77,10 @@
         CKEDITOR.replace('editor1');
         var deleteFiles = [];
         $(document).ready(function(){
-            $('button[class="close_preview_img"]').on('click', function() {
-                deleteFiles = [...deleteFiles, $(this).data('story_media_id')];
-                $(this).parent().remove();
-            })
+            // $('button[class="close_preview_img"]').on('click', function() {
+            //     deleteFiles = [...deleteFiles, $(this).data('story_media_id')];
+            //     $(this).parent().remove();
+            // })
             $(".remove_video_btn").on('click', function(){
                 console.log($(this).data('story_media_id'));
                 //deleteFiles = [...deleteFiles, $(this).data('story_media_id')];

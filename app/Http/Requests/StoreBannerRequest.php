@@ -23,7 +23,7 @@ class StoreBannerRequest extends FormRequest
     {
         return [
             'text' => 'required',
-            'photo' => 'required|max:512',
+            'photo' => 'bail|required|mimes:jpeg,jpg,png|max:4086',
             'sort_order' => 'required|unique:banners,sort_order|gt:0',
         ];
     }

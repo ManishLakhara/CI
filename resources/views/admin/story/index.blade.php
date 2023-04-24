@@ -55,8 +55,8 @@
                                 PUBLISHED
                             </span>
                         @else
-                            <a style="text-decoration: none;" id="application_a_{{$mt->story_id}}" href="{{route('admin-story.published', $mt->story_id)}}">
-                                <img src="{{asset('Images/correct-icon.svg')}}" width="25px" height="25px" alt="">
+                            <a style="text-decoration: none;" aria-label="correct" id="application_a_{{$mt->story_id}}" href="{{route('admin-story.published', $mt->story_id)}}">
+                                <img alt="correct" src="{{asset('Images/correct-icon.svg')}}" width="25px" height="25px" alt="">
                             </a>
                         @endif
                         @if($mt->status=="DECLINED")
@@ -71,7 +71,7 @@
 
                         <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $mt->story_id }}"
                             class="btn btn-white">
-                            <img src="Images/bin.png" style="width: 16px;height:20px" alt="delete">
+                            <img src="Images/bin.png"  style="width: 16px;height:20px" alt="delete">
                         </button>
                         <!-- Modal -->
                         @include('admin.components.deleteModal', [

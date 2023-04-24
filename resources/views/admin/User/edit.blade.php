@@ -85,16 +85,7 @@
                                 </label>
                             </div>
                         </div>
-                        {{-- <div class="row align-items-center py-3">
-                            <div class="col"><span class="fs-4">Update users Profile Images</span></div>
-                            <div class="col">
-                                <label for="avatar" style="cursor: pointer;">
-                                    <img src="{{asset($user->avatar)}}"
-                                        alt="profile-photo" class="img-fluid rounded-circle mt-5" style="width: 115px; height: 115px;">
-                                </label>
-                                <input type="file" id="avatar" name="avatar" style="display: none;">
-                            </div>
-                        </div> --}}
+                        
 
                         @error('avatar')
                                 <div class="text-danger">

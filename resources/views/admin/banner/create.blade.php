@@ -5,6 +5,24 @@
 @endsection
 
 @section('body')
+
+    <script>
+		function handleFileSelect(evt) {
+			var file = evt.target.files[0];
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				var img = new Image();
+				img.src = e.target.result;
+				img.onload = function() {
+					var preview = document.getElementById('preview');
+					preview.src = img.src;
+					preview.style.display = 'block';
+				}
+			}
+			reader.readAsDataURL(file);
+		}
+	</script>
+
 <div class="containter-fluid mt-4 px-4">
     <ul class="nav border-bottom"><span class="nav-link active fs-1"> Add Banner </span></ul>
 
@@ -29,8 +47,9 @@
 
     <div>
         <label for="formFileLg" class="my-3 form-label">Photo</label>
-        <input type="file" value="{{old('photo')}}" class="form-control form-control-lg" onchange="handleFiles(this.file);" id="formFileLg" name="photo">
+        <input type="file" value="{{old('photo')}}" class="form-control form-control-lg" onchange="handleFileSelect(event)" id="formFileLg" name="photo">
     </div>
+    <img id="preview" class="my-4" style="display: none; width:1000px;height:500px;" >
     @error('photo')
         <div class="text-danger">
             {{$message}}
@@ -43,12 +62,30 @@
         <a aria-label="cancle" class="btn mx-2 btn-secondary" href="{{ route('banner.index') }}">Cancle</a>
         </div></div>
     </form>
-
-    <div id="preview"></div>
     <script>
         CKEDITOR.replace('editor1');
         $('.reset-button').click(function() {
             CKEDITOR.instances['editor1'].setData('');
+            $('#preview').hide();
+        });
+        // function handleFiles(files) {
+        //     var reader = new FileReader();
+        //     reader.readAsDataURL(files[0]);
+        //     reader.onload = function(e) {
+        //         var img = new Image();
+        //         img.src = reader.result;
+        //         img.onload = function() {
+        //         var preview = document.getElementById('preview');
+        //         preview.src = img.src;
+        //         preview.style.display = 'block';
+        //         }
+        //     }
+        // }
+        $(document).ready(function(event){
+            $('.reset-button').click(function() {
+                CKEDITOR.instances['editor1'].setData('');
+                $('#preview').hide();
+            });
         });
         // function handleFiles(files) {
         //     //console.log(files);
