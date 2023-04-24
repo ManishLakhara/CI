@@ -1,7 +1,9 @@
-<input type="number" hidden id="noOfMission2" value="{{$count}}">
 @php
     $user_id = auth()->user()->user_id;
+    $count = $data->total();
 @endphp
+<input type="number" hidden id="noOfMission2" value="{{$count}}">
+
 @if ($count)
     @include('components.gridView')
     @include('components.listView')

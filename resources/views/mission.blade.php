@@ -54,7 +54,7 @@
                 <div class="row py-2">
                     <div class="col-sm-6 py-2 py-sm-4 ">
                         @if ($mission->timeMission!=null)
-                            
+
                             <div class="d-flex justify-content-start ">
                                 <div class="px-1">
                                     <img src={{ asset('Images/seats-left.png') }} alt="seat-left" style="width:25px;height:25px">
@@ -189,7 +189,7 @@
                     @if($mission->missionApplication->where('user_id',$user_id)->first()!=Null && $mission->missionApplication->where('user_id',$user_id)->first()->approval_status=="APPROVE")
                         <div class='rating bg-white'
                         @if(isset($my_rating->rating))
-                         data-my_rating="{{ $my_rating->rating }}" 
+                         data-my_rating="{{ $my_rating->rating }}"
                          @endif
                          data-mission_id="{{$mission->mission_id}}" data-user_id="{{$user_id}}">
                             <input type="radio" name="rating_5"
@@ -347,8 +347,8 @@
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <div class="card px-4">
-                        <div class="card-body">
+                    <div class="card">
+                        <div class="card-body px-2 pb-0">
                             <div class="card-title fs-4">
 
                                 <ul class="nav border-bottom"><span class="nav-link active"> Information </span></ul>
@@ -391,7 +391,7 @@
                     </div>
                     <br>
                     <div class="card">
-                        <div class="card-body" style="padding:0%">
+                        <div class="card-body pb-0 px-0">
                             <div class="card-title fs-4">
                                 <ul class="nav border-bottom"><span class="nav-link active"> Recent Volunteers </span></ul>
                             </div>

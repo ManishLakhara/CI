@@ -51,6 +51,7 @@ class MissionDetailController extends Controller
         return view('mission',compact('mission','users','skills','data','favorite','my_rating','avg_rating','count_rating','policies'));
     }
     public function showVolunteer(Request $request){
+        //dd('$request');
         if($request->ajax()){
             $recent_a = MissionApplication::where('approval_status','APPROVE')
                                             ->where('mission_id',$request->mission_id)->get()->pluck('user_id');
