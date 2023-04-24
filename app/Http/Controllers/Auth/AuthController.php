@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\User;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use \Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller {
@@ -27,14 +28,15 @@ class AuthController extends Controller {
     }
     public function postLogin(Request $request){
         $request->validate([
-            'email' => 'required',
+            'email' => 'required|exists:users,email',
             'password' => 'required',
         ]);
         $credentionals = $request->only('email','password');
         if(Auth::attempt($credentionals)){
             return redirect()->intended('index');
         } else {
-            return redirect()->intended('/')->with('status','Oppes! Incorrect Password');
+            return redirect()->intended('/login')->with('status','Oppes! Incorrect Credentials')
+                                                ->withInput(FacadesRequest::except('password'));
         }
     }
 
@@ -53,7 +55,8 @@ class AuthController extends Controller {
             return redirect()->intended('/')->with('success', $user->first_name.' New User is Registered');
         }
         else{
-            return redirect()->intended('register')->with('status', 'user-Already exists');
+            return redirect()->intended('register')->with('status', 'user-Already exists')
+                                                    ->with(FacadesRequest::except('password'));
         }
     }
     public function forgot(){

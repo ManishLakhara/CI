@@ -8,6 +8,7 @@ use App\Models\PasswordReset;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Str;
 
 class PasswordResetController extends Controller
@@ -30,7 +31,7 @@ class PasswordResetController extends Controller
                 $this->validate($request, [
                     'email' => 'required|email',
                 ]);
-           $token = Str::random(60);
+                $token = Str::random(60);
                 $user = new PasswordReset;
                 $user['email'] = $request->email;
                 $user['token'] = $token;
@@ -59,6 +60,6 @@ class PasswordResetController extends Controller
         $user->password = bcrypt($request['password']);
         $user->save();
         $reset->delete();
-        return redirect()->intended('/')->with('success','Hurry!! Password have been Successfully updated');
+        return redirect()->intended('login')->with('success','Hurry!! Password have been Successfully updated');
     }
 }

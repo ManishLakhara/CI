@@ -94,7 +94,9 @@
     border: 5px solid #F88634;
     box-shadow: 0 0 5px #F88634;
   }
-
+  .pagination *:focus{
+    box-shadow: none;
+  }
 .nav-link.active {
     border-bottom: 2px solid #333;
     color:#414141;

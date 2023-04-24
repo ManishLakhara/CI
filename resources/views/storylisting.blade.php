@@ -24,9 +24,9 @@
             @endif
 
             <div class="image">
-                <img class="d-block w-100 h-100" src="images/growsharestory.png" class="img-fluid" alt="First slide">
+                <img class="w-100 h-100" src="images/growsharestory.png"  style="min-height: 430px;object-fit:cover; overflow:hidden;" alt="First slide">
                 <div class="image__overlay">
-                    <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    <p class="text-center  infomationOnShareStory">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                         incididunt ut labore
                         et dolore magna
                         aliqua.<br> Ut enim ad minim veniam, quis nostrud

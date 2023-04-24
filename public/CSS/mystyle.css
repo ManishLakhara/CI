@@ -7,6 +7,7 @@
     box-sizing: border-box;
 }
 
+
 textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -72,6 +73,12 @@ label .btn-check:focus {
       margin: 0; /* remove margin on smaller screens */
       padding: 0 10px; /* add padding on smaller screens */
     }
+    .infomationOnShareStory{
+        display: none;
+    }
+  }
+  .pagination *:focus{
+    box-shadow: none;
   }
 .form-check-input:checked{
     background-color:#f88634;

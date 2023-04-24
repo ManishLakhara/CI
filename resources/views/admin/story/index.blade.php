@@ -49,13 +49,13 @@
                         {{$mt->user->first_name}} {{$mt->user->last_name}}
                     </td>
                     <td>
-                        <a  href="{{route('admin-story.show', $mt->story_id)}}"><button class="btn btn-outline border px-2 py-1" style="border-radius: 23px;">View</button></a>
+                        <a aria-label="view-story" href="{{route('admin-story.show', $mt->story_id)}}"><button class="btn btn-outline border px-2 py-1" style="border-radius: 23px;">View</button></a>
                         @if($mt->status=='PUBLISHED')
                             <span class="border px-2 py-1 text-success border-success" style="border-radius: 23px;">
                                 PUBLISHED
                             </span>
                         @else
-                            <a  id="application_a_{{$mt->story_id}}" href="{{route('admin-story.published', $mt->story_id)}}">
+                            <a style="text-decoration: none;" id="application_a_{{$mt->story_id}}" href="{{route('admin-story.published', $mt->story_id)}}">
                                 <img src="{{asset('Images/correct-icon.svg')}}" width="25px" height="25px" alt="">
                             </a>
                         @endif
@@ -64,7 +64,7 @@
                                 DECLINED
                             </span>
                         @else
-                            <a id="application_r_{{$mt->story_id}}" href="{{route('admin-story.declined', $mt->story_id)}}">
+                            <a style="text-decoration: none;"  id="application_r_{{$mt->story_id}}" href="{{route('admin-story.declined', $mt->story_id)}}">
                                 <img src="{{asset('Images/cancle-icon.svg')}}" width="25px" height="25px" alt="">
                             </a>
                         @endif

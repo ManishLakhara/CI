@@ -17,7 +17,7 @@
             <div class="col-lg-4 col-md-6">
 
                 {{-- @section('cms-toggle') --}}
-                <div class="container mt-5 d-lg-none d-md-none">
+                {{-- <div class="container mt-5 d-lg-none d-md-none">
                     <button class="customnavbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa-solid fa-bars" style="color:blue;text-decoration:none;"></i>
@@ -33,7 +33,7 @@
                             @endforeach
                         </ul>
                     </div>
-                </div>
+                </div> --}}
                 {{--   @endsection --}}
 
                 <div class="container mt-5 d-none d-lg-block" style="height: 100%;">
@@ -105,9 +105,9 @@
 <script>
     $(document).ready(function() {
         // Hamburger Menu Toggle
-        $('.customnavbar-toggler').on('click', function() {
-            $('.customnavbar-collapse').toggleClass('show');
-        });
+        // $('.customnavbar-toggler').on('click', function() {
+        //     $('.customnavbar-collapse').toggleClass('show');
+        // });
 
         $('.nav-link').on('click', function() {
             $('.customnavbar-collapse').removeClass('show');

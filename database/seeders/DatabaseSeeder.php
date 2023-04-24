@@ -18,20 +18,20 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
         $this->call([
             //CountrySeeder::class,
             //CitySeeder::class,
-            //SkillSeeder::class,
+            SkillSeeder::class,
             MissionThemeSeeder::class,
             MissionSkillSeeder::class,
-            MissionSeeder::class,
             UserSeeder::class,
-             GoalMissionSeeder::class,
+            MissionSeeder::class,
+            GoalMissionSeeder::class,
             TimeMissionSeeder::class,
-            CommentSeeder::class,
             MissionApplicationSeeder::class,
+            CommentSeeder::class,
             MissionRatingSeeder::class,
-            MissionMediaSeeder::class,
             StorySeeder::class,
             StoryMediaSeeder::class,
         ]);
