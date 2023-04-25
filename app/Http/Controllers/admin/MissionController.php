@@ -144,7 +144,8 @@ class MissionController extends Controller
                 $missionMedia->save();
             }
         }
-       // missiob skill code
+
+       // mission skill code
         foreach ($request->input('skill_id') as $skill_id) {
             $missionSkill = new MissionSkill([
                 'skill_id' => $skill_id,
@@ -170,7 +171,7 @@ class MissionController extends Controller
 
             $timeMission->save();
         }
-
+       
         return redirect()->route('mission.index')->with('success', 'New Mission have been created');
     }
 
@@ -199,8 +200,8 @@ class MissionController extends Controller
         $missionVideo = MissionMedia::where(['mission_id' => $missionId, 'media_name' => 'youtube'])->get();
         $missionImages = MissionMedia::where([
             'mission_id' => $missionId,
-            'media_type' => 'png'
-        ])->get();
+            // 'media_type' => 'png'
+        ])->whereIn('media_type', ['png', 'jpeg', 'jpg'])->get();
         $missionDocuments = MissionDocument::where([
             'mission_id' => $missionId,
         ])->get();
@@ -214,7 +215,7 @@ class MissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMissionRequest $request, $id): RedirectResponse
+    public function update(UpdateMissionRequest $request, $id)
     {
         //dd($request->toArray());
         // $mission=new Mission;
@@ -232,7 +233,7 @@ class MissionController extends Controller
         //dd($newMissionType);
         $mission->fill($request->post())->save();
 
-        $mission->update($request->all());
+        // $mission->update($request->all());
 
         // Move mission data between tables based on mission type change
         if ($currentMissionType !== $newMissionType) {
@@ -303,10 +304,10 @@ class MissionController extends Controller
         $images = $request->file('media_name');
         if ($images) {
             foreach ($images as $key => $image) {
-                // generate unique name for the image
+                // giving unique name for the image
                 $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
 
-                // save image to storage/mission_media directory with the generated name
+                // save image to storage/mission_media directory with the image name
                 $imagePath = $image->storeAs('mission_media', $imageName, 'public');
 
                 // get file extension
@@ -372,7 +373,7 @@ class MissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id): RedirectResponse
+    public function destroy($id)
     {
         // $mission = new Mission;
 

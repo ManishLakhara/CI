@@ -125,9 +125,9 @@
 
 
     <script>
-
         //var uploadedFiles = [];
         var recentuploadFiles = [];
+
         function handleFiles(files) {
             //console.log(files);
             var preview = document.getElementById("preview");
@@ -207,33 +207,40 @@
                 var path = $('#path').val().split('\n');
 
                 for (var i = 0; i < path.length; i++) {
-                    if(path[i].length!=0){
+                    if (path[i].length != 0) {
                         formData.append('path[]', path[i]);
                     }
                 }
-                console.log(formData.getAll('path[]'));
-                $.ajax({
-                    type: 'post',
-                    url: '{{ route('stories.store') }}',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(id) {
-                        alert("Saved to Draft");
-                        var link = document.createElement('a');
-                        link.href = "{{ route('mystories.edit',':id') }}".replace(':id',id);
-                        link.click();
-                    },
-                    
-                    error: function(response) {
-                    var errors = response.responseJSON.errors;
-                    var errorHtml = '';
-                    $.each(errors, function(key, value) {
-                        errorHtml += '<p>' + value + '</p>';
+                if (recentuploadFiles.length > 20) {
+                    alert('maximum 20 images can be uploaded');
+                }
+
+                else {
+                    console.log(formData.getAll('path[]'));
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ route('stories.store') }}',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(id) {
+                            alert("Saved to Draft");
+                            var link = document.createElement('a');
+                            link.href = "{{ route('mystories.edit', ':id') }}".replace(':id',
+                                id);
+                            link.click();
+                        },
+
+                        error: function(response) {
+                            var errors = response.responseJSON.errors;
+                            var errorHtml = '';
+                            $.each(errors, function(key, value) {
+                                errorHtml += '<p>' + value + '</p>';
+                            });
+                            $('#story-error').html(errorHtml).show();
+                        },
                     });
-                    $('#story-error').html(errorHtml).show();
-                },
-                })
+                }
             })
         })
     </script>

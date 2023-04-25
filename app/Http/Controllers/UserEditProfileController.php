@@ -154,26 +154,22 @@ class UserEditProfileController extends Controller
     public function updateSkills(Request $request)
     {
         $user_id = $request->input('user_id');
-        $selected_skills = $request->input('selected_skills');
-
-
         $existing_skills = UserSkill::where('user_id', $user_id)->pluck('skill_id')->toArray();
+        if(isset($request->selected_skills)){
+            $selected_skills = $request->input('selected_skills');
+            $skills_to_delete = array_diff($existing_skills, $selected_skills);
+            $skills_to_add = array_diff($selected_skills, $existing_skills);
 
-
-        $skills_to_delete = array_diff($existing_skills, $selected_skills);
-        $skills_to_add = array_diff($selected_skills, $existing_skills);
-
-
-        UserSkill::where('user_id', $user_id)->whereIn('skill_id', $skills_to_delete)->delete();
-
-
-        foreach ($skills_to_add as $skill_id) {
-            $user_skill = new UserSkill;
-            $user_skill->user_id = $user_id;
-            $user_skill->skill_id = $skill_id;
-            $user_skill->save();
+            foreach ($skills_to_add as $skill_id) {
+                $user_skill = new UserSkill;
+                $user_skill->user_id = $user_id;
+                $user_skill->skill_id = $skill_id;
+                $user_skill->save();
+            }
+        } else {
+            $skills_to_delete = $existing_skills;
         }
-
+        UserSkill::where('user_id', $user_id)->whereIn('skill_id', $skills_to_delete)->delete();
         return response()->json(['success' => true]);
     }
 
