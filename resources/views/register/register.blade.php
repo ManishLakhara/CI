@@ -17,7 +17,7 @@
                         @csrf
                         <label for="inputFirstName" class="col-form-label"> First Name</label>
                         <div class="col">
-                            <input type="text" class="form-control"  name="first_name" value="{{old('first_name')}}">
+                            <input type="text" autocomplete="on" class="form-control"  name="first_name" value="{{old('first_name')}}">
                             @error('first_name')
                             <div class="text-danger">
                                 {{$message}}
@@ -27,7 +27,7 @@
 
                         <label for="inputLastName" class="col-form-label"> Last Name</label>
                         <div class="col">
-                            <input type="text" class="form-control"  name="last_name" value="{{old('last_name')}}">
+                            <input type="text" autocomplete="on" class="form-control"  name="last_name" value="{{old('last_name')}}">
                             @error('last_name')
                             <div class="text-danger">
                                 {{$message}}
@@ -36,7 +36,7 @@
                         </div>
                         <label for="inputPhone" class="col-form-label"> Phone Number</label>
                         <div class="col">
-                            <input type="tel" class="form-control"  name="phone_number"
+                            <input type="tel" autocomplete="on" class="form-control"  name="phone_number"
                                 value="{{old('phone_number')}}">
                                 @error('phone_number')
                                 <div class="text-danger">
@@ -46,7 +46,7 @@
                         </div>
                         <label for="inputEmail" class="col-form-label"> Email</label>
                         <div class="col">
-                            <input   class="form-control"  name="email"
+                            <input autocomplete="on"  class="form-control"  name="email"
                                 value="{{old('email')}}">
                                 @error('email')
                                 <div class="text-danger">
@@ -56,7 +56,7 @@
                         </div>
                         <label for="inputPassword" class="col-form-label">Password</label>
                         <div class="col">
-                            <input type="password" class="form-control"  name="password" value="{{old('password')}}">
+                            <input autocomplete="on" type="password" class="form-control"  name="password" value="{{old('password')}}">
                             @error('password')
                             <div class="text-danger">
                                 {{$message}}
@@ -65,7 +65,7 @@
                         </div>
                         <label for="inputComfirmPassword" class="col-form-label">Confirm Password</label>
                         <div class="col">
-                            <input type="password" class="form-control"  name="confirm_password"
+                            <input autocomplete="on" type="password" class="form-control"  name="confirm_password"
                                 value="{{old('comfirm_password')}}">
                             @error('confirm_password')
                             <div class="text-danger">

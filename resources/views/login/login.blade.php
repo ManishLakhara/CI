@@ -17,7 +17,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="email" class="login-text">Email Address</label>
-                    <input type="email" class="form-control m-1" name="email" id="email" aria-describedby="emailHelpId" placeholder="" value="{{old('email')}}">
+                    <input type="email" autocomplete="on" class="form-control m-1" name="email" id="email" aria-describedby="emailHelpId" placeholder="" value="{{old('email')}}">
                     @error('email')
                     <div class="text-danger">
                         {{$message}}
@@ -26,7 +26,7 @@
                   </div>
                   <div class="form-group">
                     <label for="password" class="login-text">Password</label>
-                    <input type="password" class="form-control m-1" name="password" id="password" placeholder="" value="{{old('password')}}">
+                    <input type="password" autocomplete="on" class="form-control m-1" name="password" id="password" placeholder="" value="{{old('password')}}">
                     @error('password')
                     <div class="text-danger">
                         {{$message}}
