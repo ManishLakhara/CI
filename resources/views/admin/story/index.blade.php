@@ -49,14 +49,23 @@
                         {{$mt->user->first_name}} {{$mt->user->last_name}}
                     </td>
                     <td>
+<<<<<<< Updated upstream
                         <a aria-label="view-story" href="{{route('admin-story.show', $mt->story_id)}}"><button class="btn btn-outline border px-2 py-1" style="border-radius: 23px;color:#F88634;border-style: solid;border-color: #F88634!important;">View</button></a>
+=======
+                        <a aria-label="view-story" href="{{route('admin-story.show', $mt->story_id)}}"><button class="btn btn-outline border px-2 py-1" style="border-radius: 23px;">View</button></a>
+>>>>>>> Stashed changes
                         @if($mt->status=='PUBLISHED')
                             <span class="border px-2 py-1 text-success border-success" style="border-radius: 23px;">
                                 PUBLISHED
                             </span>
                         @else
+<<<<<<< Updated upstream
                             <a style="text-decoration: none;" aria-label="correct" id="application_a_{{$mt->story_id}}" href="{{route('admin-story.published', $mt->story_id)}}">
                                 <img alt="correct" src="{{asset('Images/correct-icon.svg')}}" width="25px" height="25px" alt="">
+=======
+                            <a style="text-decoration: none;" id="application_a_{{$mt->story_id}}" href="{{route('admin-story.published', $mt->story_id)}}">
+                                <img src="{{asset('Images/correct-icon.svg')}}" width="25px" height="25px" alt="">
+>>>>>>> Stashed changes
                             </a>
                         @endif
                         @if($mt->status=="DECLINED")
