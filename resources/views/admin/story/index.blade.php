@@ -49,7 +49,7 @@
                         {{$mt->user->first_name}} {{$mt->user->last_name}}
                     </td>
                     <td>
-                        <a aria-label="view-story" href="{{route('admin-story.show', $mt->story_id)}}"><button class="btn btn-outline border px-2 py-1" style="border-radius: 23px;">View</button></a>
+                        <a aria-label="view-story" href="{{route('admin-story.show', $mt->story_id)}}"><button class="btn btn-outline border px-2 py-1" style="border-radius: 23px;color:#F88634;border-style: solid;border-color: #F88634!important;">View</button></a>
                         @if($mt->status=='PUBLISHED')
                             <span class="border px-2 py-1 text-success border-success" style="border-radius: 23px;">
                                 PUBLISHED
