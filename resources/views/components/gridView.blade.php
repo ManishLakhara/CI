@@ -3,7 +3,7 @@
         {{-- This is grid view --}}
     <div class="card col-lg-6 col-md-12 col-xxl-4 col-xl-6 border-0 pb-4 text-center">
         <div class="d-flex justify-content-center py-1 h-100">
-            <div class="w-100">
+            <div class="w-100 d-flex justify-content-center">
                 <div class="position-relative" style="max-width: 416px; height: 247px;">
                     <div class="position-absolute current-status">
                     @if($item->missionApplication->where('user_id',$user_id)->first()!=Null)
