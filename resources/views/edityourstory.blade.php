@@ -5,11 +5,12 @@
 
 
 @section('content')
-<div class="container-fluid position-sticky" style="top:0%;background-color: white;z-index:999;">
-    <button class="btn" name="header-toggle" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-</div>
+    <div class="container-fluid position-sticky" style="top:0%;background-color: white;z-index:999;">
+        <button class="btn" name="header-toggle" id="main_header_btn" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
     <form id="story-form" action="{{ route('mystories.update', $story->story_id) }}" method="POST"
         enctype="multipart/form-data">
         @csrf
@@ -75,8 +76,7 @@
             <div class="row">
                 <div class="col-lg-12 mt-5">
                     <label for="orgVideo" class="form-label">Enter Video URL</label>
-                    <textarea class="form-control" id="path" name="path[]" placeholder="Enter your url">
-                        @foreach ($storyvideoMedia as $videomedia){{ $videomedia->path }}&#13;&#10;@endforeach
+                    <textarea class="form-control" id="path" name="path[]" placeholder="Enter your url">@foreach ($storyvideoMedia as $videomedia){{ $videomedia->path }}&#13;&#10;@endforeach
                     </textarea>
                     @error('path.*')
                         <div class="text-danger">
@@ -128,10 +128,11 @@
             <div class="row">
 
                 <div class=" mt-4">
-                    <a aria-label="cancel" type="button" class="btn px-4  btn-outline-secondary  rounded-pill float-start"
+                    <a aria-label="cancel" type="button"
+                        class="btn px-4  btn-outline-secondary  rounded-pill float-start"
                         href="{{ route('mystories.index') }}">Cancel</a>
-                    <button aria-label="submit" type="submit" class="btn px-3 btn-outline-warning ms-3 rounded-pill float-end"
-                        id="submit-button">
+                    <button aria-label="submit" type="submit"
+                        class="btn px-3 btn-outline-warning ms-3 rounded-pill float-end" id="submit-button">
                         Submit</button>
 
                     <button type="button" id="edit_story_save" data-story_id={{ $story->story_id }}
@@ -229,11 +230,11 @@
                     }).prop('files', recentuploadFiles[i]).appendTo('form');
                 }
                 $('<input>').attr({
-                        type: 'hidden',
-                        name: 'removedPhotos',
-                        value: deleteFiles,
-                    }).appendTo('form');
-                });
+                    type: 'hidden',
+                    name: 'removedPhotos',
+                    value: deleteFiles,
+                }).appendTo('form');
+            });
 
 
             $('#edit_story_save').on('click', function(event) {
@@ -258,7 +259,8 @@
                 // Split the path input by new lines
                 var path = $('#path').val().split('\n');
                 let count = 0;
-                let total_image = $('#preview').data('prev_file')+recentuploadFiles.length-deleteFiles.length;
+                let total_image = $('#preview').data('prev_file') + recentuploadFiles.length - deleteFiles
+                    .length;
                 console.log(total_image);
                 for (var i = 0; i < path.length; i++) {
                     if (path[i].trim().length !== 0) {
@@ -266,13 +268,11 @@
                         count++;
                     }
                 }
-                if(total_image>20){
+                if (total_image > 20) {
                     alert("can't have more than 20 images");
-                }
-                else if(total_image == 0){
-                    alert("can't have no url")
-                }
-                else {
+                } else if (total_image == 0) {
+                    alert("atleast 1 image is required")
+                } else {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -280,32 +280,33 @@
                     });
                     $.ajax({
                         type: 'post',
-                        url: "{{ url('mystories/draft/:story_id') }}".replace(':story_id', $(this).data('story_id')),
+                        url: "{{ url('mystories/:story_id') }}".replace(':story_id', $(this).data(
+                            'story_id')),
                         data: formData,
                         processData: false,
                         contentType: false,
                         success: function(response) {
                             alert(response);
                         },
+                        error: function(response) {
+                            var errors = response.responseJSON.errors;
+                            var errorHtml = '';
+                            $.each(errors, function(key, value) {
+                                errorHtml += '<p>' + value + '</p>';
+                            });
+                            $('#story-error').html(errorHtml).show();
+                        }
                         // error: function(response) {
                         //     var errors = response.responseJSON.errors;
-                        //     var errorHtml = '';
-                        //     $.each(errors, function(key, value) {
-                        //         errorHtml += '<p>' + value + '</p>';
-                        //     });
-                        //     $('#story-error').html(errorHtml).show();
-                        // }
-                        error: function(response) {
-                        var errors = response.responseJSON.errors;
 
-                        $.each(errors, function(field, messages) {
-                            var $input = $('input[name="' + field + '"]');
-                            $input.addClass('border-red-500');
-                            if (field === 'name') {
-                                $input.next('.text-red-500').html(messages[0]);
-                            }
-                        });
-                    }
+                        //     $.each(errors, function(field, messages) {
+                        //         var $input = $('input[name="' + field + '"]');
+                        //         $input.addClass('border-red-500');
+                        //         if (field === 'name') {
+                        //             $input.next('.text-red-500').html(messages[0]);
+                        //         }
+                        //     });
+                        // }
                     });
                 }
             });
@@ -314,10 +315,10 @@
                 $(this).parent().remove();
             });
         })
-            // $('#submit-button').on('click', function() {
-            // var path = $('#path').val().split('\n');
-            // console.log(path);
-            // })
+        // $('#submit-button').on('click', function() {
+        // var path = $('#path').val().split('\n');
+        // console.log(path);
+        // })
         // $(document).ready(function(event) {
 
         //     close_preview();

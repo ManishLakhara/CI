@@ -115,7 +115,7 @@ Route::group(['middleware' => ['user']], function(){
 });
 Route::get('cms',[CmsPagesController::class, 'index'])->name('policy-page');
 //backend routes
-Route::post('mystories/draft/{story_id}', [StoryListingController::class,'updateDraft'])->name('mystories.updateDraft');
+Route::post('mystories/{story_id}', [StoryListingController::class,'updateDraft'])->name('mystories.updateDraft');
 
 // Route::get('adminresetpage',function(){
     //     return view('admin.auth.login');

@@ -63,14 +63,13 @@ class StoryListingController extends Controller
     public function updateDraft(Request $request, $story_id)
     {
         //$story = Story::findOrFail($story_id);
-
+        // dd($request);
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|max:40000',
             'mission_id' => 'required',
             'published_at' => 'nullable|date',
-            'path' => 'nullable|array|max:20',
-
+            'path' => 'required|array|max:20',
             'path.*' => [
                 'required',
                 'url',
@@ -89,6 +88,7 @@ class StoryListingController extends Controller
                  'path.*.regex' => 'please enter a valid youtube URL on index :index of the video URL',
             ]
     );
+    // dd($request);
         $story = Story::findOrFail($story_id);
 
         $story->title = $validatedData['title'];
@@ -158,6 +158,7 @@ class StoryListingController extends Controller
 
     public function update(Request $request, $story_id)
     {
+        
         $newPaths = explode("\r\n", $request->path[0]);
         $validator = Validator::make($newPaths, [
             'path.*' => 'required|url',
@@ -167,7 +168,7 @@ class StoryListingController extends Controller
             'description' => 'required|max:40000',
             'mission_id' => 'required',
             'published_at' => 'nullable|date',
-            'path' => 'nullable|array|max:20',
+            'path' => 'required|array|max:20',
             'photos' => 'nullable|array|max:20',
             'photos.*' => 'image|max:4096|mimes:jpg,jpeg,png,',
 

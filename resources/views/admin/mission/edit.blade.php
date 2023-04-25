@@ -1,7 +1,7 @@
 @extends('admin.app')
 
 @section('title')
-    Mission-Theme Add mission
+     edit mission
 @endsection
 
 @section('body')
