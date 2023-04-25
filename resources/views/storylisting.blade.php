@@ -84,8 +84,10 @@
                         </p>
                     </div>
                     <div class="d-flex justify-content-start">
-                        <img class="rounded-circle px-3 " id="header-avatar" src="{{ asset($mystory->user->avatar) }}"
-                            alt="Profile" style="height:54px">
+                        {{-- <img class="rounded-circle px-3 " id="header-avatar" src="{{ asset($mystory->user->avatar) }}"
+                            alt="Profile" style="height:54px"> --}}
+                            <img class="rounded-circle px-3" id="header-avatar" src="{{ $mystory->user->avatar ? asset($mystory->user->avatar) : asset('images/user1.png') }}" alt="Profile" style="height:54px">
+
                         <span class="mt-3" id="userAvatar">{{ $mystory->user->first_name }}
                             {{ $mystory->user->last_name }}</span>
                     </div>

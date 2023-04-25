@@ -49,9 +49,9 @@ class CmsPageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCmsPageRequest $request): RedirectResponse
+    public function store(StoreCmsPageRequest $request)
     {
-        $request->validated();
+        // $request->validated();
 
         CmsPage::create($request->post());
 
@@ -77,7 +77,7 @@ class CmsPageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCmsPageRequest $request, CmsPage $cmsPage, $id): RedirectResponse
+    public function update(UpdateCmsPageRequest $request, CmsPage $cmsPage, $id)
     {
         $request->validated();
         $cmsPage->find($id)
@@ -89,7 +89,7 @@ class CmsPageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CmsPage $cmsPage, $id): RedirectResponse
+    public function destroy(CmsPage $cmsPage, $id)
     {
         $cmsPage->find($id)
             ->delete();
