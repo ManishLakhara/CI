@@ -25,9 +25,12 @@
             </thead>
             <tbody>
                 {{-- $--}}
+                @php
+                    $index=1;
+                @endphp
                 @foreach ($data as $d)
                     <tr>
-                        <td class="px-3">{{ $d->mission_theme_id}}</td>
+                        <td class="px-3">{{ $index++}}</td>
                         <td>{{ $d->title }}</td>
                         <td>
                             @if ($d->status)

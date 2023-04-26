@@ -1,7 +1,7 @@
 @extends('admin.app')
 
 @section('title')
-     Add mission
+    Add mission
 @endsection
 
 @section('body')
@@ -418,4 +418,3 @@
         });
     </script>
 @endsection
-

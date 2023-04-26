@@ -26,9 +26,12 @@
                 </tr>
             </thead>
             <tbody>
+             @php
+                    $index=1;
+                @endphp
                 @foreach ($data as $mt)
                     <tr>
-                        <td class="px-3">{{ $mt->skill_id}}</td>
+                        <td class="px-3">{{ $index++}}</td>
                         <td>{{ $mt->skill_name }}</td>
                         <td>
                             @if ($mt->status)

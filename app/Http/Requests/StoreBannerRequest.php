@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreBannerRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class StoreBannerRequest extends FormRequest
         return [
             'text' => 'required',
             'photo' => 'bail|required|mimes:jpeg,jpg,png|max:4086',
-            'sort_order' => 'required|unique:banners,sort_order|gt:0',
+            'sort_order' => ['required',Rule::unique('banners','sort_order')->whereNull('deleted_at'),'gt:0']
         ];
     }
 }

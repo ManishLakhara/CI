@@ -28,7 +28,7 @@ class UpdateBannerRequest extends FormRequest
             'text' => 'required',
             'sort_order' => 'required','integer','gt:0',
                             Rule::unique('banners')->where(function($query){
-                                $query->where('deleted_at','!=',Null);
+                                $query->whereNull('deleted_at');
                             })->ignore($bannerId),
             'photo' => 'bail|nullable|mimes:jpeg,jpg,png|max:4086'
         ];

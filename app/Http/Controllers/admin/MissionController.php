@@ -171,7 +171,7 @@ class MissionController extends Controller
 
             $timeMission->save();
         }
-       
+
         return redirect()->route('mission.index')->with('success', 'New Mission have been created');
     }
 
@@ -233,7 +233,7 @@ class MissionController extends Controller
         //dd($newMissionType);
         $mission->fill($request->post())->save();
 
-        // $mission->update($request->all());
+        //$mission->update($request->all());
 
         // Move mission data between tables based on mission type change
         if ($currentMissionType !== $newMissionType) {

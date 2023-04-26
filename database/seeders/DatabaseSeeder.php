@@ -18,11 +18,6 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-<<<<<<< Updated upstream
-
-=======
-        
->>>>>>> Stashed changes
         $this->call([
             //CountrySeeder::class,
             //CitySeeder::class,
