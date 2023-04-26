@@ -225,7 +225,7 @@ class MissionController extends Controller
         //              ->save();
         //              dd($mission->mission_type);
         // return redirect()->route('mission.index')->with('success','field Has Been updated successfully');
-
+        //dd($request->post('total_seats'));
         $mission = Mission::find($id);
         $currentMissionType = $mission->mission_type;
         //dd($currentMissionType);
@@ -233,37 +233,59 @@ class MissionController extends Controller
         //dd($newMissionType);
         $mission->fill($request->post())->save();
 
-        //$mission->update($request->all());
 
-        // Move mission data between tables based on mission type change
-        if ($currentMissionType !== $newMissionType) {
-            if ($currentMissionType === 'TIME') {
-                $timeMission = TimeMission::where('mission_id', $id)->first();
-                $goalMission = new GoalMission();
-                $goalMission->fill([
-                    'mission_id' => $mission->mission_id,
-                    'goal_objective_text' => $request->post('goal_objective_text'),
-                    'goal_value' => $request->post('goal_value'),
-                ])->save();
+        // $mission->update($request->all());
 
-                if ($timeMission) {
-                    $timeMission->delete();
-                }
-            } elseif ($currentMissionType === 'GOAL') {
-                $goalMission = GoalMission::where('mission_id', $id)->first();
-                $timeMission = new TimeMission();
+    if ($currentMissionType == $newMissionType) {
+        if ($currentMissionType === 'TIME') {
+            $timeMission = TimeMission::where('mission_id', $id)->first();
+            if ($timeMission) {
                 $timeMission->fill([
                     'mission_id' => $mission->mission_id,
                     'total_seats' => $request->post('total_seats'),
                     'registration_deadline' => $request->post('registration_deadline'),
                 ])->save();
-
-                if ($goalMission) {
-                    $goalMission->delete();
-                }
+            }
+        } elseif ($currentMissionType === 'GOAL') {
+            $goalMission = GoalMission::where('mission_id', $id)->first();
+            if ($goalMission) {
+                $goalMission->fill([
+                    'mission_id' => $mission->mission_id,
+                    'goal_objective_text' => $request->post('goal_objective_text'),
+                    'goal_value' => $request->post('goal_value'),
+                ])->save();
             }
         }
+    }
 
+    // Move mission data between tables based on mission type change
+    if ($currentMissionType !== $newMissionType) {
+        if ($currentMissionType === 'TIME') {
+            $timeMission = TimeMission::where('mission_id', $id)->first();
+            $goalMission = new GoalMission();
+            $goalMission->fill([
+                'mission_id' => $mission->mission_id,
+                'goal_objective_text' => $request->post('goal_objective_text'),
+                'goal_value' => $request->post('goal_value'),
+            ])->save();
+
+            if ($timeMission) {
+                $timeMission->delete();
+            }
+        } elseif ($currentMissionType === 'GOAL') {
+            $goalMission = GoalMission::where('mission_id', $id)->first();
+            $timeMission = new TimeMission();
+            $timeMission->fill([
+                'mission_id' => $mission->mission_id,
+                'total_seats' => $request->post('total_seats'),
+                'registration_deadline' => $request->post('registration_deadline'),
+            ])->save();
+
+            if ($goalMission) {
+                $goalMission->delete();
+            }
+        }
+    }
         $selectedDocuments = $request->input('selected_documents', []);
         $documentsToDelete = array_diff($mission->missionDocument()->pluck('document_name')->toArray(), $selectedDocuments);
 
