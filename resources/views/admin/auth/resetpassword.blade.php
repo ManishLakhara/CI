@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
+        <meta name="description" content="this is a reset password page" />
         <meta name="author" content="" />
         <title>Login - SB Admin</title>
         <link href="{{asset('admin/css/styles.css')}}" rel="stylesheet" />
@@ -36,8 +36,8 @@
                                             @enderror
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" name="confirm-password"  placeholder="Password"/>
-                                                <label for="inputPassword">Confirm New Password</label>
+                                                <input class="form-control" id="inputConfirmPassword" type="password" name="confirm-password"  placeholder="Password"/>
+                                                <label for="inputConfirmPassword">Confirm New Password</label>
                                                 @error('confirm-password')
                                                 <div class="text-danger">
                                                     {{$message}}

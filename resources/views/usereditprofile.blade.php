@@ -48,20 +48,20 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <label for="first_name" class="form-label">Name*</label>
-                                    <input type="text" class="form-control" id="first_name" name='first_name'
+                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name='first_name'
                                         placeholder="Enter your name" value="{{ $user->first_name }}">
                                     @error('first_name')
-                                        <div class="text-danger">
+                                        <div class="text-danger invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="last_name" class="form-label">Surname*</label>
-                                    <input type="text" class="form-control" id="last_name" name='last_name'
+                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name" name='last_name'
                                         placeholder="Enter your surname" value="{{ $user->last_name }}">
                                     @error('last_name')
-                                        <div class="text-danger">
+                                        <div class="text-danger invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -72,10 +72,10 @@
                             <div class="row">
                                 <div class="col-lg-6 mt-4">
                                     <label for="employee_id" class="form-label">Employee ID</label>
-                                    <input type="text" name="employee_id" class="form-control" id="employee_id"
+                                    <input type="text" name="employee_id" class="form-control @error('employee_id') is-invalid @enderror" id="employee_id"
                                         placeholder="Enter your Employee ID" value="{{ $user->employee_id }}">
                                     @error('employee_id')
-                                        <div class="text-danger">
+                                        <div class="text-danger invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -92,15 +92,20 @@
                             <div class="row">
                                 <div class="col-lg-6 mt-4">
                                     <label for="title" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="title" name='title'
+                                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name='title'
                                         placeholder="Enter your title" value="{{ $user->title }}">
+                                        @error('title')
+                                        <div class="text-danger invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="col-lg-6 mt-4">
                                     <label for="department" class="form-label">Department</label>
-                                    <input type="text" class="form-control" id="department" name='department'
+                                    <input type="text" class="form-control @error('department') is-invalid @enderror" id="department" name='department'
                                         placeholder="Enter your Department" value="{{ $user->department }}">
                                     @error('department')
-                                        <div class="text-danger">
+                                        <div class="text-danger invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -111,9 +116,9 @@
                             <div class="row">
                                 <div class="col mt-4">
                                     <label for="profile_text">My Profile*</label>
-                                    <textarea class="form-control mt-2" id="profile_text" name="profile_text" placeholder="Enter your comments...">{{ $user->profile_text }}</textarea>
+                                    <textarea class="form-control mt-2 @error('profile_text') is-invalid @enderror" id="profile_text" name="profile_text" placeholder="Enter your comments...">{{ $user->profile_text }}</textarea>
                                     @error('profile_text')
-                                        <div class="text-danger">
+                                        <div class="text-danger invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -124,10 +129,10 @@
                             <div class="row">
                                 <div class="col mt-4">
                                     <label for="why_i_volunteer">Why I Volunteer?</label>
-                                    <textarea class="form-control mt-2" id="why_i_volunteer" name="why_i_volunteer"
+                                    <textarea class="form-control mt-2 @error('why_i_volunteer') is-invalid @enderror" id="why_i_volunteer" name="why_i_volunteer"
                                         placeholder="Enter your comments...">{!! $user->why_i_volunteer !!}</textarea>
                                     @error('why_i_volunteer')
-                                        <div class="text-danger">
+                                        <div class="text-danger invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -216,7 +221,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="linked_in_url" class="form-label">LinkedIn</label>
-                                    <input type="text" class="form-control" id=""
+                                    <input type="text" class="form-control @error('linked_in_url') is-invalid @enderror" id=""
                                         placeholder="Enter your Linkdin URL" name="linked_in_url"
                                         value="{{ $user->linked_in_url }}">
                                     @error('linked_in_url')
@@ -300,6 +305,9 @@
                                     <input type="password" class="form-control" id="old_password"
                                         placeholder="Enter Old Password" name="old_password">
                                 </div>
+                                <span class="text-danger" id="error_old_password">
+
+                                </span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -308,7 +316,7 @@
                                     <input type="password" class="form-control" id="password"
                                         placeholder="Enter new Password" name="password">
                                 </div>
-
+                                <span class="text-danger" id="error_password"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -317,7 +325,7 @@
                                     <input type="password" class="form-control" id="password_confirmation"
                                         placeholder="Enter confirm Password" name="confirm_password">
                                 </div>
-
+                                <span class="text-danger" id="error_confirm_password"></span>
                             </div>
                         </div>
                         <div id="password-error" class="alert alert-danger" role="alert" style="display: none;"></div>
@@ -330,7 +338,6 @@
                             <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->user_id }}">
                             <button type="submit" class="btn px-4 btn-outline-warning" style="border-radius:18px">Change
                                 Password</button>
-
                         </div>
 
                     </div>
@@ -545,6 +552,7 @@
         $('#passwordForm').submit(function(event) {
             event.preventDefault();
             var user_id = $('#user_id').val();
+            $('[id^=error]').html('');
             $.ajax({
                 type: 'POST',
                 url: "{{ url('api/users/update-password') }}",
@@ -558,9 +566,13 @@
                     var errors = response.responseJSON.errors;
                     var errorHtml = '';
                     $.each(errors, function(key, value) {
+                        errorHtml = '';
                         errorHtml += '<p>' + value + '</p>';
+                        console.log(key+','+value);
+                        $('#error_'+key).html(errorHtml);
                     });
-                    $('#password-error').html(errorHtml).show();
+
+                    //$('#password-error').html(errorHtml).show();
                 },
             });
         });

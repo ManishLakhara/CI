@@ -30,7 +30,7 @@ class UpdateUserProfileRequest extends FormRequest
             'last_name' => 'required|max:16',
             // 'employee_id' => 'max:16',
             'employee_id' => [
-                'required',
+                'required','numeric','max:16',
                 Rule::unique('users')->ignore($user->employee_id, 'employee_id')
             ],
             'title' => 'max:255',
@@ -39,7 +39,7 @@ class UpdateUserProfileRequest extends FormRequest
             'city_id' => 'required',
 
             // 'linked_in_url'=>'max:255',
-            'linked_in_url' => ['nullable','max:255', 'regex:/^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub|company)\/[a-zA-Z0-9-_.]+$/'],
+            'linked_in_url' => ['nullable','max:255', 'url'],
 
             'avatar'=>'max:2048',
         ];

@@ -33,9 +33,10 @@ class StoreTimesheetRequest extends FormRequest
             'notes' => 'required|string',
 
             'action' => [
+
                 Rule::requiredIf(function () use ($mission) {
                     return $mission->mission_type === 'GOAL';
-                })
+                }), 'numeric', 'gt:0',
             ],
 
             'hour' => [
@@ -57,7 +58,7 @@ class StoreTimesheetRequest extends FormRequest
                 'max:59',
             ],
 
-           
+
 
             'date_volunteered' => [
                 'required',

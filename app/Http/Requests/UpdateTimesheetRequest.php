@@ -38,6 +38,7 @@ class UpdateTimesheetRequest extends FormRequest
                 Rule::requiredIf(function () use ($mission) {
                     return $mission->mission_type === 'GOAL';
                 })
+                ,'numeric','gt:0',
             ],
 
             'hour' => [

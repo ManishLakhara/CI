@@ -5,11 +5,12 @@
 @endsection
 
 @section('content')
-<div class="container-fluid position-sticky" style="top:0%;background-color: white;z-index:999;">
-    <button class="btn" name="header-toggle" id="main_header_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-</div>
+    <div class="container-fluid position-sticky" style="top:0%;background-color: white;z-index:999;">
+        <button class="btn" name="header-toggle" id="main_header_btn" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
     <div class="container mt-5 pt-5">
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
@@ -22,8 +23,8 @@
             <div class="col-lg-5 border mt-3 col-sm-10 ms-sm-5">
                 <div class="mt-4">
                     <span>Volunteering Hours</span>
-                    <button type="button" class="btn btn-outline-warning float-end me-3 mb-3 rounded-pill" data-toggle="modal"
-                        data-target="#volunteerhourModal"><i class="fas fa-plus"></i>
+                    <button type="button" class="btn btn-outline-warning float-end me-3 mb-3 rounded-pill"
+                        data-toggle="modal" data-target="#volunteerhourModal"><i class="fas fa-plus"></i>
                         Add
                     </button>
 
@@ -101,6 +102,8 @@
                                                                 <input type="date" class="form-control"
                                                                     id="dateVolunteered" name="date_volunteered"
                                                                     value="{{ \Carbon\Carbon::parse($timesheet->date_volunteered)->format('Y-m-d') }}">
+                                                                <span class="text-danger"
+                                                                    id="error_edit_hour_date_volunteered">
                                                             </div>
                                                             <div class="form-group  mt-3">
                                                                 <label for="hoursVolunteered">Hours</label>
@@ -108,6 +111,7 @@
                                                                     id="hoursVolunteered" placeholder="Enter Spent Hours"
                                                                     min="0" name="hour"
                                                                     value="{{ date('H', strtotime($timesheet->time)) }}">
+                                                                <span class="text-danger" id="error_edit_hour_hour">
                                                             </div>
                                                             <div class="form-group  mt-3">
                                                                 <label for="minutesVolunteered">Minutes</label>
@@ -116,10 +120,12 @@
                                                                     placeholder="Enter Spent Minutes" min="0"
                                                                     max="59" name="minute"
                                                                     value="{{ date('i', strtotime($timesheet->time)) }}">
+                                                                <span class="text-danger" id="error_edit_hour_minute">
                                                             </div>
                                                             <div class="form-group  mt-3">
                                                                 <label for="messageTextarea">Message</label>
                                                                 <textarea class="form-control" id="messageTextarea" rows="3" placeholder="Enter your message" name="notes">{{ $timesheet->notes }}</textarea>
+                                                                <span class="text-danger" id="error_edit_hour_notes">
                                                             </div>
                                                             <input type="hidden" id="user_id" name="user_id"
                                                                 value="{{ Auth::user()->user_id }}">
@@ -195,21 +201,25 @@
                                         <label for="dateVolunteered">Date Volunteered</label>
                                         <input type="date" class="form-control" id="dateVolunteered"
                                             name="date_volunteered">
+                                        <span class="text-danger" id="error_date_volunteered">
                                     </div>
                                     <div class="form-group  mt-3">
                                         <label for="hoursVolunteered">Hours</label>
                                         <input type="number" class="form-control" id="hoursVolunteered"
                                             placeholder="Enter Spent Hours" min="0" name="hour">
+                                        <span class="text-danger" id="error_hour">
                                     </div>
                                     <div class="form-group  mt-3">
                                         <label for="minutesVolunteered">Minutes</label>
                                         <input type="number" class="form-control" id="minutesVolunteered"
                                             placeholder="Enter Spent Minutes" min="0" max="59"
                                             name="minute">
+                                        <span class="text-danger" id="error_minute">
                                     </div>
                                     <div class="form-group  mt-3">
                                         <label for="messageTextarea">Message</label>
                                         <textarea class="form-control" id="messageTextarea" rows="3" placeholder="Enter your message" name="notes"></textarea>
+                                        <span class="text-danger" id="error_notes">
                                     </div>
                                     <input type="hidden" id="user_id" name="user_id"
                                         value="{{ Auth::user()->user_id }}">
@@ -315,16 +325,20 @@
                                                                 <input type="text" class="form-control" id="action"
                                                                     placeholder="Enter Actions" name="action"
                                                                     value="{{ $timesheet->action }}">
+                                                                <span class="text-danger" id="error_edit_goal_action">
                                                             </div>
                                                             <div class="form-group mt-3">
                                                                 <label for="dateVolunteered">Date Volunteered</label>
                                                                 <input type="date" class="form-control"
                                                                     id="dateVolunteered" name="date_volunteered"
                                                                     value="{{ \carbon\carbon::parse($timesheet->date_volunteered)->format('Y-m-d') }}">
+                                                                <span class="text-danger"
+                                                                    id="error_edit_goal_date_volunteered">
                                                             </div>
                                                             <div class="form-group mt-3">
                                                                 <label for="message">Message</label>
                                                                 <textarea class="form-control" id="message" rows="3" placeholder="Enter your message" name="notes">{{ $timesheet->notes }}</textarea>
+                                                                <span class="text-danger" id="error_edit_goal_notes">
                                                             </div>
                                                             <div id="editgoalentry-error-{{ $timesheet->timesheet_id }}"
                                                                 class="alert alert-danger" role="alert"
@@ -401,15 +415,18 @@
                                         <label for="action">Action</label>
                                         <input type="text" class="form-control" id="action"
                                             placeholder="Enter Actions" name="action">
+                                        <span class="text-danger" id="error_goal_action">
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="dateVolunteered">Date Volunteered</label>
                                         <input type="date" class="form-control" id="dateVolunteered"
                                             name="date_volunteered">
+                                        <span class="text-danger" id="error_goal_date_volunteered">
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="message">Message</label>
                                         <textarea class="form-control" id="message" rows="3" placeholder="Enter your message" name="notes"></textarea>
+                                        <span class="text-danger" id="error_goal_notes">
                                     </div>
                                     <div id="goalentry-error" class="alert alert-danger" role="alert"
                                         style="display: none;"></div>
@@ -442,6 +459,7 @@
     <script>
         $(document).ready(function() {
             $('#submitTimesheetBtn').click(function() {
+                $('[id^=error]').html('');
                 $.ajax({
                     url: "{{ route('timesheet.store') }}",
                     type: "POST",
@@ -460,9 +478,12 @@
                         var errors = response.responseJSON.errors;
                         var errorHtml = '';
                         $.each(errors, function(key, value) {
+                            var errorHtml = '';
                             errorHtml += '<p>' + value + '</p>';
+                            console.log(key + ',' + value);
+                            $('#error_' + key).html(errorHtml);
                         });
-                        $('#timeentry-error').html(errorHtml).show();
+                        //$('#timeentry-error').html(errorHtml).show();
                     },
                 });
             });
@@ -474,6 +495,7 @@
     <script>
         $(document).ready(function() {
             $('#submitgoalTimesheetBtn').click(function() {
+                $('[id^=error]').html('');
                 $.ajax({
                     url: "{{ route('timesheet.store') }}",
                     type: "POST",
@@ -492,9 +514,12 @@
                         var errors = response.responseJSON.errors;
                         var errorHtml = '';
                         $.each(errors, function(key, value) {
+                            errorHtml = '';
                             errorHtml += '<p>' + value + '</p>';
+                            console.log(key + ',' + value);
+                            $('#error_' + 'goal_' + key).html(errorHtml);
                         });
-                        $('#goalentry-error').html(errorHtml).show();
+                        // $('#goalentry-error').html(errorHtml).show();
                     },
                 });
             });
@@ -505,7 +530,7 @@
     <script>
         $(document).ready(function() {
             $('.edit-timesheet-btn').click(function() {
-
+                $('[id^=error]').html('');
                 var timesheetId = $(this).data('timesheet-id');
                 var formId = 'editTimeTimesheetForm-' + timesheetId;
                 console.log();
@@ -527,9 +552,12 @@
                         var errors = response.responseJSON.errors;
                         var errorHtml = '';
                         $.each(errors, function(key, value) {
+                            var errorHtml = '';
                             errorHtml += '<p>' + value + '</p>';
+                            console.log(key + ',' + value);
+                            $('#error_edit_hour_' + key).html(errorHtml);
                         });
-                        $('#edittimeentry-error-' + timesheetId).html(errorHtml).show();
+                        //$('#edittimeentry-error-' + timesheetId).html(errorHtml).show();
 
 
                     },
@@ -543,6 +571,7 @@
     <script>
         $(document).ready(function() {
             $('.edit-goal-timesheet-btn').click(function() {
+                $('[id^=error]').html('');
 
                 var timesheetId = $(this).data('timesheet-id');
                 var formId = 'editGoalTimesheetForm-' + timesheetId;
@@ -565,9 +594,13 @@
                         var errors = response.responseJSON.errors;
                         var errorHtml = '';
                         $.each(errors, function(key, value) {
+                            var errorHtml = '';
+
                             errorHtml += '<p>' + value + '</p>';
+                            console.log(key + ',' + value);
+                            $('#error_edit_goal_' + key).html(errorHtml);
                         });
-                        $('#editgoalentry-error-' + timesheetId).html(errorHtml).show();
+                        //$('#editgoalentry-error-' + timesheetId).html(errorHtml).show();
 
 
                     },
