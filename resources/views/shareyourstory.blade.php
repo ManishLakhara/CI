@@ -238,6 +238,7 @@
                                 errorHtml += '<p>' + value + '</p>';
                             });
                             $('#story-error').html(errorHtml).show();
+                            $("#story-error").slideUp(40000);
                         },
                     });
                 }
