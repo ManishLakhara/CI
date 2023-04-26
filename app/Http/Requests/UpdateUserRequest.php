@@ -34,7 +34,7 @@ class UpdateUserRequest extends FormRequest
                                 Rule::unique('users')->where(function($query){
                                     $query->whereNull('deleted_at');
                                 })->ignore($userId,'user_id')],
-            'employee_id' => ['nullable','numeric','max:16',
+            'employee_id' => ['nullable','numeric','max:9999999999999999',
                                 Rule::unique('users')->where(function($query){
                                     $query->whereNull('deleted_at');
                                 })->ignore($userId)],
@@ -44,6 +44,13 @@ class UpdateUserRequest extends FormRequest
             'country_id' => 'required',
             'city_id' => 'required',
             'status' => 'required|in:0,1',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'employee_id.max' => 'Employee Id can\'t be more than 16 digits'
         ];
     }
 }
