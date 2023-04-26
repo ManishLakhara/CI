@@ -92,7 +92,7 @@
             <div class="form-row">
                 <div class="col-md-6">
                     <label for="first_name">First Name</label>
-                    <input required type="text" name="first_name" class="form-control" value="{{ old('first_name') }}">
+                    <input type="text" name="first_name" class="form-control" value="{{ old('first_name') }}">
 
                     @error('first_name')
                         <div class="text-danger">
@@ -102,7 +102,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="last_name">Last Name</label>
-                    <input required type="text" name="last_name" class="form-control" value="{{ old('last_name') }}">
+                    <input type="text" name="last_name" class="form-control" value="{{ old('last_name') }}">
                     @error('last_name')
                         <div class="text-danger">
                             {{ $message }}
@@ -113,7 +113,7 @@
             <div class="form-row">
                 <div class="col-md-6">
                     <label for="email">Email</label>
-                    <input required type="email" name="email" class="form-control" value="{{ old('email') }}">
+                    <input type="email" name="email" class="form-control" value="{{ old('email') }}">
                     @error('email')
                         <div class="text-danger">
                             {{ $message }}
@@ -122,7 +122,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="phone_number">Phone Number</label>
-                    <input required type="tel" name="phone_number" class="form-control" value="{{ old('phone_number') }}">
+                    <input type="tel" name="phone_number" class="form-control" value="{{ old('phone_number') }}">
                     @error('phone_number')
                         <div class="text-danger">
                             {{ $message }}
@@ -133,7 +133,7 @@
             <div class="form-row">
                 <div class="col-md-6">
                     <label for="password">Password</label>
-                    <input required type="password" name="password" class="form-control" value="">
+                    <input type="password" name="password" class="form-control" value="">
                     @error('password')
                         <div class="text-danger">
                             {{ $message }}
@@ -142,7 +142,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="confirm_password">Confirm password</label>
-                    <input required type="password" name="confirm_password" class="form-control" value="">
+                    <input type="password" name="confirm_password" class="form-control" value="">
                     @error('confirm_password')
                         <div class="text-danger">
                             {{ $message }}
@@ -162,7 +162,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="department">Department</label>
-                    <select required id="inputState" name="department" class="form-control">
+                    <select id="inputState" name="department" class="form-control">
                         <option value="{{Null}}" disabled selected>Choose...</option>
                         <option value="HR" {{ old('department') == 'HR' ? 'selected' : '' }}>HR</option>
                         <option value="Development" {{ old('department') == 'Development' ? 'selected' : '' }}>Development
@@ -194,7 +194,7 @@
             <div class="form-row justify-content-start">
                 <div class="col-md-5">
                     <label for="country">Country</label>
-                    <select required name="country_id" class="form-control" id="country-dropdown">
+                    <select name="country_id" class="form-control" id="country-dropdown">
                         <option value="{{Null}}" disabled selected>Select Country</option>
                         @foreach ($countries as $country)
                             <option value="{{ $country->country_id }}"
@@ -210,7 +210,7 @@
                 </div>
                 <div class="col-md-5">
                     <label for="city">city</label>
-                    <select required class="form-control" name="city_id" id="city-dropdown">
+                    <select class="form-control" name="city_id" id="city-dropdown">
                         @if(old('city_id'))
                             <option value="{{old('city_id')}}">Old Selected value</option>
                         @endif
@@ -225,7 +225,7 @@
             <div class="form-row justify-content-left">
                 <div class="col-md-4 py-4">
                     <label for="status">Status</label>
-                                <select name="status" id="status" class="form-control" required>
+                                <select name="status" id="status" class="form-control">
                                     <option value="0" @if(old('status')=="0")? selected @endif >Inactive</option>
                                     <option value="1" @if(old('status')=="1")? selected @endif >Active</option>
                                 </select>

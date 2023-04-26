@@ -20,7 +20,7 @@ class BannerController extends Controller
             [function ($query) use ($request){
                 if(($s = $request->s)) {
                     $query->where('image','LIKE','%'.$s.'%')
-                          ->where('sort_order','LIKE','%'.$s.'%')
+                          ->orWhere('sort_order','LIKE','%'.$s.'%')
                     ->get();
                 }
             }]
@@ -47,6 +47,7 @@ class BannerController extends Controller
      */
     public function store(StoreBannerRequest $request)
     {
+
         $banner = new Banner;
         $banner->text = $request->text;
         $banner->sort_order = $request->sort_order;

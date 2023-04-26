@@ -34,10 +34,10 @@ class UpdateUserRequest extends FormRequest
                                 Rule::unique('users')->where(function($query){
                                     $query->whereNull('deleted_at');
                                 })->ignore($userId,'user_id')],
-            'employee_id' => ['nullable','numeric',
+            'employee_id' => ['nullable','numeric','max:16',
                                 Rule::unique('users')->where(function($query){
                                     $query->whereNull('deleted_at');
-                                })->ignore($userId,'user_id')],
+                                })->ignore($userId)],
             'avatar' => 'nullable',
             'department' => 'required',
             'profile_text' => 'required',

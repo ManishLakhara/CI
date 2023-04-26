@@ -23,6 +23,7 @@ class StoreUserRequest extends FormRequest
     public function rules() : array
     {
         $userId = $this->route('user') ? $this->route('user'): null;
+        //dd($this->employee_id);
         return [
             'first_name' => 'required|max:16|alpha',
             'last_name' => 'required|max:16|alpha',
@@ -30,13 +31,20 @@ class StoreUserRequest extends FormRequest
             'phone_number' => 'required|numeric|digits:10|unique:users',
             'password' => 'required|min:8',
             'confirm_password' => 'bail|required|same:password',
-            'employee_id' => 'numeric|unique:users',
+            'employee_id' => 'nullable|numeric|max:9999999999999999|unique:users',
             'avatar' => 'required',
             'department' => 'required',
             'profile_text' => 'required',
             'country_id' => 'required',
             'city_id' => 'required',
             'status' => 'required|in:0,1',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'employee_id.max' => 'Employee Id can\'t be more than 16 digits'
         ];
     }
 }
