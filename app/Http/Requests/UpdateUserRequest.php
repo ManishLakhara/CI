@@ -45,8 +45,8 @@ class UpdateUserRequest extends FormRequest
             'avatar' => 'nullable',
             'department' => 'required',
             'profile_text' => 'required',
-            'country_id' => 'required',
-            'city_id' => 'required',
+            'country_id' => 'required|exists:countries',
+            'city_id' => 'required|exists:cities',
             'status' => 'required|in:0,1',
         ];
     }
