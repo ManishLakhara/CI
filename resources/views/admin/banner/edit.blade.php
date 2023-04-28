@@ -57,7 +57,7 @@
 
             <div class="my-4 row justify-content-end">
                 <div class="col-md-4 text-end">
-                    <button type="reset" class="btn mx-2 btn-outline-secondary"> cancle </button>
+                    <a aria-label="cancel" class="btn mx-2 btn-secondary" href="{{ route('banner.index') }}">Cancel</a>
                     <button type="submit" class="btn mx-2 btn-outline-warning"> Save </button>
                 </div>
             </div>

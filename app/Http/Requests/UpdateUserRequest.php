@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,6 +24,7 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         $userId = $this->route('user');
+        $employee_id = User::findOrFail($userId)->employee_id;
         return [
             'first_name' => 'required|max:16|alpha',
             'last_name' => 'required|max:16|alpha',
@@ -37,7 +39,9 @@ class UpdateUserRequest extends FormRequest
             'employee_id' => ['nullable','numeric','max:9999999999999999',
                                 Rule::unique('users')->where(function($query){
                                     $query->whereNull('deleted_at');
-                                })->ignore($userId)],
+                                })->ignore($userId,'user_id')
+                                ]
+                                ,
             'avatar' => 'nullable',
             'department' => 'required',
             'profile_text' => 'required',

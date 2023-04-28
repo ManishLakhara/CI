@@ -56,7 +56,7 @@
                 @enderror
             </div>
             <button type="submit" class='btn btn-warning'> Submit Edit</button>
-            <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('missionskill.index') }}">Cancle</a>
+            <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('missionskill.index') }}">Cancel</a>
         </form>
     </div>
 @endsection

@@ -33,7 +33,7 @@
                 <button type='submit' class="btn btn-warning">
                     Create
                 </button>
-                <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('missionskill.index') }}">Cancle</a>
+                <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('missionskill.index') }}">Cancel</a>
             </div>
         </form>
 
