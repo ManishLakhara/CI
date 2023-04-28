@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateMissionRequest extends FormRequest
 {
@@ -42,12 +43,58 @@ class UpdateMissionRequest extends FormRequest
             ],
             'start_date' => 'date',
             'end_date' => 'date|after:start_date',
-            'total_seats'=>'integer',
-            'registration_deadline'=>'date|after:start_date|before:end_date',
-            'goal_objective_text'=>'max:255|string',
-            'goal_value'=>'integer',
+            //'total_seats'=>['required_if:mission_type,TIME','numeric','gt:0'],
+            'total_seats' => [
+                Rule::when($this->input('mission_type') === 'TIME', [
+                    'required',
+                    'numeric',
+                    'gt:0',
+                ]),
+                Rule::when($this->input('mission_type') === 'GOAL', [
+
+                    function ($attribute, $value, $fail) {
+                        $fail('The ' . $attribute . ' field should not be filled when the mission type is GOAL.');
+                    },
+                ]),
+            ],
+            //'registration_deadline' => ['required_if:mission_type,TIME', 'date', 'after:start_date', 'before:end_date'],
+            'registration_deadline' => [
+                Rule::when($this->input('mission_type') === 'TIME', [
+                    'required', 'date', 'after:start_date', 'before:end_date',
+                ]),
+                Rule::when($this->input('mission_type') === 'GOAL', [
+
+                    function ($attribute, $value, $fail) {
+                        $fail('The ' . $attribute . ' field should not be filled when the mission type is GOAL.');
+                    },
+                ]),
+            ],
+            'goal_objective_text' => [
+                Rule::when($this->input('mission_type') === 'GOAL', [
+                    'required', 'max:255', 'string',
+                ]),
+                Rule::when($this->input('mission_type') === 'TIME', [
+
+                    function ($attribute, $value, $fail) {
+                        $fail('The ' . $attribute . ' field should not be filled when the mission type is TIME.');
+                    },
+                ]),
+            ],
+            'goal_value' => [
+                Rule::when($this->input('mission_type') === 'GOAL', [
+                    'required', 'integer',
+                ]),
+                Rule::when($this->input('mission_type') === 'TIME', [
+
+                    function ($attribute, $value, $fail) {
+                        $fail('The ' . $attribute . ' field should not be filled when the mission type is TIME.');
+                    },
+                ]),
+            ],
+            //'goal_objective_text' => 'max:255|string',
+            //'goal_value' => 'integer',
             'skill_id' => 'required_without_all:skill_id.*|array|min:1',
-            'availability'=>'in:daily,weekly,week-end,monthly',
+            'availability' => 'in:daily,weekly,week-end,monthly',
         ];
     }
 
