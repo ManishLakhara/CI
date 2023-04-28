@@ -305,7 +305,7 @@
                                     <input type="password" class="form-control" id="old_password"
                                         placeholder="Enter Old Password" name="old_password">
                                 </div>
-                                <span class="text-danger" id="error_old_password">
+                                <span class="text-danger" id="error_old_password"></span>
 
                                 </span>
                             </div>

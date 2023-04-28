@@ -28,8 +28,8 @@ class UpdateMissionRequest extends FormRequest
             'theme_id' => 'required|exists:mission_themes,mission_theme_id',
             'city_id' => 'required|exists:cities,city_id',
             'country_id' => 'required|exists:countries,country_id',
-            'mission_type' => 'required',
-            'status' => 'required',
+            'mission_type' => 'required|in:TIME,GOAL',
+            'status' => 'required|in:0,1',
             'document_name.*' => 'mimes:pdf,doc,docx',
             'media_name.*' => 'image|max:2048|mimes:jpg,jpeg,png,',
             'media_names' => [
@@ -47,6 +47,7 @@ class UpdateMissionRequest extends FormRequest
             'goal_objective_text'=>'max:255|string',
             'goal_value'=>'integer',
             'skill_id' => 'required_without_all:skill_id.*|array|min:1',
+            'availability'=>'in:daily,weekly,week-end,monthly',
         ];
     }
 

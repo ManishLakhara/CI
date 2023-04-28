@@ -30,13 +30,14 @@ class UpdateUserProfileRequest extends FormRequest
             'last_name' => 'required|max:16',
             // 'employee_id' => 'max:16',
             'employee_id' => [
-                'required','numeric','max:16',
-                Rule::unique('users')->ignore($user->employee_id, 'employee_id')
+
+                Rule::unique('users')->ignore($user->employee_id, 'employee_id'),
+                'required','numeric','digits_between:1,16'
             ],
             'title' => 'max:255',
             'department' => 'max:16',
-            'country_id' => 'required',
-            'city_id' => 'required',
+            'city_id' => 'required|exists:cities,city_id',
+            'country_id' => 'required|exists:countries,country_id',
 
             // 'linked_in_url'=>'max:255',
             'linked_in_url' => ['nullable','max:255', 'url'],
