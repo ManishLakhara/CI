@@ -18,20 +18,9 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index(Request $request)
+    public function index()
     {
-        $data = User::where([
-            [function ($query) use ($request) {
-                if (($s = $request->s)) {
-                    $query->orWhere('first_name', 'LIKE', '%' . $s . '%')
-                          ->orWhere('last_name', 'LIKE', '%' . $s . '%')
-                          ->orWhere('email', 'LIKE', '%' . $s . '%')
-                          ->orWhere('employee_id', 'LIKE', '%' . $s . '%')
-                          ->orWhere('department', 'LIKE', '%' . $s . '%')
-                          ->get();
-                }
-            }]
-        ])->paginate(10);
+        $data = $this->search();
         $pagination = $data->links()->render();
         if($data instanceof LengthAwarePaginator){
             $pagination = $data->appends(request()->all())->links('pagination.default');
@@ -112,5 +101,21 @@ class UserController extends Controller
         $user->find($id)
              ->delete();
         return back()->with('success','Successfully Deleted');
+    }
+
+    public function search(){
+        $request = request();
+        return  User::where([
+                    [function ($query) use ($request) {
+                        if (($s = $request->s)) {
+                            $query->orWhere('first_name', 'LIKE', '%' . $s . '%')
+                                ->orWhere('last_name', 'LIKE', '%' . $s . '%')
+                                ->orWhere('email', 'LIKE', '%' . $s . '%')
+                                ->orWhere('employee_id', 'LIKE', '%' . $s . '%')
+                                ->orWhere('department', 'LIKE', '%' . $s . '%')
+                                ->get();
+                        }
+                    }]
+                ])->paginate(10);
     }
 }

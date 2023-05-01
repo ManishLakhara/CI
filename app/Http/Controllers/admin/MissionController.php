@@ -26,20 +26,11 @@ class MissionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $data = Mission::where([
-            ['title', '!=', Null],
-            [function ($query) use ($request) {
-                if (($s = $request->s)) {
-                    $query->orWhere('title', 'LIKE', '%' . $s . '%')
-                        ->orWhere('mission_type', 'LIKE', '%' . $s . '%')
-                        ->get();
-                }
-            }]
-        ])->orderByDesc('mission_id')->paginate(10);
-
+        $data = $this->search();
         $pagination = $data->links()->render();
+
         if($data instanceof LengthAwarePaginator) {
             $pagination = $data->appends(request()->all())->links('pagination.default');
         }
@@ -53,7 +44,6 @@ class MissionController extends Controller
      */
     public function create()
     {
-
         $data['countries'] = Country::get(['name', 'country_id']);
         $data['mission_theme'] = MissionTheme::get(['title', 'mission_theme_id']);
         $data['mission_skills'] = Skill::get(['skill_id', 'skill_name']);
@@ -66,23 +56,7 @@ class MissionController extends Controller
     public function store(StoreMissionRequest $request)
     {
 
-        //dd($request);
         $mission = Mission::create($request->post());
-        // $document_path = $request->file('document_name')->store('mission_documents');
-
-        // // Get the document type from the file extension
-        // $document_type = $request->file('document_name')->getClientOriginalExtension();
-
-        // // Create a new mission document record in the database
-        // $mission_document = new MissionDocument([
-        //     'document_name' => $request->file('document_name')->getClientOriginalName(),
-        //     'document_type' => $document_type,
-        //     'document_path' => $document_path
-        // ]);
-        // // $mission_document->save();
-        // $mission->missionDocument()->save($mission_document);
-
-
 
         if ($request->hasfile('document_name')) {
             foreach ($request->file('document_name') as $file) {
@@ -99,7 +73,6 @@ class MissionController extends Controller
             }
         }
 
-        //  mission images code
         $images = $request->file('media_name');
         if ($images) {
             foreach ($images as $key => $image) {
@@ -416,5 +389,18 @@ class MissionController extends Controller
         $mission->delete();
 
         return back()->with('success', 'field has been deleted successfully');
+    }
+    public function search(){
+        $request = request();
+        return Mission::where([
+                        ['title', '!=', Null],
+                        [function ($query) use ($request) {
+                            if (($s = $request->s)) {
+                                $query->orWhere('title', 'LIKE', '%' . $s . '%')
+                                    ->orWhere('mission_type', 'LIKE', '%' . $s . '%')
+                                    ->get();
+                            }
+                        }]
+                    ])->orderByDesc('mission_id')->paginate(10);
     }
 }

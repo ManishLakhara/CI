@@ -7,10 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMissionThemeRequest;
 use App\Http\Requests\UpdateMissionThemeRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
-use Illuminate\Http\Request;
-use App\Models\Country;
-use App\Models\City;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class MissionThemeController extends Controller
@@ -18,26 +14,15 @@ class MissionThemeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $data = MissionTheme::where([
-            ['title', '!=', Null],
-            [function ($query) use ($request) {
-                if (($s = $request->s)) {
-                    $query->orWhere('title', 'LIKE', '%' . $s . '%')
-                        ->get();
-                }
-            }]
-        ])->orderBy('created_at','desc')
-            ->paginate(10);
+        $data = $this->search();
+        $pagination = $data->links()->render();
 
-            $pagination = $data->links()->render();
-            if($data instanceof LengthAwarePaginator){
-                $pagination = $data->appends(request()->all())->links('pagination.default');
-            }
-
-        //$data = MissionTheme::orderBy('mission_theme_id','desc')->paginate(10);
-        return view('admin.missiontheme.index', compact('data','pagination')); // Create view by name missiontheme/index.blade.php
+        if($data instanceof LengthAwarePaginator){
+            $pagination = $data->appends(request()->all())->links('pagination.default');
+        }
+        return view('admin.missiontheme.index', compact('data','pagination'));
     }
 
     /**
@@ -45,7 +30,7 @@ class MissionThemeController extends Controller
      */
     public function create()
     {
-        return view('admin.missiontheme.create'); // Create view by name missiontheme/create.blade.php
+        return view('admin.missiontheme.create');
     }
 
     /**
@@ -75,7 +60,6 @@ class MissionThemeController extends Controller
     {
         $missionTheme = $missionTheme->find($missionThemeId);
         return view('admin.missiontheme.edit', compact('missionTheme'));
-        // Create view by name missiontheme/edit.blade.php
     }
 
     /**
@@ -99,5 +83,18 @@ class MissionThemeController extends Controller
         $missionTheme->find($id)
             ->delete();
         return back()->with('success', 'field has been deleted successfully');
+    }
+    public function search(){
+        $request = request();
+        return MissionTheme::where([
+            ['title', '!=', Null],
+            [function ($query) use ($request) {
+                if (($s = $request->s)) {
+                    $query->orWhere('title', 'LIKE', '%' . $s . '%')
+                        ->get();
+                }
+            }]
+        ])->orderBy('created_at','desc')
+            ->paginate(10);
     }
 }

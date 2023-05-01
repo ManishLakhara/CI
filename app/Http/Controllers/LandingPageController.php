@@ -16,13 +16,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\CmsPage;
+use App\Query\CityFilter;
+use App\Query\CountryFilter;
+use App\Query\ThemeFilter;
+use Illuminate\Pipeline\Pipeline;
+
 class LandingPageController extends Controller
 {
-
-    public function index()
-    {
-        //$count = 0;
+    public function index(){
         $data = Mission::where('mission_id','!=',null);
+
         $count = $data->count();
         $countrys = $data->pluck('country_id')->toArray();
         $country_ids = array_unique($countrys);
@@ -47,6 +50,7 @@ class LandingPageController extends Controller
                        ->orderBy('user_id','asc')
                        ->get();
         $data = $data->orderBy('created_at','desc')->paginate(9);
+
         $pagination = $data->links()->render();
         if ($data instanceof LengthAwarePaginator) {
             $pagination = $data->appends(request()->all())->links('pagination.default');
@@ -57,69 +61,19 @@ class LandingPageController extends Controller
 
     public function filterApply(Request $request){
         if($request->ajax()){
+
             $user_id = Auth::user()->user_id;
-            $datas = Mission::where([
-                ['title', '!=', Null],
-                [function ($query) use ($request) {
-                    if (($s = $request->s)){
-                        $query->orWhere('title','LIKE','%'.$s.'%')
-                            ->orWhere('mission_type', 'LIKE', '%'.$s.'%')
-                            ->get();
-                    }
-                }]
-            ]);
-            if(isset($request->countries)){
-                $country_id_array = explode(',',$request->countries);
-                $datas = $datas->whereIn('country_id',$country_id_array);
-            }
-            if(isset($request->cities)){
-                $city_id_array = explode(',',$request->cities);
-                $datas = $datas->whereIn('city_id',$city_id_array);
-            }
-            if(isset($request->themes)){
-                $theme_id_array = explode(',',$request->themes);
-                $datas = $datas->whereIn('theme_id',$theme_id_array);
-            }
-            if(isset($request->skills)){
-                $skill_id_array = explode(',',$request->skills);
-                $datas = $datas->select('missions.*')
-                               ->join('mission_skills','mission_skills.mission_id','=','missions.mission_id')
-                               ->whereIn('mission_skills.skill_id',$skill_id_array)
-                               ->distinct();
-            }
-            if(isset($request->sort)){
-                switch($request->sort){
+            $datas = $this->search();
 
-                    case '1': // Newest
-                        $datas = $datas->orderBy('start_date','desc');
-                        break;
-                    case '2': // Oldest
-                        $datas = $datas->orderBy('start_date','asc');
-                        break;
-                    case '3': // Lowest Availabel Seat
-                        $datas = $datas->select('missions.*')
-                                     ->join('time_missions','time_missions.mission_id','=','missions.mission_id')
-                                     ->orderBy('time_missions.total_seats', 'asc');
-
-
-                        break;
-                    case '4': // Highest Availabel Seat
-                        $datas = $datas->select('missions.*')
-                                     ->Join('time_missions','time_missions.mission_id','=','missions.mission_id')
-                                     ->orderBy('time_missions.total_seats', 'desc');
-                        break;
-                    case '5': // My Facovorites
-                        $datas = $datas->select('missions.*')
-                                     ->leftJoin('favorite_missions','favorite_missions.mission_id','=','missions.mission_id')
-                                     ->orderBy('favorite_missions.created_at', 'desc');
-                        break;
-                    case '6': // Registration DeadLine
-                        $datas = $datas->select('missions.*')
-                                     ->leftJoin('time_missions','time_missions.mission_id','=','missions.mission_id')
-                                     ->orderBy('time_missions.registration_deadline', 'desc');
-                        break;
-                }
-            }
+            $datas = app(Pipeline::class)
+                        ->send($datas)
+                        ->through([
+                            CountryFilter::class,
+                            CityFilter::class,
+                            ThemeFilter::class,
+                        ])
+                        ->thenReturn();
+            $datas = $this->sort($datas);
             $count = $datas->count();
             $data = $datas->paginate(9);
             $favorite = FavoriteMission::where('user_id',Auth::user()->user_id)
@@ -136,53 +90,29 @@ class LandingPageController extends Controller
         }
     }
 
-    public function findCountry(Request $request){
-        if($request->ajax()){
-            $datas = Mission::where([
-                ['title', '!=', Null],
-                [function ($query) use ($request) {
-                    if (($s = $request->s)){
-                        $query->orWhere('title','LIKE','%'.$s.'%')
-                            ->orWhere('mission_type', 'LIKE', '%'.$s.'%')
-                            ->get();
-                    }
-                }]
-            ]);
-            if($request->countries!=Null){
-                $datas = $datas->whereIn('country_id',$request->countries);
-            }
-            if($request->cities!=Null){
-                $datas = $datas->whereIn('city_id',$request->cities);
-            }
-            if($request->themes!=Null){
-                $datas = $datas->whereIn('theme_id',$request->themes);
-            }
-            if($request->skills!=Null){
-                $skill_id_array = explode(',',$request->skills);
-                $datas = $datas->select('missions.*')
-                               ->join('mission_skills','mission_skills.mission_id','=','missions.mission_id')
-                               ->whereIn('mission_skills.skill_id',$skill_id_array)
-                               ->distinct();
-            }
-            $countrys = $datas->pluck('country_id')->toArray();
-            $country_ids = array_unique($countrys);
-            $countries = Country::whereIn('country_id',$country_ids)->get(['country_id','name']);
-            return view('components.country-dropper', compact('countries'));
-        }
-    }
+    // public function findCountry(Request $request){
+    //     if($request->ajax()){
+    //         $datas = $this->search();
+
+    //         $datas = app(Pipeline::class)
+    //                     ->send($datas)
+    //                     ->through([
+    //                         CountryFilter::class,
+    //                         CityFilter::class,
+    //                         ThemeFilter::class,
+    //                         SkillFilter::class,
+    //                     ])
+    //                     ->thenReturn();
+    //         $countrys = $datas->pluck('country_id')->toArray();
+    //         $country_ids = array_unique($countrys);
+    //         $countries = Country::whereIn('country_id',$country_ids)->get(['country_id','name']);
+    //         return view('components.country-dropper', compact('countries'));
+    //     }
+    // }
 
     public function findCity(Request $request){
         if($request->ajax()){
-            $datas = Mission::where([
-                ['title', '!=', Null],
-                [function ($query) use ($request) {
-                    if (($s = $request->s)){
-                        $query->orWhere('title','LIKE','%'.$s.'%')
-                            ->orWhere('mission_type', 'LIKE', '%'.$s.'%')
-                            ->get();
-                    }
-                }]
-            ]);
+            $datas = $this->search();
             if($request->countries!=null){
                 $datas = $datas->whereIn('country_id',$request->countries);
             }
@@ -195,16 +125,7 @@ class LandingPageController extends Controller
 
     public function findTheme(Request $request){
         if($request->ajax()){
-            $datas = Mission::where([
-                ['title', '!=', Null],
-                [function ($query) use ($request) {
-                    if (($s = $request->s)){
-                        $query->orWhere('title','LIKE','%'.$s.'%')
-                            ->orWhere('mission_type', 'LIKE', '%'.$s.'%')
-                            ->get();
-                    }
-                }]
-            ]);
+            $datas = $this->search();
             if($request->countries!=null){
                 $datas = $datas->whereIn('country_id',$request->countries);
             }
@@ -220,16 +141,7 @@ class LandingPageController extends Controller
 
     public function findSkill(Request $request){
         if($request->ajax()){
-            $datas = Mission::where([
-                ['title', '!=', Null],
-                [function ($query) use ($request) {
-                    if (($s = $request->s)){
-                        $query->orWhere('title','LIKE','%'.$s.'%')
-                            ->orWhere('mission_type', 'LIKE', '%'.$s.'%')
-                            ->get();
-                    }
-                }]
-            ]);
+            $datas = $this->search();
             if($request->countries!=null){
                 $datas = $datas->whereIn('country_id',$request->countries);
             }
@@ -248,5 +160,55 @@ class LandingPageController extends Controller
             return view('components.skill-dropper', compact('skills'));
         }
     }
+
+    public function search(){
+        $request = request();
+        return Mission::where([
+            ['title', '!=', Null],
+            [function ($query) use ($request) {
+                if (($s = $request->s)){
+                    $query->orWhere('title','LIKE','%'.$s.'%')
+                        ->orWhere('mission_type', 'LIKE', '%'.$s.'%')
+                        ->get();
+                }
+            }]
+        ]);
+    }
+
+    public function sort($datas){
+
+        if(isset(request()->sort)){
+            switch(request()->sort){
+                case '1': // Newest
+                    $datas = $datas->orderBy('start_date','desc');
+                    break;
+                case '2': // Oldest
+                    $datas = $datas->orderBy('start_date','asc');
+                    break;
+                case '3': // Lowest Availabel Seat
+                    $datas = $datas->select('missions.*')
+                                 ->join('time_missions','time_missions.mission_id','=','missions.mission_id')
+                                 ->orderBy('time_missions.total_seats', 'asc');
+
+
+                    break;
+                case '4': // Highest Availabel Seat
+                    $datas = $datas->select('missions.*')
+                                 ->Join('time_missions','time_missions.mission_id','=','missions.mission_id')
+                                 ->orderBy('time_missions.total_seats', 'desc');
+                    break;
+                case '5': // My Facovorites
+                    $datas = $datas->select('missions.*')
+                                 ->leftJoin('favorite_missions','favorite_missions.mission_id','=','missions.mission_id')
+                                 ->orderBy('favorite_missions.created_at', 'desc');
+                    break;
+                case '6': // Registration DeadLine
+                    $datas = $datas->select('missions.*')
+                                 ->leftJoin('time_missions','time_missions.mission_id','=','missions.mission_id')
+                                 ->orderBy('time_missions.registration_deadline', 'desc');
+                    break;
+            }
+            return $datas;
+        }
+    }
 }
-{{}}

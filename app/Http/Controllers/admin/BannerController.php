@@ -14,18 +14,9 @@ class BannerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $data = Banner::where([
-            [function ($query) use ($request){
-                if(($s = $request->s)) {
-                    $query->where('image','LIKE','%'.$s.'%')
-                          ->orWhere('sort_order','LIKE','%'.$s.'%')
-                    ->get();
-                }
-            }]
-        ])->orderBy('sort_order','asc')
-          ->paginate(10);
+        $data = $this->search();
 
         $pagination = $data->links()->render();
         if($data instanceof LengthAwarePaginator){
@@ -104,5 +95,19 @@ class BannerController extends Controller
         $banner = Banner::find($id);
         $banner->delete();
         return redirect()->route('banner.index')->with('success',"Selected Images is removed from banner");
+    }
+
+    public function search(){
+        $request = request();
+        return Banner::where([
+                    [function ($query) use ($request){
+                        if(($s = $request->s)) {
+                            $query->where('image','LIKE','%'.$s.'%')
+                                ->orWhere('sort_order','LIKE','%'.$s.'%')
+                            ->get();
+                        }
+                    }]
+                ])->orderBy('sort_order','asc')
+                ->paginate(10);
     }
 }

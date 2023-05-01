@@ -72,9 +72,6 @@ Route::get('adminresetpage/{token}', function () {
 Route::post('admin-password-resetting', [AdminPasswordResetController::class, 'adminPasswordResetting'])->name('adminPasswordResetting');
 
 
-//frontend Routes
-
-
 Route::group(['middleware' => ['admin']], function(){
     Route::get('admindashboard', [AdminAuthController::class, 'dashboard'])->name('dashboard');
     Route::post('admindashboard', [AdminAuthController::class, 'index'])->name('dashboard');
@@ -116,20 +113,6 @@ Route::group(['middleware' => ['user']], function(){
 Route::get('cms',[CmsPagesController::class, 'index'])->name('policy-page');
 //backend routes
 Route::post('mystories/{story_id}', [StoryListingController::class,'updateDraft'])->name('mystories.updateDraft');
-
-// Route::get('adminresetpage',function(){
-    //     return view('admin.auth.login');
-    // });
-    // Route::get('missiontheme/delete/{slug}', [MissionThemeController::class,'delete']);
-    // Route::post('missiontheme/new',[MissionThemeController::class,'new'])->name('missiontheme.new');
-    // Route::get('missiontheme',[MissionThemeController::class,'getAll']);
-    // Route::get('missionskill',[SkillController::class,'getAll']);
-    // Route::post('missionskill/new',[SkillController::class,'new'])->name('missionskill.new');
-    // Route::get('missionskill/delete/{slug}', [SkillController::class,'delete']);
-
-//end backend route
-
-
 
 
 

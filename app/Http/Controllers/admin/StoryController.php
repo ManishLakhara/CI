@@ -16,35 +16,9 @@ class StoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $data =Story::where([
-                        ['title', '!=', Null],
-                        [function ($query) use ($request) {
-                            if (($s = $request->s)) {
-                                $query->where('title', 'LIKE', '%' . $s . '%')
-                                    ->get();
-                            }
-                        }]
-                    ])
-                      ->orWhereHas('user', function ($query) use ($request) {
-                        if ($s = $request->s) {
-                            $query->where('first_name', 'like', '%' . $s . '%')
-                                  ->orWhere('last_name', 'like', '%' . $s . '%');
-                        }
-                    })
-                      ->orWhereHas('mission',function ($query) use ($request) {
-                        if ($s = $request->s) {
-                            $query->where('title', 'like', '%' . $s . '%');
-                        }
-                    })
-                    //   ->orderByRaw("CASE status
-                    //                 WHEN 'PENDING' THEN 1
-                    //                 WHEN 'PUBLISHED' THEN 2
-                    //                 WHEN 'DECLINED' THEN 3
-                    //                 END")
-                      ->where('status','!=','DRAFT')
-                      ->paginate(10);
+        $data = $this->search();
         $pagination = $data->links()->render();
         if($data instanceof LengthAwarePaginator){
             $pagination = $data->appends(request()->all())->links('pagination.default');
@@ -121,5 +95,36 @@ class StoryController extends Controller
         $story->find($id)
               ->delete();
         return redirect()->route('admin-story.index')->with('success','Successfully Deleted');
+    }
+
+    public function search(){
+        $request = request();
+        return Story::where([
+                    ['title', '!=', Null],
+                    [function ($query) use ($request) {
+                        if (($s = $request->s)) {
+                            $query->where('title', 'LIKE', '%' . $s . '%')
+                                ->get();
+                        }
+                    }]
+                ])
+                ->orWhereHas('user', function ($query) use ($request) {
+                    if ($s = $request->s) {
+                        $query->where('first_name', 'like', '%' . $s . '%')
+                            ->orWhere('last_name', 'like', '%' . $s . '%');
+                    }
+                })
+                ->orWhereHas('mission',function ($query) use ($request) {
+                    if ($s = $request->s) {
+                        $query->where('title', 'like', '%' . $s . '%');
+                    }
+                })
+                //   ->orderByRaw("CASE status
+                //                 WHEN 'PENDING' THEN 1
+                //                 WHEN 'PUBLISHED' THEN 2
+                //                 WHEN 'DECLINED' THEN 3
+                //                 END")
+                ->where('status','!=','DRAFT')
+                ->paginate(10);
     }
 }

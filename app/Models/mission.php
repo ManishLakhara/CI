@@ -99,4 +99,7 @@ class Mission extends Model
     public function contactUs() {
         return $this->hasMany(ContactUs::class, 'contact_us_id');
     }
+    public function path() {
+        return 'mission/'.$this->mission_id;
+    }
 }

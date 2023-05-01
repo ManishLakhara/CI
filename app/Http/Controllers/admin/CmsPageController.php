@@ -17,23 +17,14 @@ class CmsPageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $data = CmsPage::where([
-            ['title', '!=', Null],
-            [function ($query) use ($request) {
-                if (($s = $request->s)) {
-                    $query->orWhere('title', 'LIKE', '%' . $s . '%')
-                        ->get();
-                }
-            }]
-        ])->paginate(10);
-
+        $data = $this->search();
         $pagination = $data->links()->render();
+
         if($data instanceof LengthAwarePaginator){
             $pagination = $data->appends(request()->all())->links('pagination.default');
         }
-
 
         return view('admin.cmspage.index', compact('data','pagination'));
     }
@@ -51,10 +42,7 @@ class CmsPageController extends Controller
      */
     public function store(StoreCmsPageRequest $request)
     {
-        // $request->validated();
-
         CmsPage::create($request->post());
-
         return redirect()->route('cmspage.index')->with('success', 'field has been created successfully.');
     }
 
@@ -94,5 +82,18 @@ class CmsPageController extends Controller
         $cmsPage->find($id)
             ->delete();
         return back()->with('success', 'field has been deleted successfully');
+    }
+
+    public function search(){
+        $request = request();
+        return CmsPage::where([
+                    ['title', '!=', Null],
+                    [function ($query) use ($request) {
+                        if (($s = $request->s)) {
+                            $query->orWhere('title', 'LIKE', '%' . $s . '%')
+                                ->get();
+                        }
+                    }]
+                ])->paginate(10);
     }
 }

@@ -10,40 +10,29 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class MissionApplicationController extends Controller
 {
-    public function index(Request $request){
-        $data = MissionApplication::whereHas('mission', function ($query) use ($request) {
-                                            if(($s = $request->s)) {
-                                                $query->where('title', 'LIKE', '%'.$s.'%')
-                                                      ->orWhere('mission_id','LIKE', '%'.$s.'%');
-                                            }
-                                        })
-                                           ->orWhereHas('user', function ($query) use ($request) {
-                                            if(($s = $request->s)) {
-                                                $query->where('first_name','LIKE','%'.$s.'%')
-                                                      ->orWhere('last_name', 'LIKE','%'.$s.'%')
-                                                      ->orWhere('user_id', 'LIKE','%'.$s.'%');
-                                            }
-                                        })
-                                           ->orderByRaw("CASE approval_status
-                                                WHEN 'PENDING' THEN 1
-                                                WHEN 'APPROVE' THEN 2
-                                                WHEN 'DECLINE' THEN 3
-                                                END")
-                                            ->orderBy('created_at', 'desc')
-                                            ->paginate(10);
+    public function index(): View
+    {
+        $data = $this->search();
         $pagination = $data->links()->render();
+
         if($data instanceof LengthAwarePaginator){
             $pagination = $data->appends(request()->all())->links('pagination.default');
         }
         return view('admin.missionapplication.index',compact('data','pagination'));
     }
+
     public function newMissionApplication(Request $request){
-        $req = MissionApplication::where('mission_id',$request->mission_id)
-                                    ->where('user_id',$request->user_id);
-        MissionApplication::create($request->post());
+        MissionApplication::where('mission_id',$request->mission_id)
+                                    ->where('user_id',$request->user_id)
+                                    ->firstOrCreate([
+                                        'mission_id' => $request->mission_id,
+                                        'user_id' => $request->user_id,
+                                        'approval_status' => 'PENDING',
+                                    ]);
         return "Mission Application Request submitted";
     }
 
@@ -72,5 +61,29 @@ class MissionApplicationController extends Controller
         $application->approval_status = "DECLINE";
         $application->save();
         return("rejected");
+    }
+
+    public function search(){
+        $request = request();
+        return MissionApplication::whereHas('mission', function ($query) use ($request) {
+                                    if(($s = $request->s)) {
+                                        $query->where('title', 'LIKE', '%'.$s.'%')
+                                            ->orWhere('mission_id','LIKE', '%'.$s.'%');
+                                    }
+                                })
+                                ->orWhereHas('user', function ($query) use ($request) {
+                                    if(($s = $request->s)) {
+                                        $query->where('first_name','LIKE','%'.$s.'%')
+                                            ->orWhere('last_name', 'LIKE','%'.$s.'%')
+                                            ->orWhere('user_id', 'LIKE','%'.$s.'%');
+                                    }
+                                })
+                                ->orderByRaw("CASE approval_status
+                                        WHEN 'PENDING' THEN 1
+                                        WHEN 'APPROVE' THEN 2
+                                        WHEN 'DECLINE' THEN 3
+                                        END")
+                                    ->orderBy('created_at', 'desc')
+                                    ->paginate(10);
     }
 }
