@@ -12,19 +12,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class MissionApplicationController extends Controller
+class MissionApplicationController extends AdminBaseController
 {
-    public function index(): View
-    {
-        $data = $this->search();
-        $pagination = $data->links()->render();
-
-        if($data instanceof LengthAwarePaginator){
-            $pagination = $data->appends(request()->all())->links('pagination.default');
-        }
-        return view('admin.missionapplication.index',compact('data','pagination'));
-    }
-
     public function newMissionApplication(Request $request){
         MissionApplication::where('mission_id',$request->mission_id)
                                     ->where('user_id',$request->user_id)

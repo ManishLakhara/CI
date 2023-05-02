@@ -12,23 +12,8 @@ use App\Http\Requests\UpdateCmsPageRequest;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
-class CmsPageController extends Controller
+class CmsPageController extends AdminBaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $data = $this->search();
-        $pagination = $data->links()->render();
-
-        if($data instanceof LengthAwarePaginator){
-            $pagination = $data->appends(request()->all())->links('pagination.default');
-        }
-
-        return view('admin.cmspage.index', compact('data','pagination'));
-    }
-
     /**
      * Show the form for creating a new resource.
      */

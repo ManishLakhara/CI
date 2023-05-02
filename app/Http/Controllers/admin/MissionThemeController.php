@@ -9,22 +9,8 @@ use App\Http\Requests\UpdateMissionThemeRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class MissionThemeController extends Controller
+class MissionThemeController extends AdminBaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $data = $this->search();
-        $pagination = $data->links()->render();
-
-        if($data instanceof LengthAwarePaginator){
-            $pagination = $data->appends(request()->all())->links('pagination.default');
-        }
-        return view('admin.missiontheme.index', compact('data','pagination'));
-    }
-
     /**
      * Show the form for creating a new resource.
      */

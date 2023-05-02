@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
-use App\Models\Country;
-use App\Models\Mission;
-use App\Models\MissionTheme;
-use App\Models\Skill;
-use App\Models\FavoriteMission;
-use App\Models\MissionSkill;
-use App\Models\User;
-use Illuminate\Database\Query\JoinClause;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Models\CmsPage;
-use App\Query\CityFilter;
-use App\Query\CountryFilter;
-use App\Query\ThemeFilter;
-use Illuminate\Pipeline\Pipeline;
+    use App\Models\City;
+    use App\Models\Country;
+    use App\Models\Mission;
+    use App\Models\MissionTheme;
+    use App\Models\Skill;
+    use App\Models\FavoriteMission;
+    use App\Models\MissionSkill;
+    use App\Models\User;
+    use Illuminate\Http\Request;
+    use Illuminate\Pagination\LengthAwarePaginator;
+    use Illuminate\Support\Facades\Auth;
+    use App\Models\CmsPage;
+    use App\Query\CityFilter;
+    use App\Query\CountryFilter;
+    use App\Query\ThemeFilter;
+    use Illuminate\Pipeline\Pipeline;
 
 class LandingPageController extends Controller
 {
@@ -189,7 +187,6 @@ class LandingPageController extends Controller
                     $datas = $datas->select('missions.*')
                                  ->join('time_missions','time_missions.mission_id','=','missions.mission_id')
                                  ->orderBy('time_missions.total_seats', 'asc');
-
 
                     break;
                 case '4': // Highest Availabel Seat

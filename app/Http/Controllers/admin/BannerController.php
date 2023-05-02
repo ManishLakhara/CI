@@ -9,35 +9,19 @@ use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class BannerController extends Controller
+class BannerController extends AdminBaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $data = $this->search();
-
-        $pagination = $data->links()->render();
-        if($data instanceof LengthAwarePaginator){
-            $pagination = $data->appends(request()->all())->links('pagination.default');
-        }
-        return view('admin.banner.index', compact('data','pagination'));
-    }
-
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create(){
         return view('admin.banner.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBannerRequest $request)
-    {
+    public function store(StoreBannerRequest $request){
 
         $banner = new Banner;
         $banner->text = $request->text;

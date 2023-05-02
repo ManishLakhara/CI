@@ -4,37 +4,16 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Country;
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Pagination\LengthAwarePaginator;
-
-class UserController extends Controller
+class UserController extends AdminBaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-    public function index()
-    {
-        $data = $this->search();
-        $pagination = $data->links()->render();
-        if($data instanceof LengthAwarePaginator){
-            $pagination = $data->appends(request()->all())->links('pagination.default');
-        }
-        //$data = User::orderBy('user_id','desc')->paginate(10);
-        return view('admin.user.index', compact('data','pagination')); // Create view by name missiontheme/index.blade.php
-    }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-
         $data['countries'] = Country::get(['name', 'country_id']);
         return view('admin.user.create', $data);
     }

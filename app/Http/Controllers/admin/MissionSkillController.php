@@ -11,22 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class MissionSkillController extends Controller
+class MissionSkillController extends AdminBaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $data = $this->search();
-        $pagination = $data->links()->render();
-
-        if($data instanceof LengthAwarePaginator){
-            $pagination = $data->appends(request()->all())->links('pagination.default');
-        }
-        return view("admin.missionskill.index", compact('data','pagination'));
-    }
-
     /**
      * Show the form for creating a new resource.
      */
