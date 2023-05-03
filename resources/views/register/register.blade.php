@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row h-100 w-100">
             <div class="col-lg-8 align-self-center" style="padding: 0%">
-                @include('components.carosel')
+                <x-carosel/>
             </div>
             <div class="col-lg-4 align-self-center" style="padding: 4%;">
 

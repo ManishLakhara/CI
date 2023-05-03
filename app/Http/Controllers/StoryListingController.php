@@ -87,8 +87,8 @@ class StoryListingController extends Controller
                  'photos.max' => 'maximum 20 photos can be uploaded',
                  'path.*.regex' => 'please enter a valid youtube URL on index :index of the video URL',
             ]
-    );
-    // dd($request);
+        );
+        // dd($request);
         $story = Story::findOrFail($story_id);
 
         $story->title = $validatedData['title'];
@@ -131,7 +131,7 @@ class StoryListingController extends Controller
                 $media->save();
             }
         }
-     //dd($request->removedPhotos);
+        //dd($request->removedPhotos);
 
         if(isset($request->removedPhotos)){
 
@@ -158,7 +158,7 @@ class StoryListingController extends Controller
 
     public function update(Request $request, $story_id)
     {
-        
+
         $newPaths = explode("\r\n", $request->path[0]);
         $validator = Validator::make($newPaths, [
             'path.*' => 'required|url',

@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row h-100 w-100">
             <div class="col-md-8 align-self-center" style="padding: 0%">
-                @include('components.carosel')
+                <x-carosel/>
             </div>
             <div class="col-md-4 align-self-center" style="padding: 4%;">
                     <h4 style="text-align: center;" >Forgot Password </h4>

@@ -44,12 +44,10 @@ Route::post('custom-login', [AuthController::class, 'postLogin'])->name('login.c
 Route::get('forgot',[AuthController::class,'forgot'])->name('forgot.password');
 Route::post('reset', [PasswordResetController::class, 'resetPassword'])->name('check.email');
 Route::get('register', function () {
-    $banners = Banner::orderBy('sort_order','asc')->get();
-    return view('register.register', compact('banners'));
+    return view('register.register');
 })->name('register');
 Route::get('forgot-password/{token}', function ($token) {
-    $banners = Banner::orderBy('sort_order','asc')->get();
-    return view('reset', compact('token','banners'));
+    return view('reset', compact('token'));
 });
 Route::post('register', [AuthController::class, 'register'])->name('post-register');
 Route::post('password-resetting', [PasswordResetController::class, 'passwordResetting'])->name('password-resetting');
@@ -84,7 +82,7 @@ Route::group(['middleware' => ['admin']], function(){
     Route::resource('user', UserController::class)->withTrashed();
     Route::resource('mission', MissionController::class);
     Route::resource('cmspage', CmsPageController::class);
-    Route::resource('banner',BannerController::class);
+    Route::resource('banner',BannerController::class)->except(['show']);
     Route::get('adminlogout', [AdminAuthController::class,'logout'])->name('adminlogout');
 });
 
@@ -102,13 +100,13 @@ Route::group(['middleware' => ['user']], function(){
     Route::get('edit-profile/{user_id}', [UserEditProfileController::class,'editProfile'])->name('edit-profile');
     Route::post('logout', [UserEditProfileController::class,'logout'])->name('logout');
     Route::get('mission-page/{mission_id}',[MissionDetailController::class,'main'])->name('mission-page');
-    Route::resource('timesheet',VolunteeringTimesheetController::class);
+    Route::resource('timesheet',VolunteeringTimesheetController::class)->except('show','edit');
     Route::get('share-your-story',[ShareYourStoryController::class,'index']);
-    Route::resource('stories', ShareYourStoryController::class);
+    Route::resource('stories', ShareYourStoryController::class)->only(['index', 'store']);
     Route::get('download/{filename}',[DownloadController::class,'download']);
     Route::get('story-listing',[StoryListingController::class,'index'])->name('story-listing');
     Route::get('story-details-page/{story_id}',[StoryDetailController::class,'index'])->name('story-details-page');
-    Route::resource('mystories', StoryListingController::class);
+    Route::resource('mystories', StoryListingController::class)->only(['index','edit','update']);
 });
 Route::get('cms',[CmsPagesController::class, 'index'])->name('policy-page');
 //backend routes

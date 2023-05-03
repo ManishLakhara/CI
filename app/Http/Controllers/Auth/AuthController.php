@@ -18,8 +18,7 @@ class AuthController extends Controller {
     */
     public function index()
     {
-        $banners = Banner::orderBy('sort_order','asc')->get();
-        return view('login.login',compact('banners'));
+        return view('login.login');
     }
 
     public function logout(){
@@ -60,7 +59,6 @@ class AuthController extends Controller {
         }
     }
     public function forgot(){
-        $banners = Banner::orderBy('sort_order','asc')->get();
-        return view('login.forgot',compact('banners'));
+        return view('login.forgot');
     }
 }

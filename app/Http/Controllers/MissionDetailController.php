@@ -29,7 +29,6 @@ class MissionDetailController extends Controller
                         ->where('mission_id','!=',$mission->mission_id)
                         ->limit(3)
                         ->get();
-        //
         $my_rating = MissionRating::where('mission_id','=',$mission_id)
                                     ->where('user_id','=',$user->user_id)
                                     ->first();

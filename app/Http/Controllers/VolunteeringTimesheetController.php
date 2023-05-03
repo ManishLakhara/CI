@@ -14,35 +14,6 @@ use App\Http\Requests\UpdateTimesheetRequest;
 use App\Models\CmsPage;
 class VolunteeringTimesheetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index(Request $request)
-    // {
-    //     $user = Auth::user();
-
-    //     $timesheets = Timesheet::all();
-
-    //     $appliedTimeMissionIds = MissionApplication::where('user_id', $user->user_id)
-    //         ->where('approval_status', 'APPROVE')
-    //         ->pluck('mission_id')
-    //         ->toArray();
-
-    //     $timemissions = Mission::whereIn('mission_id', $appliedTimeMissionIds)->where('mission_type', 'TIME')->get();
-
-
-    //     $missions = Mission::get(['title', 'mission_id']);
-    //     $appliedGoalMissionIds = MissionApplication::where('user_id', $user->user_id)
-    //         ->where('approval_status', 'APPROVE')
-    //         ->pluck('mission_id')
-    //         ->toArray();
-
-    //     $goalmissions = Mission::whereIn('mission_id', $appliedGoalMissionIds)->where('mission_type', 'GOAL')->get();
-
-    //     return view('volunteeringtimesheet.index', compact('user', 'timesheets', 'appliedTimeMissionIds', 'timemissions', 'appliedGoalMissionIds', 'goalmissions', 'missions'));
-    // }
-
-
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -70,14 +41,6 @@ class VolunteeringTimesheetController extends Controller
             ->get();
         $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
         return view('volunteeringtimesheet.index', compact('user', 'timesheets', 'appliedTimeMissionIds', 'timemissions', 'appliedGoalMissionIds', 'goalmissions', 'missions','policies'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -110,7 +73,9 @@ class VolunteeringTimesheetController extends Controller
         return response()->json(['success' => true]);
     }
 
-
+    /**
+     * Update an existing resource in storage.
+     */
     public function update(UpdateTimesheetRequest $request, $id)
     {
 
@@ -153,7 +118,6 @@ class VolunteeringTimesheetController extends Controller
     public function destroy(TimeSheet $sheet, $id)
     {
         $sheet->find($id)->delete();
-
         return back()->with('success', 'field has been deleted successfully');
     }
 }

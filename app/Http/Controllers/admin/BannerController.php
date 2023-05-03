@@ -35,15 +35,6 @@ class BannerController extends AdminBaseController
         return redirect()->route('banner.index')->with('success',"New Banner Have been successfully Added");
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      */

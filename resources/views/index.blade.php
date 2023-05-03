@@ -12,7 +12,9 @@ Landing Mission Page
       {{ session('success') }}
   </div>
 @endif
-        @include('components.search-filter')
+        {{-- @include('components.search-filter') --}}
+        <x-search-filter :data='$data'/>
+
     </div>
     <div class="container py-4">
         <div class="d-flex">
@@ -23,12 +25,12 @@ Landing Mission Page
             </div>
         </div>
     </div>
-@if($count!=0)
+@if($data->total()!=0)
 <div class="container-fluid">
     <div class="container py-3 text-center" id="all-mission">
         <div class="row justify-content-between">
             <div class="col-md-6 col-12">
-                <h4 class="fs-4 text-start"> <span class="light-theme-color text-center">Explore</span> <span class="theme-color" id="noOfMission">{{$count}}
+                <h4 class="fs-4 text-start"> <span class="light-theme-color text-center">Explore</span> <span class="theme-color" id="noOfMission">{{$data->total()}}
                     </span> Mission </h4>
             </div>
             <div class=" col-md-6 d-flex justify-content-md-end justify-content-between ">

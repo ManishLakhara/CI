@@ -24,23 +24,6 @@ class LandingPageController extends Controller
     public function index(){
         $data = Mission::where('mission_id','!=',null);
 
-        $count = $data->count();
-        $countrys = $data->pluck('country_id')->toArray();
-        $country_ids = array_unique($countrys);
-        $countries = Country::whereIn('country_id',$country_ids)
-                            ->get(['country_id','name']);
-        $themes = $data->pluck('theme_id')->toArray();
-        $theme_ids = array_unique($themes);
-        $themes = MissionTheme::whereIn('mission_theme_id',$theme_ids)
-                                ->get(['mission_theme_id','title']);
-        $skills = MissionSkill::all(['skill_id'])->pluck('skill_id')->toArray();
-        $skill_ids = array_unique($skills);
-        $skills = Skill::whereIn('skill_id',$skill_ids)->get(['skill_id','skill_name']);
-
-        $citys = $data->pluck('city_id')->toArray();
-        $city_ids = array_unique($citys);
-        $cities = City::whereIn('city_id',$city_ids)->get(['city_id','name']);
-
         $favorite = FavoriteMission::where('user_id',Auth::user()->user_id)
                                      ->get(['favorite_mission_id','mission_id']);
 
@@ -54,7 +37,7 @@ class LandingPageController extends Controller
             $pagination = $data->appends(request()->all())->links('pagination.default');
         }
         $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
-        return view('index', compact('data','count','countries','cities','themes','skills','favorite','users','pagination','policies')); // Create view by name missiontheme/index.blade.php
+        return view('index', compact('data','favorite','users','pagination','policies')); // Create view by name missiontheme/index.blade.php
     }
 
     public function filterApply(Request $request){
@@ -71,6 +54,7 @@ class LandingPageController extends Controller
                             ThemeFilter::class,
                         ])
                         ->thenReturn();
+
             $datas = $this->sort($datas);
             $count = $datas->count();
             $data = $datas->paginate(9);
@@ -87,26 +71,6 @@ class LandingPageController extends Controller
             return view('components.gridListView', compact('count','data','favorite','users','user_id','pagination'));
         }
     }
-
-    // public function findCountry(Request $request){
-    //     if($request->ajax()){
-    //         $datas = $this->search();
-
-    //         $datas = app(Pipeline::class)
-    //                     ->send($datas)
-    //                     ->through([
-    //                         CountryFilter::class,
-    //                         CityFilter::class,
-    //                         ThemeFilter::class,
-    //                         SkillFilter::class,
-    //                     ])
-    //                     ->thenReturn();
-    //         $countrys = $datas->pluck('country_id')->toArray();
-    //         $country_ids = array_unique($countrys);
-    //         $countries = Country::whereIn('country_id',$country_ids)->get(['country_id','name']);
-    //         return view('components.country-dropper', compact('countries'));
-    //     }
-    // }
 
     public function findCity(Request $request){
         if($request->ajax()){
@@ -194,11 +158,11 @@ class LandingPageController extends Controller
                                  ->Join('time_missions','time_missions.mission_id','=','missions.mission_id')
                                  ->orderBy('time_missions.total_seats', 'desc');
                     break;
-                case '5': // My Facovorites
+                case '5': // My Favorites
                     $datas = $datas->select('missions.*')
                                  ->leftJoin('favorite_missions','favorite_missions.mission_id','=','missions.mission_id')
                                  ->orderBy('favorite_missions.created_at', 'desc');
-                    break;
+                        break;
                 case '6': // Registration DeadLine
                     $datas = $datas->select('missions.*')
                                  ->leftJoin('time_missions','time_missions.mission_id','=','missions.mission_id')
