@@ -11,7 +11,7 @@
     @include('admin.components.successAlert')
 
     <div class="col-sm-4 relative w-100 py-4">
-        <form id="search-form" action="{{ route('admin-story.index') }}" method="GET">
+        <form id="search-form" action="{{ route('story.index') }}" method="GET">
             @csrf
             <label for="search" class="sr-only">
                 Search
@@ -49,13 +49,13 @@
                         {{$mt->user->first_name}} {{$mt->user->last_name}}
                     </td>
                     <td>
-                        <a aria-label="view-story" href="{{route('admin-story.show', $mt->story_id)}}"><button class="btn btn-outline border px-2 py-1" style="border-radius: 23px;color:#F88634;border-style: solid;border-color: #F88634!important;">View</button></a>
+                        <a aria-label="view-story" href="{{route('story.show', $mt->story_id)}}"><button class="btn btn-outline border px-2 py-1" style="border-radius: 23px;color:#F88634;border-style: solid;border-color: #F88634!important;">View</button></a>
                         @if($mt->status=='PUBLISHED')
                             <span class="border px-2 py-1 text-success border-success" style="border-radius: 23px;">
                                 PUBLISHED
                             </span>
                         @else
-                            <a style="text-decoration: none;" aria-label="correct" id="application_a_{{$mt->story_id}}" href="{{route('admin-story.published', $mt->story_id)}}">
+                            <a style="text-decoration: none;" aria-label="correct" id="application_a_{{$mt->story_id}}" href="{{route('story.published', $mt->story_id)}}">
                                 <img alt="correct" src="{{asset('Images/correct-icon.svg')}}" width="25px" height="25px" alt="">
                             </a>
                         @endif
@@ -64,7 +64,7 @@
                                 DECLINED
                             </span>
                         @else
-                            <a style="text-decoration: none;"  id="application_r_{{$mt->story_id}}" href="{{route('admin-story.declined', $mt->story_id)}}">
+                            <a style="text-decoration: none;"  id="application_r_{{$mt->story_id}}" href="{{route('story.declined', $mt->story_id)}}">
                                 <img src="{{asset('Images/cancle-icon.svg')}}" width="25px" height="25px" alt="">
                             </a>
                         @endif
@@ -76,7 +76,7 @@
                         <!-- Modal -->
                         @include('admin.components.deleteModal', [
                             'id' => $mt->story_id,
-                            'form_action' => 'admin-story.destroy',
+                            'form_action' => 'story.destroy',
                         ])
                     </td>
                 </tr>
@@ -115,7 +115,7 @@
             searchForm.submit();
         }else {
 
-            searchForm.attr('action', "{{ route('admin-story.index') }}").submit();
+            searchForm.attr('action', "{{ route('story.index') }}").submit();
         }
     }
     });

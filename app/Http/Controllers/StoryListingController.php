@@ -11,17 +11,23 @@ use App\Models\MissionApplication;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 use App\Models\CmsPage;
+use Illuminate\View\View;
+
 class StoryListingController extends Controller
 {
     public function __construct()
     {
         $this->middleware('CheckDraftStatus')->only(['edit', 'update']);
     }
-    public function index(Request $request)
+
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function index(Request $request): View
     {
-
         $user = Auth::user();
-
         $draft_stories = Story::where('user_id', $user->user_id)->where('status', 'DRAFT')->get();
         $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
         $published_stories = Story::where('status', 'PUBLISHED')->paginate(9);
@@ -29,8 +35,6 @@ class StoryListingController extends Controller
         if($published_stories instanceof LengthAwarePaginator){
             $pagination = $published_stories->appends(request()->all())->links('pagination.default');
         }
-
-
         if ($request->ajax()) {
             return view('components.my-story', compact('published_stories','pagination','policies'));
         } else {
@@ -39,12 +43,11 @@ class StoryListingController extends Controller
     }
 
 
-    public function edit($story_id)
+    public function edit(Story $story)
     {
         $user = Auth::user();
-        $story = Story::findOrFail($story_id);
-        $storyvideoMedia = StoryMedia::where('story_id', $story_id)->where('type', 'video')->get();
-        $storyimageMedia = StoryMedia::where('story_id', $story_id)->whereIn('type', ['png', 'jpg', 'jpeg'])->get();
+        $storyvideoMedia = StoryMedia::where('story_id', $story->story_id)->where('type', 'video')->get();
+        $storyimageMedia = StoryMedia::where('story_id', $story->story_id)->whereIn('type', ['png', 'jpg', 'jpeg'])->get();
 
 
 

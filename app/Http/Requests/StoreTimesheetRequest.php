@@ -26,7 +26,6 @@ class StoreTimesheetRequest extends FormRequest
 
 
         $mission = Mission::findOrFail($this->mission_id);
-
         return [
 
             'mission_id' => 'required',
@@ -74,9 +73,7 @@ class StoreTimesheetRequest extends FormRequest
     public function messages()
     {
         return [
-
             'date_volunteered.required' => 'Please select the date when you volunteered.',
-
             'date_volunteered.after_or_equal' => 'The date must be equal to or after the start date of the mission.',
             'date_volunteered.before_or_equal' => 'The date must be equal to or before the end date of the mission.',
             'date_volunteered.before' => 'You cannot add a volunteer time in the future.',

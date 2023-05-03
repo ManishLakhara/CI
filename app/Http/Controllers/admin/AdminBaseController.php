@@ -7,9 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Stringable;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
+
 class AdminBaseController extends Controller
 {
-    public function index()
+    /**
+     * @return View
+     */
+    public function index(): View
     {
         $data = $this->search();
         //dd(Str::lower(class_basename($this)));

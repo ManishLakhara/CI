@@ -8,13 +8,13 @@
     <div class="container-fluid mt-4 px-4">
         <ul class="nav border-bottom"><span class="nav-link active fs-1"> Edit Mission Theme </span></ul>
 
-        <form class="py-4" action="{{ route('missiontheme.update', $missionTheme->mission_theme_id) }}" method="post">
+        <form class="py-4" action="{{ route('missiontheme.update', $missiontheme->mission_theme_id) }}" method="post">
             @csrf
             @method('PUT')
             <label for="title">Title</label>
             <input type="text" class='form-control' name='title'
             @if (old('title') == null)
-                value="{{ $missionTheme->title }}"
+                value="{{ $missiontheme->title }}"
             @else
                 value="{{ old('title') }}"
             @endif>
@@ -28,7 +28,7 @@
             <select name="status" id="status" class="form-control" required>
                 <option value="0"
                     @if (old('status') == null)
-                        @if ($missionTheme->status == '0')
+                        @if ($missiontheme->status == '0')
                             selected
                         @endif
                     @else
@@ -38,7 +38,7 @@
                     >Inactive</option>
                 <option value="1"
                     @if (old('status')==null)
-                        @if ($missionTheme->status == '1')
+                        @if ($missiontheme->status == '1')
                             selected
                         @endif
                     @else

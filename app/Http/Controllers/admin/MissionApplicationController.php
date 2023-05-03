@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Mission;
 use App\Models\MissionApplication;
 use App\Models\TimeMission;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
-
 class MissionApplicationController extends AdminBaseController
 {
-    public function newMissionApplication(Request $request){
+    /**
+     * @param Illuminate\Http\Request $request
+     *
+     * @return string
+     */
+    public function newMissionApplication(Request $request): string{
         MissionApplication::where('mission_id',$request->mission_id)
                                     ->where('user_id',$request->user_id)
                                     ->firstOrCreate([
@@ -25,7 +25,12 @@ class MissionApplicationController extends AdminBaseController
         return "Mission Application Request submitted";
     }
 
-    public function approveApplication(Request $request){
+    /**
+     * @param Illuminate\Http\Request $request
+     *
+     * @return string
+     */
+    public function approveApplication(Request $request): string{
         $application = MissionApplication::find($request->mission_application_id);
         $application->approval_status = "APPROVE";
         $application->save();
@@ -37,7 +42,13 @@ class MissionApplicationController extends AdminBaseController
         }
         return("success");
     }
-    public function rejectApplication(Request $request){
+
+    /**
+     * @param Illuminate\Http\Request $request
+     *
+     * @return string
+     */
+    public function rejectApplication(Request $request): string{
         $application = MissionApplication::find($request->mission_application_id);
         if($application->approval_status == "APPROVE"){
             $mission = Mission::find($application->mission_id);
@@ -52,7 +63,10 @@ class MissionApplicationController extends AdminBaseController
         return("rejected");
     }
 
-    public function search(){
+    /**
+     * @return Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function search(): LengthAwarePaginator{
         $request = request();
         return MissionApplication::whereHas('mission', function ($query) use ($request) {
                                     if(($s = $request->s)) {

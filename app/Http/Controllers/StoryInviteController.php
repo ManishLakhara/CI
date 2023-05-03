@@ -7,9 +7,13 @@ use App\Models\StoryInvite;
 
 class StoryInviteController extends Controller
 {
-    public function inviteUser(Request $repuest)
+    /**
+     * @param Request $repuest
+     *
+     * @return void
+     */
+    public function inviteUser(Request $repuest): void
     {
         $invite = StoryInvite::create($repuest->post());
-        return;
     }
 }

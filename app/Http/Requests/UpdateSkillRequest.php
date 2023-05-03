@@ -22,7 +22,7 @@ class UpdateSkillRequest extends FormRequest
      */
     public function rules(): array
     {
-        $skillId = $this->route('missionskill');
+        $skillId = $this->route('skill');
         return [
             'skill_name' => ['required','max:64',
                                 Rule::unique('skills')->where(function($query){

@@ -9,37 +9,32 @@ use App\Models\StoryMedia;
 use App\Models\MissionApplication;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ShareYourStoryController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function index(Request $request): View
     {
         $user = Auth::user();
-
-
-
         $sharedMissionIds = Story::where('user_id', $user->user_id)
             ->pluck('mission_id')
             ->toArray();
-
 
         $appliedMissionIds = MissionApplication::where('user_id', $user->user_id)
             ->where('approval_status', 'APPROVE')
             ->pluck('mission_id')
             ->toArray();
 
-        // $appliedMissions = Mission::whereIn('mission_id', $appliedMissionIds,)->get();
-
-
         $appliedMissions = Mission::whereIn('mission_id', $appliedMissionIds)
             ->whereNotIn('mission_id', $sharedMissionIds)
             ->get();
 
         $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
-
-
-
-
         return view('shareyourstory', compact('user',  'appliedMissionIds', 'appliedMissions', 'policies'));
     }
 

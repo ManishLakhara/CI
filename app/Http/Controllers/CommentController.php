@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ShowCommentRequest;
 use App\Http\Requests\StoreCommentRequest;
 use App\Models\Comment;
+use Illuminate\Http\JsonResponse;
 
 class CommentController extends Controller
 {
-    public function showComments(ShowCommentRequest $request){
+    /**
+     * @param ShowCommentRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function showComments(ShowCommentRequest $request): JsonResponse{
         $comments = Comment::where('approval_status','PUBLISHED')->where('mission_id',$request->mission_id)
                              ->join('users','users.user_id','=','comments.user_id')
                              ->orderBy('comments.created_at', 'desc')
@@ -16,7 +22,12 @@ class CommentController extends Controller
         return response()->json($comments);
     }
 
-    public function addComment(StoreCommentRequest $request){
+    /**
+     * @param StoreCommentRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function addComment(StoreCommentRequest $request): JsonResponse{
        Comment::create($request->post());
        return response()->json('success');
     }

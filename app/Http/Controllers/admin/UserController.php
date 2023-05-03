@@ -7,12 +7,16 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\View\View;
+
 class UserController extends AdminBaseController
 {
     /**
      * Show the form for creating a new resource.
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $data['countries'] = Country::get(['name', 'country_id']);
         return view('admin.user.create', $data);
@@ -20,10 +24,12 @@ class UserController extends AdminBaseController
 
     /**
      * Store a newly created resource in storage.
+     * @param StoreUserRequest $request
+     *
+     * @return RedirectResponse
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
-        //dd($request);
         $password = $request['password'];
         $request['password'] = bcrypt($password);
         User::create($request->post());
@@ -31,20 +37,13 @@ class UserController extends AdminBaseController
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(User $user,$id)
-    {
-        $user->find('$id');
-        return view('admin.user.edit');
-    }
-
-    /**
      * Show the form for editing the specified resource.
+     * @param User $user
+     *
+     * @return View
      */
-    public function edit($id)
+    public function edit(User $user): View
     {
-        $user = User::find($id);
         if($user->city_id!=null){
             $cities = $user->country->city;
             $countries = Country::get(['name', 'country_id']);
@@ -58,14 +57,16 @@ class UserController extends AdminBaseController
 
     /**
      * Update the specified resource in storage.
+     * @param UpdateUserRequest $request
+     * @param User $user
+     *
+     * @return RedirectResponse
      */
-    public function update(UpdateUserRequest $request,$id) : RedirectResponse
+    public function update(UpdateUserRequest $request,User $user) : RedirectResponse
     {
-        $user = new User;
         $password = $request['password'];
         $request['password'] = bcrypt($password);
-        $user->find($id)
-             ->fill($request->post())
+        $user->fill($request->post())
              ->save();
         return redirect()->route('user.index')
                          ->with('success','Field Have been successfully Submitted');
@@ -73,16 +74,20 @@ class UserController extends AdminBaseController
 
     /**
      * Remove the specified resource from storage.
+     * @param User $user
+     *
+     * @return RedirectResponse
      */
-    public function destroy($id): RedirectResponse
+    public function destroy(User $user): RedirectResponse
     {
-        $user = new User;
-        $user->find($id)
-             ->delete();
+        $user->delete();
         return back()->with('success','Successfully Deleted');
     }
 
-    public function search(){
+    /**
+     * @return LengthAwarePaginator
+     */
+    public function search(): LengthAwarePaginator{
         $request = request();
         return  User::where([
                     [function ($query) use ($request) {

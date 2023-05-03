@@ -48,8 +48,8 @@
                         </span>
                     </div>
                 </a>
-                <a class="nav-link" href="/missionskill">
-                        <div id="missionskill" class='container px-3 py-3 rounded fs-5'>
+                <a class="nav-link" href="/skill">
+                        <div id="skill" class='container px-3 py-3 rounded fs-5'>
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
                         <i class="fas fa-tools"></i>
                         <span class="font-weight-light pl-3" style="color: inherit">
@@ -66,8 +66,8 @@
                         </span>
                     </div>
                 </a>
-                <a class="nav-link" href="/admin-story">
-                        <div id="admin-story" class='container px-3 py-3 rounded fs-5'>
+                <a class="nav-link" href="/story">
+                        <div id="story" class='container px-3 py-3 rounded fs-5'>
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
                         <i class="fas fa-book"></i>
                         <span class="font-weight-light pl-3" style="color: inherit">

@@ -31,7 +31,10 @@ class RegisterRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    /**
+     * @return array
+     */
+    public function messages(): array
     {
         return [
             'email.unique' => "This :attribute have been already registered",

@@ -13,8 +13,8 @@
 
 
         @include('admin.components.search_add', [
-            'form_action' => 'missionskill.index',
-            'add' => 'missionskill.create',
+            'form_action' => 'skill.index',
+            'add' => 'skill.create',
         ])
         <table class="table table-responsive border-start border-end">
             <thead style="background-color: #F8F9FC">
@@ -46,7 +46,7 @@
                         </td>
                         <td>
                             <div class="d-flex justify-content-end">
-                                <a class="btn btn-white" href="{{ route('missionskill.edit', $mt->skill_id) }}">
+                                <a class="btn btn-white" href="{{ route('skill.edit', $mt->skill_id) }}">
                                     <i class="far fa-edit" style="color:#F88634;"></i>
                                 </a>
                                 <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $mt->skill_id }}"
@@ -56,7 +56,7 @@
                                 <!-- Modal -->
                                 @include('admin.components.deleteModal', [
                                     'id' => $mt->skill_id,
-                                    'form_action' => 'missionskill.destroy',
+                                    'form_action' => 'skill.destroy',
                                 ])
                             </div>
                         </td>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\UpdateUserProfileRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,11 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -23,8 +29,11 @@ class ProfileController extends Controller
 
     /**
      * Update the user's profile information.
+     * @param UpdateUserProfileRequest $request
+     *
+     * @return RedirectResponse
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(UpdateUserProfileRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
 
@@ -39,6 +48,9 @@ class ProfileController extends Controller
 
     /**
      * Delete the user's account.
+     * @param Request $request
+     *
+     * @return RedirectResponse
      */
     public function destroy(Request $request): RedirectResponse
     {

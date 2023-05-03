@@ -60,16 +60,16 @@
     <div class="row py-4 ">
         <div class="col">
             <a id="publish_btn" data-story_id="{{$story->story_id}}" class="btn btn-outline-primary">Publish</a>
-            <a href="{{route('admin-story.declined',$story->story_id)}}" id="decline_btn" data-story_id="{{$story->story_id}}" class="btn btn-outline-secondary">Decline</a>
+            <a href="{{route('story.declined',$story->story_id)}}" id="decline_btn" data-story_id="{{$story->story_id}}" class="btn btn-outline-secondary">Decline</a>
             <button type="button" data-toggle="modal" data-target="#deleteModal-{{ $story->story_id }}"
                 class="btn btn-outline-danger">
                 Delete
             </button>
-            <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('stories.index') }}">Cancle</a>
+            <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('story.index') }}">Cancle</a>
             <!-- Modal -->
             @include('admin.components.deleteModal', [
                 'id' => $story->story_id,
-                'form_action' => 'admin-story.destroy',
+                'form_action' => 'story.destroy',
             ])
         </div>
     </div>
@@ -88,7 +88,7 @@
             })
             $('#publish_btn').on('click', function(){
                 $.ajax({
-                    url: "{{url('admin-story-published/:id')}}".replace(':id',$(this).data('story_id')),
+                    url: "{{url('story-published/:id')}}".replace(':id',$(this).data('story_id')),
                     type: "get",
                     data: {
                         media_declined_ids: deleteFiles,
@@ -96,7 +96,7 @@
                     success: function(response) {
                         alert(response);
                         var link = document.createElement('a');
-                        link.href = "{{route('admin-story.index')}}"
+                        link.href = "{{route('story.index')}}"
                         link.click();
                     }
                 })

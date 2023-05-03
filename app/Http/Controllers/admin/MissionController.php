@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Models\Mission;
 use App\Models\MissionTheme;
 use App\Models\Country;
@@ -20,13 +17,17 @@ use App\Models\MissionSkill;
 use App\Models\GoalMission;
 use App\Models\TimeMission;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\View\View;
 
 class MissionController extends AdminBaseController
 {
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    /**
+     * @return View
+     */
+    public function create(): View
     {
         $data['countries'] = Country::get(['name', 'country_id']);
         $data['mission_theme'] = MissionTheme::get(['title', 'mission_theme_id']);
@@ -37,7 +38,12 @@ class MissionController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMissionRequest $request)
+    /**
+     * @param StoreMissionRequest $request
+     *
+     * @return RedirectResponse
+     */
+    public function store(StoreMissionRequest $request): RedirectResponse
     {
 
         $mission = Mission::create($request->post());
@@ -134,8 +140,11 @@ class MissionController extends AdminBaseController
 
     /**
      * Display the specified resource.
+     * @param Mission $mission
+     *
+     * @return View
      */
-    public function show(Mission $mission)
+    public function show(Mission $mission): View
     {
         return view('admin.mission.edit', compact('mission'));
     }
@@ -144,23 +153,26 @@ class MissionController extends AdminBaseController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($missionId)
+    /**
+     * @param Mission $mission
+     *
+     * @return View
+     */
+    public function edit(Mission $mission): View
     {
-        $mission = new Mission;
-        $mission = $mission->find($missionId);
         $countries = Country::get(['name', 'country_id']);
         $cities = City::where("country_id", $mission->country_id)->get();
         $mission_theme = MissionTheme::get(['title', 'mission_theme_id']);
 
         $mission_skills = Skill::get(['skill_id', 'skill_name']);
-        $selected_skills = MissionSkill::where(['mission_id' => $missionId])->get();
-        $missionVideo = MissionMedia::where(['mission_id' => $missionId, 'media_name' => 'youtube'])->get();
+        $selected_skills = MissionSkill::where(['mission_id' => $mission->mission_id])->get();
+        $missionVideo = MissionMedia::where(['mission_id' => $mission->mission_id, 'media_name' => 'youtube'])->get();
         $missionImages = MissionMedia::where([
-            'mission_id' => $missionId,
+            'mission_id' => $mission->mission_id,
             // 'media_type' => 'png'
         ])->whereIn('media_type', ['png', 'jpeg', 'jpg'])->get();
         $missionDocuments = MissionDocument::where([
-            'mission_id' => $missionId,
+            'mission_id' => $mission->mission_id,
         ])->get();
         $goalMission = $mission->goalMission;
         $timeMission = $mission->timeMission;
@@ -170,24 +182,16 @@ class MissionController extends AdminBaseController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage
+     * @param UpdateMissionRequest $request
+     * @param Mission $mission
+     *
+     * @return RedirectResponse
      */
-    public function update(UpdateMissionRequest $request, $id)
+    public function update(UpdateMissionRequest $request, Mission $mission): RedirectResponse
     {
-        //dd($request->toArray());
-        // $mission=new Mission;
-        // $request->validated();
-        // $mission->find($id)
-        //              ->fill($request->post())
-        //              ->save();
-        //              dd($mission->mission_type);
-        // return redirect()->route('mission.index')->with('success','field Has Been updated successfully');
-        //dd($request->post('total_seats'));
-        $mission = Mission::find($id);
         $currentMissionType = $mission->mission_type;
-        //dd($currentMissionType);
         $newMissionType = $request->post('mission_type');
-        //dd($newMissionType);
         $mission->fill($request->post())->save();
 
 
@@ -195,7 +199,7 @@ class MissionController extends AdminBaseController
 
     if ($currentMissionType == $newMissionType) {
         if ($currentMissionType === 'TIME') {
-            $timeMission = TimeMission::where('mission_id', $id)->first();
+            $timeMission = TimeMission::where('mission_id', $mission->mission_id)->first();
             if ($timeMission) {
                 $timeMission->fill([
                     'mission_id' => $mission->mission_id,
@@ -204,7 +208,7 @@ class MissionController extends AdminBaseController
                 ])->save();
             }
         } elseif ($currentMissionType === 'GOAL') {
-            $goalMission = GoalMission::where('mission_id', $id)->first();
+            $goalMission = GoalMission::where('mission_id', $mission->mission_id)->first();
             if ($goalMission) {
                 $goalMission->fill([
                     'mission_id' => $mission->mission_id,
@@ -218,7 +222,7 @@ class MissionController extends AdminBaseController
     // Move mission data between tables based on mission type change
     if ($currentMissionType !== $newMissionType) {
         if ($currentMissionType === 'TIME') {
-            $timeMission = TimeMission::where('mission_id', $id)->first();
+            $timeMission = TimeMission::where('mission_id', $mission->mission_id)->first();
             $goalMission = new GoalMission();
             $goalMission->fill([
                 'mission_id' => $mission->mission_id,
@@ -230,7 +234,7 @@ class MissionController extends AdminBaseController
                 $timeMission->delete();
             }
         } elseif ($currentMissionType === 'GOAL') {
-            $goalMission = GoalMission::where('mission_id', $id)->first();
+            $goalMission = GoalMission::where('mission_id', $mission->mission_id)->first();
             $timeMission = new TimeMission();
             $timeMission->fill([
                 'mission_id' => $mission->mission_id,
@@ -271,7 +275,7 @@ class MissionController extends AdminBaseController
 
         // handle mission images
         $selectedMedia = $request->input('selected_media', []);
-        $missionImages = MissionMedia::where('mission_id', $id)->get();
+        $missionImages = MissionMedia::where('mission_id', $mission->mission_id)->get();
 
         foreach ($missionImages as $image) {
             if (!in_array($image->media_name, $selectedMedia)) {
@@ -352,12 +356,16 @@ class MissionController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    /**
+     * @param Mission $mission
+     *
+     * @return RedirectResponse
+     */
+    public function destroy(Mission $mission): RedirectResponse
     {
         // $mission = new Mission;
 
         // $mission->find($id)->delete();
-        $mission = Mission::findOrFail($id);
         $missionDocuments = MissionDocument::where('mission_id', $mission->mission_id)->get();
         $missionMedia = MissionMedia::where('mission_id', $mission->mission_id)->get();
         $missionSkills = MissionSkill::where('mission_id', $mission->mission_id)->delete();
@@ -374,7 +382,11 @@ class MissionController extends AdminBaseController
 
         return back()->with('success', 'field has been deleted successfully');
     }
-    public function search(){
+
+    /**
+     * @return LengthAwarePaginator
+     */
+    public function search(): LengthAwarePaginator{
         $request = request();
         return Mission::where([
                         ['title', '!=', Null],

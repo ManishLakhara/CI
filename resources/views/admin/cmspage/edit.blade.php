@@ -14,13 +14,13 @@
 
             <div class="card-body">
                 {{-- <div class="container"> --}}
-                <form action="{{ route('cmspage.update', $cmsPage->cms_page_id) }}" method="post">
+                <form action="{{ route('cmspage.update', $cmspage->cms_page_id) }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label for="Title">Title</label>
-                            <input type="text" name="title" class="form-control" value='{{ $cmsPage->title }}'
+                            <input type="text" name="title" class="form-control" value='{{ $cmspage->title }}'
                                 id="">
 
                             @error('title')
@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-md-12 mb-3">
                             <label for="inputAddress" class="form-label">Description</label>
-                            <textarea name="text" id="editor1">{{ $cmsPage->text }}</textarea>
+                            <textarea name="text" id="editor1">{{ $cmspage->text }}</textarea>
                             @error('text')
                                 <div class="text-danger">
                                     {{ $message }}
@@ -41,7 +41,7 @@
 
                         <div class="col-md-12 mb-3">
                             <label for="slug">Slug</label>
-                            <input type="text" name="slug" class="form-control" value='{{ $cmsPage->slug }}'
+                            <input type="text" name="slug" class="form-control" value='{{ $cmspage->slug }}'
                                 id="">
 
                             @error('slug')
@@ -53,9 +53,9 @@
                         <div class="col-md-12 mb-3">
                             <label for="status">Status</label>
                             <select name="status" id="status" class="form-control" required>
-                                <option value="0" @if (!$cmsPage->status) selected @endif>Inactive
+                                <option value="0" @if (!$cmspage->status) selected @endif>Inactive
                                 </option>
-                                <option value="1" @if ($cmsPage->status) selected @endif>Active</option>
+                                <option value="1" @if ($cmspage->status) selected @endif>Active</option>
                             </select>
 
 

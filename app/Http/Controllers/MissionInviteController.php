@@ -7,8 +7,12 @@ use App\Models\MissionInvite;
 
 class MissionInviteController extends Controller
 {
-    public function inviteUser(Request $repuest){
+    /**
+     * @param Request $repuest
+     *
+     * @return void
+     */
+    public function inviteUser(Request $repuest): void{
         $invite = MissionInvite::create($repuest->post());
-        return;
     }
 }

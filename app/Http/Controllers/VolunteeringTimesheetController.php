@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TimeSheet;
 use App\Models\MissionApplication;
@@ -12,9 +11,17 @@ use App\Models\Mission;
 use App\Http\Requests\StoreTimeSheetRequest;
 use App\Http\Requests\UpdateTimesheetRequest;
 use App\Models\CmsPage;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
+
 class VolunteeringTimesheetController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function index(Request $request): View
     {
         $user = Auth::user();
 
@@ -45,11 +52,12 @@ class VolunteeringTimesheetController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param StoreTimesheetRequest $request
+     *
+     * @return JsonResponse
      */
-    public function store(StoreTimesheetRequest $request)
+    public function store(StoreTimesheetRequest $request): JsonResponse
     {
-
-
         $mission = Mission::findOrFail($request->mission_id);
         $missionType = $mission->mission_type;
 
@@ -75,22 +83,17 @@ class VolunteeringTimesheetController extends Controller
 
     /**
      * Update an existing resource in storage.
+     * @param UpdateTimesheetRequest $request
+     * @param TimeSheet $timesheet
+     *
+     * @return JsonResponse
      */
-    public function update(UpdateTimesheetRequest $request, $id)
+    public function update(UpdateTimesheetRequest $request, TimeSheet $timesheet): JsonResponse
     {
-
-        $timesheet = Timesheet::findOrFail($id);
-
         $mission = Mission::findOrFail($request->mission_id);
         $missionType = $mission->mission_type;
-
-
-
         $timesheet->user_id = auth()->user()->user_id;
         $timesheet->mission_id = $request->mission_id;
-
-
-
         if ($missionType == 'TIME') {
             $timesheet->action = null;
             $timesheet->time = sprintf('%02d:%02d:00', $request->hour, $request->minute);
@@ -100,24 +103,21 @@ class VolunteeringTimesheetController extends Controller
         }
         $timesheet->date_volunteered = $request->date_volunteered;
         $timesheet->notes = $request->notes;
-
-
         $timesheet->status = 'PENDING';
-
-
         $timesheet->save();
-
-
         return response()->json(['success' => true]);
     }
 
 
     /**
      * Remove the specified resource from storage.
+     * @param TimeSheet $timesheet
+     *
+     * @return RedirectResponse
      */
-    public function destroy(TimeSheet $sheet, $id)
+    public function destroy(TimeSheet $timesheet): RedirectResponse
     {
-        $sheet->find($id)->delete();
+        $timesheet->delete();
         return back()->with('success', 'field has been deleted successfully');
     }
 }

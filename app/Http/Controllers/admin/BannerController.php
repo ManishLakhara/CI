@@ -1,32 +1,34 @@
 <?php
 
 namespace App\Http\Controllers\admin;
-
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBannerRequest;
 use App\Http\Requests\UpdateBannerRequest;
 use App\Models\Banner;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\View\View;
 
 class BannerController extends AdminBaseController
 {
     /**
      * Show the form for creating a new resource.
+     * @return View
      */
-    public function create(){
+    public function create(): View{
         return view('admin.banner.create');
     }
 
     /**
      * Store a newly created resource in storage.
+     * @param StoreBannerRequest $request
+     *
+     * @return RedirectResponse
      */
-    public function store(StoreBannerRequest $request){
+    public function store(StoreBannerRequest $request): RedirectResponse{
 
         $banner = new Banner;
         $banner->text = $request->text;
         $banner->sort_order = $request->sort_order;
-             //This is photo storing code
         $photo = $request->file('photo');
         $imageName = $photo->getClientOriginalName().'.'.uniqid().'.'.$photo->getClientOriginalExtension();
         $imagePath = $photo->storeAs('banner',$imageName, 'public');
@@ -37,19 +39,24 @@ class BannerController extends AdminBaseController
 
     /**
      * Show the form for editing the specified resource.
+     * @param Banner $banner
+     *
+     * @return View
      */
-    public function edit(string $id)
+    public function edit(Banner $banner): View
     {
-        $banner = Banner::find($id);
         return view('admin.banner.edit',compact('banner'));
     }
 
     /**
      * Update the specified resource in storage.
+     * @param UpdateBannerRequest $request
+     * @param Banner $banner
+     *
+     * @return RedirectResponse
      */
-    public function update(UpdateBannerRequest $request, string $id)
+    public function update(UpdateBannerRequest $request, Banner $banner): RedirectResponse
     {
-        $banner = Banner::find($id);
         $banner->text = $request->text;
         $banner->sort_order = $request->sort_order;
         if($request->photo!=null){
@@ -64,17 +71,22 @@ class BannerController extends AdminBaseController
 
     /**
      * Remove the specified resource from storage.
+     * @param Banner $banner
+     *
+     * @return RedirectResponse
      */
-    public function destroy(string $id)
+    public function destroy(Banner $banner): RedirectResponse
     {
-        $banner = Banner::find($id);
         $banner->delete();
         return redirect()->route('banner.index')->with('success',"Selected Images is removed from banner");
     }
 
-    public function search(){
+    /**
+     * @return LengthAwarePaginator
+     */
+    public function search(): LengthAwarePaginator{
         $request = request();
-        return Banner::where([
+        return(Banner::where([
                     [function ($query) use ($request){
                         if(($s = $request->s)) {
                             $query->where('image','LIKE','%'.$s.'%')
@@ -83,6 +95,6 @@ class BannerController extends AdminBaseController
                         }
                     }]
                 ])->orderBy('sort_order','asc')
-                ->paginate(10);
+                ->paginate(10));
     }
 }

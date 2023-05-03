@@ -8,7 +8,7 @@
     <div class="container-fluid mt-4 px-4">
         <ul class="nav border-bottom"><span class="nav-link active fs-1"> Edit Mission Skill </span></ul>
 
-        <form class="py-4" action="{{ route('missionskill.update', $skill->skill_id) }}" method="post">
+        <form class="py-4" action="{{ route('skill.update', $skill->skill_id) }}" method="post">
             @csrf
             @method('PUT')
             <label for="skill_name">Skill Name</label>
@@ -56,7 +56,7 @@
                 @enderror
             </div>
             <button type="submit" class='btn btn-warning'> Submit Edit</button>
-            <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('missionskill.index') }}">Cancel</a>
+            <a aria-label="cancle" class="btn mx-4 btn-secondary" href="{{ route('skill.index') }}">Cancel</a>
         </form>
     </div>
 @endsection

@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Models\CmsPage;
 use App\Http\Requests\StoreCmsPageRequest;
 use App\Http\Requests\UpdateCmsPageRequest;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class CmsPageController extends AdminBaseController
 {
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    /**
+     * @return Illuminate\View\View
+     */
+    public function create(): View
     {
         return view('admin.cmspage.create');
     }
@@ -25,7 +25,12 @@ class CmsPageController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCmsPageRequest $request)
+    /**
+     * @param StoreCmsPageRequest $request
+     *
+     * @return Illuminate\Http\RedirectResponse
+     */
+    public function store(StoreCmsPageRequest $request): RedirectResponse
     {
         CmsPage::create($request->post());
         return redirect()->route('cmspage.index')->with('success', 'field has been created successfully.');
@@ -34,27 +39,41 @@ class CmsPageController extends AdminBaseController
     /**
      * Display the specified resource.
      */
-    public function show(CmsPage $cmsPage)
+    /**
+     * @param App\Models\CmsPage $cmspage
+     *
+     * @return Illuminate\View\View
+     */
+    public function show(CmsPage $cmspage): View
     {
-        return view('admin.cmspage.edit', compact('cmsPage'));
+        return view('admin.cmspage.edit', compact('cmspage'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CmsPage $cmsPage, $cmsPageId)
+    /**
+     * @param App\Models\CmsPage $cmspage
+     *
+     * @return Illuminate\View\View
+     */
+    public function edit(CmsPage $cmspage): View
     {
-        $cmsPage = $cmsPage->find($cmsPageId);
-        return view('admin.cmspage.edit', compact('cmsPage'));
+        return view('admin.cmspage.edit', compact('cmspage'));
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCmsPageRequest $request, CmsPage $cmsPage, $id)
+    /**
+     * @param UpdateCmsPageRequest $request
+     * @param App\Models\CmsPage $cmspage
+     *
+     * @return Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateCmsPageRequest $request, CmsPage $cmspage): RedirectResponse
     {
         $request->validated();
-        $cmsPage->find($id)
-            ->fill($request->post())
+        $cmspage->fill($request->post())
             ->save();
         return redirect()->route('cmspage.index')->with('success', 'field Has Been updated successfully');
     }
@@ -62,14 +81,21 @@ class CmsPageController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CmsPage $cmsPage, $id)
+    /**
+     * @param App\Models\CmsPage $cmspage
+     *
+     * @return Illuminate\Http\RedirectResponse
+     */
+    public function destroy(CmsPage $cmspage): RedirectResponse
     {
-        $cmsPage->find($id)
-            ->delete();
+        $cmspage->delete();
         return back()->with('success', 'field has been deleted successfully');
     }
 
-    public function search(){
+    /**
+     * @return Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function search(): LengthAwarePaginator{
         $request = request();
         return CmsPage::where([
                     ['title', '!=', Null],

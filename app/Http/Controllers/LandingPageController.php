@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
     use App\Models\City;
-    use App\Models\Country;
     use App\Models\Mission;
     use App\Models\MissionTheme;
     use App\Models\Skill;
@@ -17,11 +16,17 @@ namespace App\Http\Controllers;
     use App\Query\CityFilter;
     use App\Query\CountryFilter;
     use App\Query\ThemeFilter;
+    use Illuminate\Contracts\View\View;
+    use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Pipeline\Pipeline;
 
 class LandingPageController extends Controller
 {
-    public function index(){
+    /**
+     * @return View
+     */
+    public function index(): View
+    {
         $data = Mission::where('mission_id','!=',null);
 
         $favorite = FavoriteMission::where('user_id',Auth::user()->user_id)
@@ -30,17 +35,23 @@ class LandingPageController extends Controller
         $users = User::where('user_id','!=',Auth::user()->user_id)
                        ->orderBy('user_id','asc')
                        ->get();
-        $data = $data->orderBy('created_at','desc')->paginate(9);
+        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
 
+        $data = $data->orderBy('created_at','desc')->paginate(9);
         $pagination = $data->links()->render();
         if ($data instanceof LengthAwarePaginator) {
             $pagination = $data->appends(request()->all())->links('pagination.default');
         }
-        $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
         return view('index', compact('data','favorite','users','pagination','policies')); // Create view by name missiontheme/index.blade.php
     }
 
-    public function filterApply(Request $request){
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function filterApply(Request $request):View
+    {
         if($request->ajax()){
 
             $user_id = Auth::user()->user_id;
@@ -72,7 +83,13 @@ class LandingPageController extends Controller
         }
     }
 
-    public function findCity(Request $request){
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function findCity(Request $request): View
+    {
         if($request->ajax()){
             $datas = $this->search();
             if($request->countries!=null){
@@ -85,7 +102,13 @@ class LandingPageController extends Controller
         }
     }
 
-    public function findTheme(Request $request){
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function findTheme(Request $request): View
+    {
         if($request->ajax()){
             $datas = $this->search();
             if($request->countries!=null){
@@ -101,7 +124,13 @@ class LandingPageController extends Controller
         }
     }
 
-    public function findSkill(Request $request){
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function findSkill(Request $request): View
+    {
         if($request->ajax()){
             $datas = $this->search();
             if($request->countries!=null){
@@ -123,7 +152,11 @@ class LandingPageController extends Controller
         }
     }
 
-    public function search(){
+    /**
+     * @return Builder
+     */
+    public function search(): Builder
+    {
         $request = request();
         return Mission::where([
             ['title', '!=', Null],
@@ -137,8 +170,13 @@ class LandingPageController extends Controller
         ]);
     }
 
-    public function sort($datas){
-
+    /**
+     * @param Builder $datas
+     *
+     * @return Builder
+     */
+    public function sort(Builder $datas): Builder
+    {
         if(isset(request()->sort)){
             switch(request()->sort){
                 case '1': // Newest

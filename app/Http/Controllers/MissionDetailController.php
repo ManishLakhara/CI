@@ -12,16 +12,21 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\CmsPage;
+use Illuminate\View\View;
+
 class MissionDetailController extends Controller
 {
-    public function main($mission_id){
+    /**
+     * @param Mission $mission
+     *
+     * @return View
+     */
+    public function main(Mission $mission): View{
         $user=Auth::user();
-        $mission = Mission::where('mission_id',$mission_id)
-                            ->first();
         $users = User::where('user_id','!=',Auth::user()->user_id)
         ->orderBy('user_id','asc')
         ->get();
-        $skill_id_array = MissionSkill::where('mission_id',$mission_id)->get()->pluck('skill_id');
+        $skill_id_array = MissionSkill::where('mission_id',$mission->mission_id)->get()->pluck('skill_id');
         $skills = Skill::whereIn('skill_id',$skill_id_array)->get()->pluck('skill_name');
         $favorite = FavoriteMission::where('user_id',Auth::user()->user_id)
                                      ->get(['favorite_mission_id','mission_id']);
@@ -29,10 +34,10 @@ class MissionDetailController extends Controller
                         ->where('mission_id','!=',$mission->mission_id)
                         ->limit(3)
                         ->get();
-        $my_rating = MissionRating::where('mission_id','=',$mission_id)
+        $my_rating = MissionRating::where('mission_id','=',$mission->mission_id)
                                     ->where('user_id','=',$user->user_id)
                                     ->first();
-        $rating_a = MissionRating::where('mission_id',$mission_id)
+        $rating_a = MissionRating::where('mission_id',$mission->mission_id)
                                 ->get()
                                 ->pluck('rating');
         $rating=0;
@@ -49,8 +54,14 @@ class MissionDetailController extends Controller
         $policies = CmsPage::orderBy('cms_page_id', 'asc')->get();
         return view('mission',compact('mission','users','skills','data','favorite','my_rating','avg_rating','count_rating','policies'));
     }
-    public function showVolunteer(Request $request){
-        //dd('$request');
+
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function showVolunteer(Request $request)
+    {
         if($request->ajax()){
             $recent_a = MissionApplication::where('approval_status','APPROVE')
                                             ->where('mission_id',$request->mission_id)->get()->pluck('user_id');
@@ -58,7 +69,13 @@ class MissionDetailController extends Controller
             return view('components.recentvolunteers',compact('volunteers'))->render();
         }
     }
-    public function getRating($mission_id){
+    /**
+     * @param int $mission_id
+     *
+     * @return View
+     */
+    public function getRating($mission_id):View
+    {
         $my_rating = MissionRating::where('mission_id','=',$mission_id)
                                     ->where('user_id','=',auth()->user())
                                     ->first();

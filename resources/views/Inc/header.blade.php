@@ -48,7 +48,7 @@
           <div class="dropdown-menu" aria-labelledby="profile-dropper">
               <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
               <a class="dropdown-item" href="{{ route('timesheet.index') }}">Volunteering Timesheet</a>
-              <a class="dropdown-item" href="{{ route('edit-profile', ['user_id' => Auth::user()->user_id]) }}">Edit Profile </a>
+              <a class="dropdown-item" href="{{ route('edit-profile', Auth::user()->user_id) }}">Edit Profile </a>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@
             <div class="dropdown-menu" aria-labelledby="user_personals">
                 <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                 <a class="dropdown-item" href="{{ route('timesheet.index') }}">Volunteering Timesheet</a>
-                <a class="dropdown-item" href="{{ route('edit-profile', ['user_id' => Auth::user()->user_id]) }}">Edit Profile </a>
+                <a class="dropdown-item" href="{{ route('edit-profile',Auth::user()->user_id) }}">Edit Profile </a>
             </div>
           </div>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>

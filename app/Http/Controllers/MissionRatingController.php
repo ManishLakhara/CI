@@ -9,7 +9,12 @@ use Illuminate\Http\Request;
 
 class MissionRatingController extends Controller
 {
-    public function addRating(Request $request){
+    /**
+     * @param Request $request
+     *
+     * @return string
+     */
+    public function addRating(Request $request): string{
         $checkUser = MissionApplication::where('user_id',$request->user_id)
                                         ->where('mission_id',$request->mission_id)
                                         ->first();

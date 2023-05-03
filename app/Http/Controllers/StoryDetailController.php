@@ -8,10 +8,16 @@ use App\Models\User;
 use App\Models\Story;
 use App\Models\StoryViews;
 use App\Models\CmsPage;
+use Illuminate\View\View;
 
 class StoryDetailController extends Controller
 {
-    public function index($story_id)
+    /**
+     * @param mixed $story_id
+     *
+     * @return View
+     */
+    public function index($story_id): View
     {
         $user = Auth::user();
 

@@ -7,29 +7,50 @@ use Illuminate\Http\Request;
 use App\Models\Admin\Admin;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AdminResetPassword;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class ForgetPasswordController extends Controller
 {
-    public function forgetpassword(Request $request)
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function forgetpassword(Request $request): View
     {
         return view('admin.auth.forgetpassword');
     }
 
-    public function reset(Request $request)
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function reset(Request $request): View
     {
 
         return view('admin.auth.login');
     }
 
-    public function resetpassword(Request $request)
+    /**
+     * @param Request $request
+     *
+     * @return View
+     */
+    public function resetpassword(Request $request): View
     {
-
         return view('admin.auth.resetpassword');
     }
 
     protected $email;
-    public function admincheckEmail(Request $request)
+    /**
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
+    public function admincheckEmail(Request $request): RedirectResponse
     {
 
         if ($request->email == null) {
@@ -53,7 +74,6 @@ class ForgetPasswordController extends Controller
                     return back()->with('success', 'Success! password reset link has been sent to your email');
                 }
                 return back()->with('failed', 'Failed! there is some issue with email provider');
-
             }
         }
     }
