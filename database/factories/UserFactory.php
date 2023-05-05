@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'employee_id' => fake()->unique()->randomNumber(9),
             'department' => fake()->randomElement(['HR', 'SALES', 'DEVELOPER', 'DEPLOYER', 'MANAGER']),
             'status' => fake()->numberBetween(0,1),
-            'password' => bcrypt(fake()->word()), //passsword
+            'password' => bcrypt('12345678'), //passsword
             'phone_number' => fake()->randomNumber(9),
             'profile_text' => fake()->sentence(3),
             'title' => fake()->words(6,true),

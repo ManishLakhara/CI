@@ -389,14 +389,25 @@ class MissionController extends AdminBaseController
     public function search(): LengthAwarePaginator{
         $request = request();
         return Mission::where([
-                        ['title', '!=', Null],
-                        [function ($query) use ($request) {
-                            if (($s = $request->s)) {
-                                $query->orWhere('title', 'LIKE', '%' . $s . '%')
-                                    ->orWhere('mission_type', 'LIKE', '%' . $s . '%')
-                                    ->get();
-                            }
-                        }]
-                    ])->orderByDesc('mission_id')->paginate(10);
+            ['title', '!=', Null],
+            [function ($query) use ($request) {
+                if (($s = $request->s)) {
+                    $query->orWhere('title', 'LIKE', '%' . $s . '%')
+                        ->orWhere('mission_type', 'LIKE', '%' . $s . '%')
+                        ->get();
+                }
+            }]
+        ])->orderByDesc('mission_id')
+          ->without([
+            'skill',
+            'goalMission',
+            'timeMission',
+            'missionMedia',
+            'missionApplication',
+            'missionTheme',
+            'missionRating',
+            'missionSkill',
+        ])
+          ->paginate(10);
     }
 }

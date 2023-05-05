@@ -49,10 +49,9 @@ class BannerController extends AdminBaseController
     }
 
     /**
-     * Update the specified resource in storage.
-     * @param UpdateBannerRequest $request
-     * @param Banner $banner
-     *
+     * Update the specified resource in storage
+     * @param  UpdateBannerRequest $request
+     * @param  Banner $banner
      * @return RedirectResponse
      */
     public function update(UpdateBannerRequest $request, Banner $banner): RedirectResponse

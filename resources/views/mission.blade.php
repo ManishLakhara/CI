@@ -542,7 +542,8 @@
             })
             getComment();
             getVolunteers(1);
-            $('[id^="click-to-details_"]').click(function(){
+            $('[class^="click-to-details_"]').click(function(){
+                console.log($(this).data('mission_id'));
                 $(location).attr('href',"{{url('mission-page/')}}"+'/'+$(this).data('mission_id'));
             });
             $('button[id="mission_application_btn"]').on('click',function(){

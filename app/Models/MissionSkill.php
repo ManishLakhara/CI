@@ -17,7 +17,7 @@ class MissionSkill extends Model
         'mission_id'
     ];
 
-    public function mission() {
+    public function mission(){
         return $this->hasOne(Mission::class, 'mission_id','mission_id');
     }
 

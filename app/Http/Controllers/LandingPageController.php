@@ -76,6 +76,7 @@ class LandingPageController extends Controller
                         ->orderBy('user_id','asc')
                         ->get();
             $pagination = $data->links()->render();
+            
             if ($data instanceof LengthAwarePaginator) {
                 $pagination = $data->appends(request()->all())->links('pagination.default');
             }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,6 +15,16 @@ class Mission extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $with=[
+        'skill',
+        'goalMission',
+        'timeMission',
+        'missionMedia',
+        'missionApplication',
+        'missionTheme',
+        'missionRating',
+        'missionSkill',
+    ];
 
     protected $fillable = [
         'title',
@@ -30,8 +41,6 @@ class Mission extends Model
         'organization_detail',
         'availability',
     ];
-
-
     protected $primaryKey = 'mission_id';
     protected $dates = ['deleted_at'];
 
@@ -42,9 +51,11 @@ class Mission extends Model
     public function country(): HasOne {
         return $this->hasOne(Country::class, 'country_id','country_id');
     }
+
     public function city(): HasOne {
         return $this->hasOne(City::class, 'city_id','city_id');
     }
+
     public function missionTheme(): HasOne{
         return $this->hasOne(MissionTheme::class, 'mission_theme_id', 'theme_id');
     }
@@ -96,9 +107,27 @@ class Mission extends Model
     public function userSkill() {
         return $this->hasOne(UserSkill::class, 'mission_id');
     }
+
     public function contactUs() {
         return $this->hasMany(ContactUs::class, 'contact_us_id');
     }
+
+    public function getRequestedAttribute(){
+        return $this->missionApplication->where('user_id',auth()->user()->user_id)->first() ?? false;
+    }
+
+    public function getDeclinedAttribute(){
+        return $this->missionApplication->where('user_id',auth()->user()->user_id)->first()->approval_status=='DECLINE'? true : false;
+    }
+
+    public function getClosedAttribute(){
+        return ($this->TimeMission!=Null && $this->TimeMission->registration_deadline < now()) || ($this->TimeMission!=Null && $this->TimeMission->total_seats <= 0) ? true : false;
+    }
+
+    public function isFavourite(){
+        //
+    }
+
     public function path() {
         return 'mission/'.$this->mission_id;
     }

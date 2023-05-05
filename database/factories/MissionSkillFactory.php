@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Skill;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,9 @@ class MissionSkillFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
-            'mission_id' => $this->faker->numberBetween(1,400),
-            'skill_id' => $this->faker->numberBetween(1,10),
+//
         ];
     }
 }
