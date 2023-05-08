@@ -51,11 +51,9 @@ class Mission extends Model
     public function country(): HasOne {
         return $this->hasOne(Country::class, 'country_id','country_id');
     }
-
     public function city(): HasOne {
         return $this->hasOne(City::class, 'city_id','city_id');
     }
-
     public function missionTheme(): HasOne{
         return $this->hasOne(MissionTheme::class, 'mission_theme_id', 'theme_id');
     }
@@ -107,9 +105,12 @@ class Mission extends Model
     public function userSkill() {
         return $this->hasOne(UserSkill::class, 'mission_id');
     }
-
     public function contactUs() {
         return $this->hasMany(ContactUs::class, 'contact_us_id');
+    }
+
+    public function getApprovedAttribute(){
+        return $this->missionApplication->where('user_id',auth()->user()->user_id)->first()->approval_status=="APPROVE" ?? false;
     }
 
     public function getRequestedAttribute(){
@@ -120,12 +121,12 @@ class Mission extends Model
         return $this->missionApplication->where('user_id',auth()->user()->user_id)->first()->approval_status=='DECLINE'? true : false;
     }
 
-    public function getApprovedAttribute(){
-        return $this->missionApplication->where('user_id',auth()->user()->user_id)->first()->approval_status=="APPROVE" ?? false;
-    }
-
     public function getClosedAttribute(){
         return ($this->TimeMission!=Null && $this->TimeMission->registration_deadline < now()) || ($this->TimeMission!=Null && $this->TimeMission->total_seats <= 0) ? true : false;
+    }
+
+    public function isFavourite(){
+        //
     }
 
     public function path() {

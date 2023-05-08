@@ -56,7 +56,7 @@
                                 @endif
 
                         <input type="radio" name="imgbackground" class="mission_like_input_{{$item->mission_id}}_{{$user_id}} d-none imgbgchk py-1 hidden" style="display: none"
-                        value={{$value}}
+                        value={{$item->isFavourite()}}
                         >
                         {{-- </label> --}}
                     </div>
