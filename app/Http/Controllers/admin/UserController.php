@@ -90,16 +90,16 @@ class UserController extends AdminBaseController
     public function search(): LengthAwarePaginator{
         $request = request();
         return  User::where([
-                    [function ($query) use ($request) {
-                        if (($s = $request->s)) {
-                            $query->orWhere('first_name', 'LIKE', '%' . $s . '%')
-                                ->orWhere('last_name', 'LIKE', '%' . $s . '%')
-                                ->orWhere('email', 'LIKE', '%' . $s . '%')
-                                ->orWhere('employee_id', 'LIKE', '%' . $s . '%')
-                                ->orWhere('department', 'LIKE', '%' . $s . '%')
-                                ->get();
-                        }
-                    }]
-                ])->paginate(10);
+            [function ($query) use ($request) {
+                if (($s = $request->s)) {
+                    $query->orWhere('first_name', 'LIKE', '%' . $s . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $s . '%')
+                    ->orWhere('email', 'LIKE', '%' . $s . '%')
+                    ->orWhere('employee_id', 'LIKE', '%' . $s . '%')
+                    ->orWhere('department', 'LIKE', '%' . $s . '%')
+                    ->get();
+                }
+            }]
+        ])->paginate(10);
     }
 }

@@ -260,7 +260,7 @@ Landing Mission Page
                         url: "{{url('api/add-favourite')}}",
                         type: "POST",
                         data: {
-                            _token: '{{ csrf_token() }}',
+                            //_token: '{{ csrf_token() }}',
                             mission_id: mission_id,
                             user_id: user_id,
                         },

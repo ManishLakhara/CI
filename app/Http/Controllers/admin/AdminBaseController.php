@@ -17,7 +17,6 @@ class AdminBaseController extends Controller
     public function index(): View
     {
         $data = $this->search();
-        //dd(Str::lower(class_basename($this)));
         $class_name = Str::substr(Str::lower(class_basename($this)),0,-10);
         $pagination = $data->links()->render();
         if($data instanceof LengthAwarePaginator){

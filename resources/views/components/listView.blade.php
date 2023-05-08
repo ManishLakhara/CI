@@ -9,12 +9,10 @@
                         src="{{asset('storage/'.$item->missionMedia->where('default','1')->first()->media_path)}}"
                     @endif alt="default mission image" style="width:408px;max-height:249px">
                     <div class="position-absolute current-status">
-                    @if($item->missionApplication->where('user_id',$user_id)->first()!=Null)
-                            @if($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='PENDING'
-                            || $item->missionApplication->where('user_id',$user_id)->first()->approval_status=='APPROVE'
-                            )
+                    @if($item->requested)
+                            @if(!$item->declined)
                             <span class="badge bg-success fs-6">Applied</span>
-                            @elseif ($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='DECLINE')
+                            @else
                             <span class="badge bg-danger fs-6">Decline</span>
                             @endif
                     @endif
@@ -23,7 +21,7 @@
                         <span class="badge bg-warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
                     </div>
                     @endif
-                    @if($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now()|| ($item->TimeMission!=Null && $item->TimeMission->total_seats <= 0))
+                    @if($item->closed)
                         <div class="position-absolute current-status" style="top: 0">
                             <span class="badge bg-warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
                         </div>
@@ -128,7 +126,7 @@
                             <div class="col-lg-6 align-item-center">
                                 <div class="row">
                                     @if ($item->timeMission!=null)
-                                    
+
                                         <div class="col-6 d-flex align-items-center">
                                             <div class="px-1">
                                                 <img src={{ asset('Images/seats-left.png') }} alt="seat_left" style="width:25px;height:25px">
@@ -201,10 +199,8 @@
                     </div>
                     <div class="col-xxl-3">
                         @if ($item->end_date>=now() &&
-                        !($item->timeMission!=Null &&
-                        $item->timeMission->registration_deadline < now()) &&
-                        ($item->end_date >now()) &&
-                        (collect($item->missionApplication->where('user_id',$user_id))->isEmpty()))
+                        !$item->closed &&
+                        !$item->requested)
                         <button name="applymission" type="button" id="mission_application_l_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn w-100"
                             > Apply <i class="fa-sharp fa-solid fa-arrow-right"></i> </button>
                         @else

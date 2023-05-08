@@ -13,12 +13,12 @@ class City extends Model
     protected $fillable = [
         'country_id', 'name'
     ];
-    
+
     public function Country() {
-        return $this->belongsTo(Country::class, 'country_id');
+        return $this->hasOne(Country::class, 'country_id');
     }
 
     public function User() {
-        return $this->hasMany(User::class, 'city_id');
+        return $this->belongsToMany(User::class, 'city_id');
     }
 }

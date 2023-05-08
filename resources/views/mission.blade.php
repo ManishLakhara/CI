@@ -186,7 +186,7 @@
                     </div>
                 <div class="border-top"></div>
                 <div class="d-flex justify-content-center position-relative" style="margin-top: -35px">
-                    @if($mission->missionApplication->where('user_id',$user_id)->first()!=Null && $mission->missionApplication->where('user_id',$user_id)->first()->approval_status=="APPROVE")
+                    @if($mission->requested && $mission->approved)
                         <div class='rating bg-white'
                         @if(isset($my_rating->rating))
                          data-my_rating="{{ $my_rating->rating }}"
@@ -272,8 +272,8 @@
                 </div>
                 <div class="row py-4 justify-content-center align-item-center" >{{--Apply Button--}}
                     <div class="col-6 align-self-center">
-                        @if(!($mission->end_date < now() || ($mission->TimeMission!=Null && $mission->TimeMission->registration_deadline < now()) || ($mission->TimeMission!=Null && $mission->TimeMission->total_seats <= 0)))
-                            @if(count($mission->missionApplication->where('user_id',$user_id))===0)
+                        @if(!$mission->closed)
+                            @if(!$mission->requested)
                                 <button type="button" id="mission_application_btn" data-user_id="{{$user_id}}" data-mission_id="{{$mission->mission_id}}" class="btn btn-lg fs-5 apply-btn w-100"> Apply <i
                                     class="fa-sharp fa-solid fa-arrow-right"></i> </button>
                             @endif
@@ -542,7 +542,8 @@
             })
             getComment();
             getVolunteers(1);
-            $('[id^="click-to-details_"]').click(function(){
+            $('[class^="click-to-details_"]').click(function(){
+                console.log($(this).data('mission_id'));
                 $(location).attr('href',"{{url('mission-page/')}}"+'/'+$(this).data('mission_id'));
             });
             $('button[id="mission_application_btn"]').on('click',function(){

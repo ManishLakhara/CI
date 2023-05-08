@@ -6,12 +6,11 @@
             <div class="w-100 d-flex justify-content-center">
                 <div class="position-relative" style="max-width: 416px; height: 247px;">
                     <div class="position-absolute current-status">
-                    @if($item->missionApplication->where('user_id',$user_id)->first()!=Null)
-                        @if($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='PENDING'
-                        || $item->missionApplication->where('user_id',$user_id)->first()->approval_status=='APPROVE'
-                        )
+                    {{--@if($item->missionApplication->where('user_id',$user_id)->first()!=Null)--}}
+                    @if($item->requested)
+                        @if(!$item->declined)
                         <span class="badge bg-success fs-6">Applied</span>
-                        @elseif ($item->missionApplication->where('user_id',$user_id)->first()->approval_status=='DECLINE')
+                        @else
                         <span class="badge bg-danger fs-6">Decline</span>
                         @endif
                     @endif
@@ -20,7 +19,7 @@
                             <span class="badge bg-warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
                         </div>
                     @endif
-                    @if(($item->TimeMission!=Null && $item->TimeMission->registration_deadline < now()) || ($item->TimeMission!=Null && $item->TimeMission->total_seats <= 0))
+                    @if($item->closed)
                         <div class="position-absolute current-status" style="top: 0">
                             <span class="badge bg-warning fs-6">&nbsp;&nbsp; Closed&nbsp;&nbsp;  </span>
                         </div>
@@ -41,21 +40,21 @@
                     <div class="position-absolute parent_like_btn">
                         <button name="missionLike" aria-label="like_mission" type="button" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="mission_like_btn_{{$item->mission_id}}_{{$user_id}} like_btn py-1">
                             <?php $set=false;
-                                    $value='0';?>
-                            @foreach ($favorite as $fav)
-                                @if($fav->mission_id == $item->mission_id)
-                                    <i class="fas fa-heart fs-4"></i>
-                                    <?php $set=true;
-                                    $value=$fav->favorite_mission_id;
-                                    ?>
-                                    @break
-                                @endif
-                            @endforeach
+                                        $value='0';?>
+                                @foreach ($favorite as $fav)
+                                    @if($fav->mission_id == $item->mission_id)
+                                        <i class="fas fa-heart fs-4"></i>
+                                        <?php $set=true;
+                                        $value=$fav->favorite_mission_id;
+                                        ?>
+                                        @break
+                                    @endif
+                                @endforeach
 
-                            @if($set==false)
-                            <i class="fa-regular fa-heart fs-4"></i>
-                            @endif
-                        </button>
+                                @if($set==false)
+                                <i class="fa-regular fa-heart fs-4"></i>
+                                @endif
+
                         <input type="radio" name="imgbackground" class="mission_like_input_{{$item->mission_id}}_{{$user_id}} d-none imgbgchk py-1 hidden" style="display: none"
                         value={{$value}}
                         >
@@ -198,10 +197,8 @@
                     @endif --}}
                {{-- @endif --}}
                @if($item->end_date>=now() &&
-                    !($item->timeMission!=Null &&
-                    $item->timeMission->registration_deadline < now()) &&
-                    ($item->end_date >now()) &&
-                    (collect($item->missionApplication->where('user_id',$user_id))->isEmpty()))
+                    !$item->closed &&
+                    !$item->requested)
                     <button type="button" name="missionApplication" id="mission_application_btn_{{$item->mission_id}}" data-mission_id="{{$item->mission_id}}" data-user_id="{{$user_id}}" class="btn btn-lg fs-6 apply-btn"> Apply <i
                         class="fa-sharp fa-solid fa-arrow-right"></i> </button>
                @else

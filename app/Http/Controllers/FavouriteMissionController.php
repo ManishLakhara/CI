@@ -9,6 +9,7 @@ class FavouriteMissionController extends Controller
 {
     /**
      * @param Illuminate\Http\Request $request
+     * @return int
      */
     public function addFavourite(Request $request): int{
         $fav = FavoriteMission::create($request->post());

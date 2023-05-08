@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('delete:oldrows')->everyMinute();
+        $schedule->command('log:cron')->everyMinute();
     }
 
     /**
@@ -25,6 +26,6 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
     protected $commands = [
-        Commands\MigrateInOrder::class,
+        Commands\LogCron::class,
     ];
 }
