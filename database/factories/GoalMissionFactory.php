@@ -17,9 +17,9 @@ class GoalMissionFactory extends Factory
      */
     public function definition(): array
     {
-    //     $ids = Mission::where('mission_type','GOAL')->get('mission_id');
         return [
-            //
+            'goal_value' => $this->faker->numberBetween(500,700),
+            'goal_objective_text' => $this->faker->words(5,true),
         ];
     }
 }
