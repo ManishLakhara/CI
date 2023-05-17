@@ -14,7 +14,7 @@ use App\Http\Controllers\UserEditProfileController;
 use App\Http\Controllers\StoryInviteController;
 use App\Http\Controllers\StoryListingController;
 use App\Models\MissionApplication;
-
+use App\Http\Controllers\Admin\TimesheetApplicationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,5 +45,7 @@ use App\Models\MissionApplication;
     Route::get('reject-application',[MissionApplicationController::class,'rejectApplication']);
     Route::post('invite-users', [StoryInviteController::class, 'inviteUser']);
     Route::post('/users/contact-us', [UserEditProfileController::class, 'contactus'])->name('users.contact-us');
+    Route::get('/timesheet/approve-application',[TimesheetApplicationController::class,'approveApplication']);
+    Route::get('/timesheet/reject-application',[TimesheetApplicationController::class,'rejectApplication']);
 
 Route::post('fetch-city', [CountryCityController::class, 'fetchCity']);

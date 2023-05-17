@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -40,8 +41,8 @@ class StoreMissionRequest extends FormRequest
                     }
                 },
             ],
-            'start_date' => 'date',
-            'end_date' => 'date|after:start_date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
             // 'total_seats'=>'integer',
             // 'registration_deadline'=>'date|after:start_date|before:end_date',
             // 'goal_objective_text'=>'max:255|string',
@@ -59,7 +60,7 @@ class StoreMissionRequest extends FormRequest
                     },
                 ]),
             ],
-           
+
             'registration_deadline' => [
                 Rule::when($this->input('mission_type') === 'TIME', [
                     'required', 'date', 'after:start_date', 'before:end_date',
@@ -94,7 +95,7 @@ class StoreMissionRequest extends FormRequest
                 ]),
             ],
             'skill_id' => 'required_without_all:skill_id.*|array|min:1',
-            'availability'=>'in:daily,weekly,week-end,monthly',
+            'availability' => 'in:daily,weekly,week-end,monthly',
         ];
     }
 

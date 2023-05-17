@@ -26,6 +26,7 @@ class AdminAuthController extends Controller
         $request->validate([
             'email' => 'required',
             'password' => 'required|min:8',
+            'captcha' => 'required|captcha'
         ]);
         $credentionals = $request->only('email','password');
         if(Auth::guard('admin')->attempt($credentionals)){
@@ -36,7 +37,10 @@ class AdminAuthController extends Controller
             return redirect()->intended('adminlogin')->with('status','Oppes! You have entered wrong password');
         }
     }
-
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img()]);
+    }
     public function logout()
     {
         Auth::guard('admin')->logout();

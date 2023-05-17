@@ -28,6 +28,7 @@ class RegisterRequest extends FormRequest
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
             'confirm_password' => 'required|same:password',
+            'captcha' => 'required|captcha',
         ];
     }
 
@@ -36,6 +37,7 @@ class RegisterRequest extends FormRequest
         return [
             'email.unique' => "This :attribute have been already registered",
             'phone_number.unique' => "This :attribute have been already registered",
+            'captcha.captcha' => "you have entered wrong captcha"
         ];
     }
 }

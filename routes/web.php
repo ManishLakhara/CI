@@ -26,7 +26,7 @@ use App\Http\Controllers\UserEditProfileController;
 use App\Http\Controllers\VolunteeringTimesheetController;
 use App\Http\Controllers\StoryListingController;
 use App\Models\Banner;
-
+use App\Http\Controllers\Admin\TimesheetApplicationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +39,8 @@ use App\Models\Banner;
 */
 //frontend Routes
 Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::get('/reload-captcha', [AuthController::class, 'reloadCaptcha'])->name('reloadCaptcha');
+Route::get('/admin-reload-captcha', [AdminAuthController::class, 'reloadCaptcha'])->name('adminReloadCaptcha');
 Route::get('logout', [AuthController::class, 'logout']);
 Route::post('custom-login', [AuthController::class, 'postLogin'])->name('login.custom');
 Route::get('forgot',[AuthController::class,'forgot'])->name('forgot.password');
@@ -131,6 +133,9 @@ Route::post('mystories/{story_id}', [StoryListingController::class,'updateDraft'
 
 
 
+Route::get('timesheet-application',[TimesheetApplicationController::class,'index'])->name('timesheet-application.index');
 
 
-
+// Route::get('/test-404-error', function () {
+//     abort(404);
+// });

@@ -30,6 +30,7 @@ class AuthController extends Controller {
         $request->validate([
             'email' => 'required|exists:users,email',
             'password' => 'required',
+            'captcha' => 'required|captcha',
         ]);
         $credentionals = $request->only('email','password');
         if(Auth::attempt($credentionals)){
@@ -51,6 +52,7 @@ class AuthController extends Controller {
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+
             ]);
             return redirect()->intended('/')->with('success', $user->first_name.' New User is Registered');
         }
@@ -59,6 +61,12 @@ class AuthController extends Controller {
                                                     ->with(FacadesRequest::except('password'));
         }
     }
+
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img()]);
+    }
+
     public function forgot(){
         $banners = Banner::orderBy('sort_order','asc')->get();
         return view('login.forgot',compact('banners'));

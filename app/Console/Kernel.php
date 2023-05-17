@@ -12,7 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('delete:oldrows')->everyMinute();
+        $schedule->command('delete:oldrows')->everyMinute()->runInBackground();
+        $schedule->command('demo:cron')->everyMinute()->runInBackground();
+        $schedule->command('app:generate-password')->everyMinute()->runInBackground();
     }
 
     /**
@@ -26,5 +28,7 @@ class Kernel extends ConsoleKernel
     }
     protected $commands = [
         Commands\MigrateInOrder::class,
+        Commands\DemoCron::class,
+        Commands\GeneratePassword::class,
     ];
 }

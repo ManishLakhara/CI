@@ -201,7 +201,7 @@ return [
         */
         //Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
         //Spatie\QueryBuilder\QueryBuilderServiceProvider::class,
-
+        Mews\Captcha\CaptchaServiceProvider::class,
     ],
 
     /*
@@ -218,6 +218,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ])->toArray(),
 
 ];

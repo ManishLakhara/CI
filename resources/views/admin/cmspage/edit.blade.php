@@ -19,8 +19,11 @@
                     @method('PUT')
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
-                            <label for="Title">Title</label>
-                            <input type="text" name="title" class="form-control" value='{{ $cmsPage->title }}'
+                            <label for="Title">Title<span style="color:red;">*</span></label>
+                            <input type="text" name="title" class="form-control"
+                                @if (old('title') == null) value={{ $cmsPage->title }}
+                        @else
+                            value={{ old('title') }} @endif
                                 id="">
 
                             @error('title')
@@ -30,8 +33,14 @@
                             @enderror
                         </div>
                         <div class="col-md-12 mb-3">
-                            <label for="inputAddress" class="form-label">Description</label>
-                            <textarea name="text" id="editor1">{{ $cmsPage->text }}</textarea>
+                            <label for="inputAddress" class="form-label">Description<span
+                                    style="color:red;">*</span></label>
+                            <textarea name="text" id="editor1">
+                                @if (old('text') == null) {{ $cmsPage->text }}
+                                    @else
+                                    {{ old('text') }}
+                                @endif
+                            </textarea>
                             @error('text')
                                 <div class="text-danger">
                                     {{ $message }}
@@ -40,8 +49,11 @@
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label for="slug">Slug</label>
-                            <input type="text" name="slug" class="form-control" value='{{ $cmsPage->slug }}'
+                            <label for="slug">Slug<span style="color:red;">*</span></label>
+                            <input type="text" name="slug" class="form-control"
+                                @if (old('slug') == null) value={{ $cmsPage->slug }}
+                            @else
+                                value={{ old('slug') }} @endif
                                 id="">
 
                             @error('slug')
@@ -51,11 +63,17 @@
                             @enderror
                         </div>
                         <div class="col-md-12 mb-3">
-                            <label for="status">Status</label>
+                            <label for="status">Status<span style="color:red;">*</span></label>
                             <select name="status" id="status" class="form-control" required>
-                                <option value="0" @if (!$cmsPage->status) selected @endif>Inactive
-                                </option>
-                                <option value="1" @if ($cmsPage->status) selected @endif>Active</option>
+                                <option value="0"
+                                    @if (old('status') == null) @if ($cmsPage->status == 0)? selected @endif
+                                @else @if (old('status') == 0) ? selected @endif @endif
+                                    >
+                                    Inactive</option>
+                                <option value="1"
+                                    @if (old('status') == null) @if ($cmsPage->status == 1)? selected @endif
+                                @else @if (old('status') == 1) ? selected @endif @endif
+                                    > Active </option>
                             </select>
 
 

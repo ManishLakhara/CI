@@ -30,12 +30,12 @@ class CmsPageController extends Controller
         ])->paginate(10);
 
         $pagination = $data->links()->render();
-        if($data instanceof LengthAwarePaginator){
+        if ($data instanceof LengthAwarePaginator) {
             $pagination = $data->appends(request()->all())->links('pagination.default');
         }
 
 
-        return view('admin.cmspage.index', compact('data','pagination'));
+        return view('admin.cmspage.index', compact('data', 'pagination'));
     }
 
     /**
@@ -59,14 +59,6 @@ class CmsPageController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(CmsPage $cmsPage)
-    {
-        return view('admin.cmspage.edit', compact('cmsPage'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(CmsPage $cmsPage, $cmsPageId)
@@ -81,8 +73,8 @@ class CmsPageController extends Controller
     {
         $request->validated();
         $cmsPage->find($id)
-            ->fill($request->post())
-            ->save();
+            ->update($request->post());
+
         return redirect()->route('cmspage.index')->with('success', 'field Has Been updated successfully');
     }
 

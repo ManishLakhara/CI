@@ -59,11 +59,11 @@ class AdminResetPassword extends Mailable
 
     public function build()
     {
-        $banners = Banner::orderBy('sort_order','asc')->get();
+
         $user['name'] = $this->name;
         $user['token'] = $this->token;
 
-        return $this->from("19it.rutvikkumar.kansagara@gmail.com", "kansagara rutvikkumar25")
+        return $this->from("abc23@gmail.com", "kansagara rutvikkumar25")
         ->subject('Password Reset Link')
         ->view('admin.admintemplate.adminreset', ['user' => $user]);
     }

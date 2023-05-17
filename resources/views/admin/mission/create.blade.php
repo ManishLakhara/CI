@@ -12,7 +12,7 @@
             @csrf
             <div class="row">
                 <div class="col-md-6">
-                    <label for="missionTitle" class="form-label">Mission Title</label>
+                    <label for="missionTitle" class="form-label">Mission Title<span style="color:red;">*</span></label>
                     <input type="text" class="form-control" id="missionTitle" name='title' value="{{ old('title') }}">
                     @error('title')
                         <div class="text-danger">
@@ -21,7 +21,8 @@
                     @enderror
                 </div>
                 <div class="col-md-6">
-                    <label for="missionDesc" class="form-label">Mission Short Description</label>
+                    <label for="missionDesc" class="form-label">Mission Short Description<span
+                            style="color:red;">*</span></label>
                     <input type="text" class="form-control" id="missionDesc" name='short_description'
                         value="{{ old('short_description') }}">
                     @error('short_description')
@@ -33,7 +34,8 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <label for="inputAddress" class="form-label">Mission Description</label>
+                    <label for="inputAddress" class="form-label">Mission Description<span
+                            style="color:red;">*</span></label>
                     <textarea name="description" id="editor1">{{ old('description') }}</textarea>
                     @error('description')
                         <div class="text-danger">
@@ -44,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label for="country">Country</label>
+                    <label for="country">Country<span style="color:red;">*</span></label>
                     <select name="country_id" class="form-control" id="country-dropdown">
                         <option value="none" selected="" disabled="" hidden="">select country</option>
                         @foreach ($countries as $country)
@@ -61,7 +63,7 @@
                     @enderror
                 </div>
                 <div class="col-md-6">
-                    <label for="city">City</label>
+                    <label for="city">City<span style="color:red;">*</span></label>
                     <select class="form-control" name="city_id" id="city-dropdown">
                         {{-- <option value="none" selected="" disabled="" hidden=""></option> --}}
 
@@ -87,7 +89,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label for="inputdate" class="form-label">Mission Start Date</label>
+                    <label for="inputdate" class="form-label">Mission Start Date<span style="color:red;">*</span></label>
                     <div class='input-group date' id='datetimepicker1'>
                         <input type='date' class="form-control" name='start_date' value="{{ old('start_date') }}" />
 
@@ -99,7 +101,7 @@
                     @enderror
                 </div>
                 <div class="col-md-6">
-                    <label for="inputPassword4" class="form-label">Mission End Date</label>
+                    <label for="inputPassword4" class="form-label">Mission End Date<span style="color:red;">*</span></label>
                     <div class='input-group date' id='datetimepicker1'>
                         <input type='date' class="form-control" name='end_date' value="{{ old('end_date') }}" />
 
@@ -113,7 +115,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label for="inputType" class="form-label">Mission Type</label>
+                    <label for="inputType" class="form-label">Mission Type<span style="color:red;">*</span></label>
                     <select id="inputType" class="form-select" name='mission_type' value="{{ old('mission_type') }}">
                         <option value="none" selected="" disabled="" hidden="">select mision type</option>
                         {{-- <option value="time">Time</option>
@@ -181,13 +183,13 @@
 
 
                 <div class="col-md-6">
-                    <label for="inputTheme" class="form-label">Mission Theme</label>
+                    <label for="inputTheme" class="form-label">Mission Theme<span style="color:red;">*</span></label>
                     <select class="form-control" id="country-dropdown" name='theme_id'>
                         <option value="none" selected="" disabled="" hidden="">select mission theme
                         </option>
                         @foreach ($mission_theme as $theme)
                             {{-- <option value="{{ $theme->mission_theme_id }}">{{ $theme->title }}</option> --}}
-                            <option value="{{ $theme->mission_theme_id}}"
+                            <option value="{{ $theme->mission_theme_id }}"
                                 {{ old('theme_id') == $theme->mission_theme_id ? 'selected' : '' }}>{{ $theme->title }}
                             </option>
                         @endforeach
@@ -200,7 +202,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label for="mission_skills">Mission Skills</label>
+                    <label for="mission_skills">Mission Skills<span style="color:red;">*</span></label>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle col-md-6" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -287,7 +289,7 @@
                     @enderror
                 </div>
                 <div class="col-md-6">
-                    <label for="status">Status</label>
+                    <label for="status">Status<span style="color:red;">*</span></label>
                     <select name="status" id="status" class="form-control" required>
                         {{-- <option value="0">Inactive</option>
                         <option value="1" selected>Active</option> --}}

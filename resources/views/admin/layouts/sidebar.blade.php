@@ -84,5 +84,14 @@
                         </span>
                     </div>
                 </a>
+                <a class="nav-link" href="/timesheet-application">
+                    <div id="timesheet-application" class='container px-1 py-3 rounded fs-5'>
+                    {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> --}}
+                    <i class="fas fa-folder"></i>
+                    <span class="font-weight-light pl-3" style="color: inherit">
+                        Timesheet Application
+                    </span>
+                </div>
+            </a>
     </nav>
 </div>
