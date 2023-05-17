@@ -11,6 +11,7 @@
             <i class="fa-solid fa-bars"></i>
         </button>
     </div>
+    {{-- {{dd($story)}} --}}
     <form id="story-form" action="{{ route('mystories.update', $story->story_id) }}" method="POST"
         enctype="multipart/form-data">
         @csrf

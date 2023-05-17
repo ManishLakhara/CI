@@ -39,14 +39,15 @@ class StoryListingController extends Controller
     }
 
 
-    public function edit($story_id)
+    public function edit($id)
     {
+        $story = Story::find($id)->first();
+        $story_id = $story->story_id;
+        /* dd($story); */
         $user = Auth::user();
         $story = Story::findOrFail($story_id);
         $storyvideoMedia = StoryMedia::where('story_id', $story_id)->where('type', 'video')->get();
         $storyimageMedia = StoryMedia::where('story_id', $story_id)->whereIn('type', ['png', 'jpg', 'jpeg'])->get();
-
-
 
         $appliedMissionIds = MissionApplication::where('user_id', $user->user_id)
             ->where('approval_status', 'APPROVE')
@@ -158,7 +159,7 @@ class StoryListingController extends Controller
 
     public function update(Request $request, $story_id)
     {
-        
+
         $newPaths = explode("\r\n", $request->path[0]);
         $validator = Validator::make($newPaths, [
             'path.*' => 'required|url',

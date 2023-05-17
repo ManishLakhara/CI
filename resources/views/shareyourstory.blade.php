@@ -11,7 +11,7 @@
       </button>
 </div>
     <form id="story-form" action="{{ route('stories.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    {{-- @csrf --}}
 
         <div class="container mt-5">
             <h2>Share Your Story</h2>
@@ -224,6 +224,7 @@
                         processData: false,
                         contentType: false,
                         success: function(id) {
+                            console.log(id);
                             alert("Saved to Draft");
                             var link = document.createElement('a');
                             link.href = "{{ route('mystories.edit', ':id') }}".replace(':id',
